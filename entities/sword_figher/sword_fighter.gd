@@ -22,6 +22,8 @@ export var ground_drag = 10
 export var default_tracking_speed = 20
 export var tracking_speed = 20
 export var max_hp = 1000
+export var min_jump_str = 2.5
+export var max_jump_str = 25
 
 var ready = false
 var player_side = 0
@@ -118,6 +120,8 @@ func _input(event):
 #			if event.axis == 2:
 #				camera_pivot.rotation.y += event.axis_value * -0.1
 #				sticks[event.axis] = event.axis_value
+	if event.is_action_pressed("debug_reset"):
+		reset()
 
 var count = 0
 
@@ -191,8 +195,8 @@ func _physics_process(delta):
 #			fsm.receive_event("_touched_surface", "floor")
 	
 	if input_listener.is_key_pressed(InputManager.GUARD):
-		if jump_str < 25:
-			jump_str += delta * 90
+		if jump_str < max_jump_str:
+			jump_str += max_jump_str * delta * 4
 	
 #	velocity = move_and_slide_with_snap(velocity, Vector3.DOWN, Vector3.UP, false, 4, 0.785398, true)
 #	move_and_slide(velocity, Vector3.UP, false, 4, 0.785398, true)
@@ -206,6 +210,7 @@ func _physics_process(delta):
 	
 #	emit_signal("transform_changed", transform)
 	emit_signal("position_changed", transform.origin)
+	print(Vector2(velocity.x, velocity.z).length())
 
 func center_camera(delta):
 	camera_pivot.rotation.y = lerp_angle(camera_pivot.rotation.y, model_container.rotation.y, delta * 2)
@@ -219,7 +224,7 @@ var prev_velocity = Vector3.ZERO
 func lerp_velocity(delta):
 	var interpolated_vector = Vector2(velocity.x, velocity.z).linear_interpolate(target_velocity, delta * 4.5)
 	velocity = Vector3(interpolated_vector.x, velocity.y, interpolated_vector.y)
-	model.rotation_degrees.z = Vector2(velocity.x, velocity.z).angle_to(target_velocity) * 45
+	model.rotation_degrees.z = clamp(Vector2(velocity.x, velocity.z).angle_to(target_velocity) * 45, -30, 30)
 	pass
 
 func set_target_velocity(_target_velocity):
@@ -285,7 +290,7 @@ func jump():
 	
 	add_impulse(Vector3(direction.x, jump_str , direction.y))
 	on_ground = false
-	jump_str = 0
+	jump_str = min_jump_str
 
 func get_current_animation():
 	return $AnimationEvents.assigned_animation

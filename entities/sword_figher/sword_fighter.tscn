@@ -1092,7 +1092,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.333333 ),
+"times": PoolRealArray( 0.034 ),
 "transitions": PoolRealArray( 1 ),
 "update": 2,
 "values": [ true ]
@@ -1104,7 +1104,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0.3 ),
+"times": PoolRealArray( 0.034 ),
 "transitions": PoolRealArray( 1 ),
 "update": 2,
 "values": [ true ]
@@ -1116,7 +1116,7 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0.333333 ),
+"times": PoolRealArray( 0.034 ),
 "transitions": PoolRealArray( 1 ),
 "update": 2,
 "values": [ true ]
@@ -1486,6 +1486,42 @@ tracks/0/keys = {
 "update": 2,
 "values": [ false ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:ground_drag")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 13 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("AnimationFlags:is_command_cancelable")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
+"values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = false
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
+"values": [ true ]
+}
 
 [sub_resource type="Animation" id=36]
 length = 0.166667
@@ -1558,6 +1594,42 @@ length = 0.833333
 
 [sub_resource type="Animation" id=39]
 length = 0.45
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimationFlags:is_command_cancelable")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
+"values": [ true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:ground_drag")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
+"values": [ 10 ]
+}
 
 [sub_resource type="Animation" id=40]
 length = 0.416667
@@ -1826,13 +1898,13 @@ length = 1.2
 collision_layer = 2
 collision_mask = 3
 script = ExtResource( 2 )
-default_ground_drag = 15
-ground_drag = 3
 
 [node name="FSM" parent="." instance=ExtResource( 4 )]
 state_list_script = ExtResource( 5 )
 
 [node name="AnimationFlags" parent="." instance=ExtResource( 7 )]
+is_evade_cancelable = true
+is_command_cancelable = true
 
 [node name="InputListener" parent="." instance=ExtResource( 3 )]
 enabled = true
@@ -1920,7 +1992,7 @@ material/0 = ExtResource( 12 )
 material/0 = ExtResource( 12 )
 
 [node name="BoneAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
-transform = Transform( 1, 0, 0, 0, 0.998474, 0.0552152, 0, -0.0552152, 0.998474, -6.59474e-17, 2.24226, 0 )
+transform = Transform( 0.966887, 0.195107, 0.16451, 0.107235, 0.274347, -0.955633, -0.231584, 0.94163, 0.24434, -0.13698, 1.2935, -0.298398 )
 bone_name = "torso"
 
 [node name="Hurtbox" parent="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment" instance=ExtResource( 11 )]
