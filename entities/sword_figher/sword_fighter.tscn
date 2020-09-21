@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=2]
+[gd_scene load_steps=68 format=2]
 
 [ext_resource path="res://entities/sword_figher/model/sword_fighter.glb" type="PackedScene" id=1]
 [ext_resource path="res://entities/sword_figher/sword_fighter.gd" type="Script" id=2]
@@ -1894,6 +1894,24 @@ length = 3.0
 [sub_resource type="RayShape" id=52]
 length = 1.2
 
+[sub_resource type="Curve" id=53]
+_data = [ Vector2( 0, 1 ), 0.0, -0.0363921, 0, 0, Vector2( 1, 0 ), -2.04049, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=54]
+curve = SubResource( 53 )
+
+[sub_resource type="ParticlesMaterial" id=55]
+direction = Vector3( 0, 0, -1 )
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 15.0
+initial_velocity_random = 0.5
+damping = 86.62
+scale = 0.3
+scale_curve = SubResource( 54 )
+
+[sub_resource type="CubeMesh" id=56]
+
 [node name="SwordFighter" type="KinematicBody"]
 collision_layer = 2
 collision_mask = 3
@@ -2039,6 +2057,15 @@ collision_layer = 0
 
 [node name="CollisionShape" type="CollisionShape" parent="ModelContainer/Feet"]
 shape = SubResource( 52 )
+
+[node name="Particles" type="Particles" parent="ModelContainer"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25693, 0 )
+emitting = false
+amount = 15
+explosiveness = 1.0
+local_coords = false
+process_material = SubResource( 55 )
+draw_pass_1 = SubResource( 56 )
 
 [node name="CameraPointPivot" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )

@@ -54,7 +54,7 @@ func _process_state(delta):
 	
 	entity.model_container.rotation_degrees.y += ang_momentum
 	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
-	entity.center_camera(delta)
+	entity.center_camera(delta * 2)
 	
 #	entity.set_target_velocity(Vector3(0.0, 0.0, 0.0))
 #	entity.lerp_velocity(delta)

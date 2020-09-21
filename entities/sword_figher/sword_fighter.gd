@@ -210,7 +210,8 @@ func _physics_process(delta):
 	
 #	emit_signal("transform_changed", transform)
 	emit_signal("position_changed", transform.origin)
-	print(Vector2(velocity.x, velocity.z).length())
+	
+#	print(Vector2(velocity.x, velocity.z).length())
 
 func center_camera(delta):
 	camera_pivot.rotation.y = lerp_angle(camera_pivot.rotation.y, model_container.rotation.y, delta * 2)
@@ -218,22 +219,50 @@ func center_camera(delta):
 func apply_rotation(delta):
 	velocity = velocity.rotated(Vector3.UP, model_container.rotation.y)
 
-var target_velocity = Vector2.ZERO
-var prev_velocity = Vector3.ZERO
+var target_velocity = Vector3.ZERO
+var current_velocity = Vector3.ZERO
 
-func lerp_velocity(delta):
-	var interpolated_vector = Vector2(velocity.x, velocity.z).linear_interpolate(target_velocity, delta * 4.5)
-	velocity = Vector3(interpolated_vector.x, velocity.y, interpolated_vector.y)
-	model.rotation_degrees.z = clamp(Vector2(velocity.x, velocity.z).angle_to(target_velocity) * 45, -30, 30)
-	pass
-
-func set_target_velocity(_target_velocity):
-	var rotated_vector = _target_velocity.rotated(Vector3.UP, model_container.rotation.y)
-	target_velocity = Vector2(rotated_vector.x, rotated_vector.z)
+var target_vector = Vector2.ZERO
 
 func set_velocity(_velocity):
-	var rotated_vector = _velocity.rotated(Vector3.UP, model_container.rotation.y)
-	velocity = Vector3(rotated_vector.x, velocity.y, rotated_vector.z)
+#	velocity = Vector3(_velocity.x, velocity.y, _velocity.z)
+	velocity = _velocity.rotated(Vector3.UP, model_container.rotation.y)
+	
+func accelerate(speed : float, delta):
+	target_velocity = Vector3(0.0, 0.0, speed).rotated(Vector3.UP, model_container.rotation.y)
+#	velocity = velocity.normalized() * abs(speed)
+#	velocity = velocity.normalized() * target_velocity.length()
+	velocity = velocity.linear_interpolate(target_velocity, delta * 4.5)
+	
+	model.rotation_degrees.z = clamp(Vector2(velocity.x, velocity.z).angle_to(Vector2(target_velocity.x, target_velocity.z)) * 45, -30, 30)
+	
+func lerp_velocity(delta):
+#	var interpolated_vector = Vector2(velocity.x, velocity.z).linear_interpolate(target_velocity, delta * 4.5)
+#	velocity = Vector3(interpolated_vector.x, velocity.y, interpolated_vector.y)
+#	var interpolated_vector = Vector2(velocity.x, velocity.z).linear_interpolate(target_velocity, delta * 4.5)
+#	var model_rot = model.rotation_degrees
+	
+#	var interpolated_vector = velocity.linear_interpolate(target_velocity, delta * 4.5)
+	
+	velocity = velocity.linear_interpolate(target_velocity, delta * 4.5)
+#	current_velocity = velocity
+
+	model.rotation_degrees.z = clamp(Vector2(velocity.x, velocity.z).angle_to(Vector2(target_velocity.x, target_velocity.z)) * 45, -30, 30)
+	
+#	prints("v", velocity)
+#	prints("t", target_velocity)
+
+	
+
+func set_target_velocity(_target_velocity):
+#	current_velocity = velocity.normalized()
+	velocity = velocity.normalized() * _target_velocity.length()
+#	var rotated_vector = _target_velocity.rotated(Vector3.UP, model_container.rotation.y)
+	target_velocity = _target_velocity.rotated(Vector3.UP, model_container.rotation.y)
+	target_velocity.y = velocity.y
+	
+#	var rotated_vector = _velocity.rotated(Vector3.UP, model_container.rotation.y)
+#	velocity = Vector3(rotated_vector.x, velocity.y, rotated_vector.z)
 	
 func add_impulse(value : Vector3):
 	velocity += value.rotated(Vector3.UP, model_container.rotation.y)
@@ -440,3 +469,10 @@ func _on_LSide_body_entered(body):
 func _on_Feet_body_entered(body):
 	if not on_ground:
 		fsm.receive_event("_touched_surface", "floor")
+
+func emit_one_shot():
+	$ModelContainer/Particles.emitting = true
+	yield(get_tree(), "physics_frame")
+	yield(get_tree(), "physics_frame")
+	yield(get_tree(), "physics_frame")
+	$ModelContainer/Particles.emitting = false
