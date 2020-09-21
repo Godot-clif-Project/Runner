@@ -40,6 +40,7 @@ func _process_state(delta):
 #	if entity.flags.track_target:
 #		entity.apply_tracking(delta)
 	entity.apply_drag(delta)
+	entity.apply_gravity(delta)
 	
 #	._process_state(delta)
 

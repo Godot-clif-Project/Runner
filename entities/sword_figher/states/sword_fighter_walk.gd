@@ -48,6 +48,7 @@ func _process_state(delta):
 #	entity.motion_vector = Vector3(direction.x, 0, direction.y).normalized()
 	entity.motion_vector = Vector3(direction.x, 0, direction.y)
 	
+	entity.apply_gravity(delta)
 	entity.apply_tracking(delta)
 	entity.apply_root_motion(delta)
 

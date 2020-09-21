@@ -32,10 +32,10 @@ func _process_state(delta):
 		ang_momentum = clamp(-stick * max_turn_speed, -max_turn_speed, max_turn_speed)
 	
 	elif entity.input_listener.is_key_pressed(InputManager.RIGHT):
-		ang_momentum = clamp(ang_momentum - delta * rot_speed, -max_turn_speed, max_turn_speed)
+		ang_momentum = clamp(ang_momentum - delta * rot_speed * 0.5, -max_turn_speed, max_turn_speed)
 #
 	elif entity.input_listener.is_key_pressed(InputManager.LEFT):
-		ang_momentum = clamp(ang_momentum + delta * rot_speed, -max_turn_speed, max_turn_speed) 
+		ang_momentum = clamp(ang_momentum + delta * rot_speed * 0.5, -max_turn_speed, max_turn_speed) 
 		
 	else:
 		ang_momentum = lerp(ang_momentum, 0, delta * rot_drag)
@@ -62,6 +62,8 @@ func _process_state(delta):
 		entity.accelerate(-target_speed, delta)
 	else:
 		entity.apply_drag(delta)
+	
+	entity.apply_gravity(delta)
 		
 #	._process_state(delta)
 #	entity.apply_root_motion(delta)

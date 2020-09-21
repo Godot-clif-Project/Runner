@@ -41,10 +41,11 @@ func _enter_state():
 #    ._enter_state(entity)
 
 func _process_state(delta):
-	if entity.flags.track_target:
-		entity.apply_tracking(delta)
+#	if entity.flags.track_target:
+#		entity.apply_tracking(delta)
 	entity.apply_root_motion(delta)
 	entity.apply_drag(delta)
+	entity.apply_gravity(delta)
 #	if entity.hitstop:
 #		return
 #

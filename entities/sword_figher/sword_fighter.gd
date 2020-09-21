@@ -59,6 +59,10 @@ onready var animation_blender = $AnimationBlender
 onready var fsm = $FSM
 onready var flags = $AnimationFlags
 onready var feet = $ModelContainer/Feet
+onready var ledge_detect_low = $ModelContainer/LedgeDetectLow
+onready var ledge_detect_high = $ModelContainer/LedgeDetectHigh
+onready var ledge_detect_r = $ModelContainer/LedgeDetectR
+onready var ledge_detect_l = $ModelContainer/LedgeDetectL
 
 func set_hp(value):
 	hp = clamp(value, 0, max_hp)
@@ -180,23 +184,11 @@ func _physics_process(delta):
 #	root_motion = -model.get_node("Armature/Skeleton").get_bone_pose(0).origin
 #	model.get_node("Armature/Skeleton").set_bone_pose(0, Transform.IDENTITY)
 	
-	if velocity.y > TERMINAL_VELOCITY:
-		if not is_on_floor():
-			velocity.y -= 9.8 * delta * 8
-		else:
-			velocity.y -= 9.8 * delta * 0.3
-	else:
-		velocity.y = TERMINAL_VELOCITY
-	
-	velocity = move_and_slide(velocity, Vector3.UP, false, 4, 0.785398, true)
 	
 #	if not on_ground:
 #		if feet.get_overlapping_bodies().size() > 0:
 #			fsm.receive_event("_touched_surface", "floor")
 	
-	if input_listener.is_key_pressed(InputManager.GUARD):
-		if jump_str < max_jump_str:
-			jump_str += max_jump_str * delta * 4
 	
 #	velocity = move_and_slide_with_snap(velocity, Vector3.DOWN, Vector3.UP, false, 4, 0.785398, true)
 #	move_and_slide(velocity, Vector3.UP, false, 4, 0.785398, true)
@@ -205,9 +197,15 @@ func _physics_process(delta):
 #		prints(is_on_floor())
 #		count = 0
 #	count += 1
-
+	
 	fsm._process_current_state(delta, true)
 	
+	velocity = move_and_slide(velocity, Vector3.UP, false, 4, 0.785398, true)
+	
+	if input_listener.is_key_pressed(InputManager.GUARD):
+		if jump_str < max_jump_str:
+			jump_str += max_jump_str * delta * 4
+			
 #	emit_signal("transform_changed", transform)
 	emit_signal("position_changed", transform.origin)
 	
@@ -215,6 +213,15 @@ func _physics_process(delta):
 
 func center_camera(delta):
 	camera_pivot.rotation.y = lerp_angle(camera_pivot.rotation.y, model_container.rotation.y, delta * 2)
+
+func apply_gravity(delta):
+	if velocity.y > TERMINAL_VELOCITY:
+		if not is_on_floor():
+			velocity.y -= 9.8 * delta * 8
+		else:
+			velocity.y -= 9.8 * delta * 0.3
+	else:
+		velocity.y = TERMINAL_VELOCITY
 
 func apply_rotation(delta):
 	velocity = velocity.rotated(Vector3.UP, model_container.rotation.y)
@@ -225,8 +232,8 @@ var current_velocity = Vector3.ZERO
 var target_vector = Vector2.ZERO
 
 func set_velocity(_velocity):
-#	velocity = Vector3(_velocity.x, velocity.y, _velocity.z)
-	velocity = _velocity.rotated(Vector3.UP, model_container.rotation.y)
+	var velocity_rotated = _velocity.rotated(Vector3.UP, model_container.rotation.y)
+	velocity = Vector3(velocity_rotated.x, velocity.y, velocity_rotated.z)
 	
 func accelerate(speed : float, delta):
 	target_velocity = Vector3(0.0, 0.0, speed).rotated(Vector3.UP, model_container.rotation.y)
@@ -476,3 +483,6 @@ func emit_one_shot():
 	yield(get_tree(), "physics_frame")
 	yield(get_tree(), "physics_frame")
 	$ModelContainer/Particles.emitting = false
+
+func _on_LedgeDetect_body_entered(body):
+	pass # Replace with function body.

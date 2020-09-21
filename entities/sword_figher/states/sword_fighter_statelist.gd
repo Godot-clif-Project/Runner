@@ -26,6 +26,7 @@ const STATES = {
 	"walk" : preload("res://entities/sword_figher/states/sword_fighter_walk.gd"),
 	"jump" : preload("res://entities/sword_figher/states/sword_fighter_off_jump.gd"),
 	"fall" : preload("res://entities/sword_figher/states/sword_fighter_fall.gd"),
+	"ledge_climb" : preload("res://entities/sword_figher/states/sword_fighter_ledge_climb.gd"),
 	"def_step" : preload("res://entities/sword_figher/states/sword_fighter_def_step.gd"),
 	"receive_throw" : preload("res://entities/sword_figher/states/sword_fighter_receive_throw.gd"),
 	"guard_broken" : preload("res://entities/sword_figher/states/sword_fighter_guard_broken.gd"),

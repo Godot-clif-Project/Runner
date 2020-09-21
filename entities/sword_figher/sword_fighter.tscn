@@ -1889,7 +1889,7 @@ tracks/4/keys = {
 }
 
 [sub_resource type="RayShape" id=51]
-length = 3.0
+length = 1.05726
 
 [sub_resource type="RayShape" id=52]
 length = 1.2
@@ -2003,6 +2003,10 @@ anims/walk = SubResource( 50 )
 [node name="sword_fighter" parent="ModelContainer" instance=ExtResource( 1 )]
 transform = Transform( -0.6, 0, -9.05975e-08, 0, 0.6, 0, 9.05975e-08, 0, -0.6, 0, 0, 0 )
 
+[node name="Skeleton" parent="ModelContainer/sword_fighter/Armature" index="0"]
+bones/2/bound_children = [ NodePath("ThrowAttachment") ]
+bones/12/bound_children = [ NodePath("BoneAttachment") ]
+
 [node name="Cube" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="0"]
 material/0 = ExtResource( 12 )
 
@@ -2010,7 +2014,7 @@ material/0 = ExtResource( 12 )
 material/0 = ExtResource( 12 )
 
 [node name="BoneAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
-transform = Transform( 0.966887, 0.195107, 0.16451, 0.107235, 0.274347, -0.955633, -0.231584, 0.94163, 0.24434, -0.13698, 1.2935, -0.298398 )
+transform = Transform( 1, 0, 0, 0, 0.998474, 0.0552152, 0, -0.0552152, 0.998474, -6.59474e-17, 2.24226, 0 )
 bone_name = "torso"
 
 [node name="Hurtbox" parent="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment" instance=ExtResource( 11 )]
@@ -2033,21 +2037,56 @@ hit_name = "off_throw_f_startup"
 
 [node name="Hitbox2" parent="ModelContainer" instance=ExtResource( 9 )]
 transform = Transform( 0.569786, 0, 0, 0, 0.569786, 0, 0, 0, 0.569786, 0.0618832, 1.25873, -1.56914 )
+visible = false
 hit_info = ExtResource( 10 )
 hit_name = "def_hi_light"
 
-[node name="RSide" type="Area" parent="ModelContainer"]
-transform = Transform( 0.5, -1.13133e-08, 0.866025, 4.36679e-09, 1, 1.05424e-08, -0.866025, -1.48943e-09, 0.5, 0, 1, 0 )
+[node name="LedgeDetectHigh" type="Area" parent="ModelContainer"]
+transform = Transform( -1, 0, -8.74227e-08, 0, 1, 0, 8.74227e-08, 0, -1, 0, 1.48743, 0 )
+monitorable = false
 collision_layer = 0
 
-[node name="CollisionShape" type="CollisionShape" parent="ModelContainer/RSide"]
+[node name="CollisionShape" type="CollisionShape" parent="ModelContainer/LedgeDetectHigh"]
 shape = SubResource( 51 )
 
-[node name="LSide" type="Area" parent="ModelContainer"]
-transform = Transform( 0.5, -1.12605e-05, -0.866025, -1.84381e-06, 1, -1.4067e-05, 0.866025, 8.63028e-06, 0.5, 0, 1, 0 )
+[node name="CollisionShape4" type="CollisionShape" parent="ModelContainer/LedgeDetectHigh"]
+transform = Transform( 0.862372, 0, -0.506274, 0, 1, 0, 0.506274, 0, 0.862372, 0, 0.00296748, 0 )
+shape = SubResource( 51 )
+
+[node name="CollisionShape5" type="CollisionShape" parent="ModelContainer/LedgeDetectHigh"]
+transform = Transform( 0.875885, 0, 0.482518, 0, 1, 0, -0.482518, 0, 0.875885, 0, 0.00296748, 0 )
+shape = SubResource( 51 )
+
+[node name="LedgeDetectLow" type="Area" parent="ModelContainer"]
+transform = Transform( -1, 0, -8.74227e-08, 0, 1, 0, 8.74227e-08, 0, -1, 0, 0.748984, 0 )
+monitorable = false
 collision_layer = 0
 
-[node name="CollisionShape" type="CollisionShape" parent="ModelContainer/LSide"]
+[node name="CollisionShape" type="CollisionShape" parent="ModelContainer/LedgeDetectLow"]
+shape = SubResource( 51 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="ModelContainer/LedgeDetectLow"]
+transform = Transform( 0.862372, 0, -0.506275, 0, 1, 0, 0.506275, 0, 0.862372, 0, 0, 0 )
+shape = SubResource( 51 )
+
+[node name="CollisionShape3" type="CollisionShape" parent="ModelContainer/LedgeDetectLow"]
+transform = Transform( 0.875886, 0, 0.482518, 0, 1, 0, -0.482518, 0, 0.875886, 0, 0, 0 )
+shape = SubResource( 51 )
+
+[node name="LedgeDetectR" type="Area" parent="ModelContainer"]
+transform = Transform( -0.707106, 0, 0.707106, 0, 1, 0, -0.707106, 0, -0.707106, 0, 1.01163, 0 )
+monitorable = false
+collision_layer = 0
+
+[node name="CollisionShape" type="CollisionShape" parent="ModelContainer/LedgeDetectR"]
+shape = SubResource( 51 )
+
+[node name="LedgeDetectL" type="Area" parent="ModelContainer"]
+transform = Transform( -0.707106, 0, -0.707106, 0, 1, 0, 0.707106, 0, -0.707106, 0, 1.01163, 0 )
+monitorable = false
+collision_layer = 0
+
+[node name="CollisionShape" type="CollisionShape" parent="ModelContainer/LedgeDetectL"]
 shape = SubResource( 51 )
 
 [node name="Feet" type="Area" parent="ModelContainer"]
@@ -2083,8 +2122,8 @@ playback/speed = 3.0
 [connection signal="received_hit" from="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment/Hurtbox" to="." method="_on_Hurtbox_received_hit"]
 [connection signal="dealt_hit" from="ModelContainer/Hitbox" to="." method="_on_Hitbox_dealt_hit"]
 [connection signal="dealt_hit" from="ModelContainer/Hitbox2" to="." method="_on_Hitbox_dealt_hit"]
-[connection signal="body_entered" from="ModelContainer/RSide" to="." method="_on_RSide_body_entered"]
-[connection signal="body_entered" from="ModelContainer/LSide" to="." method="_on_LSide_body_entered"]
+[connection signal="body_entered" from="ModelContainer/LedgeDetectHigh" to="." method="_on_LedgeDetect_body_entered"]
+[connection signal="body_entered" from="ModelContainer/LedgeDetectLow" to="." method="_on_LedgeDetect_body_entered"]
 [connection signal="body_entered" from="ModelContainer/Feet" to="." method="_on_Feet_body_entered"]
 
 [editable path="ModelContainer/sword_fighter"]

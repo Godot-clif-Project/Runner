@@ -32,11 +32,15 @@ func _process_state(delta):
 				entity.model_container.rotation_degrees.y -= stick * delta * 270
 				
 		entity.set_velocity(Vector3(0.0, 0.0, -Vector2(entity.velocity.x, entity.velocity.z).length()))
-			
-	if entity.velocity.y < falling_speed:
-		falling_speed = entity.velocity.y
+	else:
+		if entity.ledge_detect_low.get_overlapping_bodies().size() > 0 and entity.ledge_detect_high.get_overlapping_bodies().size() == 0:
+			set_next_state("ledge_climb")
+		
+		if entity.velocity.y < falling_speed:
+			falling_speed = entity.velocity.y
 	
 	entity.apply_drag(delta)
+	entity.apply_gravity(delta)
 	entity.center_camera(delta)
 
 func _touched_surface(surface):
