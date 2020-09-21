@@ -63,6 +63,7 @@ onready var ledge_detect_low = $ModelContainer/LedgeDetectLow
 onready var ledge_detect_high = $ModelContainer/LedgeDetectHigh
 onready var ledge_detect_r = $ModelContainer/LedgeDetectR
 onready var ledge_detect_l = $ModelContainer/LedgeDetectL
+onready var raycast = $ModelContainer/RayCast
 
 func set_hp(value):
 	hp = clamp(value, 0, max_hp)
@@ -111,10 +112,26 @@ func reset():
 		transform = get_node("../Player2Pos").transform
 	emit_signal("ready")
 
+#const arrow = preload("res://misc/arrow.tscn")
+#onready var arrow = get_node("../Arrow")
+
+func get_normal():
+	raycast.force_raycast_update()
+#	var point = raycast.get_collision_point()
+	var normal = raycast.get_collision_normal()
+	var t = Transform.IDENTITY.looking_at(normal, Vector3.UP)
+	
+#	arrow.transform = t
+#	arrow.transform.origin = point
+	
+	return t.basis.get_euler()
+
 func _on_InputListener_received_input(key, state):
 	fsm.receive_event("_received_input", [key, state])
+#	if key == InputManager.LIGHT:
+#		a.transform = Transform(raycast.get_collision_normal(), raycast.get_collision_point())
+#		a.translation = raycast.get_collision_point()
 #	if state:
-#		print(key)
 
 func _input(event):
 	if event is InputEventMouseMotion:

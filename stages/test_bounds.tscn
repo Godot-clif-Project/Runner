@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://objects/test_material.material" type="Material" id=1]
 [ext_resource path="res://stages/static_box.tscn" type="PackedScene" id=2]
 [ext_resource path="res://stages/forest/tree/Tree.tscn" type="PackedScene" id=3]
 [ext_resource path="res://stages/static_cylinder.tscn" type="PackedScene" id=4]
+[ext_resource path="res://stages/static_sphere.tscn" type="PackedScene" id=5]
 
 [sub_resource type="SphereMesh" id=1]
 material = ExtResource( 1 )
@@ -180,6 +181,9 @@ material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody2"]
 shape = SubResource( 2 )
+
+[node name="Sphere" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 3, 1, 6 )
 
 [node name="Scene Root" parent="." instance=ExtResource( 3 )]
 transform = Transform( -0.43139, 0, -0.252791, 0, 0.5, 0, 0.252791, 0, -0.43139, -0.08257, 27.906, 24.6161 )

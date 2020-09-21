@@ -9,6 +9,11 @@ func _enter_state():
 	entity.velocity = Vector3.ZERO
 ##	entity.set_animation("off_hi_r_light", 0, 16.0)
 #	entity.on_ground = false
+#	entity.get_normal()
+#	entity.model_container.rotation_degrees.y = entity.arrow.rotation_degrees.y + 180
+	
+	entity.model_container.rotation.y = entity.get_normal().y + PI
+	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
 	._enter_state()
 #
 ## Inverse of enter_state.
@@ -16,16 +21,16 @@ func _enter_state():
 ##	pass
 
 func _process_state(delta):
-	if entity.ledge_detect_l.get_overlapping_bodies().size() != 0:
-#		if entity.ledge_detect_r.get_overlapping_bodies().size() != 0:
-#			pass
-#		else:
-		entity.model_container.rotation_degrees.y += delta * 180
-	elif entity.ledge_detect_r.get_overlapping_bodies().size() != 0:
-#		if entity.ledge_detect_l.get_overlapping_bodies().size() != 0:
-#			pass
-#		else:
-		entity.model_container.rotation_degrees.y -= delta * 180
+#	if entity.ledge_detect_l.get_overlapping_bodies().size() != 0:
+##		if entity.ledge_detect_r.get_overlapping_bodies().size() != 0:
+##			pass
+##		else:
+#		entity.model_container.rotation_degrees.y += delta * 180
+#	elif entity.ledge_detect_r.get_overlapping_bodies().size() != 0:
+##		if entity.ledge_detect_l.get_overlapping_bodies().size() != 0:
+##			pass
+##		else:
+#		entity.model_container.rotation_degrees.y -= delta * 180
 	
 	if entity.ledge_detect_low.get_overlapping_bodies().size() == 0:
 		if entity.input_listener.is_key_pressed(InputManager.UP):

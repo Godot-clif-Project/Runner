@@ -1889,7 +1889,6 @@ tracks/4/keys = {
 }
 
 [sub_resource type="RayShape" id=51]
-length = 1.05726
 
 [sub_resource type="RayShape" id=52]
 length = 1.2
@@ -2003,10 +2002,6 @@ anims/walk = SubResource( 50 )
 [node name="sword_fighter" parent="ModelContainer" instance=ExtResource( 1 )]
 transform = Transform( -0.6, 0, -9.05975e-08, 0, 0.6, 0, 9.05975e-08, 0, -0.6, 0, 0, 0 )
 
-[node name="Skeleton" parent="ModelContainer/sword_fighter/Armature" index="0"]
-bones/2/bound_children = [ NodePath("ThrowAttachment") ]
-bones/12/bound_children = [ NodePath("BoneAttachment") ]
-
 [node name="Cube" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="0"]
 material/0 = ExtResource( 12 )
 
@@ -2049,14 +2044,6 @@ collision_layer = 0
 [node name="CollisionShape" type="CollisionShape" parent="ModelContainer/LedgeDetectHigh"]
 shape = SubResource( 51 )
 
-[node name="CollisionShape4" type="CollisionShape" parent="ModelContainer/LedgeDetectHigh"]
-transform = Transform( 0.862372, 0, -0.506274, 0, 1, 0, 0.506274, 0, 0.862372, 0, 0.00296748, 0 )
-shape = SubResource( 51 )
-
-[node name="CollisionShape5" type="CollisionShape" parent="ModelContainer/LedgeDetectHigh"]
-transform = Transform( 0.875885, 0, 0.482518, 0, 1, 0, -0.482518, 0, 0.875885, 0, 0.00296748, 0 )
-shape = SubResource( 51 )
-
 [node name="LedgeDetectLow" type="Area" parent="ModelContainer"]
 transform = Transform( -1, 0, -8.74227e-08, 0, 1, 0, 8.74227e-08, 0, -1, 0, 0.748984, 0 )
 monitorable = false
@@ -2065,16 +2052,9 @@ collision_layer = 0
 [node name="CollisionShape" type="CollisionShape" parent="ModelContainer/LedgeDetectLow"]
 shape = SubResource( 51 )
 
-[node name="CollisionShape2" type="CollisionShape" parent="ModelContainer/LedgeDetectLow"]
-transform = Transform( 0.862372, 0, -0.506275, 0, 1, 0, 0.506275, 0, 0.862372, 0, 0, 0 )
-shape = SubResource( 51 )
-
-[node name="CollisionShape3" type="CollisionShape" parent="ModelContainer/LedgeDetectLow"]
-transform = Transform( 0.875886, 0, 0.482518, 0, 1, 0, -0.482518, 0, 0.875886, 0, 0, 0 )
-shape = SubResource( 51 )
-
 [node name="LedgeDetectR" type="Area" parent="ModelContainer"]
 transform = Transform( -0.707106, 0, 0.707106, 0, 1, 0, -0.707106, 0, -0.707106, 0, 1.01163, 0 )
+monitoring = false
 monitorable = false
 collision_layer = 0
 
@@ -2083,6 +2063,7 @@ shape = SubResource( 51 )
 
 [node name="LedgeDetectL" type="Area" parent="ModelContainer"]
 transform = Transform( -0.707106, 0, -0.707106, 0, 1, 0, 0.707106, 0, -0.707106, 0, 1.01163, 0 )
+monitoring = false
 monitorable = false
 collision_layer = 0
 
@@ -2106,11 +2087,15 @@ local_coords = false
 process_material = SubResource( 55 )
 draw_pass_1 = SubResource( 56 )
 
+[node name="RayCast" type="RayCast" parent="ModelContainer"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.746612, 0 )
+enabled = true
+
 [node name="CameraPointPivot" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )
 
 [node name="Position3D" type="Position3D" parent="CameraPointPivot"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6, 2.5 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6, 3.5 )
 
 [node name="Tween" type="Tween" parent="."]
 playback_speed = 3.0

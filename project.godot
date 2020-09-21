@@ -45,7 +45,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Runner"
-run/main_scene="res://stages/test_stage.tscn"
+run/main_scene="res://game/multiplayer/lobby.tscn"
 config/icon="res://run_icon.PNG"
 
 [autoload]

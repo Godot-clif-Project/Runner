@@ -269,7 +269,7 @@ tracks/4/keys = {
 "values": [  ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=15]
 resource_name = "receive_off_throw_f"
 length = 2.18333
 step = 0.0166667
@@ -291,7 +291,7 @@ tracks/0/keys = {
 } ]
 }
 
-[sub_resource type="CapsuleShape" id=15]
+[sub_resource type="CapsuleShape" id=16]
 radius = 0.558514
 height = 2.0
 
@@ -320,15 +320,19 @@ anims/off_hi_heavy = SubResource( 13 )
 anims/walk = SubResource( 14 )
 
 [node name="AnimationEvents" type="AnimationPlayer" parent="."]
-anims/receive_off_throw_f = SubResource( 16 )
+anims/receive_off_throw_f = SubResource( 15 )
 
 [node name="ModelContainer" type="Spatial" parent="."]
 
 [node name="sword_fighter" parent="ModelContainer" instance=ExtResource( 2 )]
 transform = Transform( -0.6, 0, -9.05975e-08, 0, 0.6, 0, 9.05975e-08, 0, -0.6, 0, 0, 0 )
 
+[node name="Skeleton" parent="ModelContainer/sword_fighter/Armature" index="0"]
+bones/2/bound_children = [ NodePath("ThrowAttachment") ]
+bones/12/bound_children = [ NodePath("BoneAttachment") ]
+
 [node name="BoneAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
-transform = Transform( 1, 0, 0, 0, 0.998474, 0.0552152, 0, -0.0552152, 0.998474, -6.59474e-17, 2.24226, 0 )
+transform = Transform( 1, 0, 0, 0, 0.998474, 0.0552152, 0, -0.0552152, 0.998474, -6.59474e-17, 2.24226, 7.43921e-09 )
 bone_name = "torso"
 
 [node name="Hurtbox" parent="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment" instance=ExtResource( 3 )]
@@ -351,7 +355,7 @@ playback/speed = 3.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.55842, 0 )
-shape = SubResource( 15 )
+shape = SubResource( 16 )
 __meta__ = {
 "_editor_description_": ""
 }
