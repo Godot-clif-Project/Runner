@@ -54,7 +54,7 @@ func _touched_surface(surface):
 		entity.on_ground = true
 		turn_speed = 270.0
 #		print(falling_speed)
-		if falling_speed < -22:
+		if falling_speed < -25:
 			entity.set_animation("jump_land", 0.0, 16.0)
 			
 		elif entity.input_listener.is_key_pressed(InputManager.UP):

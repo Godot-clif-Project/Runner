@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://stages/stage_env.tres" type="Environment" id=1]
 [ext_resource path="res://entities/sword_figher/sword_fighter.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://ui/lifebar/lifebar.tscn" type="PackedScene" id=5]
 [ext_resource path="res://ui/input_display/input_display.tscn" type="PackedScene" id=6]
 [ext_resource path="res://run_icon.PNG" type="Texture" id=7]
+[ext_resource path="res://entities/sword_figher/sword_fighter_2.tscn" type="PackedScene" id=8]
 
 [sub_resource type="Animation" id=1]
 length = 60.0
@@ -141,8 +142,15 @@ playback_process_mode = 0
 "anims/New Anim" = SubResource( 1 )
 
 [node name="SwordFighter" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.10779, 0.491038, 25.3645 )
 target = NodePath("../MeshInstance")
+max_jump_str = 28
+
+[node name="SwordFighter2" parent="." instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 61.6811, 33.4985, 52.3605 )
+target = NodePath("../MeshInstance")
+
+[node name="InputListener" parent="SwordFighter2" index="2"]
+enabled = false
 
 [node name="InterpolatedCamera" parent="." instance=ExtResource( 3 )]
 transform = Transform( -0.00497429, -0.459186, 0.888326, 0, 0.888337, 0.459192, -0.999988, 0.00228415, -0.00441884, 5.30534, 3.75645, -0.193563 )
@@ -174,3 +182,5 @@ shape = SubResource( 3 )
 [connection signal="body_entered" from="Goal" to="SwordFighter" method="_on_Goal_body_entered"]
 
 [editable path="SwordFighter"]
+
+[editable path="SwordFighter2"]

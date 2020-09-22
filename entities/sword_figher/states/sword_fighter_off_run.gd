@@ -77,7 +77,7 @@ func _process_state(delta):
 	entity.model_container.rotation_degrees.y += ang_momentum
 	entity.apply_gravity(delta)
 	
-#	entity.center_camera(delta)
+	entity.center_camera(delta)
 	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
 		
 ##func _animation_blend_started(anim_name):

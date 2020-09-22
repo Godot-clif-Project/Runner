@@ -1,6 +1,6 @@
 extends Node
 
-const BASE_RESOLUTION = Vector2(1280, 720)
+const BASE_RESOLUTION = Vector2(640, 360)
 const MAX_ZOOM = 4
 
 var zoom = 1 setget set_zoom

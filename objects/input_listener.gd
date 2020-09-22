@@ -71,7 +71,7 @@ var sticks = {
 signal received_input(key, state)
 
 func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+#	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	InputManager.connect("key_changed", self, "_received_input")
 #	InputManager.connect("multiple_input_pressed", self, "_received_multiple_input")
 	set_physics_process(false)
