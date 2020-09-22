@@ -36,6 +36,7 @@ func _process_state(delta):
 		if entity.input_listener.is_key_pressed(InputManager.UP):
 			entity.jump_str = 20
 			set_next_state("jump")
+#			entity.add_impulse(Vector3(0.0, 0.0 , -0.0))
 #			entity.velocity.y = 10
 #			entity.set_velocity(Vector3(0.0, 30.0, -10.0))
 		else:

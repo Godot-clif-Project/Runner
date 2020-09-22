@@ -1,5 +1,6 @@
 extends "res://entities/sword_figher/states/sword_fighter_offensive_moves.gd"
 
+var turn_speed = 180.0
 var falling_speed = 0.0
 
 func get_animation_data():
@@ -18,20 +19,25 @@ func _enter_state():
 ##	pass
 
 func _process_state(delta):
-	if entity.get_current_animation() == "jump_land":
-#		entity.apply_rotation(delta)
-		if entity.input_listener.is_key_pressed(InputManager.RIGHT):
-			entity.model_container.rotation_degrees.y -= delta * 270
+	
+	if entity.input_listener.is_key_pressed(InputManager.RIGHT):
+		entity.model_container.rotation_degrees.y -= delta * turn_speed
+	
+	elif entity.input_listener.is_key_pressed(InputManager.LEFT):
+		entity.model_container.rotation_degrees.y += delta * turn_speed
 		
-		elif entity.input_listener.is_key_pressed(InputManager.LEFT):
-			entity.model_container.rotation_degrees.y += delta * 270
+	else:
+		var stick = entity.input_listener.sticks[0]
+		if abs(stick) > 0.1:
+			entity.model_container.rotation_degrees.y -= stick * delta * turn_speed
 			
-		else:
-			var stick = entity.input_listener.sticks[0]
-			if abs(stick) > 0.1:
-				entity.model_container.rotation_degrees.y -= stick * delta * 270
-				
-		entity.set_velocity(Vector3(0.0, 0.0, -Vector2(entity.velocity.x, entity.velocity.z).length()))
+	if entity.get_current_animation() == "jump_land":
+		if entity.feet.get_overlapping_bodies().size() == 0:
+			set_next_state("fall")
+			return
+#		entity.apply_rotation(delta)
+		entity.accelerate(-5, delta * 0.2)
+#		entity.set_velocity(Vector3(0.0, 0.0, -Vector2(entity.velocity.x, entity.velocity.z).length()))
 	else:
 		if entity.ledge_detect_low.get_overlapping_bodies().size() > 0 and entity.ledge_detect_high.get_overlapping_bodies().size() == 0:
 			set_next_state("ledge_climb")
@@ -46,11 +52,13 @@ func _process_state(delta):
 func _touched_surface(surface):
 	if surface == "floor":
 		entity.on_ground = true
+		turn_speed = 270.0
 #		print(falling_speed)
 		if falling_speed < -22:
 			entity.set_animation("jump_land", 0.0, 16.0)
 			
 		elif entity.input_listener.is_key_pressed(InputManager.UP):
+#			set_next_state("off_run_startup")
 			set_next_state("off_run")
 			
 		else:

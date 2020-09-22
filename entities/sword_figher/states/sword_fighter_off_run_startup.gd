@@ -18,21 +18,21 @@ func _enter_state():
 #	._exit_state()
 #	pass
 #
-#	._process_state(delta)
-#	entity.apply_root_motion(delta)
-##	pass
-#
+#func _process_state(delta):
+#	entity.accelerate(-13, delta)
+#	pass
+
 ##func _animation_blend_started(anim_name):
 ##	print(anim_name)
 ##	set_next_state("idle")
 ##	if anim_name == "off_h_r_heavy":
 #
 func _animation_finished(anim_name):
-	if released_up:
+#	if released_up:
 #		entity.set_animation("off_run_stop", 0, 10.0)
-		set_next_state("offensive_stance")
-	else:
-		set_next_state("off_run")
+#		set_next_state("offensive_stance")
+#	else:
+	set_next_state("off_run")
 #			entity.set_animation("run_loop", 0, -1.0)
 #			if entity.input_listener.is_key_pressed(InputManager.RIGHT):
 #				direction = 1
@@ -65,10 +65,13 @@ func _received_input(key, state):
 #	if entity.flags.is_stringable:
 	._received_input(key, state)
 	
-	if not state:
-		if key == InputManager.UP:
-			released_up = true
-			entity.set_animation("off_run_stop", 0, 10.0)
+	if state:
+		if key == InputManager.DOWN:
+			set_next_state("run_stop")
+#	if not state:
+#		if key == InputManager.UP:
+#			released_up = true
+#			entity.set_animation("off_run_stop", 0, 10.0)
 				
 #				if direction != 0:
 #					entity.tween_camera_position(entity.default_camera_pos.x * -direction)

@@ -6,16 +6,24 @@ extends "res://entities/sword_figher/states/sword_fighter_offensive_moves.gd"
 
 var released_up = false
 var ang_momentum = 0.0
-var rot_drag = 4
+var rot_drag = 15
 var rot_speed = 30
 var max_turn_speed = 3.2
 var target_speed = 13.0
+var acceleration = 1.0
+
+var turn_acc = 0.0
+var current_turn_dir = 0
+var prev_turn_dir = 0
 
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
 	entity.set_animation("run_loop", 0, 10.0)
-	entity.set_velocity(Vector3(0.0, 0.0, -target_speed))
+	if entity.horizontal_speed > target_speed:
+		entity.velocity = entity.velocity.normalized() * target_speed
+		
 	entity.model.rotation.z = 0.0
+	entity.get_node("ModelContainer/Particles2").emitting = true
 #	._enter_state()
 #
 ## Inverse of enter_state.
@@ -32,18 +40,22 @@ func _process_state(delta):
 		ang_momentum = clamp(-stick * max_turn_speed, -max_turn_speed, max_turn_speed)
 	
 	elif entity.input_listener.is_key_pressed(InputManager.RIGHT):
-		ang_momentum = clamp(ang_momentum - delta * rot_speed * 0.5, -max_turn_speed, max_turn_speed)
+		current_turn_dir = 1
+		turn_acc = lerp(turn_acc, 1, delta * 10)
+		ang_momentum = clamp(ang_momentum - delta * rot_speed * turn_acc, -max_turn_speed, max_turn_speed)
 #
 	elif entity.input_listener.is_key_pressed(InputManager.LEFT):
-		ang_momentum = clamp(ang_momentum + delta * rot_speed * 0.5, -max_turn_speed, max_turn_speed) 
+		current_turn_dir = -1
+		turn_acc = lerp(turn_acc, 1, delta * 10)
+		ang_momentum = clamp(ang_momentum + delta * rot_speed * turn_acc, -max_turn_speed, max_turn_speed) 
 		
 	else:
+		current_turn_dir = 0
 		ang_momentum = lerp(ang_momentum, 0, delta * rot_drag)
-	
-#	entity.model.rotation_degrees.z = ang_momentum * -7
-	entity.model_container.rotation_degrees.y += ang_momentum
-	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
-	entity.center_camera(delta)
+		
+	if current_turn_dir != prev_turn_dir:
+		turn_acc = 0.0
+		prev_turn_dir = current_turn_dir
 	
 	if entity.input_listener.is_key_released(InputManager.UP) or target_speed > 13:
 		target_speed -= delta * 12
@@ -55,20 +67,19 @@ func _process_state(delta):
 		target_speed = 13
 		max_turn_speed = 3.2
 	
-	if entity.flags.is_active:
-#		entity.set_velocity(Vector3(0.0, 0.0, -target_speed))
-#		entity.set_target_velocity(Vector3(0.0, 0.0, -target_speed))
-#		entity.lerp_velocity(delta)
-		entity.accelerate(-target_speed, delta)
-	else:
-		entity.apply_drag(delta)
-	
+#	if entity.flags.is_active:
+##		entity.set_velocity(Vector3(0.0, 0.0, -target_speed))
+##		entity.set_target_velocity(Vector3(0.0, 0.0, -target_speed))
+##		entity.lerp_velocity(delta)
+#	else:
+	entity.accelerate(-target_speed, delta * acceleration)
+#	entity.apply_drag(delta)
+	entity.model_container.rotation_degrees.y += ang_momentum
 	entity.apply_gravity(delta)
+	
+#	entity.center_camera(delta)
+	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
 		
-#	._process_state(delta)
-#	entity.apply_root_motion(delta)
-##	pass
-#
 ##func _animation_blend_started(anim_name):
 ##	print(anim_name)
 ##	set_next_state("idle")
@@ -105,9 +116,10 @@ func _received_input(key, state):
 			set_next_state("run_stop")
 			return
 		if key == InputManager.UP_UP:
-			target_speed = 20
-			max_turn_speed = 2
-			entity.set_velocity(Vector3(0.0, 0.0, -target_speed))
+			target_speed = 23
+			max_turn_speed = 2.3
+#			entity.set_velocity(Vector3(0.0, 0.0, -target_speed))
+#			acceleration = 2.0
 			entity.emit_one_shot()
 #			if target_speed < 22:
 #				target_speed += 6

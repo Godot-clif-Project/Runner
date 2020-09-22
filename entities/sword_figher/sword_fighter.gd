@@ -45,6 +45,7 @@ var throwing_entity = null
 var receive_throw_pos = Vector3.ZERO
 var receive_throw_rot = 0.0
 var jump_str = 0
+var horizontal_speed = 0.0
 
 onready var lock_on_target : Spatial = get_node(target)
 onready var input_listener = $InputListener
@@ -64,6 +65,8 @@ onready var ledge_detect_high = $ModelContainer/LedgeDetectHigh
 onready var ledge_detect_r = $ModelContainer/LedgeDetectR
 onready var ledge_detect_l = $ModelContainer/LedgeDetectL
 onready var raycast = $ModelContainer/RayCast
+
+onready var vel_arrow = $VelocityArrow
 
 func set_hp(value):
 	hp = clamp(value, 0, max_hp)
@@ -86,7 +89,6 @@ func _ready():
 	$AnimationTree.active = true
 	ready = true
 	emit_signal("ready")
-	
 	
 func setup(side):
 	player_side = side
@@ -128,7 +130,9 @@ func get_normal():
 
 func _on_InputListener_received_input(key, state):
 	fsm.receive_event("_received_input", [key, state])
-#	if key == InputManager.LIGHT:
+	if key == InputManager.START:
+		start_time = OS.get_ticks_msec()
+		stop_timer = false
 #		a.transform = Transform(raycast.get_collision_normal(), raycast.get_collision_point())
 #		a.translation = raycast.get_collision_point()
 #	if state:
@@ -144,76 +148,24 @@ func _input(event):
 	if event.is_action_pressed("debug_reset"):
 		reset()
 
-var count = 0
+onready var start_time = OS.get_ticks_msec()
+var stop_timer = false
+func _process(delta):
+#		print("Elapsed time: ", OS.get_ticks_msec() - start_time)	
+#		print("Elapsed time: ", OS.get_ticks_msec() / 1000.0)
+	if not stop_timer:
+		var ticks = OS.get_ticks_msec() - start_time
+		var minutes = ticks / 60000
+		var seconds = (ticks / 1000) % 60
+		var hundreds = (ticks / 10) % 100
+		var str_time = "%02d : %02d : %02d" % [minutes, seconds, hundreds]
+#		get_node("../Timer").text = str(ticks/60000).pad_zeros(2) + ":" + str((ticks / 1000) % 60).pad_zeros(2) + ":" + str((ticks / 10) % 100).pad_zeros(2)
+		get_node("../Timer").text = str_time
 
 func _physics_process(delta):
-	
 	camera_pivot.rotation.y += input_listener.sticks[2] * -0.1
 	camera_pivot.rotation.x = clamp(camera_pivot.rotation.x + input_listener.sticks[3] * -0.1, -1.5, 0.9)
 	target_rotation = camera_pivot.rotation.y
-	
-#	target_point = lock_on_target.global_transform.origin
-##	target_point = Vector3(target_point.x, 1.5, target_point.z)
-#
-#	var target_vector = global_transform.origin.direction_to(target_point)
-#	target_rotation = PI + atan2(target_vector.x, target_vector.z)
-#
-#	camera_point.look_at(target_point + Vector3(0.0, 1.0, 0.0), Vector3.UP)
-	
-#	$CameraPointPivot/Position3D.rotation.z = 0
-#	$CameraPointPivot/Position3D.rotation.y = 0
-#	$CameraPointPivot/Position3D.rotation.x = 0
-	
-#	if count > 3:
-#		print(atan2(target_vector.z, target_vector.x))
-#		count = 0
-#	count += 1
-
-#	var current_rot = camera_pivot.rotation.y
-#	camera_pivot.rotation.y = lerp_angle(current_rot, target_rotation, delta * 15)
-	
-#	var start = $ModelContainer/CameraPointPivot.transform.basis.get_euler()
-#	var end = Quat(target_vector)
-	
-#	$ModelContainer/CameraPointPivot.transform.basis = Basis(start.slerp(end, delta))
-	
-#	var dir_vector = global_transform.origin.direction_to(target_point)
-#	var target_transform = $ModelContainer/CameraPointPivot.global_transform.looking_at(dir_vector)
-#	var my_dir = transform.basis.get_rotation_quat()
-	
-#			if (target.length() > 0.001):
-#	var q_from = Quat($ModelContainer/CameraPointPivot.transform.basis.orthonormalized())
-#	var q_to = Quat($ModelContainer/CameraPointPivot.transform.looking_at(target_point, Vector3(0,1,0)).basis)
-#	
-			# interpolate current rotation with desired one
-	
-	
-	
-#	model.translation = model.get_node("Armature/Skeleton").get_bone_pose(0).origin / 1.65
-#	print(model.get_node("Armature/Skeleton").get_bone_pose(0).origin)
-
-#	var y_velocity = velocity.y
-#
-#	if motion_vector != Vector3.ZERO:
-#		pass
-#	else:
-	
-#	root_motion = -model.get_node("Armature/Skeleton").get_bone_pose(0).origin
-#	model.get_node("Armature/Skeleton").set_bone_pose(0, Transform.IDENTITY)
-	
-	
-#	if not on_ground:
-#		if feet.get_overlapping_bodies().size() > 0:
-#			fsm.receive_event("_touched_surface", "floor")
-	
-	
-#	velocity = move_and_slide_with_snap(velocity, Vector3.DOWN, Vector3.UP, false, 4, 0.785398, true)
-#	move_and_slide(velocity, Vector3.UP, false, 4, 0.785398, true)
-#	if count > 4:
-#		prints(name, velocity)
-#		prints(is_on_floor())
-#		count = 0
-#	count += 1
 	
 	fsm._process_current_state(delta, true)
 	
@@ -226,7 +178,11 @@ func _physics_process(delta):
 #	emit_signal("transform_changed", transform)
 	emit_signal("position_changed", transform.origin)
 	
-#	print(Vector2(velocity.x, velocity.z).length())
+	horizontal_speed = Vector2(velocity.x, velocity.z).length()
+	vel_arrow.look_at(velocity + translation + Vector3.FORWARD * 0.01, Vector3.UP)
+	vel_arrow.scale.z = lerp(0, 1.0, horizontal_speed / 6)
+	
+#	print(horizontal_speed)
 
 func center_camera(delta):
 	camera_pivot.rotation.y = lerp_angle(camera_pivot.rotation.y, model_container.rotation.y, delta * 2)
@@ -253,10 +209,14 @@ func set_velocity(_velocity):
 	velocity = Vector3(velocity_rotated.x, velocity.y, velocity_rotated.z)
 	
 func accelerate(speed : float, delta):
-	target_velocity = Vector3(0.0, 0.0, speed).rotated(Vector3.UP, model_container.rotation.y)
 #	velocity = velocity.normalized() * abs(speed)
 #	velocity = velocity.normalized() * target_velocity.length()
-	velocity = velocity.linear_interpolate(target_velocity, delta * 4.5)
+	target_velocity = Vector3(0.0, 0.0, speed).rotated(Vector3.UP, model_container.rotation.y)
+	velocity = velocity.linear_interpolate(target_velocity, delta * 3)
+
+#	var velocity_xz = Vector2(velocity.x, velocity.z).linear_interpolate(Vector2(target_velocity.x, target_velocity.z), delta * 3)
+#	velocity.x = velocity_xz.x
+#	velocity.z = velocity_xz.y
 	
 	model.rotation_degrees.z = clamp(Vector2(velocity.x, velocity.z).angle_to(Vector2(target_velocity.x, target_velocity.z)) * 45, -30, 30)
 	
@@ -330,6 +290,7 @@ func apply_root_motion(delta):
 
 func jump():
 	velocity.y = 0.0
+	
 	var direction = Vector2.ZERO
 	if input_listener.is_key_pressed(InputManager.UP):
 		direction += Vector2.UP
@@ -341,7 +302,11 @@ func jump():
 		direction += Vector2.RIGHT
 	direction = direction.normalized() * 5
 	
+#	add_impulse(Vector3(0.0, jump_str , 0.0))
+#	set_velocity(Vector3(direction.x, 0.0 , direction.y))
 	add_impulse(Vector3(direction.x, jump_str , direction.y))
+#	if horizontal_speed > 16.0:
+#	set_velocity(Vector3(0.0, 0.0 , -16.0))
 	on_ground = false
 	jump_str = min_jump_str
 
@@ -496,10 +461,15 @@ func _on_Feet_body_entered(body):
 
 func emit_one_shot():
 	$ModelContainer/Particles.emitting = true
+#	$ModelContainer/Particles.restart()
+	
 	yield(get_tree(), "physics_frame")
-	yield(get_tree(), "physics_frame")
+#	yield(get_tree(), "physics_frame")
 	yield(get_tree(), "physics_frame")
 	$ModelContainer/Particles.emitting = false
 
 func _on_LedgeDetect_body_entered(body):
 	pass # Replace with function body.
+
+func _on_Goal_body_entered(body):
+	stop_timer = true

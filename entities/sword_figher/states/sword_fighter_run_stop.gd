@@ -38,7 +38,6 @@ func _process_state(delta):
 		set_next_state("fall")
 		return
 	
-	
 	var stick = entity.input_listener.sticks[0]
 	if abs(stick) > 0.1:
 		ang_momentum = clamp(-stick * max_turn_speed, -max_turn_speed, max_turn_speed)

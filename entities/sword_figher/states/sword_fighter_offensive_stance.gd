@@ -6,6 +6,7 @@ func get_animation_data():
 
 # Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
+	entity.get_node("ModelContainer/Particles2").emitting = false
 	entity.current_stance = entity.Stances.OFFENSIVE
 	
 #	if entity.input_listener.is_key_pressed(InputManager.GUARD):

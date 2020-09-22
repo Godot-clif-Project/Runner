@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://stages/stage_env.tres" type="Environment" id=1]
 [ext_resource path="res://entities/sword_figher/sword_fighter.tscn" type="PackedScene" id=2]
@@ -26,7 +26,21 @@ tracks/0/keys = {
 
 [sub_resource type="CubeMesh" id=2]
 
+[sub_resource type="BoxShape" id=3]
+
 [node name="Stage" type="Spatial"]
+
+[node name="Timer" type="Label" parent="."]
+margin_left = 883.492
+margin_top = 20.0
+margin_right = 983.492
+margin_bottom = 34.0
+rect_scale = Vector2( 3.82997, 3.82997 )
+text = "00:00:00"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="PlayerName1" type="Label" parent="."]
 margin_left = 32.0
@@ -150,6 +164,13 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5 )
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform( -0.218294, -0.00115033, 1.13636, 0, 1.15714, 0.00117136, -1.13636, 0.000220977, -0.218294, -11.8004, 3.00957, 9.69288 )
 texture = ExtResource( 7 )
+
+[node name="Goal" type="Area" parent="."]
+transform = Transform( 5.09698, 0, -0.425677, 0, 5.11473, 0, 0.425677, 0, 5.09698, 53.4341, 37.0923, 51.869 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Goal"]
+shape = SubResource( 3 )
 [connection signal="hp_changed" from="SwordFighter" to="Lifebar" method="_on_sword_fighter_hp_changed"]
+[connection signal="body_entered" from="Goal" to="SwordFighter" method="_on_Goal_body_entered"]
 
 [editable path="SwordFighter"]

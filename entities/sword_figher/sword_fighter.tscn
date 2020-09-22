@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=2]
+[gd_scene load_steps=70 format=2]
 
 [ext_resource path="res://entities/sword_figher/model/sword_fighter.glb" type="PackedScene" id=1]
 [ext_resource path="res://entities/sword_figher/sword_fighter.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://entities/sword_figher/states/sword_fighter_statelist.gd" type="Script" id=5]
 [ext_resource path="res://entities/sword_figher/sword_fighter_animation_node.tres" type="AnimationNodeBlendTree" id=6]
 [ext_resource path="res://objects/animation_flags.tscn" type="PackedScene" id=7]
+[ext_resource path="res://misc/arrow.tscn" type="PackedScene" id=8]
 [ext_resource path="res://objects/hitbox.tscn" type="PackedScene" id=9]
 [ext_resource path="res://entities/sword_figher/sword_fighter_hit_info.gd" type="Script" id=10]
 [ext_resource path="res://objects/hurtbox.tscn" type="PackedScene" id=11]
@@ -557,7 +558,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 3 ]
+"values": [ 1 ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("AnimationFlags:is_active")
@@ -1069,6 +1070,18 @@ tracks/11/keys = {
 [sub_resource type="Animation" id=24]
 length = 0.2
 step = 0.0166667
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:ground_drag")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 10 ]
+}
 
 [sub_resource type="Animation" id=25]
 length = 0.583333
@@ -1911,10 +1924,22 @@ scale_curve = SubResource( 54 )
 
 [sub_resource type="CubeMesh" id=56]
 
+[sub_resource type="ParticlesMaterial" id=57]
+emission_shape = 1
+emission_sphere_radius = 0.15
+direction = Vector3( 0, 1, 0 )
+spread = 0.0
+gravity = Vector3( 0, -2, 0 )
+initial_velocity = 1.0
+initial_velocity_random = 0.5
+scale = 0.15
+scale_curve = SubResource( 54 )
+
 [node name="SwordFighter" type="KinematicBody"]
 collision_layer = 2
 collision_mask = 3
 script = ExtResource( 2 )
+ground_drag = 1
 
 [node name="FSM" parent="." instance=ExtResource( 4 )]
 state_list_script = ExtResource( 5 )
@@ -2002,6 +2027,10 @@ anims/walk = SubResource( 50 )
 [node name="sword_fighter" parent="ModelContainer" instance=ExtResource( 1 )]
 transform = Transform( -0.6, 0, -9.05975e-08, 0, 0.6, 0, 9.05975e-08, 0, -0.6, 0, 0, 0 )
 
+[node name="Skeleton" parent="ModelContainer/sword_fighter/Armature" index="0"]
+bones/2/bound_children = [ NodePath("ThrowAttachment") ]
+bones/12/bound_children = [ NodePath("BoneAttachment") ]
+
 [node name="Cube" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="0"]
 material/0 = ExtResource( 12 )
 
@@ -2081,15 +2110,27 @@ shape = SubResource( 52 )
 [node name="Particles" type="Particles" parent="ModelContainer"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25693, 0 )
 emitting = false
-amount = 15
-explosiveness = 1.0
+amount = 450
 local_coords = false
 process_material = SubResource( 55 )
+draw_pass_1 = SubResource( 56 )
+
+[node name="Particles2" type="Particles" parent="ModelContainer"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25693, 0 )
+emitting = false
+amount = 10
+local_coords = false
+process_material = SubResource( 57 )
 draw_pass_1 = SubResource( 56 )
 
 [node name="RayCast" type="RayCast" parent="ModelContainer"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.746612, 0 )
 enabled = true
+
+[node name="VelocityArrow2" parent="ModelContainer" instance=ExtResource( 8 )]
+
+[node name="MeshInstance" parent="ModelContainer/VelocityArrow2" index="0"]
+material/0 = ExtResource( 12 )
 
 [node name="CameraPointPivot" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )
@@ -2100,6 +2141,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6, 3.5 )
 [node name="Tween" type="Tween" parent="."]
 playback_speed = 3.0
 playback/speed = 3.0
+
+[node name="VelocityArrow" parent="." instance=ExtResource( 8 )]
 [connection signal="flag_changed" from="AnimationFlags" to="." method="_on_AnimationFlags_flag_changed"]
 [connection signal="received_input" from="InputListener" to="." method="_on_InputListener_received_input"]
 [connection signal="animation_finished" from="AnimationEvents" to="." method="_on_AnimationEvents_animation_finished"]
@@ -2112,3 +2155,5 @@ playback/speed = 3.0
 [connection signal="body_entered" from="ModelContainer/Feet" to="." method="_on_Feet_body_entered"]
 
 [editable path="ModelContainer/sword_fighter"]
+
+[editable path="ModelContainer/VelocityArrow2"]

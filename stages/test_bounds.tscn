@@ -81,6 +81,30 @@ transform = Transform( -0.192066, 0.00660992, 1.72167, 1.5897, 0.445711, 0, -4.5
 [node name="Box5" parent="." instance=ExtResource( 2 )]
 transform = Transform( -3.74699, 0.125682, 0.977527, 1.58878, 0.445711, 0.0193979, -2.55956, 0.0926745, -1.41898, 22.3148, 11.8943, -3.24345 )
 
+[node name="Box26" parent="." instance=ExtResource( 2 )]
+transform = Transform( -3.74699, 0.125682, 0.688921, 1.58878, 0.445711, 0.0136707, -2.55956, 0.0926747, -1.00004, -23.4193, 6.53101, -20.2183 )
+
+[node name="Box27" parent="." instance=ExtResource( 2 )]
+transform = Transform( -2.46192, 0.221613, 0.203858, 1.56553, 0.39937, 0.0670344, -0.662819, 0.120143, -0.598861, -29.3931, 9.44162, -23.3601 )
+
+[node name="Box28" parent="." instance=ExtResource( 2 )]
+transform = Transform( -1.60985, 0.215745, -0.45063, 0.748158, 0.419889, 0.243907, 2.40829, 0.0137743, -0.377, -35.3803, 12.613, -21.1253 )
+
+[node name="Box30" parent="." instance=ExtResource( 2 )]
+transform = Transform( -0.787933, 0.0301217, -0.61235, 0.791651, 0.455424, -0.00540639, 2.77555, -0.121346, -0.172294, -38.1401, 14.4076, -15.0752 )
+
+[node name="Box31" parent="." instance=ExtResource( 2 )]
+transform = Transform( -0.0567461, 0.0301217, -0.634491, 0.435853, 0.455424, 0.0336406, 1.62171, -0.121346, -0.0312431, -39.3835, 15.917, -9.71873 )
+
+[node name="Box32" parent="." instance=ExtResource( 2 )]
+transform = Transform( -0.130424, 0.0301217, -0.294977, 1.00175, 0.455424, 0.0156396, 3.7273, -0.121346, -0.014525, -39.5939, 17.5332, -3.70545 )
+
+[node name="Box33" parent="." instance=ExtResource( 2 )]
+transform = Transform( 3.15928, 0, 0, 0, 0.472274, 0, 0, 0, 3.23314, -39.9382, 19.0411, 5.41801 )
+
+[node name="Box29" parent="." instance=ExtResource( 2 )]
+transform = Transform( -1.2837, 0.216281, -0.0426803, 0.64797, 0.417951, 0.0819841, 0.171452, 0.039775, -0.6294, -32.9264, 11.4386, -23.7495 )
+
 [node name="Box25" parent="." instance=ExtResource( 2 )]
 transform = Transform( 4.80786, 0, 0, 0, 0.430679, 2.71709, 0, -0.193799, 6.03819, 33.805, 7.2687, -3.43918 )
 

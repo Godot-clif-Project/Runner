@@ -9,8 +9,6 @@
 [ext_resource path="res://entities/sword_figher/peer_sword_fighter.tscn" type="PackedScene" id=7]
 [ext_resource path="res://objects/network_interface.tscn" type="PackedScene" id=8]
 
-
-
 [sub_resource type="Animation" id=1]
 length = 60.0
 loop = true
