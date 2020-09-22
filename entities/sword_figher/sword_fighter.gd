@@ -46,6 +46,7 @@ var receive_throw_pos = Vector3.ZERO
 var receive_throw_rot = 0.0
 var jump_str = 0
 var horizontal_speed = 0.0
+var has_wall_run = true
 
 onready var lock_on_target : Spatial = get_node(target)
 onready var input_listener = $InputListener
@@ -149,7 +150,7 @@ func _input(event):
 		reset()
 
 onready var start_time = OS.get_ticks_msec()
-var stop_timer = false
+var stop_timer = true
 func _process(delta):
 #		print("Elapsed time: ", OS.get_ticks_msec() - start_time)	
 #		print("Elapsed time: ", OS.get_ticks_msec() / 1000.0)
@@ -206,7 +207,8 @@ var target_vector = Vector2.ZERO
 
 func set_velocity(_velocity):
 	var velocity_rotated = _velocity.rotated(Vector3.UP, model_container.rotation.y)
-	velocity = Vector3(velocity_rotated.x, velocity.y, velocity_rotated.z)
+#	velocity = Vector3(velocity_rotated.x, velocity.y, velocity_rotated.z)
+	velocity = velocity_rotated
 	
 func accelerate(speed : float, delta):
 #	velocity = velocity.normalized() * abs(speed)

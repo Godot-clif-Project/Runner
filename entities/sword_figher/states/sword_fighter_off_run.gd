@@ -34,6 +34,10 @@ func _process_state(delta):
 	if entity.feet.get_overlapping_bodies().size() == 0:
 		set_next_state("fall")
 		return
+	
+#	if entity.ledge_detect_low.get_overlapping_bodies().size() != 0 and entity.ledge_detect_high.get_overlapping_bodies().size() != 0:
+#		set_next_state("wall_run")
+#		return
 		
 	var stick = entity.input_listener.sticks[0]
 	if abs(stick) > 0.1:

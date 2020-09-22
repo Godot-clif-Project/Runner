@@ -43,7 +43,6 @@ func _process_state(delta):
 			entity.velocity.y = 0
 	else:
 		entity.velocity.y = 5
-	pass
 	
 #	entity.apply_drag(delta)
 #	entity.center_camera(delta)
