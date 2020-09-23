@@ -27,6 +27,7 @@ func clear_received_events():
 
 func process_received_events():
 	
+	received_events["_received_input"].invert()
 	for arg_array in received_events["_received_input"]:
 		callv("_received_input", arg_array)
 		
@@ -73,9 +74,6 @@ func process_received_events():
 		call("_received_hit", arg)
 	
 	clear_received_events()
-
-func set_next_state(state):
-	next_state = state
 
 func set_next_state_buffered(state, buffer_flag):
 	if entity.flags.get(buffer_flag):

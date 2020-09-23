@@ -32,7 +32,6 @@ func _enter_state():
 #	if entity.horizontal_speed > target_speed:
 #		entity.velocity = entity.velocity.normalized() * target_speed
 	
-#	print(entity.get_normal())
 #	._enter_state()
 #
 ## Inverse of enter_state.
@@ -51,7 +50,7 @@ func _process_state(delta):
 	else:
 		t += delta
 	
-		if entity.ledge_detect_low.get_overlapping_bodies().size() == 0:
+		if not entity.ledge_detect_low.is_colliding():
 	#		if entity.input_listener.is_key_pressed(InputManager.UP):
 			entity.jump_str = 20
 			entity.set_velocity(Vector3(0.0, 10, -2).rotated(Vector3.RIGHT, wall_rot.x))
@@ -104,4 +103,16 @@ func _received_input(key, state):
 		if key == InputManager.GUARD:
 			entity.velocity = Vector3.ZERO
 			entity.model_container.rotation.y = wall_rot.y
+	else:
+		if entity.has_wall_run_side:
+			if key == InputManager.LEFT:
+				entity.model_container.rotation.y = wall_rot.y + PI * 0.5
+				entity.wall_side = 1
+				set_next_state("wall_run_side")
+				return
+			if key == InputManager.RIGHT:
+				entity.model_container.rotation.y = wall_rot.y - PI * 0.5
+				entity.wall_side = -1
+				set_next_state("wall_run_side")
+				return
 	._received_input(key, state)

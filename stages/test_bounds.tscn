@@ -40,7 +40,7 @@ transform = Transform( 2.80391, 0, 0, 0, 7.71905, 0, 0, 0, 2.80391, 9.15223, -3.
 transform = Transform( 2.80391, 0, 0, 0, 7.71905, 0, 0, 0, 2.80391, -10.5911, -4.55987, 17.5677 )
 
 [node name="Cylinder17" parent="." instance=ExtResource( 4 )]
-transform = Transform( 2.80391, 0, 0, 0, 7.71905, 0, 0, 0, 2.80391, -3.42219, 7.7343, 18.8094 )
+transform = Transform( 0.6198, 0, 0, 0, 8.70756, 0, 0, 0, 0.6198, -3.42219, 7.7343, 18.8094 )
 
 [node name="Cylinder12" parent="." instance=ExtResource( 4 )]
 transform = Transform( 2.36986, 0, 0, 0, 6.52413, 0, 0, 0, 2.36986, -6.91131, -3.15294, -16.7278 )
@@ -110,6 +110,27 @@ transform = Transform( 4.80786, 0, 0, 0, 0.430679, 2.71709, 0, -0.193799, 6.0381
 
 [node name="Box34" parent="." instance=ExtResource( 2 )]
 transform = Transform( -9.68516e-07, -1.35216, 0, 5.94471, -2.20294e-07, 0, 0, 0, 12.2159, 37.8604, 12.8998, 8.78063 )
+
+[node name="Box36" parent="." instance=ExtResource( 2 )]
+transform = Transform( 18.1023, 0, 0, 0, 16.6083, 0, 0, 0, 1, 4.90525, 21.2717, -42.1401 )
+
+[node name="Box37" parent="." instance=ExtResource( 2 )]
+transform = Transform( 4.2643, 0, 0, 0, 1, 0, 0, 0, 3.99663, -6.24313, 12.1503, -39.0769 )
+
+[node name="Box38" parent="." instance=ExtResource( 2 )]
+transform = Transform( 4.2643, 0, 0, 0, 1, 0, 0, 0, 3.99663, 14.5622, 16.2832, -39.0769 )
+
+[node name="Box39" parent="." instance=ExtResource( 2 )]
+transform = Transform( 4.2643, 0, 0, 0, 1, 0, 0, 0, 3.99663, -5.59116, 21.0455, -39.0769 )
+
+[node name="Box40" parent="." instance=ExtResource( 2 )]
+transform = Transform( 4.2643, 0, 0, 0, 1, 0, 0, 0, 3.99663, 12.2152, 26.1702, -39.0769 )
+
+[node name="Box41" parent="." instance=ExtResource( 2 )]
+transform = Transform( 4.2643, 0, 0, 0, 1, 0, 0, 0, 3.99663, -5.12249, 29.6539, -34.7157 )
+
+[node name="Box42" parent="." instance=ExtResource( 2 )]
+transform = Transform( 4.2643, 0, 0, 0, 1, 0, 0, 0, 3.99663, 13.9829, 35.2476, -39.0769 )
 
 [node name="Box7" parent="." instance=ExtResource( 2 )]
 transform = Transform( 3.76879, 0, -0.392385, 0, 1, 0, 1.60776, 0, 0.919801, 12.1833, 13.5099, -9.24883 )

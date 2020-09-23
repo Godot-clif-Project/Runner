@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://objects/stage_timer.gd" type="Script" id=1]
+
+[node name="StageTimer" type="Label"]
+margin_left = 883.492
+margin_top = 20.0
+margin_right = 983.492
+margin_bottom = 34.0
+rect_scale = Vector2( 3.82997, 3.82997 )
+text = "00:00:00"
+align = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

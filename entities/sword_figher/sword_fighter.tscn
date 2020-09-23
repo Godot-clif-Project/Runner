@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=2]
+[gd_scene load_steps=69 format=2]
 
 [ext_resource path="res://entities/sword_figher/model/sword_fighter.glb" type="PackedScene" id=1]
 [ext_resource path="res://entities/sword_figher/sword_fighter.gd" type="Script" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://entities/sword_figher/sword_fighter_hit_info.gd" type="Script" id=10]
 [ext_resource path="res://objects/hurtbox.tscn" type="PackedScene" id=11]
 [ext_resource path="res://entities/sword_figher/sword_fighter_player_1.material" type="Material" id=12]
+[ext_resource path="res://entities/sword_figher/dust_trail.tscn" type="PackedScene" id=13]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.459803
@@ -1902,17 +1903,15 @@ tracks/4/keys = {
 }
 
 [sub_resource type="RayShape" id=51]
-
-[sub_resource type="RayShape" id=52]
 length = 1.2
 
-[sub_resource type="Curve" id=53]
+[sub_resource type="Curve" id=52]
 _data = [ Vector2( 0, 1 ), 0.0, -0.0363921, 0, 0, Vector2( 1, 0 ), -2.04049, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=54]
-curve = SubResource( 53 )
+[sub_resource type="CurveTexture" id=53]
+curve = SubResource( 52 )
 
-[sub_resource type="ParticlesMaterial" id=55]
+[sub_resource type="ParticlesMaterial" id=54]
 direction = Vector3( 0, 0, -1 )
 spread = 180.0
 gravity = Vector3( 0, 0, 0 )
@@ -1920,26 +1919,14 @@ initial_velocity = 15.0
 initial_velocity_random = 0.5
 damping = 86.62
 scale = 0.3
-scale_curve = SubResource( 54 )
+scale_curve = SubResource( 53 )
 
-[sub_resource type="CubeMesh" id=56]
-
-[sub_resource type="ParticlesMaterial" id=57]
-emission_shape = 1
-emission_sphere_radius = 0.15
-direction = Vector3( 0, 1, 0 )
-spread = 0.0
-gravity = Vector3( 0, -2, 0 )
-initial_velocity = 1.0
-initial_velocity_random = 0.5
-scale = 0.15
-scale_curve = SubResource( 54 )
+[sub_resource type="CubeMesh" id=55]
 
 [node name="SwordFighter" type="KinematicBody"]
 collision_layer = 2
 collision_mask = 3
 script = ExtResource( 2 )
-ground_drag = 1
 
 [node name="FSM" parent="." instance=ExtResource( 4 )]
 state_list_script = ExtResource( 5 )
@@ -2061,41 +2048,13 @@ visible = false
 hit_info = ExtResource( 10 )
 hit_name = "def_hi_light"
 
-[node name="LedgeDetectHigh" type="Area" parent="ModelContainer"]
-transform = Transform( -1, 0, -8.74227e-08, 0, 1, 0, 8.74227e-08, 0, -1, 0, 1.48743, 0 )
-monitorable = false
-collision_layer = 0
+[node name="LedgeDetectLow" type="RayCast" parent="ModelContainer"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.746612, 0 )
+enabled = true
 
-[node name="CollisionShape" type="CollisionShape" parent="ModelContainer/LedgeDetectHigh"]
-shape = SubResource( 51 )
-
-[node name="LedgeDetectLow" type="Area" parent="ModelContainer"]
-transform = Transform( -1, 0, -8.74227e-08, 0, 1, 0, 8.74227e-08, 0, -1, 0, 0.748984, 0 )
-monitorable = false
-collision_layer = 0
-
-[node name="CollisionShape" type="CollisionShape" parent="ModelContainer/LedgeDetectLow"]
-shape = SubResource( 51 )
-
-[node name="LedgeDetectR" type="Area" parent="ModelContainer"]
-transform = Transform( -0.707106, 0, 0.707106, 0, 1, 0, -0.707106, 0, -0.707106, 0, 0.748175, 0 )
-visible = false
-monitoring = false
-monitorable = false
-collision_layer = 0
-
-[node name="CollisionShape" type="CollisionShape" parent="ModelContainer/LedgeDetectR"]
-shape = SubResource( 51 )
-
-[node name="LedgeDetectL" type="Area" parent="ModelContainer"]
-transform = Transform( -0.707106, 0, -0.707106, 0, 1, 0, 0.707106, 0, -0.707106, 0, 0.748175, 0 )
-visible = false
-monitoring = false
-monitorable = false
-collision_layer = 0
-
-[node name="CollisionShape" type="CollisionShape" parent="ModelContainer/LedgeDetectL"]
-shape = SubResource( 51 )
+[node name="LedgeDetectHigh" type="RayCast" parent="ModelContainer"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.47098, 0 )
+enabled = true
 
 [node name="Feet" type="Area" parent="ModelContainer"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1, 0 )
@@ -2103,23 +2062,17 @@ monitorable = false
 collision_layer = 0
 
 [node name="CollisionShape" type="CollisionShape" parent="ModelContainer/Feet"]
-shape = SubResource( 52 )
+shape = SubResource( 51 )
 
 [node name="Particles" type="Particles" parent="ModelContainer"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25693, 0 )
 emitting = false
 amount = 450
 local_coords = false
-process_material = SubResource( 55 )
-draw_pass_1 = SubResource( 56 )
+process_material = SubResource( 54 )
+draw_pass_1 = SubResource( 55 )
 
-[node name="Particles2" type="Particles" parent="ModelContainer"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25693, 0 )
-emitting = false
-amount = 10
-local_coords = false
-process_material = SubResource( 57 )
-draw_pass_1 = SubResource( 56 )
+[node name="Particles2" parent="ModelContainer" instance=ExtResource( 13 )]
 
 [node name="RayCast" type="RayCast" parent="ModelContainer"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.746612, 0 )
@@ -2135,6 +2088,14 @@ transform = Transform( 0.5, -0.866025, 1.41093e-07, 0, -1.62921e-07, -1, 0.86602
 enabled = true
 cast_to = Vector3( 0, -0.75, 0 )
 
+[node name="RayCastLHigh" type="RayCast" parent="ModelContainer"]
+transform = Transform( 0.5, 0.866025, -1.41093e-07, 0, -1.62921e-07, -1, -0.866025, 0.5, -8.14603e-08, 0, 1.47052, 0 )
+cast_to = Vector3( 0, -1.5, 0 )
+
+[node name="RayCastRHigh" type="RayCast" parent="ModelContainer"]
+transform = Transform( 0.5, -0.866025, 1.41093e-07, 0, -1.62921e-07, -1, 0.866025, 0.5, -8.14603e-08, 0, 1.47052, 0 )
+cast_to = Vector3( 0, -1.5, 0 )
+
 [node name="VelocityArrow2" parent="ModelContainer" instance=ExtResource( 8 )]
 
 [node name="MeshInstance" parent="ModelContainer/VelocityArrow2" index="0"]
@@ -2144,7 +2105,7 @@ material/0 = ExtResource( 12 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )
 
 [node name="Position3D" type="Position3D" parent="CameraPointPivot"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6, 3.5 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6, 4.5 )
 
 [node name="Tween" type="Tween" parent="."]
 playback_speed = 3.0
@@ -2158,8 +2119,6 @@ playback/speed = 3.0
 [connection signal="received_hit" from="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment/Hurtbox" to="." method="_on_Hurtbox_received_hit"]
 [connection signal="dealt_hit" from="ModelContainer/Hitbox" to="." method="_on_Hitbox_dealt_hit"]
 [connection signal="dealt_hit" from="ModelContainer/Hitbox2" to="." method="_on_Hitbox_dealt_hit"]
-[connection signal="body_entered" from="ModelContainer/LedgeDetectHigh" to="." method="_on_LedgeDetect_body_entered"]
-[connection signal="body_entered" from="ModelContainer/LedgeDetectLow" to="." method="_on_LedgeDetect_body_entered"]
 [connection signal="body_entered" from="ModelContainer/Feet" to="." method="_on_Feet_body_entered"]
 
 [editable path="ModelContainer/sword_fighter"]

@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=2]
+
+[sub_resource type="Curve" id=52]
+_data = [ Vector2( 0, 1 ), 0.0, -0.0363921, 0, 0, Vector2( 1, 0 ), -2.04049, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=53]
+curve = SubResource( 52 )
+
+[sub_resource type="ParticlesMaterial" id=56]
+emission_shape = 1
+emission_sphere_radius = 0.15
+direction = Vector3( 0, 1, 0 )
+spread = 0.0
+gravity = Vector3( 0, -2, 0 )
+initial_velocity = 1.0
+initial_velocity_random = 0.5
+scale = 0.15
+scale_curve = SubResource( 53 )
+
+[sub_resource type="CubeMesh" id=55]
+
+[node name="Particles2" type="Particles"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25693, 0 )
+emitting = false
+amount = 10
+local_coords = false
+process_material = SubResource( 56 )
+draw_pass_1 = SubResource( 55 )

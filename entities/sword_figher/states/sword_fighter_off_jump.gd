@@ -14,7 +14,11 @@ func get_animation_data():
 ##func _exit_state():
 ##	pass
 
-#func _process_state(delta):
+func _process_state(delta):
+	if not entity.flags.is_active:
+		return
+	else:
+		._process_state(delta)
 #	if entity.get_current_animation() == "jump_land":
 #		entity.set_velocity(Vector3(0.0, 0.0, -Vector2(entity.velocity.x, entity.velocity.z).length()))
 ##		entity.apply_rotation(delta)

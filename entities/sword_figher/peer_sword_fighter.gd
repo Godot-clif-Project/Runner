@@ -16,6 +16,7 @@ onready var model_container = $ModelContainer
 onready var anim_tree = $AnimationTree
 onready var anim_player = $ModelContainer/sword_fighter/AnimationPlayer
 onready var animation_blender = $AnimationBlender
+onready var dust = $ModelContainer/Particles2
 
 func _ready():
 	$AnimationTree.active = true
@@ -105,6 +106,11 @@ remote func update_animation(id, anim_name, seek_pos, blend_speed):
 #			"to", anim_tree.tree_root.get_node("animation_0").animation)
 
 	animation_slot = -animation_slot
+	
+	if anim_name == "run_loop":
+		dust.emitting = true
+	elif anim_name == "offensive_stance":
+		dust.emitting = false
 
 remote func update_hp(id, new_hp):
 	if player_side == 1:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://stages/stage_env.tres" type="Environment" id=1]
 [ext_resource path="res://entities/sword_figher/sword_fighter.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://ui/input_display/input_display.tscn" type="PackedScene" id=6]
 [ext_resource path="res://run_icon.PNG" type="Texture" id=7]
 [ext_resource path="res://entities/sword_figher/sword_fighter_2.tscn" type="PackedScene" id=8]
+[ext_resource path="res://objects/stage_timer.tscn" type="PackedScene" id=9]
 
 [sub_resource type="Animation" id=1]
 length = 60.0
@@ -25,23 +26,34 @@ tracks/0/keys = {
 "values": [ Vector3( -25.071, 100, -2.385 ), Vector3( -25.071, 460, -2.385 ) ]
 }
 
-[sub_resource type="CubeMesh" id=2]
+[sub_resource type="RayShape" id=2]
 
-[sub_resource type="BoxShape" id=3]
+[sub_resource type="Curve" id=52]
+_data = [ Vector2( 0, 1 ), 0.0, -0.0363921, 0, 0, Vector2( 1, 0 ), -2.04049, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=53]
+curve = SubResource( 52 )
+
+[sub_resource type="ParticlesMaterial" id=56]
+emission_shape = 1
+emission_sphere_radius = 0.15
+direction = Vector3( 0, 1, 0 )
+spread = 0.0
+gravity = Vector3( 0, -2, 0 )
+initial_velocity = 1.0
+initial_velocity_random = 0.5
+scale = 0.15
+scale_curve = SubResource( 53 )
+
+[sub_resource type="CubeMesh" id=55]
+
+[sub_resource type="CubeMesh" id=3]
+
+[sub_resource type="BoxShape" id=4]
 
 [node name="Stage" type="Spatial"]
 
-[node name="Timer" type="Label" parent="."]
-margin_left = 883.492
-margin_top = 20.0
-margin_right = 983.492
-margin_bottom = 34.0
-rect_scale = Vector2( 3.82997, 3.82997 )
-text = "00:00:00"
-align = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="StageTimer" parent="." instance=ExtResource( 9 )]
 
 [node name="PlayerName1" type="Label" parent="."]
 margin_left = 32.0
@@ -148,17 +160,50 @@ max_jump_str = 28
 [node name="SwordFighter2" parent="." instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 61.6811, 33.4985, 52.3605 )
 target = NodePath("../MeshInstance")
+ground_drag = 1
 
 [node name="InputListener" parent="SwordFighter2" index="2"]
 enabled = false
 
-[node name="LedgeDetectR" parent="SwordFighter2/ModelContainer" index="5"]
-transform = Transform( -0.707106, 0, 0.707106, 0, 1, 0, -0.707106, 0, -0.707106, 0, 1.01163, 0 )
-visible = true
+[node name="sword_fighter" parent="SwordFighter2/ModelContainer" index="0"]
+transform = Transform( -0.6, 0, -9.05975e-08, 0, 0.6, 0, 9.05975e-08, 0, -0.6, 0, 0, 0 )
 
-[node name="LedgeDetectL" parent="SwordFighter2/ModelContainer" index="6"]
+[node name="LedgeDetectLow" parent="SwordFighter2/ModelContainer" index="3"]
+transform = Transform( -1, 0, -8.74227e-08, 0, 1, 0, 8.74227e-08, 0, -1, 0, 0.748984, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="SwordFighter2/ModelContainer/LedgeDetectLow" index="0"]
+shape = SubResource( 2 )
+
+[node name="LedgeDetectHigh" parent="SwordFighter2/ModelContainer" index="4"]
+transform = Transform( -1, 0, -8.74227e-08, 0, 1, 0, 8.74227e-08, 0, -1, 0, 1.48743, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="SwordFighter2/ModelContainer/LedgeDetectHigh" index="0"]
+shape = SubResource( 2 )
+
+[node name="LedgeDetectR" type="Area" parent="SwordFighter2/ModelContainer" index="5"]
+transform = Transform( -0.707106, 0, 0.707106, 0, 1, 0, -0.707106, 0, -0.707106, 0, 1.01163, 0 )
+monitoring = false
+monitorable = false
+collision_layer = 0
+
+[node name="CollisionShape" type="CollisionShape" parent="SwordFighter2/ModelContainer/LedgeDetectR"]
+shape = SubResource( 2 )
+
+[node name="LedgeDetectL" type="Area" parent="SwordFighter2/ModelContainer" index="6"]
 transform = Transform( -0.707106, 0, -0.707106, 0, 1, 0, 0.707106, 0, -0.707106, 0, 1.01163, 0 )
-visible = true
+monitoring = false
+monitorable = false
+collision_layer = 0
+
+[node name="CollisionShape" type="CollisionShape" parent="SwordFighter2/ModelContainer/LedgeDetectL"]
+shape = SubResource( 2 )
+
+[node name="Particles2" parent="SwordFighter2/ModelContainer" index="9"]
+process_material = SubResource( 56 )
+draw_pass_1 = SubResource( 55 )
+
+[node name="Position3D" parent="SwordFighter2/CameraPointPivot" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6, 3.5 )
 
 [node name="InterpolatedCamera" parent="." instance=ExtResource( 3 )]
 transform = Transform( -0.00497429, -0.459186, 0.888326, 0, 0.888337, 0.459192, -0.999988, 0.00228415, -0.00441884, 5.30534, 3.75645, -0.193563 )
@@ -168,7 +213,7 @@ speed = 10.0
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 0.31253, 0, 0, 0, 0.31253, 0, 0, 0, 0.31253, 0, -0.257058, 0 )
-mesh = SubResource( 2 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="Player1Pos" type="Position3D" parent="."]
@@ -187,9 +232,9 @@ texture = ExtResource( 7 )
 transform = Transform( 5.09698, 0, -0.425677, 0, 5.11473, 0, 0.425677, 0, 5.09698, 53.4341, 37.0923, 51.869 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Goal"]
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 [connection signal="hp_changed" from="SwordFighter" to="Lifebar" method="_on_sword_fighter_hp_changed"]
-[connection signal="body_entered" from="Goal" to="SwordFighter" method="_on_Goal_body_entered"]
+[connection signal="body_entered" from="Goal" to="StageTimer" method="_on_Goal_body_entered"]
 
 [editable path="SwordFighter"]
 

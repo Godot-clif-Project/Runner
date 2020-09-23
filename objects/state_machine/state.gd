@@ -7,6 +7,7 @@ var next_state = null
 var next_state_buffer = null
 var next_state_buffer_flag = null
 var entity : Entity
+var fsm
 var state_list
 
 func get_name():
@@ -16,11 +17,12 @@ func set_name(value):
 	name = value
 #	print(value)
 
-func _get_next_state():
-	return next_state
+#func _get_next_state():
+#	return next_state
 
 func set_next_state(state):
-	next_state = state
+	if state != null:
+		fsm.change_state(state)
 
 func _get_next_state_buffer():
 	return next_state_buffer

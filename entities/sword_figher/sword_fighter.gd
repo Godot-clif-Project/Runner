@@ -67,12 +67,16 @@ onready var flags = $AnimationFlags
 onready var feet = $ModelContainer/Feet
 onready var ledge_detect_low = $ModelContainer/LedgeDetectLow
 onready var ledge_detect_high = $ModelContainer/LedgeDetectHigh
-onready var ledge_detect_r = $ModelContainer/LedgeDetectR
-onready var ledge_detect_l = $ModelContainer/LedgeDetectL
+#onready var ledge_detect_r = $ModelContainer/LedgeDetectR
+#onready var ledge_detect_l = $ModelContainer/LedgeDetectL
 onready var raycast = $ModelContainer/RayCast
 onready var raycast_side = {
 	-1 : $ModelContainer/RayCastL,
 	1 : $ModelContainer/RayCastR,
+}
+onready var raycast_side_high = {
+	-1 : $ModelContainer/RayCastLHigh,
+	1 : $ModelContainer/RayCastRHigh,
 }
 #onready var raycast_l = $ModelContainer/RayCastL
 #onready var raycast_r = $ModelContainer/RayCastR
@@ -147,12 +151,6 @@ func get_normal():
 
 func _on_InputListener_received_input(key, state):
 	fsm.receive_event("_received_input", [key, state])
-	if key == InputManager.START:
-		start_time = OS.get_ticks_msec()
-		stop_timer = false
-#		a.transform = Transform(raycast.get_collision_normal(), raycast.get_collision_point())
-#		a.translation = raycast.get_collision_point()
-#	if state:
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -165,19 +163,18 @@ func _input(event):
 	if event.is_action_pressed("debug_reset"):
 		reset()
 
-onready var start_time = OS.get_ticks_msec()
-var stop_timer = true
-func _process(delta):
+
+#func _process(delta):
 #		print("Elapsed time: ", OS.get_ticks_msec() - start_time)	
 #		print("Elapsed time: ", OS.get_ticks_msec() / 1000.0)
-	if not stop_timer:
-		var ticks = OS.get_ticks_msec() - start_time
-		var minutes = ticks / 60000
-		var seconds = (ticks / 1000) % 60
-		var hundreds = (ticks / 10) % 100
-		var str_time = "%02d : %02d : %02d" % [minutes, seconds, hundreds]
-#		get_node("../Timer").text = str(ticks/60000).pad_zeros(2) + ":" + str((ticks / 1000) % 60).pad_zeros(2) + ":" + str((ticks / 10) % 100).pad_zeros(2)
-		get_node("../Timer").text = str_time
+
+#	if not stop_timer:
+#		var ticks = OS.get_ticks_msec() - start_time
+#		var minutes = ticks / 60000
+#		var seconds = (ticks / 1000) % 60
+#		var hundreds = (ticks / 10) % 100
+#		var str_time = "%02d : %02d : %02d" % [minutes, seconds, hundreds]
+#		get_node("../Timer").text = str_time
 
 func _physics_process(delta):
 	fsm._process_current_state(delta, true)
@@ -196,6 +193,8 @@ func _physics_process(delta):
 	horizontal_speed = Vector2(velocity.x, velocity.z).length()
 	vel_arrow.look_at(velocity + translation + Vector3.FORWARD * 0.01, Vector3.UP)
 	vel_arrow.scale.z = lerp(0, 1.0, horizontal_speed / 6)
+	
+#	camera_point.translation.z = lerp(3.5, 5.5, horizontal_speed / 20)
 	
 #	emit_signal("transform_changed", transform)
 	emit_signal("position_changed", transform.origin)
@@ -313,19 +312,25 @@ func jump():
 	var direction = Vector2.ZERO
 	if input_listener.is_key_pressed(InputManager.UP):
 		direction += Vector2.UP
-	if input_listener.is_key_pressed(InputManager.DOWN):
-		direction += Vector2.DOWN
-	if input_listener.is_key_pressed(InputManager.LEFT):
-		direction += Vector2.LEFT
-	if input_listener.is_key_pressed(InputManager.RIGHT):
-		direction += Vector2.RIGHT
+#	if input_listener.is_key_pressed(InputManager.DOWN):
+#		direction += Vector2.DOWN
+#	if input_listener.is_key_pressed(InputManager.LEFT):
+#		direction += Vector2.LEFT
+#	if input_listener.is_key_pressed(InputManager.RIGHT):
+#		direction += Vector2.RIGHT
 	direction = direction.normalized() * 5
 	
 #	add_impulse(Vector3(0.0, jump_str , 0.0))
 #	set_velocity(Vector3(direction.x, 0.0 , direction.y))
-	add_impulse(Vector3(direction.x, jump_str , direction.y))
-#	if horizontal_speed > 16.0:
-#	set_velocity(Vector3(0.0, 0.0 , -16.0))
+#	add_impulse(Vector3(direction.x, jump_str , direction.y))
+	add_impulse(Vector3(0.0, jump_str , direction.y))
+#	add_impulse(Vector3(0.0, jump_str , -5))
+	
+	if Vector2(velocity.x, velocity.z).length() > 20:
+		var v = Vector2(velocity.x, velocity.z).normalized() * 20
+		velocity.x = v.x
+		velocity.z = v.y
+		
 	on_ground = false
 	jump_str = min_jump_str
 
@@ -486,9 +491,3 @@ func emit_one_shot():
 #	yield(get_tree(), "physics_frame")
 	yield(get_tree(), "physics_frame")
 	$ModelContainer/Particles.emitting = false
-
-func _on_LedgeDetect_body_entered(body):
-	pass # Replace with function body.
-
-func _on_Goal_body_entered(body):
-	stop_timer = true

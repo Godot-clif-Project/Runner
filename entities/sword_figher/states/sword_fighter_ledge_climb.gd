@@ -1,5 +1,7 @@
 extends "res://entities/sword_figher/states/sword_fighter_state.gd"
 
+var wall_rot
+
 func get_animation_data():
 	# Name, seek and blend length 
 	return ["run_break_loop", 0.0, 16.0]
@@ -12,12 +14,18 @@ func _enter_state():
 #	entity.get_normal()
 #	entity.model_container.rotation_degrees.y = entity.arrow.rotation_degrees.y + 180
 	
-	entity.model_container.rotation.y = entity.get_normal().y + PI
+	wall_rot = entity.get_normal()
+	
+	entity.model_container.rotation.y = wall_rot.y + PI
+	entity.model.rotation.y = PI * 0.5
+	
 	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
 	._enter_state()
 #
 ## Inverse of enter_state.
-##func _exit_state():
+func _exit_state():
+	entity.model.rotation.y = PI
+	._exit_state()
 ##	pass
 
 func _process_state(delta):
@@ -32,7 +40,7 @@ func _process_state(delta):
 ##		else:
 #		entity.model_container.rotation_degrees.y -= delta * 180
 	
-	if entity.ledge_detect_low.get_overlapping_bodies().size() == 0:
+	if not entity.ledge_detect_low.is_colliding():
 		if entity.input_listener.is_key_pressed(InputManager.UP):
 			entity.jump_str = 20
 			set_next_state("jump")

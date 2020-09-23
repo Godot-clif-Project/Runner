@@ -19,8 +19,8 @@ var prev_turn_dir = 0
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
 	entity.set_animation("run_loop", 0, 10.0)
-	if entity.horizontal_speed > target_speed:
-		entity.velocity = entity.velocity.normalized() * target_speed
+#	if entity.horizontal_speed > target_speed:
+#		entity.velocity = entity.velocity.normalized() * target_speed
 		
 	entity.model.rotation.z = 0.0
 	entity.get_node("ModelContainer/Particles2").emitting = true

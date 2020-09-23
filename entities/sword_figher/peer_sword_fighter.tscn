@@ -1,8 +1,9 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://entities/sword_figher/peer_sword_fighter.gd" type="Script" id=1]
 [ext_resource path="res://entities/sword_figher/model/sword_fighter.glb" type="PackedScene" id=2]
 [ext_resource path="res://objects/hurtbox.tscn" type="PackedScene" id=3]
+[ext_resource path="res://entities/sword_figher/dust_trail.tscn" type="PackedScene" id=4]
 
 [sub_resource type="AnimationNodeBlend2" id=1]
 
@@ -327,12 +328,8 @@ anims/receive_off_throw_f = SubResource( 15 )
 [node name="sword_fighter" parent="ModelContainer" instance=ExtResource( 2 )]
 transform = Transform( -0.6, 0, -9.05975e-08, 0, 0.6, 0, 9.05975e-08, 0, -0.6, 0, 0, 0 )
 
-[node name="Skeleton" parent="ModelContainer/sword_fighter/Armature" index="0"]
-bones/2/bound_children = [ NodePath("ThrowAttachment") ]
-bones/12/bound_children = [ NodePath("BoneAttachment") ]
-
 [node name="BoneAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
-transform = Transform( 1, 0, 0, 0, 0.998474, 0.0552152, 0, -0.0552152, 0.998474, -6.59474e-17, 2.24226, 7.43921e-09 )
+transform = Transform( 0.931914, 0.175069, 0.317628, 0.0622501, 0.785573, -0.615629, -0.357298, 0.593486, 0.721188, -0.0126715, 1.70355, -0.279516 )
 bone_name = "torso"
 
 [node name="Hurtbox" parent="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment" instance=ExtResource( 3 )]
@@ -342,6 +339,8 @@ visible = false
 [node name="ThrowAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="3"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2 )
 bone_name = "throw_pos"
+
+[node name="Particles2" parent="ModelContainer" instance=ExtResource( 4 )]
 
 [node name="CameraPointPivot" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )

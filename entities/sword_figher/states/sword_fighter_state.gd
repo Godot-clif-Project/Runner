@@ -136,11 +136,13 @@ func set_next_state_buffered(state, buffer_flag):
 func _received_input(key, state):
 	var test = test_transition_by_input(key, state, get_possible_transitions())
 	
-	if test.flag != null:
-		if entity.flags.get(test.flag):
+	if test.state != null:
+#		prints(key, test.state)
+		if test.flag != null:
+			if entity.flags.get(test.flag):
+				set_next_state(test.state)
+		else:
 			set_next_state(test.state)
-	else:
-		set_next_state(test.state)
 
 func test_transition_by_input(key : int, key_state : int, valid_transitions : Array):
 	# Pass valid transitions into the array in order of lowest to highest priority.
