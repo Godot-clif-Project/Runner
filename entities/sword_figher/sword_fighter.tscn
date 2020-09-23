@@ -2027,10 +2027,6 @@ anims/walk = SubResource( 50 )
 [node name="sword_fighter" parent="ModelContainer" instance=ExtResource( 1 )]
 transform = Transform( -0.6, 0, -9.05975e-08, 0, 0.6, 0, 9.05975e-08, 0, -0.6, 0, 0, 0 )
 
-[node name="Skeleton" parent="ModelContainer/sword_fighter/Armature" index="0"]
-bones/2/bound_children = [ NodePath("ThrowAttachment") ]
-bones/12/bound_children = [ NodePath("BoneAttachment") ]
-
 [node name="Cube" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="0"]
 material/0 = ExtResource( 12 )
 
@@ -2082,7 +2078,8 @@ collision_layer = 0
 shape = SubResource( 51 )
 
 [node name="LedgeDetectR" type="Area" parent="ModelContainer"]
-transform = Transform( -0.707106, 0, 0.707106, 0, 1, 0, -0.707106, 0, -0.707106, 0, 1.01163, 0 )
+transform = Transform( -0.707106, 0, 0.707106, 0, 1, 0, -0.707106, 0, -0.707106, 0, 0.748175, 0 )
+visible = false
 monitoring = false
 monitorable = false
 collision_layer = 0
@@ -2091,7 +2088,8 @@ collision_layer = 0
 shape = SubResource( 51 )
 
 [node name="LedgeDetectL" type="Area" parent="ModelContainer"]
-transform = Transform( -0.707106, 0, -0.707106, 0, 1, 0, 0.707106, 0, -0.707106, 0, 1.01163, 0 )
+transform = Transform( -0.707106, 0, -0.707106, 0, 1, 0, 0.707106, 0, -0.707106, 0, 0.748175, 0 )
+visible = false
 monitoring = false
 monitorable = false
 collision_layer = 0
@@ -2126,6 +2124,16 @@ draw_pass_1 = SubResource( 56 )
 [node name="RayCast" type="RayCast" parent="ModelContainer"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.746612, 0 )
 enabled = true
+
+[node name="RayCastL" type="RayCast" parent="ModelContainer"]
+transform = Transform( 0.5, 0.866025, -1.41093e-07, 0, -1.62921e-07, -1, -0.866025, 0.5, -8.14603e-08, 0, 0.746612, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.75, 0 )
+
+[node name="RayCastR" type="RayCast" parent="ModelContainer"]
+transform = Transform( 0.5, -0.866025, 1.41093e-07, 0, -1.62921e-07, -1, 0.866025, 0.5, -8.14603e-08, 0, 0.746612, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.75, 0 )
 
 [node name="VelocityArrow2" parent="ModelContainer" instance=ExtResource( 8 )]
 

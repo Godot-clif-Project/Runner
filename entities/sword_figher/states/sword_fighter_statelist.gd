@@ -24,6 +24,7 @@ const STATES = {
 	"off_run_startup" : preload("res://entities/sword_figher/states/sword_fighter_off_run_startup.gd"),
 	"run_stop" : preload("res://entities/sword_figher/states/sword_fighter_run_stop.gd"),
 	"wall_run" : preload("res://entities/sword_figher/states/sword_fighter_wall_run.gd"),
+	"wall_run_side" : preload("res://entities/sword_figher/states/sword_fighter_wall_run_side.gd"),
 	"walk" : preload("res://entities/sword_figher/states/sword_fighter_walk.gd"),
 	"jump" : preload("res://entities/sword_figher/states/sword_fighter_off_jump.gd"),
 	"fall" : preload("res://entities/sword_figher/states/sword_fighter_fall.gd"),

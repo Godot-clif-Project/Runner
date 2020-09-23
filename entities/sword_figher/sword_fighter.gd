@@ -46,7 +46,11 @@ var receive_throw_pos = Vector3.ZERO
 var receive_throw_rot = 0.0
 var jump_str = 0
 var horizontal_speed = 0.0
+
+var prev_speed = 0.0
 var has_wall_run = true
+var has_wall_run_side = true
+var wall_side = 0
 
 onready var lock_on_target : Spatial = get_node(target)
 onready var input_listener = $InputListener
@@ -66,6 +70,12 @@ onready var ledge_detect_high = $ModelContainer/LedgeDetectHigh
 onready var ledge_detect_r = $ModelContainer/LedgeDetectR
 onready var ledge_detect_l = $ModelContainer/LedgeDetectL
 onready var raycast = $ModelContainer/RayCast
+onready var raycast_side = {
+	-1 : $ModelContainer/RayCastL,
+	1 : $ModelContainer/RayCastR,
+}
+#onready var raycast_l = $ModelContainer/RayCastL
+#onready var raycast_r = $ModelContainer/RayCastR
 
 onready var vel_arrow = $VelocityArrow
 
@@ -118,6 +128,12 @@ func reset():
 #const arrow = preload("res://misc/arrow.tscn")
 #onready var arrow = get_node("../Arrow")
 
+func get_normal_side(side):
+	raycast_side[side].force_raycast_update()
+	var normal = raycast_side[side].get_collision_normal()
+	var t = Transform.IDENTITY.looking_at(normal, Vector3.UP)
+	return t.basis.get_euler()
+
 func get_normal():
 	raycast.force_raycast_update()
 #	var point = raycast.get_collision_point()
@@ -164,11 +180,11 @@ func _process(delta):
 		get_node("../Timer").text = str_time
 
 func _physics_process(delta):
+	fsm._process_current_state(delta, true)
+	
 	camera_pivot.rotation.y += input_listener.sticks[2] * -0.1
 	camera_pivot.rotation.x = clamp(camera_pivot.rotation.x + input_listener.sticks[3] * -0.1, -1.5, 0.9)
 	target_rotation = camera_pivot.rotation.y
-	
-	fsm._process_current_state(delta, true)
 	
 	velocity = move_and_slide(velocity, Vector3.UP, false, 4, 0.785398, true)
 	
@@ -176,12 +192,13 @@ func _physics_process(delta):
 		if jump_str < max_jump_str:
 			jump_str += max_jump_str * delta * 4
 			
-#	emit_signal("transform_changed", transform)
-	emit_signal("position_changed", transform.origin)
 	
 	horizontal_speed = Vector2(velocity.x, velocity.z).length()
 	vel_arrow.look_at(velocity + translation + Vector3.FORWARD * 0.01, Vector3.UP)
 	vel_arrow.scale.z = lerp(0, 1.0, horizontal_speed / 6)
+	
+#	emit_signal("transform_changed", transform)
+	emit_signal("position_changed", transform.origin)
 	
 #	print(horizontal_speed)
 

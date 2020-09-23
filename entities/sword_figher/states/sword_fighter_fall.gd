@@ -40,16 +40,25 @@ func _process_state(delta):
 #		entity.set_velocity(Vector3(0.0, 0.0, -Vector2(entity.velocity.x, entity.velocity.z).length()))
 	else:
 		if entity.ledge_detect_low.get_overlapping_bodies().size() != 0:
-			if entity.has_wall_run:
-				if entity.ledge_detect_high.get_overlapping_bodies().size() != 0:
-					set_next_state("wall_run")
-					return
 			if entity.ledge_detect_high.get_overlapping_bodies().size() == 0:
 				set_next_state("ledge_climb")
 				return
-#		return
-#		if entity.ledge_detect_low.get_overlapping_bodies().size() > 0 and entity.ledge_detect_high.get_overlapping_bodies().size() == 0:
-#			return
+				
+		if entity.has_wall_run:
+			if entity.ledge_detect_low.get_overlapping_bodies().size() != 0:
+				set_next_state("wall_run")
+				return
+				
+			elif entity.has_wall_run_side:
+				if entity.raycast_side[-1].is_colliding():
+					set_next_state("wall_run_side")
+					entity.wall_side = -1
+					return
+					
+				if entity.raycast_side[1].is_colliding():
+					set_next_state("wall_run_side")
+					entity.wall_side = 1
+					return
 		
 		if entity.velocity.y < falling_speed:
 			falling_speed = entity.velocity.y
@@ -62,6 +71,7 @@ func _touched_surface(surface):
 	if surface == "floor":
 		entity.on_ground = true
 		entity.has_wall_run = true
+		entity.has_wall_run_side = true
 		turn_speed = 270.0
 #		print(falling_speed)
 		if falling_speed < -25:

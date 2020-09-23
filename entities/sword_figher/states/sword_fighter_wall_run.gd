@@ -16,16 +16,19 @@ var turn_acc = 0.0
 var current_turn_dir = 0
 var prev_turn_dir = 0
 
+var speed = 20
 var wall_rot
 var t = 0.0
 
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
+#	speed += entity.horizontal_speed
+#	print(entity.prev_speed)
 	entity.velocity = Vector3.ZERO
+	wall_rot = entity.get_normal()
 	entity.set_animation("run_loop", 0, 10.0)
-#	wall_rot = entity.get_normal()
-#	entity.model_container.rotation.y = wall_rot.y - PI
 	entity.has_wall_run = false
+#	entity.model_container.rotation.y = wall_rot.y - PI
 #	if entity.horizontal_speed > target_speed:
 #		entity.velocity = entity.velocity.normalized() * target_speed
 	
@@ -51,20 +54,20 @@ func _process_state(delta):
 		if entity.ledge_detect_low.get_overlapping_bodies().size() == 0:
 	#		if entity.input_listener.is_key_pressed(InputManager.UP):
 			entity.jump_str = 20
+			entity.set_velocity(Vector3(0.0, 10, -2).rotated(Vector3.RIGHT, wall_rot.x))
 			set_next_state("jump")
 			return
 	#		else:
 	#			entity.velocity.y = 0
 		else:
 #			entity.input_listener.sticks[0]
-			
-			wall_rot = entity.get_normal()
 #			entity.set_velocity(Vector3(0.0, 10, -10).rotated(Vector3.RIGHT, wall_rot.x).rotated(Vector3.FORWARD, PI *entity.input_listener.sticks[0]))
 #			entity.model_container.rotation.z = PI * -entity.input_listener.sticks[0]
-			entity.set_velocity(Vector3(0.0, 10, -10).rotated(Vector3.RIGHT, wall_rot.x))
+			speed -= delta * 25
+			wall_rot = entity.get_normal()
+			entity.set_velocity(Vector3(0.0, speed, -10).rotated(Vector3.RIGHT, wall_rot.x))
 			entity.model.rotation.x = wall_rot.x - PI * 0.5
 			entity.model_container.rotation.y = wall_rot.y - PI
-#			entity.velocity.y = 10
 		
 ##func _animation_blend_started(anim_name):
 ##	print(anim_name)
@@ -101,30 +104,4 @@ func _received_input(key, state):
 		if key == InputManager.GUARD:
 			entity.velocity = Vector3.ZERO
 			entity.model_container.rotation.y = wall_rot.y
-#		if key == InputManager.DOWN:
-#			set_next_state("run_stop")
-#			return
-#		if key == InputManager.UP_UP:
-#			target_speed = 23
-#			max_turn_speed = 2.3
-##			entity.set_velocity(Vector3(0.0, 0.0, -target_speed))
-##			acceleration = 2.0
-#			entity.emit_one_shot()
-#			if target_speed < 22:
-#				target_speed += 6
-#			else:
-#				target_speed = 22
-				
-#			released_up = true
-#			if entity.get_current_animation() == "run_loop":
-#				entity.set_animation("off_run_stop", 0, 10.0)
-#			set_next_state("run_stop")
-#			return
-#	else:
-#		if key == InputManager.UP:
-##			set_next_state("run_stop")
-#			target_speed -= delta
-#			print("ASD")
-#			return
-		
 	._received_input(key, state)

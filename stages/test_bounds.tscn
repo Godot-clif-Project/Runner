@@ -40,7 +40,7 @@ transform = Transform( 2.80391, 0, 0, 0, 7.71905, 0, 0, 0, 2.80391, 9.15223, -3.
 transform = Transform( 2.80391, 0, 0, 0, 7.71905, 0, 0, 0, 2.80391, -10.5911, -4.55987, 17.5677 )
 
 [node name="Cylinder17" parent="." instance=ExtResource( 4 )]
-transform = Transform( 2.80391, 0, 0, 0, 7.71905, 0, 0, 0, 2.80391, -3.42219, -3.13789, 18.8094 )
+transform = Transform( 2.80391, 0, 0, 0, 7.71905, 0, 0, 0, 2.80391, -3.42219, 7.7343, 18.8094 )
 
 [node name="Cylinder12" parent="." instance=ExtResource( 4 )]
 transform = Transform( 2.36986, 0, 0, 0, 6.52413, 0, 0, 0, 2.36986, -6.91131, -3.15294, -16.7278 )
@@ -108,6 +108,9 @@ transform = Transform( -1.2837, 0.216281, -0.0426803, 0.64797, 0.417951, 0.08198
 [node name="Box25" parent="." instance=ExtResource( 2 )]
 transform = Transform( 4.80786, 0, 0, 0, 0.430679, 2.71709, 0, -0.193799, 6.03819, 33.805, 7.2687, -3.43918 )
 
+[node name="Box34" parent="." instance=ExtResource( 2 )]
+transform = Transform( -9.68516e-07, -1.35216, 0, 5.94471, -2.20294e-07, 0, 0, 0, 12.2159, 37.8604, 12.8998, 8.78063 )
+
 [node name="Box7" parent="." instance=ExtResource( 2 )]
 transform = Transform( 3.76879, 0, -0.392385, 0, 1, 0, 1.60776, 0, 0.919801, 12.1833, 13.5099, -9.24883 )
 
@@ -140,6 +143,9 @@ transform = Transform( 0.304009, 0, 0.995581, 0, 1, 0, -3.22329, 0, 0.0938996, 1
 
 [node name="Box23" parent="." instance=ExtResource( 2 )]
 transform = Transform( 0.304009, 0, 3.76058, 0, 1, 0, -3.22329, 0, 0.354685, 27.4871, 14.9199, 26.0798 )
+
+[node name="Box35" parent="." instance=ExtResource( 2 )]
+transform = Transform( 0.208175, 0, 3.77381, 0, 1, 0, -4.86346, 0, 0.161534, 33.6122, 10.1735, 19.4201 )
 
 [node name="Box9" parent="." instance=ExtResource( 2 )]
 transform = Transform( 0.332797, 0.0494468, 0.995469, -1.21467, 0.954766, -0.0232373, -3.89904, -0.293218, 0.0922061, -6.31314, 17.1991, -6.45031 )
