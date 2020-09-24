@@ -46,7 +46,7 @@ func _process_state(delta):
 				return
 				
 		if entity.has_wall_run:
-			if entity.ledge_detect_low.is_colliding():
+			if entity.raycast.is_colliding():
 				set_next_state("wall_run")
 				return
 				
@@ -64,6 +64,10 @@ func _process_state(delta):
 		if entity.velocity.y < falling_speed:
 			falling_speed = entity.velocity.y
 	
+#	if fsm.state_history[1] == "off_run":
+#		entity.apply_drag(delta * 0.)
+#	else:
+
 	entity.apply_drag(delta)
 	entity.apply_gravity(delta)
 	entity.center_camera(delta)
@@ -74,7 +78,7 @@ func _touched_surface(surface):
 		entity.has_wall_run = true
 		entity.has_wall_run_side = true
 		turn_speed = 270.0
-#		print(falling_speed)
+
 		if falling_speed < -25:
 			entity.set_animation("jump_land", 0.0, 16.0)
 			
@@ -100,7 +104,7 @@ func _animation_finished(anim_name):
 		if entity.input_listener.is_key_pressed(InputManager.UP):
 			set_next_state("off_run")
 		else:
-			set_next_state("offensive_stance")
+			set_next_state("run_stop")
 #	._animation_finished(anim_name)
 #	set_next_state("offensive_stance")
 #	pass

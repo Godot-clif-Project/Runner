@@ -39,6 +39,21 @@ transform = Transform( 2.80391, 0, 0, 0, 7.71905, 0, 0, 0, 2.80391, 9.15223, -3.
 [node name="Cylinder16" parent="." instance=ExtResource( 4 )]
 transform = Transform( 2.80391, 0, 0, 0, 7.71905, 0, 0, 0, 2.80391, -10.5911, -4.55987, 17.5677 )
 
+[node name="Cylinder18" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1.77147, 0, 0, 0, 2.36267, 0, 0, 0, 1.77147, 5.68353, -1.90257, 7.06147 )
+
+[node name="Cylinder19" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1.77147, 0, 0, 0, 2.36267, 0, 0, 0, 1.77147, 5.68353, -1.35723, 4.15054 )
+
+[node name="Cylinder20" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1.77147, 0, 0, 0, 2.36267, 0, 0, 0, 1.77147, 5.68353, -0.94804, 1.72787 )
+
+[node name="Cylinder21" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1.77147, 0, 0, 0, 2.36267, 0, 0, 0, 1.77147, 5.68353, -0.520765, -0.746506 )
+
+[node name="Cylinder22" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1.77147, 0, 0, 0, 2.36267, 0, 0, 0, 1.77147, 5.68353, -0.0327764, -3.51091 )
+
 [node name="Cylinder17" parent="." instance=ExtResource( 4 )]
 transform = Transform( 0.6198, 0, 0, 0, 8.70756, 0, 0, 0, 0.6198, -3.42219, 7.7343, 18.8094 )
 
@@ -129,8 +144,11 @@ transform = Transform( 4.2643, 0, 0, 0, 1, 0, 0, 0, 3.99663, 12.2152, 26.1702, -
 [node name="Box41" parent="." instance=ExtResource( 2 )]
 transform = Transform( 4.2643, 0, 0, 0, 1, 0, 0, 0, 3.99663, -5.12249, 29.6539, -34.7157 )
 
+[node name="Box43" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1.91019, 0, 0, 0, 1, 0, 0, 0, 5.47122, 6.64155, 29.6539, -18.2113 )
+
 [node name="Box42" parent="." instance=ExtResource( 2 )]
-transform = Transform( 4.2643, 0, 0, 0, 1, 0, 0, 0, 3.99663, 13.9829, 35.2476, -39.0769 )
+transform = Transform( -1.86398e-07, -1, 0, 4.2643, -4.37114e-08, 0, 0, 0, 3.99663, 7.56211, 35.2867, -32.7399 )
 
 [node name="Box7" parent="." instance=ExtResource( 2 )]
 transform = Transform( 3.76879, 0, -0.392385, 0, 1, 0, 1.60776, 0, 0.919801, 12.1833, 13.5099, -9.24883 )

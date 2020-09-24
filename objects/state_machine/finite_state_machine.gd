@@ -7,7 +7,7 @@ onready var entity = owner
 var StateList
 var CurrentState
 #var next_state
-var forced_next_state  = null
+var state_history = [null, null]
 
 var ready_to_process = false
 var process_events = false
@@ -52,6 +52,10 @@ func change_state(next_state : String):
 		CurrentState.state_list = StateList
 
 		CurrentState._enter_state()
+		
+#		state_history.push_front(next_state)
+#		state_history.pop_back()
+#		print(state_history)
 		
 	else:
 		print("ERROR Undefined State: " + next_state + "\n" + "Tried to access from: " + CurrentState.name)

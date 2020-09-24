@@ -4,7 +4,6 @@ extends "res://entities/sword_figher/states/sword_fighter_offensive_moves.gd"
 	# Name, seek and blend length 
 #	return ["off_h_r_heavy", 0.0, 5.0]
 
-var wall_rot
 var t = 0.0
 var speed = 0.0
 var speed_y = 3.0
@@ -21,11 +20,11 @@ func _enter_state():
 	entity.raycast_side_high[entity.wall_side].enabled = true
 	
 	entity.raycast_side[entity.wall_side].cast_to.y = -1.5
-	wall_rot = entity.get_normal_side(entity.wall_side)
-	entity.set_velocity(Vector3(0.0, speed_y, -speed).rotated(Vector3.RIGHT, wall_rot.x))
+	entity.wall_rot = entity.get_normal_side(entity.wall_side)
+	entity.set_velocity(Vector3(0.0, speed_y, -speed).rotated(Vector3.RIGHT, entity.wall_rot.x))
 	entity.set_animation("run_loop", 0, 10.0)
 	entity.has_wall_run_side = false
-#	entity.model_container.rotation.y = wall_rot.y - PI
+#	entity.model_container.rotation.y = entity.wall_rot.y - PI
 #	if entity.horizontal_speed > target_speed:
 #		entity.velocity = entity.velocity.normalized() * target_speed
 	
@@ -33,9 +32,9 @@ func _enter_state():
 #
 ## Inverse of enter_state.
 func _exit_state():
-#	entity.model_container.rotation.y = wall_rot.y + (PI * 0.5) *  -entity.wall_side
+#	entity.model_container.rotation.y = entity.wall_rot.y + (PI * 0.5) *  -entity.wall_side
+	entity.model_container.rotation.z = 0.0
 	entity.raycast_side[entity.wall_side].cast_to.y = -0.75
-#	entity.model_container.rotation.z = 0.0
 	entity.raycast_side_high[entity.wall_side].enabled = false
 #	entity.model.rotation.x = 0.0
 #	entity.model.rotation.y = PI
@@ -56,7 +55,7 @@ func _process_state(delta):
 			return
 		
 		if not entity.raycast_side_high[entity.wall_side].is_colliding():
-			entity.model_container.rotation.y = wall_rot.y - PI
+			entity.model_container.rotation.y = entity.wall_rot.y - PI
 			entity.velocity = Vector3.ZERO
 			set_next_state("ledge_climb")
 			return
@@ -72,21 +71,21 @@ func _process_state(delta):
 	speed -= delta * 4
 	speed_y -= delta * 8
 		
-	wall_rot = entity.get_normal_side(entity.wall_side)
-	entity.set_velocity(Vector3(0.0, speed_y, -speed).rotated(Vector3.RIGHT, wall_rot.x))
-	entity.model_container.rotation.y = wall_rot.y - PI * 0.5 * entity.wall_side
+	entity.wall_rot = entity.get_normal_side(entity.wall_side)
+	entity.set_velocity(Vector3(0.0, speed_y, -speed).rotated(Vector3.RIGHT, entity.wall_rot.x))
+	entity.model_container.rotation.y = entity.wall_rot.y - PI * 0.5 * entity.wall_side
 	entity.model.rotation.z = PI * -0.2 * entity.wall_side
 	
-#	entity.model_container.rotation.y = wall_rot.y + PI
-#	entity.model.rotation_degrees.y = rad2deg(wall_rot.y + PI * 0.5 * entity.wall_side)
-#	prints(wall_rot, entity.model.rotation.y)
+#	entity.model_container.rotation.y = entity.wall_rot.y + PI
+#	entity.model.rotation_degrees.y = rad2deg(entity.wall_rot.y + PI * 0.5 * entity.wall_side)
+#	prints(entity.wall_rot, entity.model.rotation.y)
 	
-#	entity.set_velocity(Vector3(speed * -entity.wall_side, speed_y, 0.0).rotated(Vector3.RIGHT, wall_rot.x))
+#	entity.set_velocity(Vector3(speed * -entity.wall_side, speed_y, 0.0).rotated(Vector3.RIGHT, entity.wall_rot.x))
 	
 	wait -= 1
-#		entity.set_velocity(Vector3(0.0, 10, -10).rotated(Vector3.RIGHT, wall_rot.x).rotated(Vector3.FORWARD, PI *entity.input_listener.sticks[0]))
+#		entity.set_velocity(Vector3(0.0, 10, -10).rotated(Vector3.RIGHT, entity.wall_rot.x).rotated(Vector3.FORWARD, PI *entity.input_listener.sticks[0]))
 #		entity.model_container.rotation.z = PI * -entity.input_listener.sticks[0]
-#		entity.model.rotation.x = wall_rot.x - PI * 0.5
+#		entity.model.rotation.x = entity.wall_rot.x - PI * 0.5
 #			entity.velocity.y = 10
 #		entity.apply_drag(delta)
 #		entity.apply_gravity(delta)
@@ -125,12 +124,12 @@ func _received_input(key, state):
 	if key == InputManager.GUARD:
 		if not state:
 			if entity.input_listener.is_key_pressed(InputManager.LEFT) and entity.wall_side == 1:
-				entity.set_velocity(Vector3(-5, 0.0, 0.0).rotated(Vector3.RIGHT, wall_rot.x))
-				entity.model_container.rotation.y = wall_rot.y
+				entity.set_velocity(Vector3(-5, 0.0, 0.0).rotated(Vector3.RIGHT, entity.wall_rot.x))
+				entity.model_container.rotation.y = entity.wall_rot.y
 			else:
 				if entity.input_listener.is_key_pressed(InputManager.RIGHT) and entity.wall_side == -1:
-					entity.set_velocity(Vector3(5, 0.0, 0.0).rotated(Vector3.RIGHT, wall_rot.x))
-					entity.model_container.rotation.y = wall_rot.y
+					entity.set_velocity(Vector3(5, 0.0, 0.0).rotated(Vector3.RIGHT, entity.wall_rot.x))
+					entity.model_container.rotation.y = entity.wall_rot.y
 					
 				
 				
@@ -143,15 +142,15 @@ func _received_input(key, state):
 			
 		if entity.has_wall_run:
 			if key == InputManager.RIGHT and entity.wall_side == 1:
-					entity.model_container.rotation.y = wall_rot.y + PI
+					entity.model_container.rotation.y = entity.wall_rot.y + PI
 					set_next_state("fall")
 					return
 			
 			elif key == InputManager.LEFT and entity.wall_side == -1:
-					entity.model_container.rotation.y = wall_rot.y - PI
+					entity.model_container.rotation.y = entity.wall_rot.y - PI
 					set_next_state("fall")
 					return
-#				entity.model_container.rotation.y = wall_rot.y + PI
+#				entity.model_container.rotation.y = entity.wall_rot.y + PI
 #				set_next_state("fall")
 #				return
 

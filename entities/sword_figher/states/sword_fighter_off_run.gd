@@ -27,17 +27,39 @@ func _enter_state():
 #	._enter_state()
 #
 ## Inverse of enter_state.
-#func _exit_state():
-#	._exit_state()
-#
+func _exit_state():
+	entity.set_collision_mask_bit(0, true)
+	._exit_state()
+
+var t = 0.0
+var t_2 = 0.0
+
 func _process_state(delta):
-	if entity.feet.get_overlapping_bodies().size() == 0:
-		set_next_state("fall")
-		return
-	
-#	if entity.ledge_detect_low.get_overlapping_bodies().size() != 0 and entity.ledge_detect_high.get_overlapping_bodies().size() != 0:
-#		set_next_state("wall_run")
-#		return
+	if t <= 0.0:
+		if entity.feet.get_overlapping_bodies().size() == 0:
+			t_2 -= delta
+			if t_2 <= 0.0:
+				set_next_state("fall")
+				return
+		else:
+			t_2 = 0.1
+		
+		if entity.raycast.is_colliding():
+			if not entity.ledge_detect_high.is_colliding():
+	#			set_next_state("ledge_climb")
+#				entity.velocity.y = 13
+#				entity.add_impulse(Vector3(0.0, 10, 0.0))
+#				entity.set_collision_layer_bit(2, false)
+				entity.set_collision_mask_bit(0, false)
+				t = 0.08
+				
+	else:
+		entity.translate(Vector3(0.0, 15 * delta, 0.0))
+		t -= delta
+		if t <= 0.0 and not entity.get_collision_mask_bit(0):
+#			entity.set_collision_layer_bit(2, true)
+			entity.set_collision_mask_bit(0, true)
+			
 		
 	var stick = entity.input_listener.sticks[0]
 	if abs(stick) > 0.1:
@@ -76,9 +98,9 @@ func _process_state(delta):
 ##		entity.set_target_velocity(Vector3(0.0, 0.0, -target_speed))
 ##		entity.lerp_velocity(delta)
 #	else:
+	entity.model_container.rotation_degrees.y += ang_momentum
 	entity.accelerate(-target_speed, delta * acceleration)
 #	entity.apply_drag(delta)
-	entity.model_container.rotation_degrees.y += ang_momentum
 	entity.apply_gravity(delta)
 	
 	entity.center_camera(delta)

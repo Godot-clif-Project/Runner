@@ -17,18 +17,21 @@ var current_turn_dir = 0
 var prev_turn_dir = 0
 
 var speed = 20
-var wall_rot
 var t = 0.0
 
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
 #	speed += entity.horizontal_speed
 #	print(entity.prev_speed)
-	entity.velocity = Vector3.ZERO
-	wall_rot = entity.get_normal()
+#	entity.velocity = Vector3.ZERO
+
+	entity.velocity.x *= 0.25
+	entity.velocity.z *= 0.25
+	
+	entity.wall_rot = entity.get_normal()
 	entity.set_animation("run_loop", 0, 10.0)
 	entity.has_wall_run = false
-#	entity.model_container.rotation.y = wall_rot.y - PI
+#	entity.model_container.rotation.y = entity.wall_rot.y - PI
 #	if entity.horizontal_speed > target_speed:
 #		entity.velocity = entity.velocity.normalized() * target_speed
 	
@@ -41,32 +44,39 @@ func _exit_state():
 	._exit_state()
 #
 func _process_state(delta):
-	if t > 0.6:
-#		entity.model_container.rotation.y = wall_rot.y
+#	if t > 0.6:
+#		entity.model_container.rotation.y = entity.wall_rot.y
 #		entity.set_velocity(Vector3(0.0, 0.0, -10))
-		entity.jump_str = 20
-		set_next_state("jump")
-		return
-	else:
-		t += delta
+#		entity.jump_str = 20
+#		set_next_state("jump")
+#		return
+#	else:
+#		t += delta
 	
-		if not entity.ledge_detect_low.is_colliding():
-	#		if entity.input_listener.is_key_pressed(InputManager.UP):
+	if not entity.ledge_detect_low.is_colliding():
+		if entity.input_listener.is_key_pressed(InputManager.UP):
 			entity.jump_str = 20
-			entity.set_velocity(Vector3(0.0, 10, -2).rotated(Vector3.RIGHT, wall_rot.x))
+			entity.set_velocity(Vector3(0.0, 10, -2).rotated(Vector3.RIGHT, entity.wall_rot.x))
 			set_next_state("jump")
 			return
-	#		else:
-	#			entity.velocity.y = 0
 		else:
+			set_next_state("ledge_climb")
+			return
+#			entity.velocity.y = 0
+	else:
 #			entity.input_listener.sticks[0]
-#			entity.set_velocity(Vector3(0.0, 10, -10).rotated(Vector3.RIGHT, wall_rot.x).rotated(Vector3.FORWARD, PI *entity.input_listener.sticks[0]))
+#			entity.set_velocity(Vector3(0.0, 10, -10).rotated(Vector3.RIGHT, entity.wall_rot.x).rotated(Vector3.FORWARD, PI *entity.input_listener.sticks[0]))
 #			entity.model_container.rotation.z = PI * -entity.input_listener.sticks[0]
-			speed -= delta * 25
-			wall_rot = entity.get_normal()
-			entity.set_velocity(Vector3(0.0, speed, -10).rotated(Vector3.RIGHT, wall_rot.x))
-			entity.model.rotation.x = wall_rot.x - PI * 0.5
-			entity.model_container.rotation.y = wall_rot.y - PI
+		speed -= delta * 25
+		if speed <= -10.0:
+			set_next_state("fall")
+			return
+			
+		entity.wall_rot = entity.get_normal()
+#			entity.set_velocity(Vector3(0.0, speed, -10).rotated(Vector3.RIGHT, entity.wall_rot.x))
+		entity.velocity.y = speed
+		entity.model.rotation.x = entity.wall_rot.x - PI * 0.25
+		entity.model_container.rotation.y = entity.wall_rot.y - PI
 		
 ##func _animation_blend_started(anim_name):
 ##	print(anim_name)
@@ -102,16 +112,17 @@ func _received_input(key, state):
 	if not state:
 		if key == InputManager.GUARD:
 			entity.velocity = Vector3.ZERO
-			entity.model_container.rotation.y = wall_rot.y
+			if entity.input_listener.is_key_pressed(InputManager.DOWN):
+				entity.model_container.rotation.y = entity.wall_rot.y
 	else:
 		if entity.has_wall_run_side:
 			if key == InputManager.LEFT:
-				entity.model_container.rotation.y = wall_rot.y + PI * 0.5
+				entity.model_container.rotation.y = entity.wall_rot.y - PI * 0.5
 				entity.wall_side = 1
 				set_next_state("wall_run_side")
 				return
 			if key == InputManager.RIGHT:
-				entity.model_container.rotation.y = wall_rot.y - PI * 0.5
+				entity.model_container.rotation.y = entity.wall_rot.y + PI * 0.5
 				entity.wall_side = -1
 				set_next_state("wall_run_side")
 				return

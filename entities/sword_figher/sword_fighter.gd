@@ -51,6 +51,7 @@ var prev_speed = 0.0
 var has_wall_run = true
 var has_wall_run_side = true
 var wall_side = 0
+var wall_rot : Vector3
 
 onready var lock_on_target : Spatial = get_node(target)
 onready var input_listener = $InputListener
@@ -64,12 +65,12 @@ onready var anim_player = $ModelContainer/sword_fighter/AnimationPlayer
 onready var animation_blender = $AnimationBlender
 onready var fsm = $FSM
 onready var flags = $AnimationFlags
+
 onready var feet = $ModelContainer/Feet
 onready var ledge_detect_low = $ModelContainer/LedgeDetectLow
 onready var ledge_detect_high = $ModelContainer/LedgeDetectHigh
-#onready var ledge_detect_r = $ModelContainer/LedgeDetectR
-#onready var ledge_detect_l = $ModelContainer/LedgeDetectL
 onready var raycast = $ModelContainer/RayCast
+
 onready var raycast_side = {
 	-1 : $ModelContainer/RayCastL,
 	1 : $ModelContainer/RayCastR,
@@ -78,8 +79,6 @@ onready var raycast_side_high = {
 	-1 : $ModelContainer/RayCastLHigh,
 	1 : $ModelContainer/RayCastRHigh,
 }
-#onready var raycast_l = $ModelContainer/RayCastL
-#onready var raycast_r = $ModelContainer/RayCastR
 
 onready var vel_arrow = $VelocityArrow
 
@@ -164,9 +163,6 @@ func _input(event):
 		reset()
 
 
-#func _process(delta):
-#		print("Elapsed time: ", OS.get_ticks_msec() - start_time)	
-#		print("Elapsed time: ", OS.get_ticks_msec() / 1000.0)
 
 #	if not stop_timer:
 #		var ticks = OS.get_ticks_msec() - start_time
@@ -175,6 +171,11 @@ func _input(event):
 #		var hundreds = (ticks / 10) % 100
 #		var str_time = "%02d : %02d : %02d" % [minutes, seconds, hundreds]
 #		get_node("../Timer").text = str_time
+
+#func _process(delta):
+#	velocity = move_and_slide(velocity, Vector3.UP, false, 4, 0.785398, true)
+#		print("Elapsed time: ", OS.get_ticks_msec() - start_time)	
+#		print("Elapsed time: ", OS.get_ticks_msec() / 1000.0)
 
 func _physics_process(delta):
 	fsm._process_current_state(delta, true)
@@ -207,7 +208,7 @@ func center_camera(delta):
 func apply_gravity(delta):
 	if velocity.y > TERMINAL_VELOCITY:
 		if not is_on_floor():
-			velocity.y -= 9.8 * delta * 8
+			velocity.y -= 9.8 * delta * 7
 		else:
 			velocity.y -= 9.8 * delta * 0.3
 	else:
