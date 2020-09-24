@@ -19,7 +19,7 @@ func _ready():
 func set_up(value):
 	if enabled:
 		up = value
-		emit_signal("simulated_input", pad, InputManager.UP, int(value))
+		emit_signal("simulated_input", pad, , int(value))
 func set_down(value):
 	if enabled:
 		down = value

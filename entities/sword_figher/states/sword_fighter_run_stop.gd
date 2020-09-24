@@ -52,7 +52,7 @@ func _process_state(delta):
 	else:
 		ang_momentum = lerp(ang_momentum, 0, delta * rot_drag)
 	
-	if entity.input_listener.is_key_pressed(InputManager.DOWN):
+	if entity.input_listener.is_key_pressed(InputManager.BREAK):
 		entity.ground_drag = 10
 	else:
 		entity.ground_drag = 5
@@ -101,7 +101,7 @@ func get_possible_transitions():
 
 func _received_input(key, state):
 	if state:
-		if key == InputManager.UP:
+		if key == InputManager.RUN:
 			set_next_state("off_run")
 			return
 #		if key == InputManager.DOWN:

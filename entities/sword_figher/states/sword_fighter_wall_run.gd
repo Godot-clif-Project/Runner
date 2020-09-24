@@ -54,14 +54,18 @@ func _process_state(delta):
 #		t += delta
 	
 	if not entity.ledge_detect_low.is_colliding():
-		if entity.input_listener.is_key_pressed(InputManager.UP):
-			entity.jump_str = 20
-			entity.set_velocity(Vector3(0.0, 10, -2).rotated(Vector3.RIGHT, entity.wall_rot.x))
-			set_next_state("jump")
-			return
-		else:
+		if entity.wall_has_ledge:
+			if entity.input_listener.is_key_pressed(InputManager.RUN):
+				entity.jump_str = 20
+				entity.set_velocity(Vector3(0.0, 10, -2).rotated(Vector3.RIGHT, entity.wall_rot.x))
+				set_next_state("jump")
+				return
+				
 			set_next_state("ledge_climb")
 			return
+			
+		else:
+			set_next_state("fall")
 #			entity.velocity.y = 0
 	else:
 #			entity.input_listener.sticks[0]
@@ -86,7 +90,7 @@ func _process_state(delta):
 func _animation_finished(anim_name):
 	pass
 #	if anim_name == "off_run_startup":
-#		if entity.input_listener.is_key_released(InputManager.UP):
+#		if entity.input_listener.is_key_released(InputManager.RUN):
 #			set_next_state("offensive_stance")
 #		else:
 #			entity.set_animation("run_loop", 0, -1.0)
@@ -94,7 +98,7 @@ func _animation_finished(anim_name):
 
 #func _flag_changed(flag, state):
 #	if flag == "is_evade_cancelable" and state:
-#		if entity.input_listener.is_key_pressed(InputManager.UP):
+#		if entity.input_listener.is_key_pressed(InputManager.RUN):
 #			set_next_state("walk")
 #		if entity.input_listener.is_key_pressed(InputManager.DOWN):
 #			set_next_state("walk")
@@ -110,7 +114,7 @@ func get_possible_transitions():
 
 func _received_input(key, state):
 	if not state:
-		if key == InputManager.GUARD:
+		if key == InputManager.RUN:
 			entity.velocity = Vector3.ZERO
 			if entity.input_listener.is_key_pressed(InputManager.DOWN):
 				entity.model_container.rotation.y = entity.wall_rot.y

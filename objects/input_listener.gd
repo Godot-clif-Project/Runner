@@ -29,11 +29,11 @@ var multiple_inputs = {
 #	"specialsword" : "special+sword",
 #	"swordspecial" : "special+sword",
 #	"swordkick" : "sword+kick",
-#	"swordkick" : InputManager.STANCE,
-#	"kicksword" : InputManager.STANCE,
-#	"swordjump" : InputManager.STANCE,
-	[InputManager.LIGHT, InputManager.GUARD] : InputManager.THROW,
-	[InputManager.GUARD, InputManager.LIGHT] : InputManager.THROW,
+#	"swordkick" : InputManager.BREAK,
+#	"kicksword" : InputManager.BREAK,
+#	"swordjump" : InputManager.BREAK,
+	[InputManager.LIGHT, InputManager.RUN] : InputManager.THROW,
+	[InputManager.RUN, InputManager.LIGHT] : InputManager.THROW,
 	}
 
 export var window_for_input_chain = 15
@@ -42,6 +42,8 @@ var input_chains ={
 	InputManager.LEFT_LEFT : [InputManager.LEFT, InputManager.LEFT],
 	InputManager.UP_UP : [InputManager.UP, InputManager.UP],
 	InputManager.DOWN_DOWN : [InputManager.DOWN, InputManager.DOWN],
+	InputManager.RUN_RUN : [InputManager.RUN, InputManager.RUN],
+	InputManager.BREAK_BREAK : [InputManager.BREAK, InputManager.BREAK],
 #	"right_dp" : [InputManager.RIGHT, InputManager.DOWN, InputManager.LIGHT],
 #	"left_dp" : [InputManager.LEFT, InputManager.DOWN, InputManager.LIGHT],
 #	"right_qcf_weapon" : [InputManager.DOWN, InputManager.RIGHT, InputManager.LIGHT],
@@ -50,7 +52,7 @@ var input_chains ={
 #	"left_qcf_fire" : [InputManager.DOWN, InputManager.LEFT, "fire"],
 #	"right_qcf_kick" : [InputManager.DOWN, InputManager.RIGHT, InputManager.HEAVY],
 #	"left_qcf_kick" : [InputManager.DOWN, InputManager.LEFT, InputManager.HEAVY],
-#	"upup" : [InputManager.UP, InputManager.UP],
+#	"upup" : [, ],
 #	"right_bomb_evade" : [InputManager.LEFT, InputManager.RIGHT, "special"],
 #	"left_bomb_evade" : [InputManager.RIGHT, InputManager.LEFT, "special"],
 #	"right_gap_closer" : [InputManager.RIGHT_RIGHT, InputManager.LIGHT],
@@ -159,7 +161,7 @@ func check_multiple_input(key):
 #		print(multiple_inputs[key_combination])
 
 func check_input_chains(key):
-	if key == InputManager.STANCE or key == InputManager.START:
+	if key == InputManager.START:
 		return
 	
 	for c in input_chains.keys():

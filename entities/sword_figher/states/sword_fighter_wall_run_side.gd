@@ -15,7 +15,7 @@ func _enter_state():
 	if speed < 12:
 		speed = 12
 	if entity.velocity.y > 0.0:
-		speed_y = entity.velocity.y * 0.5
+		speed_y = clamp(entity.velocity.y * 0.5, 0, 10)
 	
 	entity.raycast_side_high[entity.wall_side].enabled = true
 	
@@ -50,15 +50,20 @@ func _process_state(delta):
 			set_next_state("wall_run")
 			return
 		
-		if not entity.ledge_detect_high.is_colliding() and entity.ledge_detect_low.is_colliding():
-			set_next_state("ledge_climb")
-			return
+		if not entity.raycast_side_high[entity.wall_side].is_colliding() and entity.wall_has_ledge:
+			if entity.wall_has_ledge:
+				entity.model_container.rotation.y = entity.wall_rot.y - PI
+				entity.model.rotation.z = 0.0
+				set_next_state("ledge_climb")
+				return
 		
-		if not entity.raycast_side_high[entity.wall_side].is_colliding():
-			entity.model_container.rotation.y = entity.wall_rot.y - PI
-			entity.velocity = Vector3.ZERO
-			set_next_state("ledge_climb")
-			return
+#		if entity.wall_has_ledge:
+##			if entity.raycast_side[entity.wall_side].get_collider().is_in_group("ledge"):
+#			entity.model_container.rotation.y = entity.wall_rot.y - PI
+#			entity.velocity = Vector3.ZERO
+#			set_next_state("ledge_climb")
+#			return
+				
 			
 	
 	if entity.feet.get_overlapping_bodies().size() != 0:
@@ -98,7 +103,7 @@ func _process_state(delta):
 func _animation_finished(anim_name):
 	pass
 #	if anim_name == "off_run_startup":
-#		if entity.input_listener.is_key_released(InputManager.UP):
+#		if entity.input_listener.is_key_released(InputManager.RUN):
 #			set_next_state("offensive_stance")
 #		else:
 #			entity.set_animation("run_loop", 0, -1.0)
@@ -106,7 +111,7 @@ func _animation_finished(anim_name):
 
 #func _flag_changed(flag, state):
 #	if flag == "is_evade_cancelable" and state:
-#		if entity.input_listener.is_key_pressed(InputManager.UP):
+#		if entity.input_listener.is_key_pressed(InputManager.RUN):
 #			set_next_state("walk")
 #		if entity.input_listener.is_key_pressed(InputManager.DOWN):
 #			set_next_state("walk")
@@ -121,7 +126,7 @@ func get_possible_transitions():
 		]
 
 func _received_input(key, state):
-	if key == InputManager.GUARD:
+	if key == InputManager.RUN:
 		if not state:
 			if entity.input_listener.is_key_pressed(InputManager.LEFT) and entity.wall_side == 1:
 				entity.set_velocity(Vector3(-5, 0.0, 0.0).rotated(Vector3.RIGHT, entity.wall_rot.x))

@@ -22,9 +22,9 @@ func get_animation_data():
 #func _process_state(delta):
 #	entity.apply_root_motion(delta)
 #
-#	if entity.input_listener.is_key_pressed(InputManager.UP) and entity.input_listener.is_key_released(InputManager.DOWN):
+#	if entity.input_listener.is_key_pressed(InputManager.RUN) and entity.input_listener.is_key_released(InputManager.DOWN):
 #		set_next_state("walk")
-#	if entity.input_listener.is_key_pressed(InputManager.DOWN) and entity.input_listener.is_key_released(InputManager.UP):
+#	if entity.input_listener.is_key_pressed(InputManager.DOWN) and entity.input_listener.is_key_released(InputManager.RUN):
 #		set_next_state("walk")
 #	if entity.input_listener.is_key_pressed(InputManager.LEFT) and entity.input_listener.is_key_released(InputManager.RIGHT):
 #		set_next_state("walk")

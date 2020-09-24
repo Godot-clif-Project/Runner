@@ -41,7 +41,7 @@ func _process_state(delta):
 #		entity.model_container.rotation_degrees.y -= delta * 180
 	
 	if not entity.ledge_detect_low.is_colliding():
-		if entity.input_listener.is_key_pressed(InputManager.UP):
+		if entity.input_listener.is_key_pressed(InputManager.RUN):
 			entity.jump_str = 20
 			set_next_state("jump")
 #			entity.add_impulse(Vector3(0.0, 0.0 , -10.0))
@@ -61,7 +61,7 @@ func _process_state(delta):
 ##		print(falling_speed)
 #		if falling_speed < -22:
 #			entity.set_animation("jump_land", 0.0, 16.0)
-#		elif entity.input_listener.is_key_pressed(InputManager.UP):
+#		elif entity.input_listener.is_key_pressed(InputManager.RUN):
 #			set_next_state("off_run")
 #		else:
 #			set_next_state("offensive_stance")
@@ -78,7 +78,7 @@ func _process_state(delta):
 #
 #func _animation_finished(anim_name):
 #	if anim_name == "jump_land":
-#		if entity.input_listener.is_key_pressed(InputManager.UP):
+#		if entity.input_listener.is_key_pressed(InputManager.RUN):
 #			set_next_state("off_run")
 #		else:
 #			set_next_state("offensive_stance")

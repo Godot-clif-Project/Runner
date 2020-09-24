@@ -83,7 +83,7 @@ func _process_state(delta):
 		turn_acc = 0.0
 		prev_turn_dir = current_turn_dir
 	
-	if entity.input_listener.is_key_released(InputManager.UP) or target_speed > 13:
+	if entity.input_listener.is_key_released(InputManager.RUN) or target_speed > 13:
 		target_speed -= delta * 12
 		if target_speed <= 0.0:
 			entity.model.rotation.z = 0.0
@@ -114,7 +114,7 @@ func _process_state(delta):
 func _animation_finished(anim_name):
 	pass
 #	if anim_name == "off_run_startup":
-#		if entity.input_listener.is_key_released(InputManager.UP):
+#		if entity.input_listener.is_key_released(InputManager.RUN):
 #			set_next_state("offensive_stance")
 #		else:
 #			entity.set_animation("run_loop", 0, -1.0)
@@ -122,7 +122,7 @@ func _animation_finished(anim_name):
 
 #func _flag_changed(flag, state):
 #	if flag == "is_evade_cancelable" and state:
-#		if entity.input_listener.is_key_pressed(InputManager.UP):
+#		if entity.input_listener.is_key_pressed(InputManager.RUN):
 #			set_next_state("walk")
 #		if entity.input_listener.is_key_pressed(InputManager.DOWN):
 #			set_next_state("walk")
@@ -138,10 +138,10 @@ func get_possible_transitions():
 
 func _received_input(key, state):
 	if state:
-		if key == InputManager.DOWN:
+		if key == InputManager.BREAK:
 			set_next_state("run_stop")
 			return
-		if key == InputManager.UP_UP:
+		if key == InputManager.RUN_RUN:
 			target_speed = 23
 			max_turn_speed = 2.3
 #			entity.set_velocity(Vector3(0.0, 0.0, -target_speed))
@@ -158,7 +158,7 @@ func _received_input(key, state):
 #			set_next_state("run_stop")
 #			return
 #	else:
-#		if key == InputManager.UP:
+#		if key == :
 ##			set_next_state("run_stop")
 #			target_speed -= delta
 #			print("ASD")

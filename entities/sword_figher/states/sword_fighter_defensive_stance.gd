@@ -18,10 +18,10 @@ func get_animation_data():
 func _enter_state():
 	entity.current_stance = entity.Stances.DEFENSIVE
 	
-#	if entity.input_listener.is_key_pressed(InputManager.UP) and entity.input_listener.is_key_released(InputManager.DOWN):
+#	if entity.input_listener.is_key_pressed(InputManager.RUN) and entity.input_listener.is_key_released(InputManager.DOWN):
 #		set_next_state("walk")
 #		return
-#	elif entity.input_listener.is_key_pressed(InputManager.DOWN) and entity.input_listener.is_key_released(InputManager.UP):
+#	elif entity.input_listener.is_key_pressed(InputManager.DOWN) and entity.input_listener.is_key_released(InputManager.RUN):
 #		set_next_state("walk")
 #		return
 #	elif entity.input_listener.is_key_pressed(InputManager.LEFT) and entity.input_listener.is_key_released(InputManager.RIGHT):
@@ -56,6 +56,6 @@ func _process_state(delta):
 #				set_next_state("def_hi_light")
 #			if key == InputManager.HEAVY:
 #				set_next_state("off_kick")
-#			if key == InputManager.STANCE:
+#			if key == InputManager.BREAK:
 #				entity.set_animation("stance_def_to_off", 0, 3.0)
 			

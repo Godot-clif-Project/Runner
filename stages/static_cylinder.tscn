@@ -9,7 +9,9 @@ rings = 1
 
 [sub_resource type="CylinderShape" id=2]
 
-[node name="Cylinder" type="StaticBody"]
+[node name="Cylinder" type="StaticBody" groups=[
+"ledge",
+]]
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 mesh = SubResource( 1 )

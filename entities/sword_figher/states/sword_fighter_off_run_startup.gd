@@ -47,7 +47,7 @@ func _animation_finished(anim_name):
 
 #func _flag_changed(flag, state):
 #	if flag == "is_evade_cancelable" and state:
-#		if entity.input_listener.is_key_pressed(InputManager.UP):
+#		if entity.input_listener.is_key_pressed(InputManager.RUN):
 #			set_next_state("walk")
 #		if entity.input_listener.is_key_pressed(InputManager.DOWN):
 #			set_next_state("walk")
@@ -69,7 +69,7 @@ func _received_input(key, state):
 		if key == InputManager.DOWN:
 			set_next_state("run_stop")
 #	if not state:
-#		if key == InputManager.UP:
+#		if key == :
 #			released_up = true
 #			entity.set_animation("off_run_stop", 0, 10.0)
 				

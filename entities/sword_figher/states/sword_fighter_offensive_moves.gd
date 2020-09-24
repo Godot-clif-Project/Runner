@@ -23,7 +23,7 @@ func _animation_finished(anim_name):
 
 func _flag_changed(flag, state):
 	if flag == "is_evade_cancelable" and state:
-#		if entity.input_listener.is_key_pressed(InputManager.GUARD):
+#		if entity.input_listener.is_key_pressed(InputManager.RUN):
 #			set_next_state("off_block")
 #			return
 		if entity.input_listener.is_key_pressed(InputManager.UP):
@@ -53,6 +53,6 @@ func _received_hit(hit : Hit):
 #				set_next_state("off_hi_light")
 #			elif key == InputManager.HEAVY:
 #				set_next_state("off_hi_heavy")
-#			if key == InputManager.GUARD:
+#			if key == InputManager.RUN:
 #				if entity.input_listener.is_key_pressed(InputManager.UP):
 #					set_next_state("off_kick")

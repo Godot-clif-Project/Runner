@@ -148,7 +148,7 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 	# Pass valid transitions into the array in order of lowest to highest priority.
 	if key_state == InputManager.RELEASED:
 		match key as int:
-			InputManager.GUARD:
+			InputManager.JUMP:
 				if valid_transitions.has("jump"):
 					return {"state" : "jump", "flag" : null}
 			
@@ -171,19 +171,19 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 							return {"state" : t, "flag" : "is_stringable"}
 							
 							
-			InputManager.STANCE:
+			InputManager.BREAK:
 				for t in valid_transitions:
 					match t as String :
 						"stance_switch":
 							return {"state" : t, "flag" : "is_stringable"}
 							
-			InputManager.SPECIAL:
+			InputManager.RUN:
 				for t in valid_transitions:
 					match t as String:
-#						"off_run_startup":
-#							return {"state" : t, "flag" : "is_evade_cancelable"}
-						"off_kick":
-							return {"state" : t, "flag" : "is_command_cancelable"}
+						"off_run_startup":
+							return {"state" : t, "flag" : "is_evade_cancelable"}
+#						"off_kick":
+#							return {"state" : t, "flag" : "is_command_cancelable"}
 #						"off_block":
 #							return {"state" : t, "flag" : "is_evade_cancelable"}
 #						"jump":
@@ -200,8 +200,6 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 			InputManager.UP_UP:
 				for t in valid_transitions:
 					match t as String:
-						"off_run_startup":
-							return {"state" : t, "flag" : "is_evade_cancelable"}
 						"def_step":
 							return {"state" : t, "flag" : "is_evade_cancelable"}
 						"walk":
@@ -215,18 +213,25 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 						"walk":
 							return {"state" : "walk", "flag" : "is_stringable"}
 							
-			InputManager.LEFT:
-				if valid_transitions.has("walk"):
-					if entity.input_listener.is_key_released(InputManager.RIGHT):
-						return {"state" : "walk", "flag" : "is_stringable"}
-			InputManager.RIGHT:
-				if valid_transitions.has("walk"):
-					if entity.input_listener.is_key_released(InputManager.LEFT):
-						return {"state" : "walk", "flag" : "is_stringable"}
+			InputManager.RUN_RUN:
+				if valid_transitions.has("off_run_startup"):
+					return {"state" : "off_run_startup", "flag" : "is_evade_cancelable"}
+					
 			InputManager.UP:
 				if valid_transitions.has("walk"):
 					if entity.input_listener.is_key_released(InputManager.DOWN):
 						return {"state" : "walk", "flag" : "is_stringable"}
+						
+			InputManager.LEFT:
+				if valid_transitions.has("walk"):
+					if entity.input_listener.is_key_released(InputManager.RIGHT):
+						return {"state" : "walk", "flag" : "is_stringable"}
+						
+			InputManager.RIGHT:
+				if valid_transitions.has("walk"):
+					if entity.input_listener.is_key_released(InputManager.LEFT):
+						return {"state" : "walk", "flag" : "is_stringable"}
+						
 			InputManager.DOWN:
 				if valid_transitions.has("walk"):
 					if entity.input_listener.is_key_released(InputManager.UP):

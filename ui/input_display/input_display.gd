@@ -5,9 +5,9 @@ export var listen_to_pad = 0
 onready var buttons = {
 	InputManager.LIGHT : get_node("Control/UIButton4/Container/Button"),
 	InputManager.HEAVY : get_node("Control/UIButton5/Container/Button"),
-	InputManager.GUARD : get_node("Control/UIButton6/Container/Button"),
-	InputManager.SPECIAL : get_node("Control/UIButton7/Container/Button"),
-	InputManager.STANCE : get_node("Control/UIButton8/Container/Button"),
+	InputManager.JUMP : get_node("Control/UIButton6/Container/Button"),
+	InputManager.RUN : get_node("Control/UIButton7/Container/Button"),
+	InputManager.BREAK : get_node("Control/UIButton8/Container/Button"),
 	InputManager.START : get_node("Control/UIButton12/Container/Button"),
 	}
 
@@ -19,10 +19,10 @@ var stick = [
 	]
 
 var dir_keys = {
-	InputManager.UP: Vector2.UP,
-	InputManager.DOWN: Vector2.DOWN,
-	InputManager.LEFT: Vector2.LEFT,
-	InputManager.RIGHT: Vector2.RIGHT,
+	InputManager.UP : Vector2.UP,
+	InputManager.DOWN : Vector2.DOWN,
+	InputManager.LEFT : Vector2.LEFT,
+	InputManager.RIGHT : Vector2.RIGHT,
 }
 
 var direction = Vector2.ZERO

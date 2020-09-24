@@ -67,8 +67,8 @@ func add_direction():
 #		set_next_state("off_hi_light")
 #	elif key == InputManager.HEAVY:
 #		set_next_state("off_hi_heavy")
-#	elif key == InputManager.GUARD:
-#		if entity.input_listener.is_key_pressed(InputManager.UP):
+#	elif key == InputManager.RUN:
+#		if entity.input_listener.is_key_pressed(InputManager.RUN):
 #			set_next_state("off_kick")
 #		else:
 #			set_next_state("off_block")

@@ -50,6 +50,7 @@ var horizontal_speed = 0.0
 var prev_speed = 0.0
 var has_wall_run = true
 var has_wall_run_side = true
+var wall_has_ledge = false
 var wall_side = 0
 var wall_rot : Vector3
 
@@ -135,6 +136,12 @@ func get_normal_side(side):
 	raycast_side[side].force_raycast_update()
 	var normal = raycast_side[side].get_collision_normal()
 	var t = Transform.IDENTITY.looking_at(normal, Vector3.UP)
+	
+	if raycast_side[side].is_colliding():
+		wall_has_ledge = raycast_side[side].get_collider().is_in_group("ledge")
+	else:
+		wall_has_ledge = false
+	
 	return t.basis.get_euler()
 
 func get_normal():
@@ -143,6 +150,11 @@ func get_normal():
 	var normal = raycast.get_collision_normal()
 	var t = Transform.IDENTITY.looking_at(normal, Vector3.UP)
 	
+	if raycast.is_colliding():
+		wall_has_ledge = raycast.get_collider().is_in_group("ledge")
+	else:
+		wall_has_ledge = false
+		
 #	arrow.transform = t
 #	arrow.transform.origin = point
 	
@@ -186,7 +198,7 @@ func _physics_process(delta):
 	
 	velocity = move_and_slide(velocity, Vector3.UP, false, 4, 0.785398, true)
 	
-	if input_listener.is_key_pressed(InputManager.GUARD):
+	if input_listener.is_key_pressed(InputManager.JUMP):
 		if jump_str < max_jump_str:
 			jump_str += max_jump_str * delta * 4
 			
@@ -311,7 +323,7 @@ func jump():
 	velocity.y = 0.0
 	
 	var direction = Vector2.ZERO
-	if input_listener.is_key_pressed(InputManager.UP):
+	if input_listener.is_key_pressed(InputManager.RUN):
 		direction += Vector2.UP
 #	if input_listener.is_key_pressed(InputManager.DOWN):
 #		direction += Vector2.DOWN

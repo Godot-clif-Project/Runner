@@ -9,7 +9,7 @@ func _enter_state():
 	entity.get_node("ModelContainer/Particles2").emitting = false
 	entity.current_stance = entity.Stances.OFFENSIVE
 	
-#	if entity.input_listener.is_key_pressed(InputManager.GUARD):
+#	if entity.input_listener.is_key_pressed(InputManager.RUN):
 #		set_next_state("off_block")
 #		return
 	if entity.input_listener.is_key_pressed(InputManager.UP) and entity.input_listener.is_key_released(InputManager.DOWN):
@@ -55,10 +55,10 @@ func _process_state(delta):
 #				set_next_state("off_hi_light")
 #			elif key == InputManager.HEAVY:
 #				set_next_state("off_hi_heavy")
-#			elif key == InputManager.STANCE:
+#			elif key == InputManager.BREAK:
 #				entity.set_animation("stance_off_to_def", 0, 3.0)
-#			elif key == InputManager.GUARD:
-#				if entity.input_listener.is_key_pressed(InputManager.UP):
+#			elif key == InputManager.RUN:
+#				if entity.input_listener.is_key_pressed(InputManager.RUN):
 #					set_next_state("off_kick")
 #				else:
 #					set_next_state("off_block")

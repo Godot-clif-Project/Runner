@@ -2,8 +2,8 @@ extends Node
 
 enum {RELEASED, PRESSED}
 enum {
-	UP, DOWN, LEFT, RIGHT, LIGHT, HEAVY, GUARD, SPECIAL, STANCE, FIRE, TAUNT, EVADE, START,
-	RIGHT_RIGHT, LEFT_LEFT, UP_UP, DOWN_DOWN,
+	UP, DOWN, LEFT, RIGHT, LIGHT, HEAVY, JUMP, RUN, BREAK, FIRE, TAUNT, EVADE, START,
+	RIGHT_RIGHT, LEFT_LEFT, UP_UP, DOWN_DOWN, RUN_RUN, BREAK_BREAK,
 	THROW,
 }
 
@@ -35,9 +35,9 @@ signal key_changed(pad, key, state)
 var pad_0_state = {
 	LIGHT : RELEASED,
 	HEAVY : RELEASED,
-	GUARD : RELEASED,
-	STANCE : RELEASED,
-	SPECIAL : RELEASED,
+	JUMP : RELEASED,
+	RUN : RELEASED,
+	BREAK : RELEASED,
 	FIRE : RELEASED,
 	TAUNT : RELEASED,
 	EVADE : RELEASED,
@@ -53,11 +53,11 @@ var pad_0_stick = Vector2(0.0, 0.0)
 var pad_1_state = {
 	LIGHT : RELEASED,
 	HEAVY : RELEASED,
-	GUARD : RELEASED,
-	SPECIAL : RELEASED,
+	JUMP : RELEASED,
+	BREAK : RELEASED,
 	FIRE : RELEASED,
 	TAUNT : RELEASED,
-	STANCE : RELEASED,
+	RUN : RELEASED,
 	EVADE : RELEASED,
 	START : RELEASED,
 	UP : RELEASED,
@@ -76,15 +76,15 @@ onready var pads = {
 ### Mapping / Device bindings ###
 
 var pad_0_keys_joystick = {
-	0 : [GUARD],
+	0 : [JUMP],
 	3 : [HEAVY],
-	1 : [STANCE],
+	1 : [RUN],
 	2 : [LIGHT],
-#	2 : [SPECIAL],
-	4 : [DOWN],
-	6 : [GUARD, LIGHT],
-	5 : [UP],
-	7 : [SPECIAL],
+#	2 : [BREAK],
+	4 : [BREAK],
+	6 : [JUMP, LIGHT],
+	5 : [RUN],
+	7 : [BREAK],
 	11 : [START],
 	12 : [UP],
 	13 : [DOWN],
@@ -98,15 +98,15 @@ var pad_0_stick_joystick = {
 	}
 
 var pad_1_keys_joystick = {
-	0 : [GUARD],
+	0 : [JUMP],
 	3 : [HEAVY],
-	1 : [STANCE],
+	1 : [RUN],
 	2 : [LIGHT],
-#	2 : [SPECIAL],
+#	2 : [BREAK],
 #	4 : [EVADE],
 #	5 : [FIRE],
-	4 : [SPECIAL],
-	5 : [GUARD, LIGHT],
+	4 : [BREAK],
+	5 : [JUMP, LIGHT],
 	7 : [TAUNT],
 	11 : [START],
 	12 : [UP],
@@ -121,9 +121,9 @@ var pad_1_stick_joystick = {
 	}
 
 var keys_keyboard = {
-	KEY_SPACE : [GUARD],
-	KEY_Q : [SPECIAL],
-	KEY_SHIFT : [EVADE],
+	KEY_SPACE : [JUMP],
+	KEY_Q : [BREAK],
+	KEY_SHIFT : [RUN],
 	KEY_TAB : [START],
 	KEY_L : [START],
 	KEY_W : [UP], 
@@ -131,16 +131,16 @@ var keys_keyboard = {
 	KEY_A : [LEFT],
 	KEY_D : [RIGHT],
 	KEY_Y : [LIGHT],
-	KEY_G : [GUARD],
+	KEY_G : [JUMP],
 	KEY_U : [HEAVY],
 	KEY_E : [HEAVY],
-	KEY_H : [STANCE],
-	KEY_CONTROL : [STANCE],
-	KEY_I : [SPECIAL],
-#	KEY_CONTROL : [SPECIAL, GUARD],
+	KEY_H : [RUN],
+	KEY_CONTROL : [RUN],
+	KEY_I : [BREAK],
+#	KEY_CONTROL : [BREAK, JUMP],
 
 #	KEY_SPACE : [JUMP],
-#	KEY_Q : [SPECIAL],
+#	KEY_Q : [BREAK],
 #	KEY_E : [CROSS, EVADE],
 #	KEY_SHIFT : [EVADE],
 #	KEY_ENTER : [START],
