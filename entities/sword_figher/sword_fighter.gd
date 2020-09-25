@@ -174,16 +174,6 @@ func _input(event):
 	if event.is_action_pressed("debug_reset"):
 		reset()
 
-
-
-#	if not stop_timer:
-#		var ticks = OS.get_ticks_msec() - start_time
-#		var minutes = ticks / 60000
-#		var seconds = (ticks / 1000) % 60
-#		var hundreds = (ticks / 10) % 100
-#		var str_time = "%02d : %02d : %02d" % [minutes, seconds, hundreds]
-#		get_node("../Timer").text = str_time
-
 #func _process(delta):
 #	velocity = move_and_slide(velocity, Vector3.UP, false, 4, 0.785398, true)
 #		print("Elapsed time: ", OS.get_ticks_msec() - start_time)	
@@ -196,14 +186,16 @@ func _physics_process(delta):
 	camera_pivot.rotation.x = clamp(camera_pivot.rotation.x + input_listener.sticks[3] * -0.1, -1.5, 0.9)
 	target_rotation = camera_pivot.rotation.y
 	
+	prev_speed = horizontal_speed
+	
 	velocity = move_and_slide(velocity, Vector3.UP, false, 4, 0.785398, true)
+	
+	horizontal_speed = Vector2(velocity.x, velocity.z).length()
 	
 	if input_listener.is_key_pressed(InputManager.JUMP):
 		if jump_str < max_jump_str:
 			jump_str += max_jump_str * delta * 4
-			
 	
-	horizontal_speed = Vector2(velocity.x, velocity.z).length()
 	vel_arrow.look_at(velocity + translation + Vector3.FORWARD * 0.01, Vector3.UP)
 	vel_arrow.scale.z = lerp(0, 1.0, horizontal_speed / 6)
 	

@@ -170,6 +170,9 @@ ground_drag = 1
 [node name="InputListener" parent="SwordFighter2" index="2"]
 enabled = false
 
+[node name="AnimationTree" parent="SwordFighter2" index="4"]
+parameters/1_and_-1/blend_amount = 0.0
+
 [node name="LedgeDetectLow" parent="SwordFighter2/ModelContainer" index="4"]
 transform = Transform( -1, 0, -8.74227e-08, 0, 1, 0, 8.74227e-08, 0, -1, 0, 0.748984, 0 )
 

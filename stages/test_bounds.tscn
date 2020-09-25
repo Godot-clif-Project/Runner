@@ -57,6 +57,9 @@ transform = Transform( 1.77147, 0, 0, 0, 2.36267, 0, 0, 0, 1.77147, 5.68353, -0.
 [node name="Cylinder17" parent="." instance=ExtResource( 4 )]
 transform = Transform( 0.6198, 0, 0, 0, 8.70756, 0, 0, 0, 0.6198, -3.42219, 7.7343, 18.8094 )
 
+[node name="Cylinder23" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1.02538, 0, 0, 0, 23.8168, 0, 0, 0, 1.02538, 8.10064, 15.3469, -7.41359 )
+
 [node name="Cylinder12" parent="." instance=ExtResource( 4 )]
 transform = Transform( 2.36986, 0, 0, 0, 6.52413, 0, 0, 0, 2.36986, -6.91131, -3.15294, -16.7278 )
 

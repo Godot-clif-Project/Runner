@@ -126,7 +126,7 @@ func get_possible_transitions():
 		]
 
 func _received_input(key, state):
-	if key == InputManager.RUN:
+	if key == InputManager.JUMP:
 		if not state:
 			if entity.input_listener.is_key_pressed(InputManager.LEFT) and entity.wall_side == 1:
 				entity.set_velocity(Vector3(-5, 0.0, 0.0).rotated(Vector3.RIGHT, entity.wall_rot.x))
@@ -135,13 +135,10 @@ func _received_input(key, state):
 				if entity.input_listener.is_key_pressed(InputManager.RIGHT) and entity.wall_side == -1:
 					entity.set_velocity(Vector3(5, 0.0, 0.0).rotated(Vector3.RIGHT, entity.wall_rot.x))
 					entity.model_container.rotation.y = entity.wall_rot.y
-					
-				
-				
 			set_next_state("jump")
 			return
 	if state:
-		if key == InputManager.DOWN:
+		if key == InputManager.BREAK:
 			set_next_state("fall")
 			return
 			

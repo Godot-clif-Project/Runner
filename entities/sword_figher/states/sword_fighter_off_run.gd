@@ -83,16 +83,38 @@ func _process_state(delta):
 		turn_acc = 0.0
 		prev_turn_dir = current_turn_dir
 	
-	if entity.input_listener.is_key_released(InputManager.RUN) or target_speed > 13:
-		target_speed -= delta * 12
+	if entity.input_listener.is_key_released(InputManager.RUN):
+		target_speed -= delta * 10
 		if target_speed <= 0.0:
-			entity.model.rotation.z = 0.0
-			set_next_state("offensive_stance")
+			set_next_state("run_stop")
 			return
-	else:
+			
+	elif target_speed > 13:
+		target_speed -= delta * 5
+		
+	elif target_speed < 13:
 		target_speed = 13
 		max_turn_speed = 3.2
 	
+	if entity.is_on_wall():
+		var wall_normal = entity.get_slide_collision(0).normal
+#		var wall_position = entity.get_slide_collision(0).position
+		var player_vector = Vector3.FORWARD.rotated(Vector3.UP, entity.model_container.rotation.y)
+		var rot = Vector2(player_vector.x, player_vector.z).angle_to(Vector2(wall_normal.x, wall_normal.z))
+		
+		entity.model_container.rotation.y -= PI * 0.2 * sign(rot)
+		
+		if wall_normal.dot(player_vector) > -0.8:
+			entity.velocity *= 0.5
+			entity.velocity += wall_normal * entity.prev_speed * 0.25
+			
+		else:
+			entity.velocity = wall_normal * entity.prev_speed
+			
+#		entity.velocity.y = entity.prev_speed * 0.5
+#			entity.model_container.rotation.y += PI
+			
+#	if entity.get_slide_collision(0).normal.dot(entity.velocity) != 0:
 #	if entity.flags.is_active:
 ##		entity.set_velocity(Vector3(0.0, 0.0, -target_speed))
 ##		entity.set_target_velocity(Vector3(0.0, 0.0, -target_speed))
@@ -142,8 +164,9 @@ func _received_input(key, state):
 			set_next_state("run_stop")
 			return
 		if key == InputManager.RUN_RUN:
+#			if target_speed <= 13:
 			target_speed = 23
-			max_turn_speed = 2.3
+			max_turn_speed = 1.3
 #			entity.set_velocity(Vector3(0.0, 0.0, -target_speed))
 #			acceleration = 2.0
 			entity.emit_one_shot()

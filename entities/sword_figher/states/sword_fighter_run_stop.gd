@@ -56,7 +56,9 @@ func _process_state(delta):
 		entity.ground_drag = 10
 	else:
 		entity.ground_drag = 5
-		
+	
+	if entity.is_on_wall():
+		entity.velocity += entity.get_slide_collision(0).normal * entity.horizontal_speed * 0.5
 		
 	entity.model_container.rotation_degrees.y += ang_momentum
 	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
