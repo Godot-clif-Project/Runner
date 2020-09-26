@@ -21,6 +21,7 @@ func _ready():
 			player_entity.connect("position_changed", self, "player_entity_position_changed")
 			player_entity.connect("rotation_changed", self, "player_entity_rotation_changed")
 			player_entity.connect("animation_changed", self, "player_entity_animation_changed")
+			player_entity.connect("dealt_tandem_action", self, "player_entity_dealt_tandem_action")
 #			player_entity.connect("dealt_hit", self, "player_entity_dealt_hit")
 			
 			if get_tree().is_network_server():
@@ -63,6 +64,9 @@ func player_entity_animation_changed(anim_name, seek_pos, blend_speed):
 	if enabled:
 		peer_entity.rpc("update_animation", NetworkManager.my_id, anim_name, seek_pos, blend_speed)
 
+func player_entity_dealt_tandem_action(action, args):
+	peer_entity.rpc("dealt_tandem_action", NetworkManager.my_id, action, args)
+
 #func player_entity_dealt_hit(hit):
 #	if enabled:
 #		var hit_data = {
@@ -82,6 +86,10 @@ remote func receive_hit_from_peer(id, hit_data):
 
 remote func receive_throw_from_peer(pos, rot, _throwing_entity):
 	player_entity.receive_throw(pos, rot, peer_entity)
+	pass
+
+remote func receive_tandem_action_from_peer(action_name, entity):
+	player_entity.receive_tandem_action(action_name, peer_entity)
 	pass
 
 remotesync func player_ready():

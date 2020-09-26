@@ -22,16 +22,6 @@ var input_buffer = [[0,0],[0,0],[0,0],[0,0],[0,0]]
 
 export var window_for_multiple_input = 3
 var multiple_inputs = {
-#	"jumpspecial" : "special+jump",
-#	"specialjump" : "special+jump",
-#	"specialfire" : "special+fire",
-#	"firespecial" : "special+fire",
-#	"specialsword" : "special+sword",
-#	"swordspecial" : "special+sword",
-#	"swordkick" : "sword+kick",
-#	"swordkick" : InputManager.BREAK,
-#	"kicksword" : InputManager.BREAK,
-#	"swordjump" : InputManager.BREAK,
 	[InputManager.LIGHT, InputManager.RUN] : InputManager.THROW,
 	[InputManager.RUN, InputManager.LIGHT] : InputManager.THROW,
 	}
@@ -44,19 +34,6 @@ var input_chains ={
 	InputManager.DOWN_DOWN : [InputManager.DOWN, InputManager.DOWN],
 	InputManager.RUN_RUN : [InputManager.RUN, InputManager.RUN],
 	InputManager.BREAK_BREAK : [InputManager.BREAK, InputManager.BREAK],
-#	"right_dp" : [InputManager.RIGHT, InputManager.DOWN, InputManager.LIGHT],
-#	"left_dp" : [InputManager.LEFT, InputManager.DOWN, InputManager.LIGHT],
-#	"right_qcf_weapon" : [InputManager.DOWN, InputManager.RIGHT, InputManager.LIGHT],
-#	"left_qcf_weapon" : [InputManager.DOWN, InputManager.LEFT, InputManager.LIGHT],
-#	"right_qcf_fire" : [InputManager.DOWN, InputManager.RIGHT, "fire"],
-#	"left_qcf_fire" : [InputManager.DOWN, InputManager.LEFT, "fire"],
-#	"right_qcf_kick" : [InputManager.DOWN, InputManager.RIGHT, InputManager.HEAVY],
-#	"left_qcf_kick" : [InputManager.DOWN, InputManager.LEFT, InputManager.HEAVY],
-#	"upup" : [, ],
-#	"right_bomb_evade" : [InputManager.LEFT, InputManager.RIGHT, "special"],
-#	"left_bomb_evade" : [InputManager.RIGHT, InputManager.LEFT, "special"],
-#	"right_gap_closer" : [InputManager.RIGHT_RIGHT, InputManager.LIGHT],
-#	"left_gap_closer" : [InputManager.LEFT_LEFT, InputManager.LIGHT],
 	}
 
 export var simulate_input = false

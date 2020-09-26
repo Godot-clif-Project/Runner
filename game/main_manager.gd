@@ -7,10 +7,6 @@ var time = 0
 #const TRAINING_ROOM = preload("res://levels/training/training_room_2.tscn")
 #const LEVEL_1 = preload("res://misc/text_test.tscn")
 
-#const MAIN_MENU = "res://levels/title_screen_2/title_screen_3.tscn"
-#const TRAINING_ROOM = "res://levels/training/training_room_2.tscn"
-#const LEVEL_1 = "res://misc/text_test.tscn"
-
 var current_level : Node
 var camera : Camera2D setget set_camera
 
@@ -57,9 +53,14 @@ func connect_signal(origin_object, signal_name, target_object, target_function):
 #			current_level.focus_out()
 #		get_tree().paused = true
 
-#func _input(event : InputEvent) -> void:
-#	if event.is_action_pressed("ui_exit"):
-#		get_tree().quit()
+func _input(event : InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		get_tree().quit()
+	if event.is_action_pressed("ui_capture"):
+		if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		else:
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 #	if event.is_action_pressed("debug_reset"):
 #		current_level.reset()
 #		current_level.queue_free()

@@ -84,7 +84,7 @@ var pad_0_keys_joystick = {
 	4 : [BREAK],
 	6 : [JUMP, LIGHT],
 	5 : [RUN],
-	7 : [BREAK],
+	7 : [EVADE],
 	11 : [START],
 	12 : [UP],
 	13 : [DOWN],
@@ -124,10 +124,11 @@ var keys_keyboard = {
 	KEY_SPACE : [JUMP],
 	KEY_Q : [BREAK],
 	KEY_SHIFT : [RUN],
+	KEY_CONTROL : [BREAK],
 	KEY_TAB : [START],
 	KEY_L : [START],
 	KEY_W : [UP], 
-	KEY_S : [DOWN],
+	KEY_S : [BREAK, DOWN],
 	KEY_A : [LEFT],
 	KEY_D : [RIGHT],
 	KEY_Y : [LIGHT],
@@ -135,7 +136,6 @@ var keys_keyboard = {
 	KEY_U : [HEAVY],
 	KEY_E : [HEAVY],
 	KEY_H : [RUN],
-	KEY_CONTROL : [RUN],
 	KEY_I : [BREAK],
 #	KEY_CONTROL : [BREAK, JUMP],
 
@@ -154,8 +154,8 @@ var keys_keyboard = {
 	}
 
 var keys_mouse = {
-	2 : [HEAVY],
 	1 : [LIGHT],
+	2 : [HEAVY],
 	3 : [FIRE],
 	}
 	
@@ -169,8 +169,6 @@ onready var pad_mappings = {
 
 func _ready():
 	pause_mode = PAUSE_MODE_PROCESS
-#	set_process_input(true)
-#	set_physics_process(true) # NOTE: shoud use _process or _fixed_process?
 
 func emit_released_signal():
 	for key in pad_0_state:
@@ -231,10 +229,6 @@ func _input(event):
 				else:
 					pads[keyboard_pad][binding] = RELEASED
 					emit_signal("key_changed", keyboard_pad, binding, RELEASED)
-		
-		# Auto set reticle control
-#		if reticle_control != 1:
-#			reticle_control = 1
 		return
 	
 #	elif event is InputEventJoypadMotion:

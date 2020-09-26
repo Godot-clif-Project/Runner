@@ -22,6 +22,7 @@ func clear_received_events():
 	"_touched_surface" : [],
 	"_evaded_hit" : [],
 	"_concurrent_fsm_state_changed" : [],
+	"_received_tandem_action" : [],
 	"_received_ai_action" : [],
 	}
 
@@ -30,6 +31,9 @@ func process_received_events():
 	received_events["_received_input"].invert()
 	for arg_array in received_events["_received_input"]:
 		callv("_received_input", arg_array)
+	
+	for arg_array in received_events["_received_tandem_action"]:
+		callv("_received_tandem_action", arg_array)
 		
 	for arg in received_events["_released_from_grapple"]:
 		call("_released_from_grapple", arg)
@@ -145,6 +149,10 @@ func _received_parry(parrying_entity):
 #	parry_hit.position = entity.position
 #	parry_hit.direction = parrying_entity.facing_direction
 #	entity._on_hurtbox_received_hit(parry_hit, entity.get_node("DirectionalObjects/Hurtbox"))
+	pass
+
+func _received_tandem_action(action, tandem_entity):
+#	prints(action, tandem_entity)
 	pass
 
 func _received_defense(defending_entity):
