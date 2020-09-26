@@ -40,6 +40,9 @@ node_connections = [ "output", 0, "TimeScale", "1_and_-1", 0, "animation_1_seek"
 
 [node name="SwordFighter" instance=ExtResource( 1 )]
 
+[node name="InputListener" parent="." index="2"]
+listen_to_pads = PoolIntArray( 1 )
+
 [node name="AnimationTree" parent="." index="4"]
 tree_root = SubResource( 8 )
 
@@ -53,3 +56,5 @@ material/0 = ExtResource( 2 )
 transform = Transform( 1, 0, 0, 0, 0.998474, 0.0552152, 0, -0.0552152, 0.998474, -6.59474e-17, 2.24226, 0 )
 
 [editable path="ModelContainer/sword_fighter"]
+
+[editable path="ModelContainer/VelocityArrow2"]

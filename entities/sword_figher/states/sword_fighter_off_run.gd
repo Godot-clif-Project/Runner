@@ -46,10 +46,6 @@ func _process_state(delta):
 		
 		if entity.raycast.is_colliding():
 			if not entity.ledge_detect_high.is_colliding():
-	#			set_next_state("ledge_climb")
-#				entity.velocity.y = 13
-#				entity.add_impulse(Vector3(0.0, 10, 0.0))
-#				entity.set_collision_layer_bit(2, false)
 				entity.set_collision_mask_bit(0, false)
 				t = 0.08
 				
@@ -59,7 +55,6 @@ func _process_state(delta):
 		if t <= 0.0 and not entity.get_collision_mask_bit(0):
 #			entity.set_collision_layer_bit(2, true)
 			entity.set_collision_mask_bit(0, true)
-			
 		
 	var stick = entity.input_listener.sticks[0]
 	if abs(stick) > 0.1:
@@ -83,7 +78,7 @@ func _process_state(delta):
 		turn_acc = 0.0
 		prev_turn_dir = current_turn_dir
 	
-	if entity.input_listener.is_key_released(InputManager.RUN):
+	if entity.input_listener.is_key_released(InputManager.RUN) and entity.input_listener.is_key_released(InputManager.UP):
 		target_speed -= delta * 10
 		if target_speed <= 0.0:
 			set_next_state("run_stop")
@@ -111,15 +106,6 @@ func _process_state(delta):
 		else:
 			entity.velocity = wall_normal * entity.prev_speed
 			
-#		entity.velocity.y = entity.prev_speed * 0.5
-#			entity.model_container.rotation.y += PI
-			
-#	if entity.get_slide_collision(0).normal.dot(entity.velocity) != 0:
-#	if entity.flags.is_active:
-##		entity.set_velocity(Vector3(0.0, 0.0, -target_speed))
-##		entity.set_target_velocity(Vector3(0.0, 0.0, -target_speed))
-##		entity.lerp_velocity(delta)
-#	else:
 	entity.model_container.rotation_degrees.y += ang_momentum
 	entity.accelerate(-target_speed, delta * acceleration)
 #	entity.apply_drag(delta)
@@ -163,10 +149,10 @@ func _received_input(key, state):
 		if key == InputManager.BREAK:
 			set_next_state("run_stop")
 			return
-		if key == InputManager.RUN_RUN:
+		if key == InputManager.RUN_RUN or key == InputManager.UP_UP:
 #			if target_speed <= 13:
 			target_speed = 23
-			max_turn_speed = 1.3
+			max_turn_speed = 2.3
 #			entity.set_velocity(Vector3(0.0, 0.0, -target_speed))
 #			acceleration = 2.0
 			entity.emit_one_shot()

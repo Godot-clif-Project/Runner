@@ -1,9 +1,10 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://entities/sword_figher/peer_sword_fighter.gd" type="Script" id=1]
 [ext_resource path="res://entities/sword_figher/model/sword_fighter.glb" type="PackedScene" id=2]
 [ext_resource path="res://objects/hurtbox.tscn" type="PackedScene" id=3]
 [ext_resource path="res://entities/sword_figher/dust_trail.tscn" type="PackedScene" id=4]
+[ext_resource path="res://entities/sword_figher/model/rope/rope_export.dae" type="PackedScene" id=5]
 
 [sub_resource type="AnimationNodeBlend2" id=1]
 
@@ -271,7 +272,9 @@ tracks/4/keys = {
 }
 
 [sub_resource type="Animation" id=15]
-resource_name = "receive_off_throw_f"
+resource_name = "def_taunt"
+
+[sub_resource type="Animation" id=16]
 length = 2.18333
 step = 0.0166667
 tracks/0/type = "method"
@@ -292,9 +295,9 @@ tracks/0/keys = {
 } ]
 }
 
-[sub_resource type="CapsuleShape" id=16]
-radius = 0.558514
-height = 2.0
+[sub_resource type="CapsuleShape" id=17]
+radius = 0.459803
+height = 0.564789
 
 [node name="PeerSwordFighter" type="KinematicBody"]
 collision_layer = 2
@@ -306,7 +309,7 @@ tree_root = SubResource( 8 )
 anim_player = NodePath("../ModelContainer/sword_fighter/AnimationPlayer")
 process_mode = 0
 root_motion_track = NodePath("Armature/Skeleton:root")
-parameters/1_and_-1/blend_amount = 0.0
+parameters/1_and_-1/blend_amount = 1.0
 parameters/Seek/seek_position = -1.0
 parameters/TimeScale/scale = 1.0
 parameters/animation_-1_seek/seek_position = -1.0
@@ -321,7 +324,8 @@ anims/off_hi_heavy = SubResource( 13 )
 anims/walk = SubResource( 14 )
 
 [node name="AnimationEvents" type="AnimationPlayer" parent="."]
-anims/receive_off_throw_f = SubResource( 15 )
+anims/def_taunt = SubResource( 15 )
+anims/receive_off_throw_f = SubResource( 16 )
 
 [node name="ModelContainer" type="Spatial" parent="."]
 
@@ -329,7 +333,7 @@ anims/receive_off_throw_f = SubResource( 15 )
 transform = Transform( -0.6, 0, -9.05975e-08, 0, 0.6, 0, 9.05975e-08, 0, -0.6, 0, 0, 0 )
 
 [node name="BoneAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
-transform = Transform( 0.931914, 0.175069, 0.317628, 0.0622501, 0.785573, -0.615629, -0.357298, 0.593486, 0.721188, -0.0126715, 1.70355, -0.279516 )
+transform = Transform( 1, 0, 0, 0, 0.998474, 0.0552152, 0, -0.0552152, 0.998474, -6.59474e-17, 2.24226, 0 )
 bone_name = "torso"
 
 [node name="Hurtbox" parent="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment" instance=ExtResource( 3 )]
@@ -342,6 +346,16 @@ bone_name = "throw_pos"
 
 [node name="Particles2" parent="ModelContainer" instance=ExtResource( 4 )]
 
+[node name="RopePoint" type="Position3D" parent="ModelContainer"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.22309, 0 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Rope" parent="ModelContainer" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 1.32887, -0.819866 )
+visible = false
+
 [node name="CameraPointPivot" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )
 
@@ -353,8 +367,8 @@ playback_speed = 3.0
 playback/speed = 3.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.55842, 0 )
-shape = SubResource( 16 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.74, 0 )
+shape = SubResource( 17 )
 __meta__ = {
 "_editor_description_": ""
 }

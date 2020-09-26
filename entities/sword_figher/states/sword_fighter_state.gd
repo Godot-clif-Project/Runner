@@ -20,6 +20,8 @@ func get_possible_transitions():
 		"off_run",
 		"off_run_startup",
 		"walk",
+		"tandem_rope_pull",
+		"tandem_launch_up",
 #		"def_step",
 		"offensive_stance",
 		"defensive_stance",
@@ -93,6 +95,15 @@ func _received_hit(hit : Hit):
 #	entity.get_node("AfterimageSpawner").afterimage_color = Color.royalblue
 #	entity.get_node("AfterimageSpawner").enabled = true
 
+func _received_tandem_action(action, tandem_entity):
+	if action == "rope_pull":
+		set_next_state("tandem_rope_being_pulled")
+	if action == "launch_up":
+#		var vector_to_target = entity.translation.direction_to(entity.tandem_entity.translation)
+#		entity.model_container.rotation.y = atan2(vector_to_target.x, vector_to_target.z) + PI
+		entity.set_velocity(Vector3(0.0, 40, -5))
+		set_next_state("fall")
+
 func _flag_changed(flag, state):
 	if next_state_buffer != null and flag == next_state_buffer_flag:
 		set_next_state(next_state_buffer)
@@ -137,7 +148,6 @@ func _received_input(key, state):
 	var test = test_transition_by_input(key, state, get_possible_transitions())
 	
 	if test.state != null:
-#		prints(key, test.state)
 		if test.flag != null:
 			if entity.flags.get(test.flag):
 				set_next_state(test.state)
@@ -161,21 +171,29 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 							return {"state" : t, "flag" : "is_stringable"}
 						"def_hi_light":
 							return {"state" : t, "flag" : "is_stringable"}
+						"tandem_launch_up":
+							if entity.input_listener.is_key_pressed(InputManager.EVADE):
+								if entity.translation.distance_to(entity.lock_on_target.translation) < 1.5:
+									return {"state" : t, "flag" : "is_stringable"}
 							
 			InputManager.HEAVY:
 				for t in valid_transitions:
 					match t as String :
+						"tandem_rope_pull":
+							if entity.input_listener.is_key_pressed(InputManager.EVADE):
+								if entity.has_los_to_target(entity.lock_on_target):
+									return {"state" : t, "flag" : "is_stringable"}
 						"off_hi_heavy":
 							return {"state" : t, "flag" : "is_stringable"}
 						"off_hi_heavy_1":
 							return {"state" : t, "flag" : "is_stringable"}
 							
 							
-			InputManager.BREAK:
-				for t in valid_transitions:
-					match t as String :
-						"stance_switch":
-							return {"state" : t, "flag" : "is_stringable"}
+#			InputManager.BREAK:
+#				for t in valid_transitions:
+#					match t as String :
+#						"stance_switch":
+#							return {"state" : t, "flag" : "is_stringable"}
 							
 			InputManager.RUN:
 				for t in valid_transitions:
@@ -202,8 +220,10 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 					match t as String:
 						"def_step":
 							return {"state" : t, "flag" : "is_evade_cancelable"}
-						"walk":
-							return {"state" : "walk", "flag" : "is_stringable"}
+						"off_run_startup":
+							return {"state" : t, "flag" : "is_evade_cancelable"}
+#						"walk":
+#							return {"state" : "walk", "flag" : "is_stringable"}
 							
 			InputManager.DOWN_DOWN:
 				for t in valid_transitions:
@@ -240,67 +260,5 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 			InputManager.THROW:
 				if valid_transitions.has("off_throw_f"):
 					return {"state" : "off_throw_f", "flag" : "is_command_cancelable"}
-				
-#			"cross":
-#				for t in valid_transitions:
-#					match t as String :
-#						"cross_drive":
-#							return {"state" : t, "flag" : null}
-#
-#			"jump":
-#				for t in valid_transitions:
-#					match t as String:
-#						"jump":
-#							if entity.on_ground or entity.has_air_jump:
-#								return {"state" : t, "flag" : "is_evade_cancelable"}
-#						"long_jump":
-#							return {"state" : t, "flag" : "is_evade_cancelable"}
-#						"dive_kick":
-#							if entity.input_listener.is_key_pressed(InputManager.DOWN):
-#								return {"state" : t, "flag" : "is_command_cancelable"}
-#			"reload":
-#				if valid_transitions.has("reload"):
-#					return {"state" : "reload", "flag" : "is_command_cancelable"}
-#			"fire":
-##				if valid_transitions.has("aim"):
-##						return {"state" : "aim", "flag" : "is_command_cancelable"}
-#				if valid_transitions.has("geyser"):
-#					if entity.input_listener.is_key_pressed(InputManager.DOWN):
-#						return {"state" : "geyser", "flag" : "is_command_cancelable"}
-#			"right_tetsuzanko", "left_tetsuzanko":
-#				if valid_transitions.has("tetsuzanko"):
-#					return {"state" : "tetsuzanko", "flag" : "is_command_cancelable"}
-#			"sword+kick":
-#				if valid_transitions.has("spin_attack"):
-#					return {"state" : "spin_attack", "flag" : null}
-#			"right_qcf_kick", "left_qcf_kick":
-#				if valid_transitions.has("wave"):
-#					if not entity.input_listener.is_key_pressed("fire"):
-#						return {"state" : "wave", "flag" : "is_command_cancelable"}
-#			"sword_held":
-#				if valid_transitions.has("blur"):
-#					return {"state" : "blur", "flag" : "is_command_cancelable"}
-#			"right_qcf_weapon", "left_qcf_weapon":
-#				if valid_transitions.has("blur"):
-#					return {"state" : "blur", "flag" : "is_command_cancelable"}
-#			"special+jump":
-#				if valid_transitions.has("eruption"):
-#					return {"state" : "eruption", "flag" : null}
-#			"special+sword":
-#				if valid_transitions.has("bomb_grab"):
-#					return {"state" : "bomb_grab", "flag" : null}
-#			"special+jump":
-#				if valid_transitions.has("eruption"):
-#					return {"state" : "eruption", "flag" : null}
-#			"special+sword":
-#				if valid_transitions.has("bomb_grab"):
-#					return {"state" : "bomb_grab", "flag" : null}
-#			"right_qcf_fire", "left_qcf_fire":
-#				if valid_transitions.has("power_slash"):
-#					return {"state" : "power_slash", "flag" : "is_command_cancelable"}
-#			"right_dp", "left_dp":
-#				if valid_transitions.has("weapon_dp"):
-#					if entity.on_ground or entity.has_air_jump:
-#						return {"state" : "weapon_dp", "flag" : "is_evade_cancelable"}
-
+					
 	return {"state" : null , "flag" : null}

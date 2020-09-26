@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=2]
+[gd_scene load_steps=70 format=2]
 
 [ext_resource path="res://entities/sword_figher/model/sword_fighter.glb" type="PackedScene" id=1]
 [ext_resource path="res://entities/sword_figher/sword_fighter.gd" type="Script" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://objects/hurtbox.tscn" type="PackedScene" id=11]
 [ext_resource path="res://entities/sword_figher/sword_fighter_player_1.material" type="Material" id=12]
 [ext_resource path="res://entities/sword_figher/dust_trail.tscn" type="PackedScene" id=13]
+[ext_resource path="res://entities/sword_figher/model/rope/rope_export.dae" type="PackedScene" id=14]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.459803
@@ -1939,7 +1940,7 @@ scale_curve = SubResource( 53 )
 collision_layer = 2
 collision_mask = 3
 script = ExtResource( 2 )
-ground_drag = 5
+ground_drag = 1
 
 [node name="FSM" parent="." instance=ExtResource( 4 )]
 state_list_script = ExtResource( 5 )
@@ -1963,7 +1964,7 @@ tree_root = ExtResource( 6 )
 anim_player = NodePath("../ModelContainer/sword_fighter/AnimationPlayer")
 process_mode = 0
 root_motion_track = NodePath("Armature/Skeleton:root")
-parameters/1_and_-1/blend_amount = 0.3
+parameters/1_and_-1/blend_amount = 0.0
 parameters/Seek/seek_position = -1.0
 parameters/TimeScale/scale = 1.0
 parameters/animation_-1_seek/seek_position = -1.0
@@ -2028,13 +2029,14 @@ anims/walk = SubResource( 50 )
 transform = Transform( -0.6, 0, -9.05975e-08, 0, 0.6, 0, 9.05975e-08, 0, -0.6, 0, 0, 0 )
 
 [node name="Cube" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="0"]
+transform = Transform( 1, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1, 0, 0, 0 )
 material/0 = ExtResource( 12 )
 
 [node name="sword" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="1"]
 material/0 = ExtResource( 12 )
 
 [node name="BoneAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
-transform = Transform( 1, 0, 0, 0, 0.998474, 0.0552152, 0, -0.0552152, 0.998474, -6.59474e-17, 2.24226, 0 )
+transform = Transform( 0.326458, -0.295979, -0.897676, -0.274191, 0.879218, -0.389609, 0.904568, 0.373326, 0.205873, 0.112911, 1.5083, -0.458656 )
 bone_name = "torso"
 
 [node name="Hurtbox" parent="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment" instance=ExtResource( 11 )]
@@ -2114,6 +2116,13 @@ draw_pass_1 = SubResource( 55 )
 [node name="MeshInstance" parent="ModelContainer/VelocityArrow2" index="0"]
 material/0 = ExtResource( 12 )
 
+[node name="RopePoint" type="Position3D" parent="ModelContainer"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.22309, 0 )
+
+[node name="Rope" parent="ModelContainer" instance=ExtResource( 14 )]
+transform = Transform( 1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 1.32887, -0.819866 )
+visible = false
+
 [node name="CameraPointPivot" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )
 
@@ -2125,6 +2134,10 @@ playback_speed = 3.0
 playback/speed = 3.0
 
 [node name="VelocityArrow" parent="." instance=ExtResource( 8 )]
+
+[node name="VisibilityNotifier" type="VisibilityNotifier" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+aabb = AABB( -0.05, -0.05, -0.05, 0.1, 0.1, 0.1 )
 [connection signal="flag_changed" from="AnimationFlags" to="." method="_on_AnimationFlags_flag_changed"]
 [connection signal="received_input" from="InputListener" to="." method="_on_InputListener_received_input"]
 [connection signal="animation_finished" from="AnimationEvents" to="." method="_on_AnimationEvents_animation_finished"]

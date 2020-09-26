@@ -9,6 +9,7 @@ func get_animation_data():
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
 	entity.velocity = Vector3.ZERO
+	entity.horizontal_speed = 0.0
 ##	entity.set_animation("off_hi_r_light", 0, 16.0)
 #	entity.on_ground = false
 #	entity.get_normal()
@@ -41,7 +42,7 @@ func _process_state(delta):
 #		entity.model_container.rotation_degrees.y -= delta * 180
 	
 	if not entity.ledge_detect_low.is_colliding():
-		if entity.input_listener.is_key_pressed(InputManager.RUN):
+		if entity.input_listener.is_key_pressed(InputManager.RUN) or entity.input_listener.is_key_pressed(InputManager.UP):
 			entity.jump_str = 20
 			set_next_state("jump")
 #			entity.add_impulse(Vector3(0.0, 0.0 , -10.0))

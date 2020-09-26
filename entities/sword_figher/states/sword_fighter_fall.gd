@@ -125,8 +125,12 @@ func _received_input(key, state):
 		._received_input(key, state)
 		
 #	if entity.flags.is_stringable:
-#		if state:
-#			if key == InputManager.LIGHT:
+	if state:
+		if key == InputManager.HEAVY:
+			if entity.has_los_to_target(entity.lock_on_target):
+				entity.lock_on_target.receive_tandem_action("rope_pull", entity)
+				entity.play_rope_animation(entity.lock_on_target.rope_point.global_transform.origin)
+				entity.emit_signal("dealt_tandem_action", "rope_pull", [entity.lock_on_target.rope_point.global_transform.origin])
 #				set_next_state("off_hi_fierce")
 #			if key == InputManager.HEAVY:
 #				set_next_state("off_kick")

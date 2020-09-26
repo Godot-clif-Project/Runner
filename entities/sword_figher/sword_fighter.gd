@@ -8,6 +8,8 @@ signal position_changed(new_value)
 signal rotation_changed(new_value)
 signal animation_changed(anim_name, seek_pos, blend_speed)
 signal dealt_hit(hit)
+# warning-ignore:unused_signal
+signal dealt_tandem_action(action, args)
 signal requested_camera(entity)
 
 enum Stances {OFFENSIVE, DEFENSIVE, UNIQUE}
@@ -54,6 +56,8 @@ var wall_has_ledge = false
 var wall_side = 0
 var wall_rot : Vector3
 
+var tandem_entity = null
+
 onready var lock_on_target : Spatial = get_node(target)
 onready var input_listener = $InputListener
 onready var model = $ModelContainer/sword_fighter
@@ -71,6 +75,9 @@ onready var feet = $ModelContainer/Feet
 onready var ledge_detect_low = $ModelContainer/LedgeDetectLow
 onready var ledge_detect_high = $ModelContainer/LedgeDetectHigh
 onready var raycast = $ModelContainer/RayCast
+
+onready var rope_point = $ModelContainer/RopePoint
+onready var rope_model = $ModelContainer/Rope
 
 onready var raycast_side = {
 	-1 : $ModelContainer/RayCastL,
@@ -159,6 +166,23 @@ func get_normal():
 #	arrow.transform.origin = point
 	
 	return t.basis.get_euler()
+
+func has_los_to_target(_target):
+	if translation.distance_to(_target.rope_point.global_transform.origin) > 35:
+		return false
+	else:
+		var space_state = get_world().direct_space_state
+		var result = space_state.intersect_ray(rope_point.global_transform.origin, _target.rope_point.global_transform.origin, [self], collision_mask)
+		if not result.empty() and result["collider"] is KinematicBody:
+			return true
+		else:
+			return false
+
+func play_rope_animation(_target):
+	rope_model.visible = true
+	rope_model.scale.z = translation.distance_to(_target)
+	rope_model.look_at(_target, Vector3.UP)
+	get_node("ModelContainer/Rope/AnimationPlayer").play("default")
 
 func _on_InputListener_received_input(key, state):
 	fsm.receive_event("_received_input", [key, state])
@@ -467,6 +491,11 @@ func receive_throw(pos, rot, _throwing_entity):
 #func follow_throw_position(delta):
 #	if throwing_entity != null:
 #		translation = throwing_entity.get_node("ModelContainer/sword_fighter/Armature/Skeleton/ThrowAttachment").global_transform.origin
+
+func receive_tandem_action(action_name, entity):
+	tandem_entity = entity
+	fsm.receive_event("_received_tandem_action", [action_name, entity])
+	pass
 
 func _on_RSide_body_entered(body):
 	if not body == self and body is KinematicBody:
