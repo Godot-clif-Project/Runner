@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=2]
+[gd_scene load_steps=88 format=2]
 
 [ext_resource path="res://entities/sword_figher/model/sword_fighter.glb" type="PackedScene" id=1]
 [ext_resource path="res://entities/sword_figher/sword_fighter.gd" type="Script" id=2]
@@ -14,6 +14,8 @@
 [ext_resource path="res://entities/sword_figher/sword_fighter_player_1.material" type="Material" id=12]
 [ext_resource path="res://entities/sword_figher/dust_trail.tscn" type="PackedScene" id=13]
 [ext_resource path="res://entities/sword_figher/model/rope/rope_export.dae" type="PackedScene" id=14]
+[ext_resource path="res://effects/dust/dust.material" type="Material" id=15]
+[ext_resource path="res://effects/dust/run_dust.tres" type="Material" id=16]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.459803
@@ -587,6 +589,30 @@ tracks/3/keys = {
 "args": [ "ParticlesJump" ],
 "method": "emit_one_shot"
 } ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("AnimationFlags:gravity")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 2,
+"values": [ false, true ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("ModelContainer/Particles2:emitting")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.1, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
 }
 
 [sub_resource type="Animation" id=13]
@@ -1932,36 +1958,109 @@ tracks/4/keys = {
 [sub_resource type="RayShape" id=51]
 length = 1.2
 
+[sub_resource type="Gradient" id=72]
+offsets = PoolRealArray( 0.113821, 1 )
+colors = PoolColorArray( 0.681641, 0.489087, 0.274254, 1, 0.333984, 0.198767, 0.113503, 0 )
+
+[sub_resource type="GradientTexture" id=73]
+gradient = SubResource( 72 )
+
 [sub_resource type="Curve" id=52]
-_data = [ Vector2( 0, 1 ), 0.0, -0.0363921, 0, 0, Vector2( 1, 0 ), -2.04049, 0.0, 0, 0 ]
+_data = [ Vector2( 0, 0.517241 ), 0.0, 1.41379, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="CurveTexture" id=53]
 curve = SubResource( 52 )
 
-[sub_resource type="ParticlesMaterial" id=54]
-direction = Vector3( 0, 0, -1 )
-spread = 180.0
+[sub_resource type="ParticlesMaterial" id=75]
+emission_shape = 2
+emission_box_extents = Vector3( 0.8, 0.7, 0.3 )
+flag_align_y = true
+flag_rotate_y = true
+direction = Vector3( 0, 0, 1 )
+spread = 0.0
 gravity = Vector3( 0, 0, 0 )
-initial_velocity = 15.0
+initial_velocity = 5.0
 initial_velocity_random = 0.5
-damping = 86.62
-scale = 0.3
+damping = 4.87
+angle = 32.2
+scale = 2.0
 scale_curve = SubResource( 53 )
+color_ramp = SubResource( 73 )
 
-[sub_resource type="CubeMesh" id=55]
+[sub_resource type="QuadMesh" id=74]
 
-[sub_resource type="ParticlesMaterial" id=56]
+[sub_resource type="QuadMesh" id=56]
+
+[sub_resource type="Gradient" id=57]
+offsets = PoolRealArray( 0.113821, 1 )
+colors = PoolColorArray( 0.681641, 0.489087, 0.274254, 1, 0.333984, 0.198767, 0.113503, 0 )
+
+[sub_resource type="GradientTexture" id=58]
+gradient = SubResource( 57 )
+
+[sub_resource type="Curve" id=69]
+max_value = 100.0
+_data = [ Vector2( 0, 83.1897 ), 0.0, -228.894, 0, 0, Vector2( 1, 0 ), 6.89152, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=67]
+curve = SubResource( 69 )
+
+[sub_resource type="Curve" id=61]
+max_value = 2.0
+_data = [ Vector2( 0, 0.662716 ), 0.0, 1.31012, 0, 0, Vector2( 1, 1.16595 ), 0.0620238, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=62]
+curve = SubResource( 61 )
+
+[sub_resource type="ParticlesMaterial" id=66]
+lifetime_randomness = 0.2
+direction = Vector3( 0, 0, 0 )
+spread = 180.0
+flatness = 0.9
+gravity = Vector3( 0, -2, 0 )
+initial_velocity = 12.0
+initial_velocity_random = 0.25
+angular_velocity = 10.14
+damping_curve = SubResource( 67 )
+angle = 720.0
+angle_random = 0.5
+scale = 2.0
+scale_random = 0.5
+scale_curve = SubResource( 62 )
+color_ramp = SubResource( 58 )
+
+[sub_resource type="QuadMesh" id=64]
+
+[sub_resource type="Curve" id=59]
+max_value = 100.0
+_data = [ Vector2( 0, 36.2069 ), 0.0, -111.126, 0, 0, Vector2( 1, 0 ), 6.89152, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=68]
+curve = SubResource( 59 )
+
+[sub_resource type="Curve" id=70]
+max_value = 2.0
+_data = [ Vector2( 0, 0.662716 ), 0.0, 1.31012, 0, 0, Vector2( 1, 1.16595 ), 0.0620238, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=71]
+curve = SubResource( 70 )
+
+[sub_resource type="ParticlesMaterial" id=65]
 lifetime_randomness = 0.2
 direction = Vector3( 0, 0, 0 )
 spread = 180.0
 flatness = 0.9
 gravity = Vector3( 0, 0, 0 )
-initial_velocity = 11.0
+initial_velocity = 6.0
 initial_velocity_random = 0.25
-radial_accel = 5.0
-damping = 30.0
-scale = 0.3
-scale_curve = SubResource( 53 )
+angular_velocity = 10.14
+linear_accel = 1.41
+damping_curve = SubResource( 68 )
+angle = 720.0
+angle_random = 0.5
+scale_random = 0.5
+scale_curve = SubResource( 71 )
+color_ramp = SubResource( 58 )
 
 [node name="SwordFighter" type="KinematicBody"]
 collision_layer = 2
@@ -1973,6 +2072,7 @@ ground_drag = 1
 state_list_script = ExtResource( 5 )
 
 [node name="AnimationFlags" parent="." instance=ExtResource( 7 )]
+is_active = true
 is_evade_cancelable = true
 is_command_cancelable = true
 
@@ -2129,23 +2229,40 @@ transform = Transform( 0.5, -0.866025, 1.41093e-07, 0, -1.62921e-07, -1, 0.86602
 cast_to = Vector3( 0, -1.5, 0 )
 
 [node name="ParticlesBoost" type="Particles" parent="ModelContainer"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25693, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.17098, -0.236003 )
+visible = false
+material_override = ExtResource( 15 )
 emitting = false
-amount = 450
+amount = 400
 local_coords = false
-process_material = SubResource( 54 )
-draw_pass_1 = SubResource( 55 )
+process_material = SubResource( 75 )
+draw_pass_1 = SubResource( 74 )
 
 [node name="Particles2" parent="ModelContainer" instance=ExtResource( 13 )]
+material_override = ExtResource( 15 )
+amount = 20
+process_material = ExtResource( 16 )
+draw_pass_1 = SubResource( 56 )
 
 [node name="ParticlesJump" type="Particles" parent="ModelContainer"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25693, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.460834, 0 )
+material_override = ExtResource( 15 )
 emitting = false
-amount = 500
-lifetime = 0.7
+amount = 600
+lifetime = 0.75
 local_coords = false
-process_material = SubResource( 56 )
-draw_pass_1 = SubResource( 55 )
+process_material = SubResource( 66 )
+draw_pass_1 = SubResource( 64 )
+
+[node name="ParticlesLand" type="Particles" parent="ModelContainer"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.460834, 0 )
+material_override = ExtResource( 15 )
+emitting = false
+amount = 400
+lifetime = 0.75
+local_coords = false
+process_material = SubResource( 65 )
+draw_pass_1 = SubResource( 64 )
 
 [node name="VelocityArrow2" parent="ModelContainer" instance=ExtResource( 8 )]
 

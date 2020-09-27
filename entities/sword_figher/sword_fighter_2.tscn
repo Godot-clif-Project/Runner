@@ -46,14 +46,15 @@ listen_to_pads = PoolIntArray( 1 )
 [node name="AnimationTree" parent="." index="4"]
 tree_root = SubResource( 8 )
 
+[node name="Skeleton" parent="ModelContainer/sword_fighter/Armature" index="0"]
+bones/2/bound_children = [ NodePath("ThrowAttachment") ]
+bones/12/bound_children = [ NodePath("BoneAttachment") ]
+
 [node name="Cube" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="0"]
 material/0 = ExtResource( 2 )
 
 [node name="sword" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="1"]
 material/0 = ExtResource( 2 )
-
-[node name="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
-transform = Transform( 1, 0, 0, 0, 0.998474, 0.0552152, 0, -0.0552152, 0.998474, -6.59474e-17, 2.24226, 0 )
 
 [editable path="ModelContainer/sword_fighter"]
 

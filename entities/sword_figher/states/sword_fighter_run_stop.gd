@@ -15,7 +15,7 @@ var speed = 0.0
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
 	speed = entity.horizontal_speed
-	
+	entity.get_node("ModelContainer/Particles2").emitting = true
 	entity.set_animation("run_break", 0, 30.0)
 	
 #	if entity.input_listener.is_key_pressed(InputManager.DOWN):
@@ -103,7 +103,7 @@ func get_possible_transitions():
 
 func _received_input(key, state):
 	if state:
-		if key == InputManager.RUN:
+		if key == InputManager.RUN or key == InputManager.UP:
 			set_next_state("off_run")
 			return
 #		if key == InputManager.DOWN:

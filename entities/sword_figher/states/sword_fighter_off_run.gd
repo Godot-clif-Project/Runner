@@ -10,6 +10,8 @@ var rot_drag = 15
 var rot_speed = 30
 var max_turn_speed = 3.2
 var target_speed = 13.0
+var max_speed = 10.0
+var boost_speed = 16.0
 var acceleration = 1.0
 
 var turn_acc = 0.0
@@ -84,11 +86,11 @@ func _process_state(delta):
 			set_next_state("run_stop")
 			return
 			
-	elif target_speed > 13:
+	elif target_speed > max_speed:
 		target_speed -= delta * 5
 		
-	elif target_speed < 13:
-		target_speed = 13
+	elif target_speed < max_speed:
+		target_speed = max_speed
 		max_turn_speed = 3.2
 	
 	if entity.is_on_wall():
@@ -149,11 +151,11 @@ func _received_input(key, state):
 			return
 		if key == InputManager.RUN_RUN or key == InputManager.UP_UP:
 #			if target_speed <= 13:
-			target_speed = 23
+			target_speed = boost_speed
 			max_turn_speed = 2.3
 #			entity.set_velocity(Vector3(0.0, 0.0, -target_speed))
 #			acceleration = 2.0
-			entity.emit_one_shot("ParticlesBoost")
+#			entity.emit_one_shot("ParticlesBoost")
 #			if target_speed < 22:
 #				target_speed += 6
 #			else:

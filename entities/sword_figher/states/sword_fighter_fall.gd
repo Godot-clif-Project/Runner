@@ -70,11 +70,16 @@ func _process_state(delta):
 #	else:
 
 	entity.apply_drag(delta)
-	entity.apply_gravity(delta)
+	if entity.flags.gravity:
+		entity.apply_gravity(delta)
+	else:
+		entity.apply_gravity(delta * 0.1)
+	
 	entity.center_camera(delta)
 	
 func _touched_surface(surface):
 	if surface == "floor":
+		entity.emit_one_shot("ParticlesLand")
 		entity.on_ground = true
 		entity.has_wall_run = true
 		entity.has_wall_run_side = true
@@ -102,7 +107,7 @@ func _touched_surface(surface):
 #
 func _animation_finished(anim_name):
 	if anim_name == "jump_land":
-		if entity.input_listener.is_key_pressed(InputManager.RUN):
+		if entity.input_listener.is_key_pressed(InputManager.RUN) or entity.input_listener.is_key_pressed(InputManager.UP):
 			set_next_state("off_run")
 		else:
 			set_next_state("run_stop")
@@ -132,5 +137,9 @@ func _received_input(key, state):
 				entity.play_rope_animation(entity.lock_on_target.rope_point.global_transform.origin)
 				entity.emit_signal("dealt_tandem_action", "rope_pull", [entity.lock_on_target.rope_point.global_transform.origin])
 #				set_next_state("off_hi_fierce")
+	else:
+		if key == InputManager.JUMP:
+			entity.set_velocity(Vector3(0.0, 0.0, -12))
+			entity.jump_str = 15
+			set_next_state("jump")
 #			if key == InputManager.HEAVY:
-#				set_next_state("off_kick")

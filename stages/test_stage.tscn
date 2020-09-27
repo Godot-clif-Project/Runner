@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://stages/stage_env.tres" type="Environment" id=1]
 [ext_resource path="res://entities/sword_figher/sword_fighter.tscn" type="PackedScene" id=2]
@@ -10,8 +10,9 @@
 [ext_resource path="res://entities/sword_figher/sword_fighter_2.tscn" type="PackedScene" id=8]
 [ext_resource path="res://objects/stage_timer.tscn" type="PackedScene" id=9]
 [ext_resource path="res://entities/sword_figher/sword_fighter_player_1.material" type="Material" id=10]
+[ext_resource path="res://effects/dust/boost.tres" type="Material" id=11]
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=1]
 length = 60.0
 loop = true
 tracks/0/type = "value"
@@ -27,13 +28,72 @@ tracks/0/keys = {
 "values": [ Vector3( -25.071, 100, -2.385 ), Vector3( -25.071, 460, -2.385 ) ]
 }
 
+[sub_resource type="CubeMesh" id=2]
+
+[sub_resource type="Curve" id=64]
+_data = [ Vector2( 0, 1 ), 0.0, -0.0363921, 0, 0, Vector2( 1, 0 ), -2.04049, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=65]
+curve = SubResource( 64 )
+
+[sub_resource type="ParticlesMaterial" id=66]
+emission_shape = 1
+emission_sphere_radius = 0.15
+direction = Vector3( 0, 1, 0 )
+spread = 0.0
+gravity = Vector3( 0, -2, 0 )
+initial_velocity = 1.0
+initial_velocity_random = 0.5
+scale = 0.15
+scale_curve = SubResource( 65 )
+
 [sub_resource type="CubeMesh" id=3]
 
-[sub_resource type="BoxShape" id=4]
+[sub_resource type="Gradient" id=57]
+offsets = PoolRealArray( 0.113821, 1 )
+colors = PoolColorArray( 0.681641, 0.489087, 0.274254, 1, 0.333984, 0.198767, 0.113503, 0 )
 
-[sub_resource type="CubeMesh" id=5]
+[sub_resource type="GradientTexture" id=58]
+gradient = SubResource( 57 )
 
-[sub_resource type="BoxShape" id=6]
+[sub_resource type="Curve" id=59]
+max_value = 100.0
+_data = [ Vector2( 0, 36.2069 ), 0.0, -111.126, 0, 0, Vector2( 1, 0 ), 6.89152, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=60]
+curve = SubResource( 59 )
+
+[sub_resource type="Curve" id=61]
+max_value = 2.0
+_data = [ Vector2( 0, 0.662716 ), 0.0, 1.31012, 0, 0, Vector2( 1, 1.16595 ), 0.0620238, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=62]
+curve = SubResource( 61 )
+
+[sub_resource type="ParticlesMaterial" id=63]
+lifetime_randomness = 0.2
+direction = Vector3( 0, 0, 0 )
+spread = 180.0
+flatness = 0.9
+gravity = Vector3( 0, -2, 0 )
+initial_velocity = 12.0
+initial_velocity_random = 0.25
+angular_velocity = 10.14
+damping_curve = SubResource( 60 )
+angle = 720.0
+angle_random = 0.5
+scale = 2.0
+scale_random = 0.5
+scale_curve = SubResource( 62 )
+color_ramp = SubResource( 58 )
+
+[sub_resource type="CubeMesh" id=4]
+
+[sub_resource type="BoxShape" id=5]
+
+[sub_resource type="CubeMesh" id=6]
+
+[sub_resource type="BoxShape" id=7]
 
 [node name="Stage" type="Spatial"]
 
@@ -139,23 +199,44 @@ shadow_enabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 playback_process_mode = 0
-"anims/New Anim" = SubResource( 2 )
+"anims/New Anim" = SubResource( 1 )
 
 [node name="SwordFighter" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 30.6905 )
 target = NodePath("../SwordFighter2")
 
 [node name="SwordFighter2" parent="." instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.53829, 3.64954, -3.20297 )
 target = NodePath("../SwordFighter")
 
+[node name="AnimationFlags" parent="SwordFighter2" index="1"]
+is_active = false
+
 [node name="AnimationTree" parent="SwordFighter2" index="4"]
 parameters/1_and_-1/blend_amount = 0.3
 
-[node name="ParticlesJump" parent="SwordFighter2/ModelContainer" index="13"]
-amount = 400
+[node name="ParticlesBoost" parent="SwordFighter2/ModelContainer" index="11"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25693, 0 )
+visible = true
+material_override = null
+amount = 450
+process_material = ExtResource( 11 )
+draw_pass_1 = SubResource( 2 )
 
-[node name="Rope" parent="SwordFighter2/ModelContainer" index="16"]
+[node name="Particles2" parent="SwordFighter2/ModelContainer" index="12"]
+material_override = null
+amount = 10
+process_material = SubResource( 66 )
+draw_pass_1 = SubResource( 3 )
+
+[node name="ParticlesJump" parent="SwordFighter2/ModelContainer" index="13"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25693, 0 )
+material_override = null
+amount = 400
+lifetime = 0.7
+process_material = SubResource( 63 )
+draw_pass_1 = SubResource( 2 )
+
+[node name="Rope" parent="SwordFighter2/ModelContainer" index="17"]
 visible = true
 
 [node name="VisibilityNotifier" parent="SwordFighter2" index="11"]
@@ -169,7 +250,7 @@ collision_layer = 4
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 0.31253, 0, 0, 0, 0.31253, 0, 0, 0, 0.31253, 0, -0.257058, 0 )
-mesh = SubResource( 3 )
+mesh = SubResource( 4 )
 material/0 = null
 
 [node name="Player1Pos" type="Position3D" parent="."]
@@ -188,7 +269,7 @@ texture = ExtResource( 7 )
 transform = Transform( 5.09698, 0, -0.425677, 0, 5.11473, 0, 0.425677, 0, 5.09698, 53.4341, 37.0923, 51.869 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Goal"]
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="RigidBody" type="RigidBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.02432, 3.43202, 20.1204 )
@@ -198,11 +279,11 @@ mass = 2.04082
 sleeping = true
 
 [node name="MeshInstance" type="MeshInstance" parent="RigidBody"]
-mesh = SubResource( 5 )
+mesh = SubResource( 6 )
 material/0 = ExtResource( 10 )
 
 [node name="CollisionShape" type="CollisionShape" parent="RigidBody"]
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 [connection signal="body_entered" from="Goal" to="StageTimer" method="_on_Goal_body_entered"]
 
 [editable path="SwordFighter"]

@@ -55,7 +55,7 @@ func _process_state(delta):
 	
 	if not entity.ledge_detect_low.is_colliding():
 		if entity.wall_has_ledge:
-			if entity.input_listener.is_key_pressed(InputManager.RUN):
+			if entity.input_listener.is_key_pressed(InputManager.RUN) or entity.input_listener.is_key_pressed(InputManager.UP):
 				entity.jump_str = 20
 				entity.set_velocity(Vector3(0.0, 10, -2).rotated(Vector3.RIGHT, entity.wall_rot.x))
 				set_next_state("jump")

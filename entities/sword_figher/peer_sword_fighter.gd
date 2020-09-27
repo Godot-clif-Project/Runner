@@ -112,11 +112,6 @@ remote func update_animation(id, anim_name, seek_pos, blend_speed):
 
 	animation_slot = -animation_slot
 	
-	if anim_name == "run_loop":
-		dust.emitting = true
-	elif anim_name == "offensive_stance":
-		dust.emitting = false
-
 remote func update_hp(id, new_hp):
 	if player_side == 1:
 		get_node("../Lifebar")._on_sword_fighter_hp_changed(new_hp)

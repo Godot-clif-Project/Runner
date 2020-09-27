@@ -347,7 +347,7 @@ func jump():
 	velocity.y = 0.0
 	
 	var direction = Vector2.ZERO
-	if input_listener.is_key_pressed(InputManager.RUN):
+	if input_listener.is_key_pressed(InputManager.RUN) or input_listener.is_key_pressed(InputManager.UP):
 		direction += Vector2.UP
 #	if input_listener.is_key_pressed(InputManager.DOWN):
 #		direction += Vector2.DOWN
