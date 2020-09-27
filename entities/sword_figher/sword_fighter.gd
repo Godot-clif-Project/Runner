@@ -26,6 +26,7 @@ export var tracking_speed = 20
 export var max_hp = 1000
 export var min_jump_str = 2.5
 export var max_jump_str = 25
+export var weight = 70
 
 var ready = false
 var player_side = 0
@@ -57,6 +58,8 @@ var wall_side = 0
 var wall_rot : Vector3
 
 var tandem_entity = null
+
+var rigidbodies = []
 
 onready var lock_on_target : Spatial = get_node(target)
 onready var input_listener = $InputListener
@@ -180,7 +183,7 @@ func has_los_to_target(_target):
 
 func play_rope_animation(_target):
 	rope_model.visible = true
-	rope_model.scale.z = translation.distance_to(_target)
+	rope_model.scale = Vector3.ONE * clamp(translation.distance_to(_target), 1, 10)
 	rope_model.look_at(_target, Vector3.UP)
 	get_node("ModelContainer/Rope/AnimationPlayer").play("default")
 
@@ -209,6 +212,11 @@ func _physics_process(delta):
 	camera_pivot.rotation.y += input_listener.sticks[2] * -0.1
 	camera_pivot.rotation.x = clamp(camera_pivot.rotation.x + input_listener.sticks[3] * -0.1, -1.5, 0.9)
 	target_rotation = camera_pivot.rotation.y
+	
+	if not rigidbodies.empty():
+		for body in rigidbodies:
+			var body_normal = (translation - body.translation)
+			velocity += Vector3(body_normal.x, 0.0, body_normal.z)
 	
 	prev_speed = horizontal_speed
 	
@@ -517,11 +525,33 @@ func _on_Feet_body_entered(body):
 	if not on_ground:
 		fsm.receive_event("_touched_surface", "floor")
 
-func emit_one_shot():
-	$ModelContainer/Particles.emitting = true
+func emit_one_shot(_name : String):
+	var node = get_node("ModelContainer/" + _name)
+	
+	node.emitting = true
 #	$ModelContainer/Particles.restart()
 	
 	yield(get_tree(), "physics_frame")
 #	yield(get_tree(), "physics_frame")
 	yield(get_tree(), "physics_frame")
-	$ModelContainer/Particles.emitting = false
+	node.emitting = false
+
+func _on_RigidbodyCollision_body_entered(body):
+	
+	body.apply_central_impulse(velocity * (0.5 + ((weight - body.weight) / weight)))
+	
+#	var body_normal = (body.translation.direction_to(translation))
+	var body_normal = (translation - body.translation).normalized()
+	var player_vector = model_container.transform.basis.z
+	var rot = Vector2(player_vector.x, player_vector.z).angle_to(Vector2(body_normal.x, body_normal.z))
+	var dot = body_normal.dot(velocity.normalized())
+	var weight_diff = clamp(1 - ((weight - body.weight) / weight),0 , 2)
+	
+	model_container.rotation.y -= PI * sign(rot) * dot * weight_diff * 0.5
+	velocity += Vector3(body_normal.x, 0.0, body_normal.z) * horizontal_speed * abs(dot) * weight_diff
+	
+	rigidbodies.append(body)
+
+func _on_RigidbodyCollision_body_exited(body):
+	rigidbodies.erase(body)
+	pass # Replace with function body.

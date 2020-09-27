@@ -332,6 +332,10 @@ anims/receive_off_throw_f = SubResource( 16 )
 [node name="sword_fighter" parent="ModelContainer" instance=ExtResource( 2 )]
 transform = Transform( -0.6, 0, -9.05975e-08, 0, 0.6, 0, 9.05975e-08, 0, -0.6, 0, 0, 0 )
 
+[node name="Skeleton" parent="ModelContainer/sword_fighter/Armature" index="0"]
+bones/2/bound_children = [ NodePath("ThrowAttachment") ]
+bones/12/bound_children = [ NodePath("BoneAttachment") ]
+
 [node name="BoneAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
 transform = Transform( 1, 0, 0, 0, 0.998474, 0.0552152, 0, -0.0552152, 0.998474, -6.59474e-17, 2.24226, 0 )
 bone_name = "torso"
@@ -369,6 +373,13 @@ playback/speed = 3.0
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.74, 0 )
 shape = SubResource( 17 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="VisibilityNotifier" type="VisibilityNotifier" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+aabb = AABB( -0.05, -0.05, -0.05, 0.1, 0.1, 0.1 )
 __meta__ = {
 "_editor_description_": ""
 }

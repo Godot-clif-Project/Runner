@@ -94,15 +94,13 @@ func _process_state(delta):
 	if entity.is_on_wall():
 		var wall_normal = entity.get_slide_collision(0).normal
 #		var wall_position = entity.get_slide_collision(0).position
-		var player_vector = Vector3.FORWARD.rotated(Vector3.UP, entity.model_container.rotation.y)
+		var player_vector = -entity.model_container.transform.basis.z
 		var rot = Vector2(player_vector.x, player_vector.z).angle_to(Vector2(wall_normal.x, wall_normal.z))
-		
 		entity.model_container.rotation.y -= PI * 0.2 * sign(rot)
 		
 		if wall_normal.dot(player_vector) > -0.8:
 			entity.velocity *= 0.5
 			entity.velocity += wall_normal * entity.prev_speed * 0.25
-			
 		else:
 			entity.velocity = wall_normal * entity.prev_speed
 			
@@ -155,7 +153,7 @@ func _received_input(key, state):
 			max_turn_speed = 2.3
 #			entity.set_velocity(Vector3(0.0, 0.0, -target_speed))
 #			acceleration = 2.0
-			entity.emit_one_shot()
+			entity.emit_one_shot("ParticlesBoost")
 #			if target_speed < 22:
 #				target_speed += 6
 #			else:

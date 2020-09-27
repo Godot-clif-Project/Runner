@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=2]
+[gd_scene load_steps=71 format=2]
 
 [ext_resource path="res://entities/sword_figher/model/sword_fighter.glb" type="PackedScene" id=1]
 [ext_resource path="res://entities/sword_figher/sword_fighter.gd" type="Script" id=2]
@@ -536,31 +536,31 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=12]
 length = 2.26667
-tracks/0/type = "method"
-tracks/0/path = NodePath(".")
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:ground_drag")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
 "times": PoolRealArray( 0.1 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
 "method": "jump"
 } ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:ground_drag")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 1 ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("AnimationFlags:is_active")
@@ -573,6 +573,20 @@ tracks/2/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 2,
 "values": [ true ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "ParticlesJump" ],
+"method": "emit_one_shot"
+} ]
 }
 
 [sub_resource type="Animation" id=13]
@@ -1936,9 +1950,22 @@ scale_curve = SubResource( 53 )
 
 [sub_resource type="CubeMesh" id=55]
 
+[sub_resource type="ParticlesMaterial" id=56]
+lifetime_randomness = 0.2
+direction = Vector3( 0, 0, 0 )
+spread = 180.0
+flatness = 0.9
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 11.0
+initial_velocity_random = 0.25
+radial_accel = 5.0
+damping = 30.0
+scale = 0.3
+scale_curve = SubResource( 53 )
+
 [node name="SwordFighter" type="KinematicBody"]
 collision_layer = 2
-collision_mask = 3
+collision_mask = 2147483651
 script = ExtResource( 2 )
 ground_drag = 1
 
@@ -2036,7 +2063,7 @@ material/0 = ExtResource( 12 )
 material/0 = ExtResource( 12 )
 
 [node name="BoneAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
-transform = Transform( 0.326458, -0.295979, -0.897676, -0.274191, 0.879218, -0.389609, 0.904568, 0.373326, 0.205873, 0.112911, 1.5083, -0.458656 )
+transform = Transform( 1, 0, 0, 0, 0.998474, 0.0552152, 0, -0.0552152, 0.998474, -6.59474e-17, 2.24226, 0 )
 bone_name = "torso"
 
 [node name="Hurtbox" parent="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment" instance=ExtResource( 11 )]
@@ -2101,7 +2128,7 @@ cast_to = Vector3( 0, -1.5, 0 )
 transform = Transform( 0.5, -0.866025, 1.41093e-07, 0, -1.62921e-07, -1, 0.866025, 0.5, -8.14603e-08, 0, 1.47052, 0 )
 cast_to = Vector3( 0, -1.5, 0 )
 
-[node name="Particles" type="Particles" parent="ModelContainer"]
+[node name="ParticlesBoost" type="Particles" parent="ModelContainer"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25693, 0 )
 emitting = false
 amount = 450
@@ -2110,6 +2137,15 @@ process_material = SubResource( 54 )
 draw_pass_1 = SubResource( 55 )
 
 [node name="Particles2" parent="ModelContainer" instance=ExtResource( 13 )]
+
+[node name="ParticlesJump" type="Particles" parent="ModelContainer"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25693, 0 )
+emitting = false
+amount = 500
+lifetime = 0.7
+local_coords = false
+process_material = SubResource( 56 )
+draw_pass_1 = SubResource( 55 )
 
 [node name="VelocityArrow2" parent="ModelContainer" instance=ExtResource( 8 )]
 
@@ -2138,6 +2174,15 @@ playback/speed = 3.0
 [node name="VisibilityNotifier" type="VisibilityNotifier" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 aabb = AABB( -0.05, -0.05, -0.05, 0.1, 0.1, 0.1 )
+
+[node name="RigidbodyCollision" type="Area" parent="."]
+monitorable = false
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape" type="CollisionShape" parent="RigidbodyCollision"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.739593, 0 )
+shape = SubResource( 1 )
 [connection signal="flag_changed" from="AnimationFlags" to="." method="_on_AnimationFlags_flag_changed"]
 [connection signal="received_input" from="InputListener" to="." method="_on_InputListener_received_input"]
 [connection signal="animation_finished" from="AnimationEvents" to="." method="_on_AnimationEvents_animation_finished"]
@@ -2146,6 +2191,8 @@ aabb = AABB( -0.05, -0.05, -0.05, 0.1, 0.1, 0.1 )
 [connection signal="dealt_hit" from="ModelContainer/Hitbox" to="." method="_on_Hitbox_dealt_hit"]
 [connection signal="dealt_hit" from="ModelContainer/Hitbox2" to="." method="_on_Hitbox_dealt_hit"]
 [connection signal="body_entered" from="ModelContainer/Feet" to="." method="_on_Feet_body_entered"]
+[connection signal="body_entered" from="RigidbodyCollision" to="." method="_on_RigidbodyCollision_body_entered"]
+[connection signal="body_exited" from="RigidbodyCollision" to="." method="_on_RigidbodyCollision_body_exited"]
 
 [editable path="ModelContainer/sword_fighter"]
 
