@@ -1,7 +1,7 @@
-extends "res://entities/sword_figher/states/sword_fighter_offensive_moves.gd"
+extends "res://entities/sword_figher/states/sword_fighter_state.gd"
 
 var turn_speed = 180.0
-var falling_speed = 0.0
+#var falling_speed = 0.0
 
 func get_animation_data():
 	# Name, seek and blend length 
@@ -31,70 +31,38 @@ func _process_state(delta):
 		if abs(stick) > 0.1:
 			entity.model_container.rotation_degrees.y -= stick * delta * turn_speed
 			
-	if entity.get_current_animation() == "jump_land":
-		if entity.feet.get_overlapping_bodies().size() == 0:
-			set_next_state("fall")
+	if entity.ledge_detect_low.is_colliding():
+		if entity.ledge_detect_low.get_collider().is_in_group("ledge"):
+			if not entity.ledge_detect_high.is_colliding():
+				set_next_state("ledge_climb")
+				return
+			
+	if entity.has_wall_run:
+		if entity.raycast.is_colliding():
+			set_next_state("wall_run")
 			return
-#		entity.apply_rotation(delta)
-		entity.accelerate(-5, delta * 0.2)
-#		entity.set_velocity(Vector3(0.0, 0.0, -Vector2(entity.velocity.x, entity.velocity.z).length()))
-	else:
-#		if entity.flags.is_active:
-		if entity.ledge_detect_low.is_colliding():
-			if entity.ledge_detect_low.get_collider().is_in_group("ledge"):
-				if not entity.ledge_detect_high.is_colliding():
-					set_next_state("ledge_climb")
-					return
-				
-		if entity.has_wall_run:
-			if entity.raycast.is_colliding():
-				set_next_state("wall_run")
-				return
-				
-		if entity.has_wall_run_side:
-			if entity.raycast_side[-1].is_colliding():
-				entity.wall_side = -1
-				set_next_state("wall_run_side")
-				return
-				
-			if entity.raycast_side[1].is_colliding():
-				entity.wall_side = 1
-				set_next_state("wall_run_side")
-				return
-		
-		if entity.velocity.y < falling_speed:
-			falling_speed = entity.velocity.y
+			
+	if entity.has_wall_run_side:
+		if entity.raycast_side[-1].is_colliding():
+			entity.wall_side = -1
+			set_next_state("wall_run_side")
+			return
+			
+		if entity.raycast_side[1].is_colliding():
+			entity.wall_side = 1
+			set_next_state("wall_run_side")
+			return
 	
-#	if fsm.state_history[1] == "off_run":
-#		entity.apply_drag(delta * 0.)
-#	else:
-
+	if entity.velocity.y < 0.0:
+		entity.falling_speed = entity.velocity.y
+	
 	entity.apply_drag(delta)
-	if entity.flags.gravity:
-		entity.apply_gravity(delta)
-	else:
-		entity.apply_gravity(delta * 0.1)
-	
+	entity.apply_gravity(delta)
 	entity.center_camera(delta)
 	
 func _touched_surface(surface):
 	if surface == "floor":
-		entity.emit_one_shot("ParticlesLand")
-		entity.on_ground = true
-		entity.has_wall_run = true
-		entity.has_wall_run_side = true
-		turn_speed = 270.0
-
-		if falling_speed < -25:
-			entity.set_animation("jump_land", 0.0, 16.0)
-			
-		elif entity.input_listener.is_key_pressed(InputManager.RUN):
-#			set_next_state("off_run_startup")
-			set_next_state("off_run")
-			
-		else:
-			set_next_state("run_stop")
-			
+		set_next_state("land")
 
 #func _process_state(delta):
 #	entity.apply_root_motion(delta)
@@ -106,13 +74,10 @@ func _touched_surface(surface):
 ##	if anim_name == "off_h_r_heavy":
 #
 func _animation_finished(anim_name):
-	if anim_name == "jump_land":
-		if entity.input_listener.is_key_pressed(InputManager.RUN) or entity.input_listener.is_key_pressed(InputManager.UP):
-			set_next_state("off_run")
-		else:
-			set_next_state("run_stop")
-#	._animation_finished(anim_name)
+	pass
+
 #	set_next_state("offensive_stance")
+#	._animation_finished(anim_name)
 #	pass
 #
 #func _flag_changed(flag, state):
@@ -124,22 +89,21 @@ func _animation_finished(anim_name):
 #			set_next_state("walk")
 #		if entity.input_listener.is_key_pressed(InputManager.RIGHT):
 #			set_next_state("walk")
-#
-func _received_input(key, state):
-	if entity.on_ground:
-		._received_input(key, state)
-		
-#	if entity.flags.is_stringable:
-	if state:
-		if key == InputManager.HEAVY:
-			if entity.has_los_to_target(entity.lock_on_target):
-				entity.lock_on_target.receive_tandem_action("rope_pull", entity)
-				entity.play_rope_animation(entity.lock_on_target.rope_point.global_transform.origin)
-				entity.emit_signal("dealt_tandem_action", "rope_pull", [entity.lock_on_target.rope_point.global_transform.origin])
-#				set_next_state("off_hi_fierce")
-	else:
-		if key == InputManager.JUMP:
-			entity.set_velocity(Vector3(0.0, 0.0, -12))
-			entity.jump_str = 15
-			set_next_state("jump")
+
+func get_possible_transitions():
+	return [
+		"air_boost",
+#		"jump",
+		"tandem_rope_pull",
+		"tandem_launch_up",
+		]
+
+#func _received_input(key, state):
+#	if key == InputManager.JUMP:
+#		entity.set_velocity(Vector3(0.0, 0.0, -12))
+#		entity.jump_str = 15
+#		set_next_state("jump")
 #			if key == InputManager.HEAVY:
+
+#	if entity.on_ground:
+#	._received_input(key, state)

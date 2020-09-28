@@ -28,6 +28,7 @@ const STATES = {
 	"walk" : preload("res://entities/sword_figher/states/sword_fighter_walk.gd"),
 	"jump" : preload("res://entities/sword_figher/states/sword_fighter_jump.gd"),
 	"fall" : preload("res://entities/sword_figher/states/sword_fighter_fall.gd"),
+	"land" : preload("res://entities/sword_figher/states/sword_fighter_land.gd"),
 	"ledge_climb" : preload("res://entities/sword_figher/states/sword_fighter_ledge_climb.gd"),
 	"def_step" : preload("res://entities/sword_figher/states/sword_fighter_def_step.gd"),
 	"receive_throw" : preload("res://entities/sword_figher/states/sword_fighter_receive_throw.gd"),
@@ -35,4 +36,5 @@ const STATES = {
 	"tandem_rope_pull" : preload("res://entities/sword_figher/states/sword_fighter_tandem_rope_pull.gd"),
 	"tandem_rope_being_pulled" : preload("res://entities/sword_figher/states/sword_fighter_tandem_rope_being_pulled.gd"),
 	"tandem_launch_up" : preload("res://entities/sword_figher/states/sword_fighter_tandem_launch_up.gd"),
+	"air_boost" : preload("res://entities/sword_figher/states/sword_fighter_air_boost.gd"),
 	}

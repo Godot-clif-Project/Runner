@@ -27,6 +27,7 @@ export var max_hp = 1000
 export var min_jump_str = 2.5
 export var max_jump_str = 25
 export var weight = 70
+export var gravity_scale = 1.0
 
 var ready = false
 var player_side = 0
@@ -49,8 +50,10 @@ var receive_throw_pos = Vector3.ZERO
 var receive_throw_rot = 0.0
 var jump_str = 0
 var horizontal_speed = 0.0
+var falling_speed = 0.0
 
 var prev_speed = 0.0
+#var prev_velocity : Vector3
 var has_wall_run = true
 var has_wall_run_side = true
 var wall_has_ledge = false
@@ -175,17 +178,21 @@ func has_los_to_target(_target):
 		return false
 	else:
 		var space_state = get_world().direct_space_state
-		var result = space_state.intersect_ray(rope_point.global_transform.origin, _target.rope_point.global_transform.origin, [self], collision_mask)
+		var result = space_state.intersect_ray(rope_point.global_transform.origin, _target.rope_point.global_transform.origin, [self], 0b00000000000000000011)
 		if not result.empty() and result["collider"] is KinematicBody:
 			return true
 		else:
 			return false
 
-func play_rope_animation(_target):
-	rope_model.visible = true
-	rope_model.scale = Vector3.ONE * clamp(translation.distance_to(_target), 1, 10)
-	rope_model.look_at(_target, Vector3.UP)
-	get_node("ModelContainer/Rope/AnimationPlayer").play("default")
+func play_rope_animation():
+	lock_on_target.receive_tandem_action("rope_pull", self)
+	emit_signal("dealt_tandem_action", "rope_pull", [lock_on_target.rope_point.global_transform.origin])
+	
+#	rope_model.scale = Vector3.ONE * clamp(translation.distance_to(lock_on_target.rope_point.global_transform.origin), 1, 10)
+#	rope_model.look_at(lock_on_target.rope_point.global_transform.origin, Vector3.UP)
+#	rope_model.visible = true
+#	get_node("ModelContainer/Rope/AnimationPlayer").stop()
+#	get_node("ModelContainer/Rope/AnimationPlayer").play("default")
 
 func _on_InputListener_received_input(key, state):
 	fsm.receive_event("_received_input", [key, state])
@@ -195,6 +202,7 @@ func _input(event):
 		camera_pivot.rotation.y += deg2rad(input_listener.mouse_motion.x * -0.1)
 		camera_pivot.rotation.x = clamp(camera_pivot.rotation.x + deg2rad(input_listener.mouse_motion.y * -0.1), -1.5, 0.9)
 #	elif event is InputEventJoypadMotion:
+		
 #			if event.axis == 2:
 #				camera_pivot.rotation.y += event.axis_value * -0.1
 #				sticks[event.axis] = event.axis_value
@@ -212,13 +220,14 @@ func _physics_process(delta):
 	camera_pivot.rotation.y += input_listener.sticks[2] * -0.1
 	camera_pivot.rotation.x = clamp(camera_pivot.rotation.x + input_listener.sticks[3] * -0.1, -1.5, 0.9)
 	target_rotation = camera_pivot.rotation.y
-	
+		
 	if not rigidbodies.empty():
 		for body in rigidbodies:
 			var body_normal = (translation - body.translation)
 			velocity += Vector3(body_normal.x, 0.0, body_normal.z)
 	
 	prev_speed = horizontal_speed
+#	prev_velocity = velocity
 	
 	velocity = move_and_slide(velocity, Vector3.UP, false, 4, 0.785398, true)
 	
@@ -241,12 +250,19 @@ func _physics_process(delta):
 func center_camera(delta):
 	camera_pivot.rotation.y = lerp_angle(camera_pivot.rotation.y, model_container.rotation.y, delta * 2)
 
+func point_camera_at_target(delta, offset):
+	var current_camera_direction = Quat(camera_pivot.global_transform.basis)
+	var target_dir = Quat(camera_pivot.global_transform.looking_at(lock_on_target.translation + offset, Vector3.UP).basis)
+	var q = current_camera_direction.slerp(target_dir, delta)
+	camera_pivot.transform.basis = Basis(q)
+	camera_pivot.rotation.z = 0.0
+
 func apply_gravity(delta):
 	if velocity.y > TERMINAL_VELOCITY:
 		if not is_on_floor():
-			velocity.y -= 9.8 * delta * 7
+			velocity.y -= 9.8 * delta * gravity_scale * 6
 		else:
-			velocity.y -= 9.8 * delta * 0.3
+			velocity.y -= 9.8 * delta * gravity_scale * 0.3
 	else:
 		velocity.y = TERMINAL_VELOCITY
 
@@ -258,7 +274,7 @@ var current_velocity = Vector3.ZERO
 
 var target_vector = Vector2.ZERO
 
-func set_velocity(_velocity):
+func set_velocity(_velocity : Vector3):
 	var velocity_rotated = _velocity.rotated(Vector3.UP, model_container.rotation.y)
 #	velocity = Vector3(velocity_rotated.x, velocity.y, velocity_rotated.z)
 	velocity = velocity_rotated
@@ -290,8 +306,6 @@ func lerp_velocity(delta):
 	
 #	prints("v", velocity)
 #	prints("t", target_velocity)
-
-	
 
 func set_target_velocity(_target_velocity):
 #	current_velocity = velocity.normalized()
@@ -355,7 +369,7 @@ func jump():
 #		direction += Vector2.LEFT
 #	if input_listener.is_key_pressed(InputManager.RIGHT):
 #		direction += Vector2.RIGHT
-	direction = direction.normalized() * 5
+	direction = direction.normalized() * 2
 	
 #	add_impulse(Vector3(0.0, jump_str , 0.0))
 #	set_velocity(Vector3(direction.x, 0.0 , direction.y))

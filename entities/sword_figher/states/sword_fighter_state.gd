@@ -159,8 +159,14 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 	if key_state == InputManager.RELEASED:
 		match key as int:
 			InputManager.JUMP:
-				if valid_transitions.has("jump"):
-					return {"state" : "jump", "flag" : null}
+				for t in valid_transitions:
+					match t as String :
+						"air_boost":
+							return {"state" : t, "flag" : "is_stringable"}
+						"jump":
+							return {"state" : t, "flag" : null}
+#					if valid_transitions.has("jump"):
+#						return {"state" : "jump", "flag" : null}
 			
 	if key_state == InputManager.PRESSED:
 		match key as int:
@@ -182,7 +188,7 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 						"tandem_rope_pull":
 							if entity.input_listener.is_key_pressed(InputManager.EVADE):
 								if entity.has_los_to_target(entity.lock_on_target):
-									return {"state" : t, "flag" : "is_stringable"}
+									return {"state" : t, "flag" : null}
 						"off_hi_heavy":
 							return {"state" : t, "flag" : "is_stringable"}
 						"off_hi_heavy_1":

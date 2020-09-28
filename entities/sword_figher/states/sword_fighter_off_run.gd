@@ -11,7 +11,7 @@ var rot_speed = 30
 var max_turn_speed = 3.2
 var target_speed = 13.0
 var max_speed = 10.0
-var boost_speed = 16.0
+var boost_speed = 20
 var acceleration = 1.0
 
 var turn_acc = 0.0
@@ -31,6 +31,7 @@ func _enter_state():
 ## Inverse of enter_state.
 func _exit_state():
 	entity.set_collision_mask_bit(0, true)
+	entity.anim_tree["parameters/TimeScale/scale"] = 1
 	._exit_state()
 
 var t = 0.0
@@ -105,12 +106,13 @@ func _process_state(delta):
 			entity.velocity += wall_normal * entity.prev_speed * 0.25
 		else:
 			entity.velocity = wall_normal * entity.prev_speed
-			
+	
 	entity.model_container.rotation_degrees.y += ang_momentum
 	entity.accelerate(-target_speed, delta * acceleration)
 #	entity.apply_drag(delta)
 	entity.apply_gravity(delta)
 	
+	entity.anim_tree["parameters/TimeScale/scale"] = target_speed / boost_speed + 0.8
 	entity.center_camera(delta)
 	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
 		

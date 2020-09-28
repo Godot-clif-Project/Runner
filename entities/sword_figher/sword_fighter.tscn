@@ -1,4 +1,4 @@
-[gd_scene load_steps=88 format=2]
+[gd_scene load_steps=91 format=2]
 
 [ext_resource path="res://entities/sword_figher/model/sword_fighter.glb" type="PackedScene" id=1]
 [ext_resource path="res://entities/sword_figher/sword_fighter.gd" type="Script" id=2]
@@ -16,12 +16,97 @@
 [ext_resource path="res://entities/sword_figher/model/rope/rope_export.dae" type="PackedScene" id=14]
 [ext_resource path="res://effects/dust/dust.material" type="Material" id=15]
 [ext_resource path="res://effects/dust/run_dust.tres" type="Material" id=16]
+[ext_resource path="res://entities/sword_figher/animation_events.gd" type="Script" id=17]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.459803
 height = 0.564789
 
 [sub_resource type="Animation" id=2]
+length = 1.08333
+step = 0.0166667
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 1.11667 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"values": [ {
+"args": [ Vector3( 0, 15, 0 ) ],
+"method": "add_impulse"
+}, {
+"args": [ Vector3( 0, 13, -12 ) ],
+"method": "set_velocity"
+}, {
+"args": [ Vector3( 0, 13, -10 ) ],
+"method": "add_impulse"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ModelContainer/Particles2:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 1.5
+step = 0.0166667
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.333333, 1.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"values": [ {
+"args": [ Vector3( 0, 20, 0 ) ],
+"method": "add_impulse"
+}, {
+"args": [ null ],
+"method": "play_rope_animation"
+}, {
+"args": [ Vector3( 0, 10, 0 ) ],
+"method": "add_impulse"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimationFlags:is_active")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 2,
+"values": [ true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:gravity_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.316667, 0.333333, 1.1, 1.23333 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 1.0, 1.0, 0.05, 0.05, 1.0 ]
+}
+
+[sub_resource type="Animation" id=4]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimationFlags:track_target")
@@ -36,10 +121,10 @@ tracks/0/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=5]
 length = 0.001
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=6]
 length = 0.683333
 step = 0.016
 tracks/0/type = "value"
@@ -199,7 +284,7 @@ tracks/12/keys = {
 "values": [ "def_hi_light" ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=7]
 length = 0.5
 step = 0.0166667
 tracks/0/type = "value"
@@ -251,7 +336,7 @@ tracks/3/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=8]
 length = 0.5
 step = 0.0166667
 tracks/0/type = "value"
@@ -303,7 +388,7 @@ tracks/3/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=9]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimationFlags:is_stringable")
@@ -380,7 +465,7 @@ tracks/5/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=10]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimationFlags:is_stringable")
@@ -457,9 +542,9 @@ tracks/5/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=11]
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=12]
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimationFlags:is_stringable")
 tracks/0/interp = 1
@@ -521,8 +606,9 @@ tracks/4/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=13]
 length = 0.7
+step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:ground_drag")
 tracks/0/interp = 1
@@ -535,8 +621,20 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 15 ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimationFlags:is_stringable")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=14]
 length = 2.26667
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:ground_drag")
@@ -611,17 +709,29 @@ tracks/5/enabled = true
 tracks/5/keys = {
 "times": PoolRealArray( 0.1, 0.4 ),
 "transitions": PoolRealArray( 1, 1 ),
-"update": 1,
+"update": 2,
 "values": [ true, false ]
 }
-
-[sub_resource type="Animation" id=13]
-length = 0.001
-
-[sub_resource type="Animation" id=14]
-length = 1.33333
+tracks/6/type = "value"
+tracks/6/path = NodePath("AnimationFlags:is_stringable")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
+"values": [ true ]
+}
 
 [sub_resource type="Animation" id=15]
+length = 0.001
+
+[sub_resource type="Animation" id=16]
+length = 1.33333
+
+[sub_resource type="Animation" id=17]
 length = 0.333333
 step = 0.0166667
 tracks/0/type = "value"
@@ -637,7 +747,7 @@ tracks/0/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=18]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimationFlags:track_target")
@@ -652,10 +762,10 @@ tracks/0/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=19]
 length = 0.833333
 
-[sub_resource type="Animation" id=18]
+[sub_resource type="Animation" id=20]
 length = 0.7
 step = 0.016
 tracks/0/type = "value"
@@ -671,7 +781,7 @@ tracks/0/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=19]
+[sub_resource type="Animation" id=21]
 length = 1.16667
 step = 0.016
 tracks/0/type = "value"
@@ -807,7 +917,7 @@ tracks/10/keys = {
 "values": [ "off_hi_r_heavy" ]
 }
 
-[sub_resource type="Animation" id=20]
+[sub_resource type="Animation" id=22]
 length = 0.916667
 step = 0.0166667
 tracks/0/type = "value"
@@ -835,10 +945,10 @@ tracks/1/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=21]
+[sub_resource type="Animation" id=23]
 length = 0.666667
 
-[sub_resource type="Animation" id=22]
+[sub_resource type="Animation" id=24]
 length = 0.666667
 step = 0.016
 tracks/0/type = "value"
@@ -962,7 +1072,7 @@ tracks/9/keys = {
 "values": [ "off_hi_r_light" ]
 }
 
-[sub_resource type="Animation" id=23]
+[sub_resource type="Animation" id=25]
 step = 0.016
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimationFlags:is_evade_cancelable")
@@ -1109,7 +1219,7 @@ tracks/11/keys = {
 "values": [ "off_kick" ]
 }
 
-[sub_resource type="Animation" id=24]
+[sub_resource type="Animation" id=26]
 length = 0.2
 step = 0.0166667
 tracks/0/type = "value"
@@ -1125,7 +1235,7 @@ tracks/0/keys = {
 "values": [ 10 ]
 }
 
-[sub_resource type="Animation" id=25]
+[sub_resource type="Animation" id=27]
 length = 0.583333
 step = 0.0166667
 tracks/0/type = "value"
@@ -1189,13 +1299,13 @@ tracks/4/keys = {
 "values": [ 10 ]
 }
 
-[sub_resource type="Animation" id=26]
+[sub_resource type="Animation" id=28]
 length = 1.93333
 
-[sub_resource type="Animation" id=27]
+[sub_resource type="Animation" id=29]
 length = 2.25
 
-[sub_resource type="Animation" id=28]
+[sub_resource type="Animation" id=30]
 length = 0.833333
 step = 0.016
 tracks/0/type = "value"
@@ -1247,7 +1357,7 @@ tracks/3/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=29]
+[sub_resource type="Animation" id=31]
 length = 1.33333
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimationFlags:is_stringable")
@@ -1298,109 +1408,7 @@ tracks/3/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=30]
-tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_stringable")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 2,
-"values": [ true ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("AnimationFlags:is_evade_cancelable")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 2,
-"values": [ true ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("AnimationFlags:is_cancelable")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 2,
-"values": [ true ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("AnimationFlags:is_command_cancelable")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 2,
-"values": [ true ]
-}
-
-[sub_resource type="Animation" id=31]
-length = 0.833333
-tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_stringable")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 2,
-"values": [ true ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("AnimationFlags:is_evade_cancelable")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 2,
-"values": [ true ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("AnimationFlags:is_cancelable")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 2,
-"values": [ true ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("AnimationFlags:is_command_cancelable")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 2,
-"values": [ true ]
-}
-
 [sub_resource type="Animation" id=32]
-length = 0.833333
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimationFlags:is_stringable")
 tracks/0/interp = 1
@@ -1451,6 +1459,108 @@ tracks/3/keys = {
 }
 
 [sub_resource type="Animation" id=33]
+length = 0.833333
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimationFlags:is_stringable")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
+"values": [ true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("AnimationFlags:is_cancelable")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
+"values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("AnimationFlags:is_command_cancelable")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=34]
+length = 0.833333
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimationFlags:is_stringable")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
+"values": [ true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("AnimationFlags:is_cancelable")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
+"values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("AnimationFlags:is_command_cancelable")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=35]
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimationFlags:is_stringable")
 tracks/0/interp = 1
@@ -1524,10 +1634,10 @@ tracks/5/keys = {
 "values": [ 10 ]
 }
 
-[sub_resource type="Animation" id=34]
+[sub_resource type="Animation" id=36]
 length = 2.18333
 
-[sub_resource type="Animation" id=35]
+[sub_resource type="Animation" id=37]
 length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimationFlags:is_active")
@@ -1577,8 +1687,20 @@ tracks/3/keys = {
 "update": 2,
 "values": [ true ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("AnimationFlags:is_stringable")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
-[sub_resource type="Animation" id=36]
+[sub_resource type="Animation" id=38]
 length = 0.166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimationFlags:is_active")
@@ -1593,7 +1715,7 @@ tracks/0/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=37]
+[sub_resource type="Animation" id=39]
 length = 0.833333
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimationFlags:is_active")
@@ -1644,10 +1766,10 @@ tracks/3/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=38]
+[sub_resource type="Animation" id=40]
 length = 0.833333
 
-[sub_resource type="Animation" id=39]
+[sub_resource type="Animation" id=41]
 length = 0.45
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimationFlags:is_command_cancelable")
@@ -1686,7 +1808,7 @@ tracks/2/keys = {
 "values": [ 10 ]
 }
 
-[sub_resource type="Animation" id=40]
+[sub_resource type="Animation" id=42]
 length = 0.416667
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimationFlags:is_active")
@@ -1701,7 +1823,7 @@ tracks/0/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=41]
+[sub_resource type="Animation" id=43]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:ground_drag")
@@ -1716,16 +1838,16 @@ tracks/0/keys = {
 "values": [ 1 ]
 }
 
-[sub_resource type="Animation" id=42]
+[sub_resource type="Animation" id=44]
 length = 0.666667
 
-[sub_resource type="Animation" id=43]
+[sub_resource type="Animation" id=45]
 length = 0.833333
 
-[sub_resource type="Animation" id=44]
+[sub_resource type="Animation" id=46]
 length = 0.001
 
-[sub_resource type="Animation" id=45]
+[sub_resource type="Animation" id=47]
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimationTree:parameters/1_and_-1/blend_amount")
 tracks/0/interp = 1
@@ -1739,7 +1861,7 @@ tracks/0/keys = {
 "values": [ 0.0, 1.0 ]
 }
 
-[sub_resource type="Animation" id=46]
+[sub_resource type="Animation" id=48]
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimationTree:parameters/anim_and_space/blend_amount")
 tracks/0/interp = 1
@@ -1753,7 +1875,7 @@ tracks/0/keys = {
 "values": [ 0.0, 1.0 ]
 }
 
-[sub_resource type="Animation" id=47]
+[sub_resource type="Animation" id=49]
 step = 0.0166667
 tracks/0/type = "animation"
 tracks/0/path = NodePath("ModelContainer/sword_fighter/AnimationPlayer")
@@ -1814,7 +1936,7 @@ tracks/4/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=48]
+[sub_resource type="Animation" id=50]
 length = 1.16667
 step = 0.0166667
 tracks/0/type = "value"
@@ -1880,7 +2002,7 @@ tracks/4/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=49]
+[sub_resource type="Animation" id=51]
 length = 1.16667
 step = 0.0166667
 tracks/0/type = "animation"
@@ -1894,7 +2016,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 )
 }
 
-[sub_resource type="Animation" id=50]
+[sub_resource type="Animation" id=52]
 step = 0.0166667
 tracks/0/type = "animation"
 tracks/0/path = NodePath("ModelContainer/sword_fighter/AnimationPlayer")
@@ -1955,23 +2077,23 @@ tracks/4/keys = {
 "values": [  ]
 }
 
-[sub_resource type="RayShape" id=51]
+[sub_resource type="RayShape" id=53]
 length = 1.2
 
-[sub_resource type="Gradient" id=72]
+[sub_resource type="Gradient" id=54]
 offsets = PoolRealArray( 0.113821, 1 )
 colors = PoolColorArray( 0.681641, 0.489087, 0.274254, 1, 0.333984, 0.198767, 0.113503, 0 )
 
-[sub_resource type="GradientTexture" id=73]
-gradient = SubResource( 72 )
+[sub_resource type="GradientTexture" id=55]
+gradient = SubResource( 54 )
 
-[sub_resource type="Curve" id=52]
+[sub_resource type="Curve" id=56]
 _data = [ Vector2( 0, 0.517241 ), 0.0, 1.41379, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=53]
-curve = SubResource( 52 )
+[sub_resource type="CurveTexture" id=57]
+curve = SubResource( 56 )
 
-[sub_resource type="ParticlesMaterial" id=75]
+[sub_resource type="ParticlesMaterial" id=58]
 emission_shape = 2
 emission_box_extents = Vector3( 0.8, 0.7, 0.3 )
 flag_align_y = true
@@ -1984,35 +2106,35 @@ initial_velocity_random = 0.5
 damping = 4.87
 angle = 32.2
 scale = 2.0
-scale_curve = SubResource( 53 )
-color_ramp = SubResource( 73 )
+scale_curve = SubResource( 57 )
+color_ramp = SubResource( 55 )
 
-[sub_resource type="QuadMesh" id=74]
+[sub_resource type="QuadMesh" id=59]
 
-[sub_resource type="QuadMesh" id=56]
+[sub_resource type="QuadMesh" id=60]
 
-[sub_resource type="Gradient" id=57]
+[sub_resource type="Gradient" id=61]
 offsets = PoolRealArray( 0.113821, 1 )
 colors = PoolColorArray( 0.681641, 0.489087, 0.274254, 1, 0.333984, 0.198767, 0.113503, 0 )
 
-[sub_resource type="GradientTexture" id=58]
-gradient = SubResource( 57 )
+[sub_resource type="GradientTexture" id=62]
+gradient = SubResource( 61 )
 
-[sub_resource type="Curve" id=69]
+[sub_resource type="Curve" id=63]
 max_value = 100.0
 _data = [ Vector2( 0, 83.1897 ), 0.0, -228.894, 0, 0, Vector2( 1, 0 ), 6.89152, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=67]
-curve = SubResource( 69 )
+[sub_resource type="CurveTexture" id=64]
+curve = SubResource( 63 )
 
-[sub_resource type="Curve" id=61]
+[sub_resource type="Curve" id=65]
 max_value = 2.0
 _data = [ Vector2( 0, 0.662716 ), 0.0, 1.31012, 0, 0, Vector2( 1, 1.16595 ), 0.0620238, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=62]
-curve = SubResource( 61 )
+[sub_resource type="CurveTexture" id=66]
+curve = SubResource( 65 )
 
-[sub_resource type="ParticlesMaterial" id=66]
+[sub_resource type="ParticlesMaterial" id=67]
 lifetime_randomness = 0.2
 direction = Vector3( 0, 0, 0 )
 spread = 180.0
@@ -2021,31 +2143,31 @@ gravity = Vector3( 0, -2, 0 )
 initial_velocity = 12.0
 initial_velocity_random = 0.25
 angular_velocity = 10.14
-damping_curve = SubResource( 67 )
+damping_curve = SubResource( 64 )
 angle = 720.0
 angle_random = 0.5
 scale = 2.0
 scale_random = 0.5
-scale_curve = SubResource( 62 )
-color_ramp = SubResource( 58 )
+scale_curve = SubResource( 66 )
+color_ramp = SubResource( 62 )
 
-[sub_resource type="QuadMesh" id=64]
+[sub_resource type="QuadMesh" id=68]
 
-[sub_resource type="Curve" id=59]
+[sub_resource type="Curve" id=69]
 max_value = 100.0
 _data = [ Vector2( 0, 36.2069 ), 0.0, -111.126, 0, 0, Vector2( 1, 0 ), 6.89152, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=68]
-curve = SubResource( 59 )
+[sub_resource type="CurveTexture" id=70]
+curve = SubResource( 69 )
 
-[sub_resource type="Curve" id=70]
+[sub_resource type="Curve" id=71]
 max_value = 2.0
 _data = [ Vector2( 0, 0.662716 ), 0.0, 1.31012, 0, 0, Vector2( 1, 1.16595 ), 0.0620238, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=71]
-curve = SubResource( 70 )
+[sub_resource type="CurveTexture" id=72]
+curve = SubResource( 71 )
 
-[sub_resource type="ParticlesMaterial" id=65]
+[sub_resource type="ParticlesMaterial" id=73]
 lifetime_randomness = 0.2
 direction = Vector3( 0, 0, 0 )
 spread = 180.0
@@ -2055,24 +2177,23 @@ initial_velocity = 6.0
 initial_velocity_random = 0.25
 angular_velocity = 10.14
 linear_accel = 1.41
-damping_curve = SubResource( 68 )
+damping_curve = SubResource( 70 )
 angle = 720.0
 angle_random = 0.5
 scale_random = 0.5
-scale_curve = SubResource( 71 )
-color_ramp = SubResource( 58 )
+scale_curve = SubResource( 72 )
+color_ramp = SubResource( 62 )
 
 [node name="SwordFighter" type="KinematicBody"]
 collision_layer = 2
-collision_mask = 2147483651
+collision_mask = 2147483649
 script = ExtResource( 2 )
-ground_drag = 1
+ground_drag = 15
 
 [node name="FSM" parent="." instance=ExtResource( 4 )]
 state_list_script = ExtResource( 5 )
 
 [node name="AnimationFlags" parent="." instance=ExtResource( 7 )]
-is_active = true
 is_evade_cancelable = true
 is_command_cancelable = true
 
@@ -2098,57 +2219,60 @@ parameters/animation_-1_seek/seek_position = -1.0
 parameters/animation_1_seek/seek_position = -1.0
 
 [node name="AnimationEvents" type="AnimationPlayer" parent="."]
-anims/def_block_hi = SubResource( 2 )
-anims/def_block_low = SubResource( 3 )
-anims/def_hi_light = SubResource( 4 )
-anims/def_step_b = SubResource( 5 )
-anims/def_step_f = SubResource( 6 )
-anims/def_step_l = SubResource( 7 )
-anims/def_step_r = SubResource( 8 )
-anims/def_taunt = SubResource( 9 )
-anims/defensive_stance = SubResource( 10 )
-anims/jump_land = SubResource( 11 )
-anims/jump_start = SubResource( 12 )
-anims/knocked_down = SubResource( 13 )
-anims/off_block_break = SubResource( 14 )
-anims/off_block_hi = SubResource( 15 )
-anims/off_block_low = SubResource( 16 )
-anims/off_h_r_0001 = SubResource( 17 )
-anims/off_h_r_1 = SubResource( 18 )
-anims/off_h_r_heavy = SubResource( 19 )
-anims/off_hi_fierce = SubResource( 20 )
-anims/off_hi_l_light = SubResource( 21 )
-anims/off_hi_r_light = SubResource( 22 )
-anims/off_kick = SubResource( 23 )
-anims/off_run_startup = SubResource( 24 )
-anims/off_run_stop = SubResource( 25 )
-anims/off_taunt = SubResource( 26 )
-anims/off_throw_f = SubResource( 27 )
-anims/off_throw_f_startup = SubResource( 28 )
-anims/off_walk_back = SubResource( 29 )
-anims/off_walk_forward = SubResource( 30 )
-anims/off_walk_left = SubResource( 31 )
-anims/off_walk_right = SubResource( 32 )
-anims/offensive_stance = SubResource( 33 )
-anims/receive_off_throw_f = SubResource( 34 )
-anims/run_break = SubResource( 35 )
-anims/run_break_loop = SubResource( 36 )
-anims/run_loop = SubResource( 37 )
-anims/run_loop_2 = SubResource( 38 )
-anims/run_stop = SubResource( 39 )
-anims/run_stop_dash = SubResource( 40 )
-anims/run_stop_loop = SubResource( 41 )
-anims/stance_def_to_off = SubResource( 42 )
-anims/stance_off_to_def = SubResource( 43 )
-anims/t_pose = SubResource( 44 )
+anims/air_boost = SubResource( 2 )
+anims/air_rope = SubResource( 3 )
+anims/def_block_hi = SubResource( 4 )
+anims/def_block_low = SubResource( 5 )
+anims/def_hi_light = SubResource( 6 )
+anims/def_step_b = SubResource( 7 )
+anims/def_step_f = SubResource( 8 )
+anims/def_step_l = SubResource( 9 )
+anims/def_step_r = SubResource( 10 )
+anims/def_taunt = SubResource( 11 )
+anims/defensive_stance = SubResource( 12 )
+anims/jump_land = SubResource( 13 )
+anims/jump_start = SubResource( 14 )
+anims/knocked_down = SubResource( 15 )
+anims/off_block_break = SubResource( 16 )
+anims/off_block_hi = SubResource( 17 )
+anims/off_block_low = SubResource( 18 )
+anims/off_h_r_0001 = SubResource( 19 )
+anims/off_h_r_1 = SubResource( 20 )
+anims/off_h_r_heavy = SubResource( 21 )
+anims/off_hi_fierce = SubResource( 22 )
+anims/off_hi_l_light = SubResource( 23 )
+anims/off_hi_r_light = SubResource( 24 )
+anims/off_kick = SubResource( 25 )
+anims/off_run_startup = SubResource( 26 )
+anims/off_run_stop = SubResource( 27 )
+anims/off_taunt = SubResource( 28 )
+anims/off_throw_f = SubResource( 29 )
+anims/off_throw_f_startup = SubResource( 30 )
+anims/off_walk_back = SubResource( 31 )
+anims/off_walk_forward = SubResource( 32 )
+anims/off_walk_left = SubResource( 33 )
+anims/off_walk_right = SubResource( 34 )
+anims/offensive_stance = SubResource( 35 )
+anims/receive_off_throw_f = SubResource( 36 )
+anims/run_break = SubResource( 37 )
+anims/run_break_loop = SubResource( 38 )
+anims/run_loop = SubResource( 39 )
+anims/run_loop_2 = SubResource( 40 )
+anims/run_stop = SubResource( 41 )
+anims/run_stop_dash = SubResource( 42 )
+anims/run_stop_loop = SubResource( 43 )
+anims/stance_def_to_off = SubResource( 44 )
+anims/stance_off_to_def = SubResource( 45 )
+anims/t_pose = SubResource( 46 )
+script = ExtResource( 17 )
 
 [node name="AnimationBlender" type="AnimationPlayer" parent="."]
-anims/blend_animation_1_animation_-1 = SubResource( 45 )
-anims/blend_animation_and_space = SubResource( 46 )
-anims/idle = SubResource( 47 )
-"anims/off_h_r_heavy (copy)" = SubResource( 48 )
-anims/off_hi_heavy = SubResource( 49 )
-anims/walk = SubResource( 50 )
+anims/blend_animation_1_animation_-1 = SubResource( 47 )
+anims/blend_animation_and_space = SubResource( 48 )
+anims/idle = SubResource( 49 )
+"anims/off_h_r_heavy (copy)" = SubResource( 50 )
+anims/off_hi_heavy = SubResource( 51 )
+anims/walk = SubResource( 52 )
 
 [node name="ModelContainer" type="Spatial" parent="."]
 
@@ -2163,7 +2287,7 @@ material/0 = ExtResource( 12 )
 material/0 = ExtResource( 12 )
 
 [node name="BoneAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
-transform = Transform( 1, 0, 0, 0, 0.998474, 0.0552152, 0, -0.0552152, 0.998474, -6.59474e-17, 2.24226, 0 )
+transform = Transform( 1, 2.34276e-16, -2.18151e-16, -2.21874e-16, 0.0160109, -0.999871, -2.30754e-16, 0.999872, 0.0160109, 1.09725e-17, 1.48018, -0.255839 )
 bone_name = "torso"
 
 [node name="Hurtbox" parent="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment" instance=ExtResource( 11 )]
@@ -2196,7 +2320,7 @@ monitorable = false
 collision_layer = 0
 
 [node name="CollisionShape" type="CollisionShape" parent="ModelContainer/Feet"]
-shape = SubResource( 51 )
+shape = SubResource( 53 )
 
 [node name="LedgeDetectLow" type="RayCast" parent="ModelContainer"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.02413, 0 )
@@ -2235,14 +2359,14 @@ material_override = ExtResource( 15 )
 emitting = false
 amount = 400
 local_coords = false
-process_material = SubResource( 75 )
-draw_pass_1 = SubResource( 74 )
+process_material = SubResource( 58 )
+draw_pass_1 = SubResource( 59 )
 
 [node name="Particles2" parent="ModelContainer" instance=ExtResource( 13 )]
 material_override = ExtResource( 15 )
 amount = 20
 process_material = ExtResource( 16 )
-draw_pass_1 = SubResource( 56 )
+draw_pass_1 = SubResource( 60 )
 
 [node name="ParticlesJump" type="Particles" parent="ModelContainer"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.460834, 0 )
@@ -2251,8 +2375,8 @@ emitting = false
 amount = 600
 lifetime = 0.75
 local_coords = false
-process_material = SubResource( 66 )
-draw_pass_1 = SubResource( 64 )
+process_material = SubResource( 67 )
+draw_pass_1 = SubResource( 68 )
 
 [node name="ParticlesLand" type="Particles" parent="ModelContainer"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.460834, 0 )
@@ -2261,8 +2385,8 @@ emitting = false
 amount = 400
 lifetime = 0.75
 local_coords = false
-process_material = SubResource( 65 )
-draw_pass_1 = SubResource( 64 )
+process_material = SubResource( 73 )
+draw_pass_1 = SubResource( 68 )
 
 [node name="VelocityArrow2" parent="ModelContainer" instance=ExtResource( 8 )]
 
