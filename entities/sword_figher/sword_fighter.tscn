@@ -1,4 +1,4 @@
-[gd_scene load_steps=91 format=2]
+[gd_scene load_steps=95 format=2]
 
 [ext_resource path="res://entities/sword_figher/model/sword_fighter.glb" type="PackedScene" id=1]
 [ext_resource path="res://entities/sword_figher/sword_fighter.gd" type="Script" id=2]
@@ -32,17 +32,17 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 1.11667 ),
+"times": PoolRealArray( 0, 1.11667, 1.275 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "values": [ {
 "args": [ Vector3( 0, 15, 0 ) ],
 "method": "add_impulse"
 }, {
-"args": [ Vector3( 0, 13, -12 ) ],
-"method": "set_velocity"
-}, {
 "args": [ Vector3( 0, 13, -10 ) ],
 "method": "add_impulse"
+}, {
+"args": [ Vector3( 0, 13, -12 ) ],
+"method": "set_velocity"
 } ]
 }
 tracks/1/type = "value"
@@ -55,6 +55,18 @@ tracks/1/keys = {
 "times": PoolRealArray( 0.2 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
+"values": [ true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("AnimationFlags:is_active")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
 "values": [ true ]
 }
 
@@ -104,6 +116,18 @@ tracks/2/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ 1.0, 1.0, 0.05, 0.05, 1.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("AnimationFlags:is_stringable")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 1.1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
+"values": [ true ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -606,6 +630,21 @@ tracks/4/keys = {
 "values": [ true, false ]
 }
 
+[sub_resource type="Animation" id=74]
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimationFlags:is_stringable")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
+"values": [ true ]
+}
+
 [sub_resource type="Animation" id=13]
 length = 0.7
 step = 0.0166667
@@ -630,7 +669,7 @@ tracks/1/enabled = true
 tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 1,
+"update": 2,
 "values": [ false ]
 }
 
@@ -1696,7 +1735,7 @@ tracks/4/enabled = true
 tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 1,
+"update": 2,
 "values": [ true ]
 }
 
@@ -1846,6 +1885,15 @@ length = 0.833333
 
 [sub_resource type="Animation" id=46]
 length = 0.001
+
+[sub_resource type="Animation" id=75]
+length = 0.833333
+
+[sub_resource type="Animation" id=76]
+length = 0.333333
+
+[sub_resource type="Animation" id=77]
+length = 0.333333
 
 [sub_resource type="Animation" id=47]
 tracks/0/type = "value"
@@ -2188,14 +2236,16 @@ color_ramp = SubResource( 62 )
 collision_layer = 2
 collision_mask = 2147483649
 script = ExtResource( 2 )
-ground_drag = 15
+ground_drag = 1
 
 [node name="FSM" parent="." instance=ExtResource( 4 )]
 state_list_script = ExtResource( 5 )
 
 [node name="AnimationFlags" parent="." instance=ExtResource( 7 )]
+is_active = true
 is_evade_cancelable = true
 is_command_cancelable = true
+is_stringable = true
 
 [node name="InputListener" parent="." instance=ExtResource( 3 )]
 enabled = true
@@ -2213,6 +2263,8 @@ anim_player = NodePath("../ModelContainer/sword_fighter/AnimationPlayer")
 process_mode = 0
 root_motion_track = NodePath("Armature/Skeleton:root")
 parameters/1_and_-1/blend_amount = 0.0
+parameters/Add2/add_amount = 0.0
+parameters/Blend2/blend_amount = 0.09
 parameters/Seek/seek_position = -1.0
 parameters/TimeScale/scale = 1.0
 parameters/animation_-1_seek/seek_position = -1.0
@@ -2230,6 +2282,7 @@ anims/def_step_l = SubResource( 9 )
 anims/def_step_r = SubResource( 10 )
 anims/def_taunt = SubResource( 11 )
 anims/defensive_stance = SubResource( 12 )
+anims/fall = SubResource( 74 )
 anims/jump_land = SubResource( 13 )
 anims/jump_start = SubResource( 14 )
 anims/knocked_down = SubResource( 15 )
@@ -2264,6 +2317,9 @@ anims/run_stop_loop = SubResource( 43 )
 anims/stance_def_to_off = SubResource( 44 )
 anims/stance_off_to_def = SubResource( 45 )
 anims/t_pose = SubResource( 46 )
+anims/wall_run_bottom = SubResource( 75 )
+anims/wall_run_top_l = SubResource( 76 )
+anims/wall_run_top_r = SubResource( 77 )
 script = ExtResource( 17 )
 
 [node name="AnimationBlender" type="AnimationPlayer" parent="."]
@@ -2279,6 +2335,10 @@ anims/walk = SubResource( 52 )
 [node name="sword_fighter" parent="ModelContainer" instance=ExtResource( 1 )]
 transform = Transform( -0.6, 0, -9.05975e-08, 0, 0.6, 0, 9.05975e-08, 0, -0.6, 0, 0, 0 )
 
+[node name="Skeleton" parent="ModelContainer/sword_fighter/Armature" index="0"]
+bones/2/bound_children = [ NodePath("ThrowAttachment") ]
+bones/6/bound_children = [ NodePath("BoneAttachment") ]
+
 [node name="Cube" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="0"]
 transform = Transform( 1, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1, 0, 0, 0 )
 material/0 = ExtResource( 12 )
@@ -2287,7 +2347,7 @@ material/0 = ExtResource( 12 )
 material/0 = ExtResource( 12 )
 
 [node name="BoneAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
-transform = Transform( 1, 2.34276e-16, -2.18151e-16, -2.21874e-16, 0.0160109, -0.999871, -2.30754e-16, 0.999872, 0.0160109, 1.09725e-17, 1.48018, -0.255839 )
+transform = Transform( 0.997822, -0.0658688, -0.00364252, 0.0659695, 0.996299, 0.0550949, 8.86358e-09, -0.0552152, 0.998474, -0.0293723, 1.79799, -0.00199303 )
 bone_name = "torso"
 
 [node name="Hurtbox" parent="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment" instance=ExtResource( 11 )]
@@ -2335,22 +2395,22 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.74
 enabled = true
 
 [node name="RayCastL" type="RayCast" parent="ModelContainer"]
-transform = Transform( 0.5, 0.866025, -1.41093e-07, 0, -1.62921e-07, -1, -0.866025, 0.5, -8.14603e-08, 0, 0.746612, 0 )
+transform = Transform( 0.258819, 0.965925, -1.57369e-07, 0, -1.62921e-07, -1, -0.965925, 0.258819, -4.21671e-08, 0, 0.746612, 0 )
 enabled = true
-cast_to = Vector3( 0, -0.75, 0 )
+cast_to = Vector3( 0, -1.25, 0 )
 
 [node name="RayCastR" type="RayCast" parent="ModelContainer"]
-transform = Transform( 0.5, -0.866025, 1.41093e-07, 0, -1.62921e-07, -1, 0.866025, 0.5, -8.14603e-08, 0, 0.746612, 0 )
+transform = Transform( 0.258819, -0.965925, 1.57369e-07, 0, -1.62921e-07, -1, 0.965925, 0.258819, -4.21671e-08, 0, 0.746612, 0 )
 enabled = true
-cast_to = Vector3( 0, -0.75, 0 )
+cast_to = Vector3( 0, -1.25, 0 )
 
 [node name="RayCastLHigh" type="RayCast" parent="ModelContainer"]
-transform = Transform( 0.5, 0.866025, -1.41093e-07, 0, -1.62921e-07, -1, -0.866025, 0.5, -8.14603e-08, 0, 1.47052, 0 )
-cast_to = Vector3( 0, -1.5, 0 )
+transform = Transform( 0.258819, 0.965925, -1.57369e-07, 0, -1.62921e-07, -1, -0.965925, 0.258819, -4.21671e-08, 0, 1.47052, 0 )
+cast_to = Vector3( 0, -1.25, 0 )
 
 [node name="RayCastRHigh" type="RayCast" parent="ModelContainer"]
-transform = Transform( 0.5, -0.866025, 1.41093e-07, 0, -1.62921e-07, -1, 0.866025, 0.5, -8.14603e-08, 0, 1.47052, 0 )
-cast_to = Vector3( 0, -1.5, 0 )
+transform = Transform( 0.258819, -0.965925, 1.57369e-07, 0, -1.62921e-07, -1, 0.965925, 0.258819, -4.21671e-08, 0, 1.47052, 0 )
+cast_to = Vector3( 0, -1.25, 0 )
 
 [node name="ParticlesBoost" type="Particles" parent="ModelContainer"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.17098, -0.236003 )
@@ -2369,7 +2429,7 @@ process_material = ExtResource( 16 )
 draw_pass_1 = SubResource( 60 )
 
 [node name="ParticlesJump" type="Particles" parent="ModelContainer"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.460834, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.193547, 0 )
 material_override = ExtResource( 15 )
 emitting = false
 amount = 600
@@ -2379,7 +2439,7 @@ process_material = SubResource( 67 )
 draw_pass_1 = SubResource( 68 )
 
 [node name="ParticlesLand" type="Particles" parent="ModelContainer"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.460834, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.193547, 0 )
 material_override = ExtResource( 15 )
 emitting = false
 amount = 400

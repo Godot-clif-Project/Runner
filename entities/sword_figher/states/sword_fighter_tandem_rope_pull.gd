@@ -52,9 +52,14 @@ func _process_state(delta):
 #			set_next_state("walk")
 #		if entity.input_listener.is_key_pressed(InputManager.RIGHT):
 #			set_next_state("walk")
-#
-func _received_input(key, state):
-	pass
+
+func get_possible_transitions():
+	return [
+		"tandem_launch_up",
+		]
+
+#func _received_input(key, state):
+#	pass
 #	if entity.flags.is_stringable:
 #		if state:
 #			if key == InputManager.LIGHT:

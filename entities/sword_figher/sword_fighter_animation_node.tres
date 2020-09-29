@@ -1,36 +1,49 @@
-[gd_resource type="AnimationNodeBlendTree" load_steps=8 format=2]
+[gd_resource type="AnimationNodeBlendTree" load_steps=11 format=2]
 
 [sub_resource type="AnimationNodeBlend2" id=1]
 
-[sub_resource type="AnimationNodeTimeSeek" id=2]
+[sub_resource type="AnimationNodeAdd2" id=10]
 
-[sub_resource type="AnimationNodeTimeScale" id=3]
+[sub_resource type="AnimationNodeBlend2" id=2]
 
-[sub_resource type="AnimationNodeAnimation" id=4]
+[sub_resource type="AnimationNodeTimeSeek" id=3]
+
+[sub_resource type="AnimationNodeTimeScale" id=4]
+
+[sub_resource type="AnimationNodeAnimation" id=5]
 animation = "t_pose"
-
-[sub_resource type="AnimationNodeTimeSeek" id=5]
 
 [sub_resource type="AnimationNodeAnimation" id=6]
 animation = "t_pose"
 
 [sub_resource type="AnimationNodeTimeSeek" id=7]
 
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "wall_run_bottom"
+
+[sub_resource type="AnimationNodeTimeSeek" id=9]
+
 [resource]
-graph_offset = Vector2( 225.24, -152.92 )
+graph_offset = Vector2( 205, -135 )
 nodes/1_and_-1/node = SubResource( 1 )
-nodes/1_and_-1/position = Vector2( 880, -40 )
-nodes/Seek/node = SubResource( 2 )
+nodes/1_and_-1/position = Vector2( 700, -80 )
+nodes/Add2/node = SubResource( 10 )
+nodes/Add2/position = Vector2( 880, -140 )
+nodes/Blend2/node = SubResource( 2 )
+nodes/Blend2/position = Vector2( 880, 40 )
+nodes/Seek/node = SubResource( 3 )
 nodes/Seek/position = Vector2( 1060, 0 )
-nodes/TimeScale/node = SubResource( 3 )
+nodes/TimeScale/node = SubResource( 4 )
 nodes/TimeScale/position = Vector2( 1180, 0 )
-nodes/animation_-1/node = SubResource( 4 )
-nodes/animation_-1/position = Vector2( 480, 40 )
-nodes/animation_-1_seek/node = SubResource( 5 )
-nodes/animation_-1_seek/position = Vector2( 680, 40 )
-nodes/animation_1/node = SubResource( 6 )
-nodes/animation_1/position = Vector2( 480, -80 )
-nodes/animation_1_seek/node = SubResource( 7 )
-nodes/animation_1_seek/position = Vector2( 680, -80 )
+nodes/add_animation/node = SubResource( 5 )
+nodes/add_animation/position = Vector2( 700, 100 )
+nodes/animation_-1/node = SubResource( 6 )
+nodes/animation_-1/position = Vector2( 300, 40 )
+nodes/animation_-1_seek/node = SubResource( 7 )
+nodes/animation_-1_seek/position = Vector2( 500, 40 )
+nodes/animation_1/node = SubResource( 8 )
+nodes/animation_1/position = Vector2( 300, -80 )
+nodes/animation_1_seek/node = SubResource( 9 )
+nodes/animation_1_seek/position = Vector2( 500, -80 )
 nodes/output/position = Vector2( 1340, 0 )
-node_connections = [ "output", 0, "TimeScale", "1_and_-1", 0, "animation_1_seek", "1_and_-1", 1, "animation_-1_seek", "Seek", 0, "1_and_-1", "TimeScale", 0, "Seek", "animation_-1_seek", 0, "animation_-1", "animation_1_seek", 0, "animation_1" ]
+node_connections = [ "output", 0, "TimeScale", "1_and_-1", 0, "animation_1_seek", "1_and_-1", 1, "animation_-1_seek", "Seek", 0, "Add2", "TimeScale", 0, "Seek", "animation_-1_seek", 0, "animation_-1", "animation_1_seek", 0, "animation_1", "Add2", 0, "1_and_-1", "Add2", 1, "add_animation" ]

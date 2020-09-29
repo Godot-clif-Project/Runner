@@ -6,7 +6,7 @@ func get_animation_data():
 
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
-	entity.velocity *= 0.4
+	entity.velocity *= 0.6
 ##	entity.set_animation("off_hi_r_light", 0, 16.0)
 #	entity.on_ground = false
 	._enter_state()
@@ -50,7 +50,10 @@ func _enter_state():
 #	set_next_state("fall")
 #	pass
 #
-#func _flag_changed(flag, state):
+func _flag_changed(flag, state):
+	if flag == "is_active":
+#		var strength = clamp(entity.jump_str
+		entity.set_velocity(Vector3(0.0, entity.jump_str * 0.5 , -entity.jump_str * 0.6))
 
 #func _received_input(key, state):
 #	pass

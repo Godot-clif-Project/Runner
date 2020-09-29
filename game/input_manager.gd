@@ -77,7 +77,7 @@ onready var pads = {
 
 var pad_0_keys_joystick = {
 	0 : [JUMP],
-	1 : [RUN],
+	1 : [FIRE],
 	2 : [LIGHT],
 	3 : [HEAVY],
 #	2 : [BREAK],

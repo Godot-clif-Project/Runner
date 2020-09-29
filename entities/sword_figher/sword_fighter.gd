@@ -59,6 +59,7 @@ var has_wall_run_side = true
 var wall_has_ledge = false
 var wall_side = 0
 var wall_rot : Vector3
+var wall_pos : Vector3
 
 var tandem_entity = null
 
@@ -133,6 +134,9 @@ func setup(side):
 
 func reset():
 	self.hp = max_hp
+	velocity = Vector3.ZERO
+	has_wall_run = true
+	has_wall_run_side = true
 	fsm.setup()
 	if throwing_entity != null:
 		remove_collision_exception_with(throwing_entity)
@@ -149,6 +153,8 @@ func get_normal_side(side):
 	raycast_side[side].force_raycast_update()
 	var normal = raycast_side[side].get_collision_normal()
 	var t = Transform.IDENTITY.looking_at(normal, Vector3.UP)
+#	wall_pos = raycast_side[side].get_collision_point() + normal * 0.1
+	wall_pos = raycast_side[side].get_collision_point()
 	
 	if raycast_side[side].is_colliding():
 		wall_has_ledge = raycast_side[side].get_collider().is_in_group("ledge")
@@ -159,7 +165,7 @@ func get_normal_side(side):
 
 func get_normal():
 	raycast.force_raycast_update()
-#	var point = raycast.get_collision_point()
+	wall_pos = raycast.get_collision_point()
 	var normal = raycast.get_collision_normal()
 	var t = Transform.IDENTITY.looking_at(normal, Vector3.UP)
 	
@@ -196,6 +202,9 @@ func play_rope_animation():
 
 func _on_InputListener_received_input(key, state):
 	fsm.receive_event("_received_input", [key, state])
+	
+	if key == InputManager.JUMP and state:
+		jump_str = min_jump_str
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -383,7 +392,7 @@ func jump():
 		velocity.z = v.y
 		
 	on_ground = false
-	jump_str = min_jump_str
+#	jump_str = min_jump_str
 
 func get_current_animation():
 	return $AnimationEvents.assigned_animation

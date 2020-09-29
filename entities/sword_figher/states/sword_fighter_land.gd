@@ -13,7 +13,7 @@ func _enter_state():
 	entity.has_wall_run_side = true
 	
 	if entity.falling_speed < -25:
-		entity.set_animation("jump_land", 0.0, 16.0)
+		entity.set_animation("jump_land", 0.0, 8.0)
 		
 	elif entity.input_listener.is_key_pressed(InputManager.RUN):
 #			set_next_state("off_run_startup")

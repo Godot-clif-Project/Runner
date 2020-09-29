@@ -10,7 +10,7 @@ var rot_drag = 15
 var rot_speed = 30
 var max_turn_speed = 3.2
 var target_speed = 13.0
-var max_speed = 10.0
+var max_speed = 14
 var boost_speed = 20
 var acceleration = 1.0
 
@@ -46,12 +46,10 @@ func _process_state(delta):
 				return
 		else:
 			t_2 = 0.1
-		
 		if entity.raycast.is_colliding():
 			if not entity.ledge_detect_high.is_colliding():
 				entity.set_collision_mask_bit(0, false)
 				t = 0.08
-				
 	else:
 		entity.translate(Vector3(0.0, 15 * delta, 0.0))
 		t -= delta
@@ -62,17 +60,14 @@ func _process_state(delta):
 	var stick = entity.input_listener.sticks[0]
 	if abs(stick) > 0.1:
 		ang_momentum = clamp(-stick * max_turn_speed, -max_turn_speed, max_turn_speed)
-	
 	elif entity.input_listener.is_key_pressed(InputManager.RIGHT):
 		current_turn_dir = 1
 		turn_acc = lerp(turn_acc, 1, delta * 10)
 		ang_momentum = clamp(ang_momentum - delta * rot_speed * turn_acc, -max_turn_speed, max_turn_speed)
-#
 	elif entity.input_listener.is_key_pressed(InputManager.LEFT):
 		current_turn_dir = -1
 		turn_acc = lerp(turn_acc, 1, delta * 10)
 		ang_momentum = clamp(ang_momentum + delta * rot_speed * turn_acc, -max_turn_speed, max_turn_speed) 
-		
 	else:
 		current_turn_dir = 0
 		ang_momentum = lerp(ang_momentum, 0, delta * rot_drag)
@@ -86,10 +81,8 @@ func _process_state(delta):
 		if target_speed <= 0.0:
 			set_next_state("run_stop")
 			return
-			
 	elif target_speed > max_speed:
 		target_speed -= delta * 5
-		
 	elif target_speed < max_speed:
 		target_speed = max_speed
 		max_turn_speed = 3.2
@@ -99,12 +92,13 @@ func _process_state(delta):
 #		var wall_position = entity.get_slide_collision(0).position
 		var player_vector = -entity.model_container.transform.basis.z
 		var rot = Vector2(player_vector.x, player_vector.z).angle_to(Vector2(wall_normal.x, wall_normal.z))
-		entity.model_container.rotation.y -= PI * 0.2 * sign(rot)
 		
 		if wall_normal.dot(player_vector) > -0.8:
-			entity.velocity *= 0.5
-			entity.velocity += wall_normal * entity.prev_speed * 0.25
+			pass
+#			entity.velocity *= 0.5
+#			entity.velocity += wall_normal * entity.prev_speed * 0.25
 		else:
+			entity.model_container.rotation.y -= PI * 0.2 * sign(rot)
 			entity.velocity = wall_normal * entity.prev_speed
 	
 	entity.model_container.rotation_degrees.y += ang_momentum

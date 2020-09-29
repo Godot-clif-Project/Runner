@@ -1,12 +1,11 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://stages/stage_env.tres" type="Environment" id=1]
 [ext_resource path="res://entities/sword_figher/sword_fighter.tscn" type="PackedScene" id=2]
 [ext_resource path="res://objects/interpolated_camera.tscn" type="PackedScene" id=3]
-[ext_resource path="res://stages/test_bounds.tscn" type="PackedScene" id=4]
+[ext_resource path="res://stages/bounds_2.tscn" type="PackedScene" id=4]
 [ext_resource path="res://ui/lifebar/lifebar.tscn" type="PackedScene" id=5]
 [ext_resource path="res://ui/input_display/input_display.tscn" type="PackedScene" id=6]
-[ext_resource path="res://run_icon.PNG" type="Texture" id=7]
 [ext_resource path="res://entities/sword_figher/sword_fighter_2.tscn" type="PackedScene" id=8]
 [ext_resource path="res://objects/stage_timer.tscn" type="PackedScene" id=9]
 [ext_resource path="res://entities/sword_figher/sword_fighter_player_1.material" type="Material" id=10]
@@ -135,13 +134,12 @@ transform = Transform( -0.298643, -0.414865, 0.859476, -0.0376933, 0.904999, 0.4
 light_energy = 1.5
 shadow_enabled = true
 
-[node name="Bounds" parent="." instance=ExtResource( 4 )]
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 playback_process_mode = 0
 "anims/New Anim" = SubResource( 1 )
 
 [node name="SwordFighter" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 332.242, 0, 31.0638 )
 target = NodePath("../SwordFighter2")
 
 [node name="SwordFighter2" parent="." instance=ExtResource( 8 )]
@@ -188,22 +186,26 @@ mesh = SubResource( 2 )
 material/0 = null
 
 [node name="Player1Pos" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.5 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 195.036, 51.0307, -10.0633 )
 
 [node name="Player2Pos" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5 )
-
-[node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform( -0.218294, -0.00115033, 1.13636, 0, 1.15714, 0.00117136, -1.13636, 0.000220977, -0.218294, -11.8004, 3.00957, 9.69288 )
-transparent = false
-shaded = true
-texture = ExtResource( 7 )
 
 [node name="Goal" type="Area" parent="."]
 transform = Transform( 5.09698, 0, -0.425677, 0, 5.11473, 0, 0.425677, 0, 5.09698, 53.4341, 37.0923, 51.869 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Goal"]
 shape = SubResource( 3 )
+
+[node name="DeathBox" type="Area" parent="."]
+transform = Transform( 1000, 0, 0, 0, 5.115, 0, 0, 0, 600, 179.813, -35.9859, 0 )
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="DeathBox"]
+shape = SubResource( 3 )
+
+[node name="Bounds" parent="." instance=ExtResource( 4 )]
 
 [node name="RigidBody" type="RigidBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.90519, 1.06634, 31.2651 )
@@ -358,5 +360,7 @@ material/0 = ExtResource( 10 )
 [node name="CollisionShape" type="CollisionShape" parent="RigidBody9"]
 shape = SubResource( 5 )
 [connection signal="body_entered" from="Goal" to="StageTimer" method="_on_Goal_body_entered"]
+
+[editable path="SwordFighter"]
 
 [editable path="SwordFighter2"]

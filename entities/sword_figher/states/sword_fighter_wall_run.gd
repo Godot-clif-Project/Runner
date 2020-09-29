@@ -60,10 +60,8 @@ func _process_state(delta):
 				entity.set_velocity(Vector3(0.0, 10, -2).rotated(Vector3.RIGHT, entity.wall_rot.x))
 				set_next_state("jump")
 				return
-				
 			set_next_state("ledge_climb")
 			return
-			
 		else:
 			set_next_state("fall")
 #			entity.velocity.y = 0
@@ -77,8 +75,8 @@ func _process_state(delta):
 			return
 			
 		entity.wall_rot = entity.get_normal()
-#			entity.set_velocity(Vector3(0.0, speed, -10).rotated(Vector3.RIGHT, entity.wall_rot.x))
-		entity.velocity.y = speed
+		entity.set_velocity(Vector3(0.0, speed, -2).rotated(Vector3.RIGHT, entity.wall_rot.x))
+#		entity.velocity.y = speed
 		entity.model.rotation.x = entity.wall_rot.x - PI * 0.25
 		entity.model_container.rotation.y = entity.wall_rot.y - PI
 		
@@ -114,10 +112,11 @@ func get_possible_transitions():
 
 func _received_input(key, state):
 	if not state:
-		if key == InputManager.RUN:
+		if key == InputManager.JUMP:
 			entity.velocity = Vector3.ZERO
 			if entity.input_listener.is_key_pressed(InputManager.DOWN):
 				entity.model_container.rotation.y = entity.wall_rot.y
+				entity.set_velocity(Vector3(0.0, 0.0, -5))
 	else:
 		if entity.has_wall_run_side:
 			if key == InputManager.LEFT:
