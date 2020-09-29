@@ -25,14 +25,14 @@ func _enter_state():
 	
 #	entity.translation = entity.wall_pos
 	entity.set_velocity(Vector3(0.0, speed_y, -speed).rotated(Vector3.RIGHT, entity.wall_rot.x))
-	entity.set_animation("wall_run_bottom", 0, 10.0)
+	entity.set_animation("run_loop", 0, 10.0)
 	entity.has_wall_run_side = false
 	
-	entity.anim_tree["parameters/Add2/add_amount"] = 1.0
-	if entity.wall_side == -1:
-		entity.anim_tree.tree_root.get_node("add_animation").animation = "wall_run_top_l"
-	else:
-		entity.anim_tree.tree_root.get_node("add_animation").animation = "wall_run_top_r"
+#	entity.anim_tree["parameters/Add2/add_amount"] = 1.0
+#	if entity.wall_side == -1:
+#		entity.anim_tree.tree_root.get_node("add_animation").animation = "wall_run_top_l"
+#	else:
+#		entity.anim_tree.tree_root.get_node("add_animation").animation = "wall_run_top_r"
 	
 #	entity.model_container.rotation.y = entity.wall_rot.y - PI
 #	if entity.horizontal_speed > target_speed:

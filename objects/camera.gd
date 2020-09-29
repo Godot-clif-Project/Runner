@@ -7,7 +7,7 @@ onready var screen_bounds = get_node("ScreenBounds")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	tracked_entity.has_camera = true
+#	tracked_entity.has_camera = true
 	InputManager.connect("key_changed", self, "receive_input")
 	set_process(false)
 	ally_indicator.visible = false

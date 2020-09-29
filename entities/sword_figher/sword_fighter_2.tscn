@@ -1,42 +1,56 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://entities/sword_figher/sword_fighter.tscn" type="PackedScene" id=1]
 [ext_resource path="res://entities/sword_figher/sword_fighter_player_2.material" type="Material" id=2]
 
 [sub_resource type="AnimationNodeBlend2" id=1]
 
-[sub_resource type="AnimationNodeTimeSeek" id=2]
+[sub_resource type="AnimationNodeAdd2" id=2]
+sync = true
 
-[sub_resource type="AnimationNodeTimeScale" id=3]
+[sub_resource type="AnimationNodeBlend2" id=3]
 
-[sub_resource type="AnimationNodeAnimation" id=4]
-animation = "t_pose"
+[sub_resource type="AnimationNodeTimeSeek" id=4]
 
-[sub_resource type="AnimationNodeTimeSeek" id=5]
+[sub_resource type="AnimationNodeTimeScale" id=5]
 
 [sub_resource type="AnimationNodeAnimation" id=6]
+animation = "wall_run_top_r"
+
+[sub_resource type="AnimationNodeAnimation" id=7]
 animation = "t_pose"
 
-[sub_resource type="AnimationNodeTimeSeek" id=7]
+[sub_resource type="AnimationNodeTimeSeek" id=8]
 
-[sub_resource type="AnimationNodeBlendTree" id=8]
-graph_offset = Vector2( 342, -188 )
+[sub_resource type="AnimationNodeAnimation" id=9]
+animation = "wall_run_bottom"
+
+[sub_resource type="AnimationNodeTimeSeek" id=10]
+
+[sub_resource type="AnimationNodeBlendTree" id=11]
+graph_offset = Vector2( 210, -109.75 )
 nodes/1_and_-1/node = SubResource( 1 )
-nodes/1_and_-1/position = Vector2( 880, -40 )
-nodes/Seek/node = SubResource( 2 )
+nodes/1_and_-1/position = Vector2( 700, -80 )
+nodes/Add2/node = SubResource( 2 )
+nodes/Add2/position = Vector2( 880, -140 )
+nodes/Blend2/node = SubResource( 3 )
+nodes/Blend2/position = Vector2( 880, 40 )
+nodes/Seek/node = SubResource( 4 )
 nodes/Seek/position = Vector2( 1060, 0 )
-nodes/TimeScale/node = SubResource( 3 )
+nodes/TimeScale/node = SubResource( 5 )
 nodes/TimeScale/position = Vector2( 1180, 0 )
-nodes/animation_-1/node = SubResource( 4 )
-nodes/animation_-1/position = Vector2( 480, 40 )
-nodes/animation_-1_seek/node = SubResource( 5 )
-nodes/animation_-1_seek/position = Vector2( 680, 40 )
-nodes/animation_1/node = SubResource( 6 )
-nodes/animation_1/position = Vector2( 480, -80 )
-nodes/animation_1_seek/node = SubResource( 7 )
-nodes/animation_1_seek/position = Vector2( 680, -80 )
+nodes/add_animation/node = SubResource( 6 )
+nodes/add_animation/position = Vector2( 680, 100 )
+nodes/animation_-1/node = SubResource( 7 )
+nodes/animation_-1/position = Vector2( 300, 40 )
+nodes/animation_-1_seek/node = SubResource( 8 )
+nodes/animation_-1_seek/position = Vector2( 500, 40 )
+nodes/animation_1/node = SubResource( 9 )
+nodes/animation_1/position = Vector2( 300, -80 )
+nodes/animation_1_seek/node = SubResource( 10 )
+nodes/animation_1_seek/position = Vector2( 500, -80 )
 nodes/output/position = Vector2( 1340, 0 )
-node_connections = [ "output", 0, "TimeScale", "1_and_-1", 0, "animation_1_seek", "1_and_-1", 1, "animation_-1_seek", "Seek", 0, "1_and_-1", "TimeScale", 0, "Seek", "animation_-1_seek", 0, "animation_-1", "animation_1_seek", 0, "animation_1" ]
+node_connections = [ "output", 0, "TimeScale", "1_and_-1", 0, "animation_1_seek", "1_and_-1", 1, "animation_-1_seek", "Add2", 0, "1_and_-1", "Add2", 1, "add_animation", "Seek", 0, "Add2", "TimeScale", 0, "Seek", "animation_-1_seek", 0, "animation_-1", "animation_1_seek", 0, "animation_1" ]
 
 [node name="SwordFighter" instance=ExtResource( 1 )]
 
@@ -44,17 +58,20 @@ node_connections = [ "output", 0, "TimeScale", "1_and_-1", 0, "animation_1_seek"
 listen_to_pads = PoolIntArray( 1 )
 
 [node name="AnimationTree" parent="." index="4"]
-tree_root = SubResource( 8 )
+tree_root = SubResource( 11 )
 
 [node name="Skeleton" parent="ModelContainer/sword_fighter/Armature" index="0"]
-bones/2/bound_children = [ NodePath("ThrowAttachment") ]
-bones/12/bound_children = [ NodePath("BoneAttachment") ]
+bones/2/bound_children = [  ]
+bones/6/bound_children = [  ]
 
 [node name="Cube" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="0"]
 material/0 = ExtResource( 2 )
 
 [node name="sword" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="1"]
 material/0 = ExtResource( 2 )
+
+[node name="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
+transform = Transform( 0.777609, -0.627788, -0.0347165, 0.628747, 0.776423, 0.0429358, 8.11776e-08, -0.0552152, 0.998474, -0.0988407, 2.10892, -0.00510575 )
 
 [editable path="ModelContainer/sword_fighter"]
 

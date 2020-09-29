@@ -8,7 +8,7 @@ var released_up = false
 var ang_momentum = 0.0
 var rot_drag = 8
 var rot_speed = 30
-var max_turn_speed = 4.5
+var max_turn_speed = 3.5
 
 var speed = 0.0
 
@@ -53,7 +53,7 @@ func _process_state(delta):
 		ang_momentum = lerp(ang_momentum, 0, delta * rot_drag)
 	
 	if entity.input_listener.is_key_pressed(InputManager.BREAK):
-		entity.ground_drag = 10
+		entity.ground_drag = 12.5
 	else:
 		entity.ground_drag = 5
 	
@@ -63,9 +63,9 @@ func _process_state(delta):
 	entity.model_container.rotation_degrees.y += ang_momentum
 	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
 	
-	speed = clamp(speed - delta * entity.ground_drag, 0, 25)
+#	speed = clamp(speed - delta * entity.ground_drag, 0, 25)
 	entity.apply_drag(delta)
-	entity.accelerate(-speed, delta * 0.25)
+#	entity.accelerate(-speed, delta * 0.25)
 	entity.apply_gravity(delta)
 	
 	entity.center_camera(delta * 2)

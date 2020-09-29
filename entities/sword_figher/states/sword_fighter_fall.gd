@@ -1,6 +1,6 @@
 extends "res://entities/sword_figher/states/sword_fighter_state.gd"
 
-var turn_speed = 300.0
+var turn_speed = 180.0
 #var falling_speed = 0.0
 
 func get_animation_data():

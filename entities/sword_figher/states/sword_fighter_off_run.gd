@@ -6,13 +6,14 @@ extends "res://entities/sword_figher/states/sword_fighter_offensive_moves.gd"
 
 var released_up = false
 var ang_momentum = 0.0
-var rot_drag = 15
+var rot_drag = 6
 var rot_speed = 30
 var max_turn_speed = 3.2
 var target_speed = 13.0
 var max_speed = 14
-var boost_speed = 20
-var acceleration = 1.0
+var boost_speed = 30
+var acceleration = 0.25
+var boost_charge = 0.0
 
 var turn_acc = 0.0
 var current_turn_dir = 0
@@ -60,6 +61,7 @@ func _process_state(delta):
 	var stick = entity.input_listener.sticks[0]
 	if abs(stick) > 0.1:
 		ang_momentum = clamp(-stick * max_turn_speed, -max_turn_speed, max_turn_speed)
+#		ang_momentum = clamp(ang_momentum + delta * rot_speed * -stick * 0.5, -max_turn_speed, max_turn_speed)
 	elif entity.input_listener.is_key_pressed(InputManager.RIGHT):
 		current_turn_dir = 1
 		turn_acc = lerp(turn_acc, 1, delta * 10)
@@ -82,10 +84,10 @@ func _process_state(delta):
 			set_next_state("run_stop")
 			return
 	elif target_speed > max_speed:
-		target_speed -= delta * 5
+		target_speed -= delta * 10
 	elif target_speed < max_speed:
 		target_speed = max_speed
-		max_turn_speed = 3.2
+#		max_turn_speed = 3.2
 	
 	if entity.is_on_wall():
 		var wall_normal = entity.get_slide_collision(0).normal
@@ -93,7 +95,7 @@ func _process_state(delta):
 		var player_vector = -entity.model_container.transform.basis.z
 		var rot = Vector2(player_vector.x, player_vector.z).angle_to(Vector2(wall_normal.x, wall_normal.z))
 		
-		if wall_normal.dot(player_vector) > -0.8:
+		if wall_normal.dot(player_vector) > -0.9:
 			pass
 #			entity.velocity *= 0.5
 #			entity.velocity += wall_normal * entity.prev_speed * 0.25
@@ -101,12 +103,17 @@ func _process_state(delta):
 			entity.model_container.rotation.y -= PI * 0.2 * sign(rot)
 			entity.velocity = wall_normal * entity.prev_speed
 	
+	if entity.input_listener.is_key_pressed(InputManager.FIRE):
+		boost_charge = clamp(boost_charge + delta, 0.0, 1.0)
+	
+	acceleration = clamp(acceleration + delta * 4, 0, 1.0)
+	
 	entity.model_container.rotation_degrees.y += ang_momentum
 	entity.accelerate(-target_speed, delta * acceleration)
 #	entity.apply_drag(delta)
 	entity.apply_gravity(delta)
 	
-	entity.anim_tree["parameters/TimeScale/scale"] = target_speed / boost_speed + 0.8
+	entity.anim_tree["parameters/TimeScale/scale"] = target_speed / boost_speed + 1
 	entity.center_camera(delta)
 	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
 		
@@ -146,9 +153,15 @@ func _received_input(key, state):
 			set_next_state("run_stop")
 			return
 		if key == InputManager.RUN_RUN or key == InputManager.UP_UP:
-#			if target_speed <= 13:
-			target_speed = boost_speed
-			max_turn_speed = 2.3
+			if target_speed <= max_speed:
+				target_speed = boost_speed
+				acceleration = 0.25
+	else:
+		if key == InputManager.FIRE:
+			if target_speed <= max_speed:
+				target_speed = boost_speed * boost_charge
+				acceleration = 0.25
+#			max_turn_speed = 2.3
 #			entity.set_velocity(Vector3(0.0, 0.0, -target_speed))
 #			acceleration = 2.0
 #			entity.emit_one_shot("ParticlesBoost")

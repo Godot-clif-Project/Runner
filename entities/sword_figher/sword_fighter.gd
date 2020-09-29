@@ -25,7 +25,7 @@ export var default_tracking_speed = 20
 export var tracking_speed = 20
 export var max_hp = 1000
 export var min_jump_str = 2.5
-export var max_jump_str = 25
+export var max_jump_str = 20
 export var weight = 70
 export var gravity_scale = 1.0
 
@@ -269,7 +269,7 @@ func point_camera_at_target(delta, offset):
 func apply_gravity(delta):
 	if velocity.y > TERMINAL_VELOCITY:
 		if not is_on_floor():
-			velocity.y -= 9.8 * delta * gravity_scale * 6
+			velocity.y -= 9.8 * delta * gravity_scale * 5
 		else:
 			velocity.y -= 9.8 * delta * gravity_scale * 0.3
 	else:
@@ -292,7 +292,7 @@ func accelerate(speed : float, delta):
 #	velocity = velocity.normalized() * abs(speed)
 #	velocity = velocity.normalized() * target_velocity.length()
 	target_velocity = Vector3(0.0, 0.0, speed).rotated(Vector3.UP, model_container.rotation.y)
-	velocity = velocity.linear_interpolate(target_velocity, delta * 3)
+	velocity = velocity.linear_interpolate(target_velocity, delta * 1.5)
 
 #	var velocity_xz = Vector2(velocity.x, velocity.z).linear_interpolate(Vector2(target_velocity.x, target_velocity.z), delta * 3)
 #	velocity.x = velocity_xz.x
