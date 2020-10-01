@@ -1,0 +1,717 @@
+[gd_scene load_steps=34 format=2]
+
+[ext_resource path="res://entities/sword_figher/sword_fighter.tscn" type="PackedScene" id=1]
+[ext_resource path="res://objects/interpolated_camera.tscn" type="PackedScene" id=2]
+[ext_resource path="res://stages/static_box.tscn" type="PackedScene" id=3]
+[ext_resource path="res://stages/static_cylinder.tscn" type="PackedScene" id=4]
+[ext_resource path="res://stages/static_sphere.tscn" type="PackedScene" id=5]
+[ext_resource path="res://stages/stage_env.tres" type="Environment" id=6]
+[ext_resource path="res://entities/sword_figher/sword_fighter_player_1.material" type="Material" id=7]
+[ext_resource path="res://ui/lifebar/lifebar.tscn" type="PackedScene" id=8]
+[ext_resource path="res://ui/input_display/input_display.tscn" type="PackedScene" id=9]
+[ext_resource path="res://entities/sword_figher/sword_fighter_2.tscn" type="PackedScene" id=10]
+[ext_resource path="res://objects/stage_timer.tscn" type="PackedScene" id=11]
+[ext_resource path="res://run_icon.PNG" type="Texture" id=12]
+[ext_resource path="res://objects/test_material.material" type="Material" id=13]
+[ext_resource path="res://entities/sword_figher/model/elizell/elizell.glb" type="PackedScene" id=14]
+
+[sub_resource type="AnimationNodeBlend2" id=1]
+
+[sub_resource type="AnimationNodeAdd2" id=2]
+sync = true
+
+[sub_resource type="AnimationNodeBlend2" id=3]
+
+[sub_resource type="AnimationNodeTimeSeek" id=4]
+
+[sub_resource type="AnimationNodeTimeScale" id=5]
+
+[sub_resource type="AnimationNodeAnimation" id=6]
+animation = "wall_run_top_r"
+
+[sub_resource type="AnimationNodeAnimation" id=7]
+animation = "t_pose"
+
+[sub_resource type="AnimationNodeTimeSeek" id=8]
+
+[sub_resource type="AnimationNodeAnimation" id=9]
+animation = "wall_run_bottom"
+
+[sub_resource type="AnimationNodeTimeSeek" id=10]
+
+[sub_resource type="AnimationNodeBlendTree" id=11]
+resource_local_to_scene = true
+graph_offset = Vector2( 210, -109.75 )
+nodes/1_and_-1/node = SubResource( 1 )
+nodes/1_and_-1/position = Vector2( 700, -80 )
+nodes/Add2/node = SubResource( 2 )
+nodes/Add2/position = Vector2( 880, -140 )
+nodes/Blend2/node = SubResource( 3 )
+nodes/Blend2/position = Vector2( 880, 40 )
+nodes/Seek/node = SubResource( 4 )
+nodes/Seek/position = Vector2( 1060, 0 )
+nodes/TimeScale/node = SubResource( 5 )
+nodes/TimeScale/position = Vector2( 1180, 0 )
+nodes/add_animation/node = SubResource( 6 )
+nodes/add_animation/position = Vector2( 680, 100 )
+nodes/animation_-1/node = SubResource( 7 )
+nodes/animation_-1/position = Vector2( 300, 40 )
+nodes/animation_-1_seek/node = SubResource( 8 )
+nodes/animation_-1_seek/position = Vector2( 500, 40 )
+nodes/animation_1/node = SubResource( 9 )
+nodes/animation_1/position = Vector2( 300, -80 )
+nodes/animation_1_seek/node = SubResource( 10 )
+nodes/animation_1_seek/position = Vector2( 500, -80 )
+nodes/output/position = Vector2( 1340, 0 )
+node_connections = [ "output", 0, "TimeScale", "1_and_-1", 0, "animation_1_seek", "1_and_-1", 1, "animation_-1_seek", "Add2", 0, "1_and_-1", "Add2", 1, "add_animation", "Seek", 0, "Add2", "TimeScale", 0, "Seek", "animation_-1_seek", 0, "animation_-1", "animation_1_seek", 0, "animation_1" ]
+
+[sub_resource type="CubeMesh" id=12]
+
+[sub_resource type="BoxShape" id=13]
+
+[sub_resource type="CubeMesh" id=14]
+
+[sub_resource type="BoxShape" id=15]
+
+[sub_resource type="CylinderMesh" id=16]
+material = ExtResource( 13 )
+radial_segments = 16
+rings = 1
+
+[sub_resource type="CylinderShape" id=17]
+
+[sub_resource type="CylinderMesh" id=18]
+material = ExtResource( 13 )
+radial_segments = 16
+rings = 1
+
+[sub_resource type="CylinderShape" id=19]
+
+[node name="Stage" type="Spatial"]
+
+[node name="StageTimer" parent="." instance=ExtResource( 11 )]
+
+[node name="PlayerName1" type="Label" parent="."]
+margin_left = 32.0
+margin_top = 16.0
+margin_right = 280.0
+margin_bottom = 30.0
+rect_scale = Vector2( 2, 2 )
+text = "Player1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RoundEnd" type="Control" parent="."]
+pause_mode = 2
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Label" parent="RoundEnd"]
+margin_left = 3.05176e-05
+margin_top = -40.0
+margin_right = 256.0
+margin_bottom = 88.0
+rect_scale = Vector2( 5, 5 )
+text = "Player 1"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Wins" type="Label" parent="RoundEnd"]
+margin_left = 3.05176e-05
+margin_top = 1.52588e-05
+margin_right = 256.0
+margin_bottom = 128.0
+rect_scale = Vector2( 5, 5 )
+text = "
+WINS!"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Next" type="Label" parent="RoundEnd"]
+margin_left = 512.0
+margin_top = 424.0
+margin_right = 649.0
+margin_bottom = 468.0
+rect_scale = Vector2( 2, 2 )
+text = "Next round in 3 sec..."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NextTimer" type="Label" parent="RoundEnd"]
+visible = false
+margin_left = 736.0
+margin_top = 424.0
+margin_right = 768.0
+margin_bottom = 438.0
+rect_scale = Vector2( 2, 2 )
+text = "3"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="RoundEnd"]
+wait_time = 3.0
+one_shot = true
+
+[node name="InputDisplay" parent="." instance=ExtResource( 9 )]
+anchor_top = 1.0
+anchor_right = 0.0
+margin_top = -160.0
+margin_right = 597.0
+margin_bottom = 52.0
+rect_scale = Vector2( 0.75, 0.75 )
+
+[node name="Lifebar" parent="." instance=ExtResource( 8 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 561.0
+margin_bottom = 124.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 6 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( -0.997493, -0.0697026, -0.0122257, -0.0376933, 0.377103, 0.925404, -0.0598928, 0.923545, -0.378785, 0, 4, 0 )
+light_energy = 1.5
+shadow_enabled = true
+
+[node name="SwordFighter" parent="." instance=ExtResource( 1 )]
+target = NodePath("../SwordFighter2")
+
+[node name="AnimationTree" parent="SwordFighter" index="4"]
+tree_root = SubResource( 11 )
+
+[node name="SwordFighter2" parent="." instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.07425, 0, 0 )
+target = NodePath("../SwordFighter")
+ground_drag = 1
+
+[node name="InterpolatedCamera" parent="." instance=ExtResource( 2 )]
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
+mesh = SubResource( 12 )
+material/0 = null
+
+[node name="Player1Pos" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.5 )
+
+[node name="Player2Pos" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5 )
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform( 6.07915, 0, 0, 0, 6.07917, 0, 0, 0, 6.07915, -1.01271, 14.4972, -359.019 )
+transparent = false
+shaded = true
+texture = ExtResource( 12 )
+
+[node name="Goal" type="Area" parent="."]
+transform = Transform( 5.09698, 0, -0.425677, 0, 5.11473, 0, 0.425677, 0, 5.09698, 53.4341, 37.0923, 51.869 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Goal"]
+shape = SubResource( 13 )
+
+[node name="RigidBody" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -41.7621, 1.06635, -3.3982 )
+collision_layer = 4
+collision_mask = 5
+mass = 1.02041
+sleeping = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="RigidBody"]
+mesh = SubResource( 14 )
+material/0 = ExtResource( 7 )
+
+[node name="CollisionShape" type="CollisionShape" parent="RigidBody"]
+shape = SubResource( 15 )
+
+[node name="RigidBody2" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -43.8718, 1.06635, -3.3982 )
+collision_layer = 4
+collision_mask = 5
+mass = 1.02041
+sleeping = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="RigidBody2"]
+mesh = SubResource( 14 )
+material/0 = ExtResource( 7 )
+
+[node name="CollisionShape" type="CollisionShape" parent="RigidBody2"]
+shape = SubResource( 15 )
+
+[node name="RigidBody3" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -45.9753, 1.06635, -3.3982 )
+collision_layer = 4
+collision_mask = 5
+mass = 1.02041
+sleeping = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="RigidBody3"]
+mesh = SubResource( 14 )
+material/0 = ExtResource( 7 )
+
+[node name="CollisionShape" type="CollisionShape" parent="RigidBody3"]
+shape = SubResource( 15 )
+
+[node name="RigidBody4" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -44.8218, 3.07552, -3.3982 )
+collision_layer = 4
+collision_mask = 5
+mass = 1.02041
+sleeping = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="RigidBody4"]
+mesh = SubResource( 14 )
+material/0 = ExtResource( 7 )
+
+[node name="CollisionShape" type="CollisionShape" parent="RigidBody4"]
+shape = SubResource( 15 )
+
+[node name="RigidBody5" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -42.6671, 3.07552, -3.3982 )
+collision_layer = 4
+collision_mask = 5
+mass = 1.02041
+sleeping = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="RigidBody5"]
+mesh = SubResource( 14 )
+material/0 = ExtResource( 7 )
+
+[node name="CollisionShape" type="CollisionShape" parent="RigidBody5"]
+shape = SubResource( 15 )
+
+[node name="RigidBody6" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -43.6862, 5.11097, -3.3982 )
+collision_layer = 4
+collision_mask = 5
+mass = 1.02041
+sleeping = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="RigidBody6"]
+mesh = SubResource( 14 )
+material/0 = ExtResource( 7 )
+
+[node name="CollisionShape" type="CollisionShape" parent="RigidBody6"]
+shape = SubResource( 15 )
+
+[node name="RigidBody7" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -44.8218, 3.07552, -3.3982 )
+collision_layer = 4
+collision_mask = 5
+mass = 1.02041
+sleeping = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="RigidBody7"]
+mesh = SubResource( 14 )
+material/0 = ExtResource( 7 )
+
+[node name="CollisionShape" type="CollisionShape" parent="RigidBody7"]
+shape = SubResource( 15 )
+
+[node name="RigidBody8" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -42.6671, 3.07552, -3.3982 )
+collision_layer = 4
+collision_mask = 5
+mass = 1.02041
+sleeping = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="RigidBody8"]
+mesh = SubResource( 14 )
+material/0 = ExtResource( 7 )
+
+[node name="CollisionShape" type="CollisionShape" parent="RigidBody8"]
+shape = SubResource( 15 )
+
+[node name="RigidBody9" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -43.6862, 5.11097, -3.3982 )
+collision_layer = 4
+collision_mask = 5
+mass = 1.02041
+sleeping = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="RigidBody9"]
+mesh = SubResource( 14 )
+material/0 = ExtResource( 7 )
+
+[node name="CollisionShape" type="CollisionShape" parent="RigidBody9"]
+shape = SubResource( 15 )
+
+[node name="Bounds" type="Spatial" parent="."]
+
+[node name="Box" parent="Bounds" instance=ExtResource( 3 )]
+transform = Transform( 23.5771, 0, 0, 0, 1, 0, 0, 0, 198.369, 0, -1, -174.28 )
+
+[node name="Box6" parent="Bounds" instance=ExtResource( 3 )]
+transform = Transform( 31.4222, 0, 0, 0, 25.8258, 0, 0, 0, 9.21304, 0, 20.5243, 15.8686 )
+
+[node name="Box12" parent="Bounds" instance=ExtResource( 3 )]
+transform = Transform( 31.4222, 0, 0, 0, 25.8258, 0, 0, 0, 9.21304, 0, 26.2991, -368.314 )
+
+[node name="Box7" parent="Bounds" instance=ExtResource( 3 )]
+transform = Transform( 4.90714, 0, 0, 0, 4.90714, 0, 0, 0, 4.90714, 19.262, 2.67219, -16.9471 )
+
+[node name="Box8" parent="Bounds" instance=ExtResource( 3 )]
+transform = Transform( 4.90714, 0, 0, 0, 4.90714, 0, 0, 0, 4.90714, 19.262, 2.67219, 1.7099 )
+
+[node name="Box13" parent="Bounds" instance=ExtResource( 3 )]
+transform = Transform( 4.90714, 0, 0, 0, 4.90714, 0, 0, 0, 4.90714, -0.950453, -0.742048, -357.772 )
+
+[node name="Box9" parent="Bounds" instance=ExtResource( 3 )]
+transform = Transform( 4.90714, 0, 0, 0, 1.22491, 0, 0, 0, 4.90714, 4.86521, 13.6823, 1.7099 )
+
+[node name="Box10" parent="Bounds" instance=ExtResource( 3 )]
+transform = Transform( 4.90714, 0, 0, 0, 1.22491, 0, 0, 0, 4.90714, -20.9919, 13.6823, 1.7099 )
+
+[node name="Box2" parent="Bounds" instance=ExtResource( 3 )]
+transform = Transform( -1.03059e-06, 6.1, 0, -23.5771, -2.66639e-07, 0, 0, 0, 198.369, -29.5671, 22.4013, -174.28 )
+
+[node name="Box3" parent="Bounds" instance=ExtResource( 3 )]
+transform = Transform( -1.03059e-06, 6.1, 0, -23.5771, -2.66639e-07, 0, 0, 0, 198.369, 29.4329, 22.6029, -174.28 )
+
+[node name="Box4" parent="Bounds" instance=ExtResource( 3 )]
+transform = Transform( 7.40853, 0, 0, 0, 10.7999, 0, 0, 0, 12.7388, 4.45672, 0, -56.4594 )
+
+[node name="Box15" parent="Bounds" instance=ExtResource( 3 )]
+transform = Transform( 19.0136, 0, 0, 0, 2.31986, 0, 0, 0, 12.7388, 21.4008, 29.8015, -66.2175 )
+
+[node name="Box16" parent="Bounds" instance=ExtResource( 3 )]
+transform = Transform( 5.54582, 0, 3.1039, 0, 2.31986, 0, -2.3891, 0, 7.20509, 8.40799, 29.8015, -94.7259 )
+
+[node name="Box5" parent="Bounds" instance=ExtResource( 3 )]
+transform = Transform( -2.71319, 0, -10.4137, 0, 10.7999, 0, 6.89383, 0, -4.09852, 18.637, 5.93899, -82.4626 )
+
+[node name="Box14" parent="Bounds" instance=ExtResource( 3 )]
+transform = Transform( 0.12943, 0, -38.8903, 0, 26.3671, 0, 7.40843, 0, 0.679439, 0.672964, 5.93899, -150.208 )
+
+[node name="Box19" parent="Bounds" instance=ExtResource( 3 )]
+transform = Transform( 0.12943, 0, -38.8903, -7.23716, 5.63677, -0.663732, 1.58378, 25.7575, 0.145251, 0.672964, 11.0004, -163.079 )
+
+[node name="Box18" parent="Bounds" instance=ExtResource( 3 )]
+transform = Transform( 0.12943, 0, -38.8903, 0, 26.3671, 0, 7.40843, 0, 0.679439, 0.672964, 5.93899, -193.859 )
+
+[node name="Box20" parent="Bounds" instance=ExtResource( 3 )]
+transform = Transform( 4.37364, 0, 0, 0, 4.37364, 0, 0, 0, 4.37364, 6.04287, 1.6433, -241.791 )
+
+[node name="Box21" parent="Bounds" instance=ExtResource( 3 )]
+transform = Transform( 4.37364, 0, 0, 0, 4.37364, 0, 0, 0, 4.37364, 19.2166, 1.6433, -225.559 )
+
+[node name="Box11" parent="Bounds" instance=ExtResource( 3 )]
+transform = Transform( 7.40846, -0.0283902, 0.125756, 0, 15.6079, 12.5101, -0.0316795, -6.63924, 29.4089, -18.0321, 4.51221, -81.8962 )
+
+[node name="Box17" parent="Bounds" instance=ExtResource( 3 )]
+transform = Transform( 5.36349, 0, 0, 0, 3.0024, -4.44439, 0, 4.44439, 3.0024, -18.8943, -1.45984, -118.977 )
+
+[node name="Sphere" parent="Bounds" instance=ExtResource( 5 )]
+transform = Transform( 8.78699, 0, 0, 0, 8.78699, 0, 0, 0, 8.78699, 19.7905, 0, -25.0604 )
+
+[node name="Cylinder" type="StaticBody" parent="Bounds"]
+transform = Transform( -2.02233e-07, -15.3966, 1.55273, 4.33832, -7.20754e-07, 7.02999e-08, 2.22924e-09, 5.90158, 4.05093, -12.9554, -0.202699, -12.9343 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder"]
+mesh = SubResource( 16 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder"]
+shape = SubResource( 17 )
+
+[node name="Cylinder10" type="StaticBody" parent="Bounds"]
+transform = Transform( -3.12249e-07, -15.4193, 2.39744, 6.6984, -7.21813e-07, 1.08544e-07, 3.44198e-09, 5.91026, 6.25466, -15.1084, 3.13779, -240.665 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder10"]
+mesh = SubResource( 16 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder10"]
+shape = SubResource( 17 )
+
+[node name="Cylinder13" type="StaticBody" parent="Bounds"]
+transform = Transform( -4.07548e-07, -20.1252, 3.12914, 8.74276, -9.42112e-07, 1.41672e-07, 4.49247e-09, 7.71409, 8.1636, -10.236, 3.13779, -268.351 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder13"]
+mesh = SubResource( 16 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder13"]
+shape = SubResource( 17 )
+
+[node name="Cylinder14" type="StaticBody" parent="Bounds"]
+transform = Transform( -4.07548e-07, -20.1252, 3.12914, 8.74276, -9.42112e-07, 1.41672e-07, 4.49247e-09, 7.71409, 8.1636, 9.28903, 3.13779, -303.755 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder14"]
+mesh = SubResource( 16 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder14"]
+shape = SubResource( 17 )
+
+[node name="Cylinder15" type="StaticBody" parent="Bounds"]
+transform = Transform( -4.07548e-07, -20.1252, 3.12914, 8.74276, -9.42112e-07, 1.41672e-07, 4.49247e-09, 7.71409, 8.1636, -39.291, 3.13779, -285.934 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder15"]
+mesh = SubResource( 16 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder15"]
+shape = SubResource( 17 )
+
+[node name="Cylinder16" type="StaticBody" parent="Bounds"]
+transform = Transform( -4.07548e-07, -20.1252, 3.12914, 8.74276, -9.42112e-07, 1.41672e-07, 4.49247e-09, 7.71409, 8.1636, -7.25473, -3.25615, -313.117 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder16"]
+mesh = SubResource( 16 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder16"]
+shape = SubResource( 17 )
+
+[node name="Cylinder19" type="StaticBody" parent="Bounds"]
+transform = Transform( 2.41876, -14.3581, 6.05506, 8.1914, 7.48254, -0.352636, -1.86721, 14.2263, 6.29665, -17.4263, 3.72558, -353.566 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder19"]
+mesh = SubResource( 16 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder19"]
+shape = SubResource( 17 )
+
+[node name="Cylinder20" type="StaticBody" parent="Bounds"]
+transform = Transform( -4.44509e-07, -19.4914, 6.10357, 9.98831, -1.07633e-06, 1.61855e-07, 1.38675e-07, 15.0468, 7.90649, 28.942, 1.96995, -365.58 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder20"]
+mesh = SubResource( 16 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder20"]
+shape = SubResource( 17 )
+
+[node name="Cylinder21" type="StaticBody" parent="Bounds"]
+transform = Transform( -3.89079e-07, -17.0608, 5.34245, 8.74276, -9.42112e-07, 1.41672e-07, 1.21382e-07, 13.1704, 6.92055, 21.859, -3.25615, -338.443 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder21"]
+mesh = SubResource( 16 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder21"]
+shape = SubResource( 17 )
+
+[node name="Cylinder22" type="StaticBody" parent="Bounds"]
+transform = Transform( -3.89079e-07, -17.0608, 5.34245, 8.74276, -9.42112e-07, 1.41672e-07, 1.21382e-07, 13.1704, 6.92055, -33.01, 0.256375, -324.386 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder22"]
+mesh = SubResource( 16 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder22"]
+shape = SubResource( 17 )
+
+[node name="Cylinder17" type="StaticBody" parent="Bounds"]
+transform = Transform( -7.78482, -9.45585, -1.05835, 3.86409, -19.3336, -8.25847e-08, -0.94937, -1.15315, 8.67846, -19.6002, 4.19956, -321.457 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder17"]
+mesh = SubResource( 16 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder17"]
+shape = SubResource( 17 )
+
+[node name="Cylinder18" type="StaticBody" parent="Bounds"]
+transform = Transform( 7.62807, 9.26545, 2.03042, 3.86409, -19.3336, -8.25847e-08, 1.82134, 2.21229, -8.50372, 13.4992, 4.19956, -322.313 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder18"]
+mesh = SubResource( 16 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder18"]
+shape = SubResource( 17 )
+
+[node name="Cylinder12" type="StaticBody" parent="Bounds"]
+transform = Transform( -0.107936, 0.766689, -6.6903, 6.32812, 5.4143, 1.16726e-07, 2.1936, -15.5815, -0.329198, -15.5526, 6.87457, -231.637 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder12"]
+mesh = SubResource( 16 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder12"]
+shape = SubResource( 17 )
+
+[node name="Cylinder11" type="StaticBody" parent="Bounds"]
+transform = Transform( 2.94739, -13.4736, -2.51208, 5.89574, 7.83809, -7.59834e-08, 1.19238, -5.45079, 6.20951, 15.1059, 7.82625, -240.174 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder11"]
+mesh = SubResource( 16 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder11"]
+shape = SubResource( 17 )
+
+[node name="Cylinder5" type="StaticBody" parent="Bounds"]
+transform = Transform( -3.55609, -6.30339, 0.237515, 2.48464, -9.03706, 0.265898, 0.0425485, 0.902036, 4.32364, -19.9987, 2.98297, -11.3473 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder5"]
+mesh = SubResource( 18 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder5"]
+shape = SubResource( 19 )
+
+[node name="Cylinder7" type="StaticBody" parent="Bounds"]
+transform = Transform( -3.55609, -6.30339, 0.237515, 2.48464, -9.03706, 0.265898, 0.0425485, 0.902036, 4.32364, -18.9464, 11.6754, -47.3474 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder7"]
+mesh = SubResource( 18 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder7"]
+shape = SubResource( 19 )
+
+[node name="Cylinder2" type="StaticBody" parent="Bounds"]
+transform = Transform( -1.24135e-07, -11.1262, 0.976171, 2.90817, -5.16297e-07, 1.30794e-08, 3.03493e-08, 3.96471, 2.73944, -6.34306, -1.39414, -28.9305 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder2"]
+mesh = SubResource( 18 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder2"]
+shape = SubResource( 19 )
+
+[node name="Cylinder3" type="StaticBody" parent="Bounds"]
+transform = Transform( -2.84268e-07, -11.2537, 0.595566, 6.46948, -4.94011e-07, 2.90963e-08, -2.93972e-09, 1.04041, 6.44201, 12.3151, -2.51897, -33.0019 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder3"]
+mesh = SubResource( 18 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder3"]
+shape = SubResource( 19 )
+
+[node name="Cylinder4" type="StaticBody" parent="Bounds"]
+transform = Transform( -4.19208e-07, -13.7202, 3.84626, 8.7452, -6.67786e-07, 1.72573e-07, 1.31397e-08, 6.71911, 7.85397, -15.9442, -2.51897, -47.3835 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder4"]
+mesh = SubResource( 18 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder4"]
+shape = SubResource( 19 )
+
+[node name="Cylinder6" type="StaticBody" parent="Bounds"]
+transform = Transform( -4.19208e-07, -13.7202, 3.84626, 8.7452, -6.67786e-07, 1.72573e-07, 1.31397e-08, 6.71911, 7.85397, 12.5531, -2.51897, -95.1341 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder6"]
+mesh = SubResource( 18 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder6"]
+shape = SubResource( 19 )
+
+[node name="Cylinder8" parent="Bounds" instance=ExtResource( 4 )]
+transform = Transform( 11.5334, 0, 0, 0, 25.7409, 0, 0, 0, 11.5334, -3.57245, 13.2751, -116.202 )
+
+[node name="Cylinder9" parent="Bounds" instance=ExtResource( 4 )]
+transform = Transform( 5.81868, 0, 0, 0, 17.8142, 0, 0, 0, 5.81868, 0.179738, 27.6279, -170.348 )
+
+[node name="elizell" parent="." instance=ExtResource( 14 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.69807, 3.63492, -354.292 )
+[connection signal="body_entered" from="Goal" to="StageTimer" method="_on_Goal_body_entered"]
+
+[editable path="SwordFighter"]

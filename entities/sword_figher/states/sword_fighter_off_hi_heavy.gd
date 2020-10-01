@@ -2,7 +2,7 @@ extends "res://entities/sword_figher/states/sword_fighter_offensive_moves.gd"
 
 func get_possible_transitions():
 	return [
-		"off_run",
+		"run",
 		"walk",
 #		"def_step",
 		"offensive_stance",

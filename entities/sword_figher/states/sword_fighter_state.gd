@@ -17,7 +17,7 @@ var resource_cost_processed = false
 func get_possible_transitions():
 	return [
 		"jump",
-		"off_run",
+		"run",
 		"off_run_startup",
 		"walk",
 		"tandem_rope_pull",
@@ -161,8 +161,8 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 			InputManager.JUMP:
 				for t in valid_transitions:
 					match t as String :
-						"air_boost":
-							return {"state" : t, "flag" : "is_stringable"}
+#						"air_boost":
+#							return {"state" : t, "flag" : "is_stringable"}
 						"jump":
 							return {"state" : t, "flag" : null}
 #					if valid_transitions.has("jump"):
@@ -170,6 +170,13 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 			
 	if key_state == InputManager.PRESSED:
 		match key as int:
+			InputManager.BOOST:
+				for t in valid_transitions:
+					match t as String :
+						"air_boost":
+							if entity.air_boosts_left > 0:
+								return {"state" : t, "flag" : "is_stringable"}
+			
 			InputManager.LIGHT:
 				for t in valid_transitions:
 					match t as String :
@@ -206,6 +213,23 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 					match t as String:
 						"off_run_startup":
 							return {"state" : t, "flag" : "is_evade_cancelable"}
+						"run":
+							return {"state" : t, "flag" : "is_evade_cancelable"}
+						"wall_run":
+							if entity.has_wall_run:
+#								entity.raycast.force_raycast_update()
+								if entity.raycast.is_colliding():
+									return {"state" : t, "flag" : null}
+						"wall_run_side":
+							if entity.has_wall_run_side:
+#								entity.raycast_side[-1].force_raycast_update()
+#								entity.raycast_side[1].force_raycast_update()
+								if entity.raycast_side[-1].is_colliding():
+									entity.wall_side = -1
+									return {"state" : t, "flag" : null}
+								elif entity.raycast_side[1].is_colliding():
+									entity.wall_side = 1
+									return {"state" : t, "flag" : null}
 #						"off_kick":
 #							return {"state" : t, "flag" : "is_command_cancelable"}
 #						"off_block":

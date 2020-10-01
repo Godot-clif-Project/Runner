@@ -53,13 +53,13 @@ animation = "wall_run_bottom"
 
 [sub_resource type="AnimationNodeBlendTree" id=12]
 resource_local_to_scene = true
-graph_offset = Vector2( 210, -109.75 )
+graph_offset = Vector2( 235, -145 )
 nodes/1_and_-1/node = SubResource( 2 )
 nodes/1_and_-1/position = Vector2( 700, -80 )
 nodes/Add2/node = SubResource( 3 )
 nodes/Add2/position = Vector2( 880, -140 )
 nodes/Blend2/node = SubResource( 4 )
-nodes/Blend2/position = Vector2( 880, 40 )
+nodes/Blend2/position = Vector2( 880, 140 )
 nodes/Seek/node = SubResource( 5 )
 nodes/Seek/position = Vector2( 1060, 0 )
 nodes/TimeScale/node = SubResource( 6 )

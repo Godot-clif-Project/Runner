@@ -7,7 +7,9 @@ func get_animation_data():
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
 #	if entity.has_los_to_target(entity.lock_on_target):
-	entity.velocity = Vector3(0.0, 0.0, 0.0)
+	entity.velocity.x *= 0.25
+	entity.velocity.z *= 0.25
+	entity.velocity.y *= 0.0
 	entity.model_container.transform.basis = entity.model_container.global_transform.looking_at(entity.lock_on_target.translation, Vector3.UP).basis
 #	entity.model_container.rotation.y = atan2(vector_to_target.x, vector_to_target.z) + PI
 	
@@ -26,6 +28,7 @@ func _exit_state():
 #
 func _process_state(delta):
 	entity.apply_gravity(delta)
+	entity.apply_drag(delta)
 	if entity.flags.is_active:
 #		entity.center_camera(delta * 2)
 		entity.point_camera_at_target(delta * 5, Vector3(0.0, -5.0, 0.0))

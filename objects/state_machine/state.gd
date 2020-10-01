@@ -23,6 +23,7 @@ func set_name(value):
 func set_next_state(state):
 	if state != null:
 		fsm.change_state(state)
+#		print(state)
 
 func _get_next_state_buffer():
 	return next_state_buffer

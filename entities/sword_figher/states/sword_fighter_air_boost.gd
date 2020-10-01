@@ -7,7 +7,10 @@ func get_animation_data():
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
 #	print(entity.velocity)
-	entity.velocity *= 0.4
+	entity.air_boosts_left -= 1
+	entity.velocity.x *= 0.4
+	entity.velocity.z *= 0.4
+	entity.velocity.y *= 0.2
 #	print(entity.velocity)
 ##	entity.set_animation("off_hi_r_light", 0, 16.0)
 #	entity.on_ground = false
@@ -55,7 +58,10 @@ func _enter_state():
 func _flag_changed(flag, state):
 	if flag == "is_active":
 		var strength = clamp(entity.jump_str * 1.5, entity.min_jump_str, entity.max_jump_str)
-		entity.set_velocity(Vector3(0.0, strength * 0.5 , -strength * 0.75))
+#		entity.set_velocity(Vector3(0.0, strength * 0.5 , -strength * 0.75))
+		entity.add_impulse(Vector3(0.0, strength * 0.25 , -strength * 0.75))
+		var length = entity.velocity.length()
+		entity.velocity = entity.velocity.normalized() * clamp(length, 0, 20)
 #		entity.set_velocity(Vector3(0.0, entity.jump_str * 0.5 , -entity.jump_str * 0.6))
 
 #func _received_input(key, state):

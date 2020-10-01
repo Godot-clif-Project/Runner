@@ -11,13 +11,14 @@ func _enter_state():
 	entity.on_ground = true
 	entity.has_wall_run = true
 	entity.has_wall_run_side = true
+	entity.air_boosts_left = entity.MAX_AIR_BOOSTS
 	
 	if entity.falling_speed < -25:
 		entity.set_animation("jump_land", 0.0, 8.0)
 		
-	elif entity.input_listener.is_key_pressed(InputManager.RUN):
+	elif entity.input_listener.is_key_pressed(InputManager.RUN) or entity.input_listener.is_key_pressed(InputManager.UP):
 #			set_next_state("off_run_startup")
-		set_next_state("off_run")
+		set_next_state("run")
 		
 	else:
 		set_next_state("run_stop")
@@ -58,7 +59,7 @@ func _process_state(delta):
 #		if falling_speed < -22:
 #			entity.set_animation("jump_land", 0.0, 16.0)
 #		elif entity.input_listener.is_key_pressed(InputManager.RUN):
-#			set_next_state("off_run")
+#			set_next_state("run")
 #		else:
 #			set_next_state("offensive_stance")
 			
@@ -66,7 +67,7 @@ func _process_state(delta):
 func _animation_finished(anim_name):
 	if anim_name == "jump_land":
 		if entity.input_listener.is_key_pressed(InputManager.RUN) or entity.input_listener.is_key_pressed(InputManager.UP):
-			set_next_state("off_run")
+			set_next_state("run")
 			return
 		else:
 			set_next_state("run_stop")

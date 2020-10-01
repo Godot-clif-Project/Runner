@@ -63,7 +63,7 @@ func _process_state(delta):
 #		if falling_speed < -22:
 #			entity.set_animation("jump_land", 0.0, 16.0)
 #		elif entity.input_listener.is_key_pressed(InputManager.RUN):
-#			set_next_state("off_run")
+#			set_next_state("run")
 #		else:
 #			set_next_state("offensive_stance")
 			
@@ -80,7 +80,7 @@ func _process_state(delta):
 #func _animation_finished(anim_name):
 #	if anim_name == "jump_land":
 #		if entity.input_listener.is_key_pressed(InputManager.RUN):
-#			set_next_state("off_run")
+#			set_next_state("run")
 #		else:
 #			set_next_state("offensive_stance")
 #	._animation_finished(anim_name)

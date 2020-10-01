@@ -4,7 +4,7 @@ enum {RELEASED, PRESSED}
 enum {
 	UP, DOWN, LEFT, RIGHT, LIGHT, HEAVY, JUMP, RUN, BREAK, FIRE, TAUNT, EVADE, START,
 	RIGHT_RIGHT, LEFT_LEFT, UP_UP, DOWN_DOWN, RUN_RUN, BREAK_BREAK,
-	THROW,
+	THROW, BOOST,
 }
 
 const RETICLE_CONTROL_STRINGS = {0 : "Joystick", 1 : "Mouse", 2 : "D-pad"}
@@ -123,7 +123,7 @@ var pad_1_stick_joystick = {
 var keys_keyboard = {
 	KEY_SPACE : [JUMP],
 	KEY_Q : [BREAK],
-	KEY_SHIFT : [RUN],
+	KEY_SHIFT : [FIRE],
 	KEY_CONTROL : [EVADE],
 	KEY_TAB : [START],
 	KEY_L : [START],

@@ -35,7 +35,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 1.11667, 1.275 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "values": [ {
-"args": [ Vector3( 0, 15, 0 ) ],
+"args": [ Vector3( 0, 12, 0 ) ],
 "method": "add_impulse"
 }, {
 "args": [ Vector3( 0, 13, -10 ) ],
@@ -112,10 +112,10 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.316667, 0.333333, 1.1, 1.23333 ),
+"times": PoolRealArray( 0, 0.323, 0.333333, 1.224, 1.23333 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ 1.0, 1.0, 0.05, 0.05, 1.0 ]
+"values": [ 1.0, 1.0, 0.25, 0.25, 1.0 ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("AnimationFlags:is_stringable")
@@ -128,6 +128,18 @@ tracks/3/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 2,
 "values": [ true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath(".:ground_drag")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -2041,7 +2053,6 @@ color_ramp = SubResource( 70 )
 collision_layer = 2
 collision_mask = 2147483649
 script = ExtResource( 2 )
-ground_drag = 1
 
 [node name="FSM" parent="." instance=ExtResource( 4 )]
 state_list_script = ExtResource( 5 )
@@ -2136,6 +2147,10 @@ anims/blend_animation_and_space = SubResource( 52 )
 [node name="sword_fighter" parent="ModelContainer" instance=ExtResource( 1 )]
 transform = Transform( -0.6, 0, -9.05975e-08, 0, 0.6, 0, 9.05975e-08, 0, -0.6, 0, 0, 0 )
 
+[node name="Skeleton" parent="ModelContainer/sword_fighter/Armature" index="0"]
+bones/2/bound_children = [ NodePath("ThrowAttachment") ]
+bones/6/bound_children = [ NodePath("BoneAttachment") ]
+
 [node name="Cube" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="0"]
 transform = Transform( 1, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1, 0, 0, 0 )
 material/0 = ExtResource( 12 )
@@ -2144,7 +2159,7 @@ material/0 = ExtResource( 12 )
 material/0 = ExtResource( 12 )
 
 [node name="BoneAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
-transform = Transform( 0.777609, -0.627788, -0.0347165, 0.628747, 0.776423, 0.0429358, 8.11776e-08, -0.0552152, 0.998474, -0.0988407, 2.10892, -0.00510575 )
+transform = Transform( 0.999689, -0.00804758, -0.0235816, -0.0147056, 0.573447, -0.819111, 0.0201146, 0.819203, 0.57315, -0.00158491, 1.62329, 0.0364919 )
 bone_name = "torso"
 
 [node name="Hurtbox" parent="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment" instance=ExtResource( 11 )]
@@ -2182,14 +2197,17 @@ shape = SubResource( 53 )
 [node name="LedgeDetectLow" type="RayCast" parent="ModelContainer"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.02413, 0 )
 enabled = true
+cast_to = Vector3( 0, -1.5, 0 )
 
 [node name="LedgeDetectHigh" type="RayCast" parent="ModelContainer"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.47098, 0 )
 enabled = true
+cast_to = Vector3( 0, -1.5, 0 )
 
 [node name="RayCast" type="RayCast" parent="ModelContainer"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.746612, 0 )
 enabled = true
+cast_to = Vector3( 0, -1.5, 0 )
 
 [node name="RayCastL" type="RayCast" parent="ModelContainer"]
 transform = Transform( 0.258819, 0.965925, -1.57369e-07, 0, -1.62921e-07, -1, -0.965925, 0.258819, -4.21671e-08, 0, 0.746612, 0 )
@@ -2261,7 +2279,7 @@ visible = false
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )
 
 [node name="Position3D" type="Position3D" parent="CameraPointPivot"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6, 4.5 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6, 3.5 )
 
 [node name="Tween" type="Tween" parent="."]
 playback_speed = 3.0

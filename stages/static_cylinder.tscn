@@ -2,20 +2,20 @@
 
 [ext_resource path="res://objects/test_material.material" type="Material" id=1]
 
-[sub_resource type="CylinderMesh" id=1]
+[sub_resource type="CylinderMesh" id=17]
 material = ExtResource( 1 )
 radial_segments = 16
 rings = 1
 
-[sub_resource type="CylinderShape" id=2]
+[sub_resource type="CylinderShape" id=18]
 
 [node name="Cylinder" type="StaticBody" groups=[
 "ledge",
 ]]
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
-mesh = SubResource( 1 )
+mesh = SubResource( 17 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-shape = SubResource( 2 )
+shape = SubResource( 18 )

@@ -34,6 +34,7 @@ var input_chains ={
 	InputManager.DOWN_DOWN : [InputManager.DOWN, InputManager.DOWN],
 	InputManager.RUN_RUN : [InputManager.RUN, InputManager.RUN],
 	InputManager.BREAK_BREAK : [InputManager.BREAK, InputManager.BREAK],
+	InputManager.BOOST : [InputManager.FIRE, InputManager.RUN],
 	}
 
 export var simulate_input = false
@@ -78,11 +79,8 @@ func _received_input (pad, key, state):
 				# Press a direction on d-pad, wasd, etc.
 				var dir = InputManager.get_direction(key)
 				if dir != null:
-					
 					dir = get_reverse(dir)
-					
 					emit_signal("received_input", InputManager.DIRECTIONS_TO_KEYS[dir], state)
-					
 					if state == InputManager.PRESSED:
 						add_to_input_buffer(InputManager.DIRECTIONS_TO_KEYS[dir])
 						check_input_chains(InputManager.DIRECTIONS_TO_KEYS[dir])
@@ -92,7 +90,6 @@ func _received_input (pad, key, state):
 								
 				else:
 					emit_signal("received_input", key, state)
-					
 					if state == InputManager.PRESSED:
 						add_to_input_buffer(key)
 						check_input_chains(key)

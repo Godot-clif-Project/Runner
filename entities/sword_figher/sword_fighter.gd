@@ -24,8 +24,8 @@ export var ground_drag = 10
 export var default_tracking_speed = 20
 export var tracking_speed = 20
 export var max_hp = 1000
-export var min_jump_str = 2.5
-export var max_jump_str = 20
+export var min_jump_str = 15
+export var max_jump_str = 15
 export var weight = 70
 export var gravity_scale = 1.0
 
@@ -48,12 +48,19 @@ var current_stance = Stances.UNIQUE
 var throwing_entity = null
 var receive_throw_pos = Vector3.ZERO
 var receive_throw_rot = 0.0
+
 var jump_str = 0
 var horizontal_speed = 0.0
 var falling_speed = 0.0
+var acceleration = 0.0
+var target_speed = 13.0
+var max_speed = 18.0
+var boost_speed = 30.0
 
 var prev_speed = 0.0
 #var prev_velocity : Vector3
+const MAX_AIR_BOOSTS = 2
+var air_boosts_left = 2
 var has_wall_run = true
 var has_wall_run_side = true
 var wall_has_ledge = false
@@ -137,13 +144,14 @@ func reset():
 	velocity = Vector3.ZERO
 	has_wall_run = true
 	has_wall_run_side = true
+	model_container.rotation.y = 0.0
 	fsm.setup()
 	if throwing_entity != null:
 		remove_collision_exception_with(throwing_entity)
 	if player_side == 1:
-		transform = get_node("../Player1Pos").transform
+		translation = get_node("../Player1Pos").translation
 	else:
-		transform = get_node("../Player2Pos").transform
+		translation = get_node("../Player2Pos").translation
 	emit_signal("ready")
 
 #const arrow = preload("res://misc/arrow.tscn")
@@ -292,7 +300,7 @@ func accelerate(speed : float, delta):
 #	velocity = velocity.normalized() * abs(speed)
 #	velocity = velocity.normalized() * target_velocity.length()
 	target_velocity = Vector3(0.0, 0.0, speed).rotated(Vector3.UP, model_container.rotation.y)
-	velocity = velocity.linear_interpolate(target_velocity, delta * 1.5)
+	velocity = velocity.linear_interpolate(target_velocity, delta)
 
 #	var velocity_xz = Vector2(velocity.x, velocity.z).linear_interpolate(Vector2(target_velocity.x, target_velocity.z), delta * 3)
 #	velocity.x = velocity_xz.x

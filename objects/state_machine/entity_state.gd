@@ -2,6 +2,7 @@ extends State
 class_name EntityState
 
 var received_events
+var stop_processing_events = false
 
 func _init():
 	clear_received_events()
@@ -27,55 +28,86 @@ func clear_received_events():
 	}
 
 func process_received_events():
-	
 	received_events["_received_input"].invert()
 	for arg_array in received_events["_received_input"]:
 		callv("_received_input", arg_array)
+		if stop_processing_events:
+			return
 	
 	for arg_array in received_events["_received_tandem_action"]:
 		callv("_received_tandem_action", arg_array)
+		if stop_processing_events:
+			return
 		
 	for arg in received_events["_released_from_grapple"]:
 		call("_released_from_grapple", arg)
+		if stop_processing_events:
+			return
 	
 	for arg in received_events["_dealt_hit"]:
 		call("_dealt_hit", arg)
+		if stop_processing_events:
+			return
 		
 	for arg in received_events["_dealt_parry"]:
 		callv("_dealt_parry", arg)
+		if stop_processing_events:
+			return
 		
 	for arg_array in received_events["_received_ai_action"]:
 		callv("_received_ai_action", arg_array)
+		if stop_processing_events:
+			return
 		
 	for arg_array in received_events["_flag_changed"]:
 		callv("_flag_changed", arg_array)
+		if stop_processing_events:
+			return
 		
 	for arg in received_events["_hitstop_ended"]:
 		call("_hitstop_ended")
+		if stop_processing_events:
+			return
 
 	for arg in received_events["_concurrent_fsm_state_changed"]:
 		call("_concurrent_fsm_state_changed", arg)
+		if stop_processing_events:
+			return
 	
 	for arg in received_events["_evaded_hit"]:
 		call("_evaded_hit", arg)
+		if stop_processing_events:
+			return
 	
 	for arg in received_events["_received_parry"]:
 		call("_received_parry", arg)
+		if stop_processing_events:
+			return
 	
 	for arg in received_events["_received_defense"]:
 		call("_received_defense", arg)
+		if stop_processing_events:
+			return
 		
 	for arg in received_events["_animation_finished"]:
 		call("_animation_finished", arg)
+		if stop_processing_events:
+			return
 		
 	for arg in received_events["_animation_blend_started"]:
 		call("_animation_blend_started", arg)
+		if stop_processing_events:
+			return
 		
 	for arg in received_events["_touched_surface"]:
 		call("_touched_surface", arg)
+		if stop_processing_events:
+			return
 		
 	for arg in received_events["_received_hit"]:
 		call("_received_hit", arg)
+		if stop_processing_events:
+			return
 	
 	clear_received_events()
 
@@ -86,6 +118,10 @@ func set_next_state_buffered(state, buffer_flag):
 		next_state_buffer = state
 		next_state_buffer_flag = buffer_flag
 
+func set_next_state(state):
+	stop_processing_events = true
+	.set_next_state(state)
+	
 func get_animation_data():
 	# Name, seek and blend length 
 	return ["anim_name", 0.0, 1.0]

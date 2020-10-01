@@ -6,14 +6,15 @@ extends "res://entities/sword_figher/states/sword_fighter_offensive_moves.gd"
 
 var released_up = false
 var ang_momentum = 0.0
-var rot_drag = 8
-var rot_speed = 30
-var max_turn_speed = 3.5
+var rot_drag = 1
+var rot_speed = 60
+var max_turn_speed = 3.2
 
 var speed = 0.0
 
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
+	entity.acceleration = 0.0
 	speed = entity.horizontal_speed
 	entity.get_node("ModelContainer/Particles2").emitting = true
 	entity.set_animation("run_break", 0, 30.0)
@@ -31,7 +32,7 @@ func _exit_state():
 	._exit_state()
 	
 func _process_state(delta):
-	if entity.velocity.length_squared() < 1.0 and entity.on_ground:
+	if entity.horizontal_speed < 2.0:
 		set_next_state("offensive_stance")
 		return
 		
@@ -58,21 +59,24 @@ func _process_state(delta):
 		entity.ground_drag = 5
 	
 	if entity.is_on_wall():
-		entity.velocity += entity.get_slide_collision(0).normal * entity.horizontal_speed * 0.5
+		var wall_normal = entity.get_slide_collision(0).normal
+#		var wall_position = entity.get_slide_collision(0).position
+		var player_vector = -entity.model_container.transform.basis.z
+		var rot = Vector2(player_vector.x, player_vector.z).angle_to(Vector2(wall_normal.x, wall_normal.z))
+		
+		entity.model_container.rotation.y -= PI * 0.75 * (entity.prev_speed / 20) * abs(wall_normal.dot(player_vector)) * sign(rot)
+		entity.velocity = wall_normal * entity.prev_speed * 0.5
 		
 	entity.model_container.rotation_degrees.y += ang_momentum
 	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
 	
 #	speed = clamp(speed - delta * entity.ground_drag, 0, 25)
-	entity.apply_drag(delta)
 #	entity.accelerate(-speed, delta * 0.25)
+	entity.apply_drag(delta)
 	entity.apply_gravity(delta)
-	
 	entity.center_camera(delta * 2)
 	
 #	._process_state(delta)
-
-
 
 func _animation_finished(anim_name):
 #	if anim_name == "off_run_startup":
@@ -104,7 +108,12 @@ func get_possible_transitions():
 func _received_input(key, state):
 	if state:
 		if key == InputManager.RUN or key == InputManager.UP:
-			set_next_state("off_run")
+			set_next_state("run")
+			return
+		elif key == InputManager.BOOST:
+			set_next_state("run")
+			entity.target_speed = entity.boost_speed
+			entity.acceleration = 0.8
 			return
 #		if key == InputManager.DOWN:
 #			entity.ground_drag = 20

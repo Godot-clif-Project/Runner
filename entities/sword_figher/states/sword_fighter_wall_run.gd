@@ -16,17 +16,18 @@ var turn_acc = 0.0
 var current_turn_dir = 0
 var prev_turn_dir = 0
 
-var speed = 20
+var speed = 15
 var t = 0.0
 
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
-#	speed += entity.horizontal_speed
 #	print(entity.prev_speed)
 #	entity.velocity = Vector3.ZERO
 
-	entity.velocity.x *= 0.25
-	entity.velocity.z *= 0.25
+	entity.velocity.x *= 0.5
+	entity.velocity.z *= 0.5
+	speed += entity.horizontal_speed * 0.33
+	entity.ground_drag = 20
 	
 	entity.wall_rot = entity.get_normal()
 	entity.set_animation("run_loop", 0, 10.0)
@@ -69,17 +70,20 @@ func _process_state(delta):
 #			entity.input_listener.sticks[0]
 #			entity.set_velocity(Vector3(0.0, 10, -10).rotated(Vector3.RIGHT, entity.wall_rot.x).rotated(Vector3.FORWARD, PI *entity.input_listener.sticks[0]))
 #			entity.model_container.rotation.z = PI * -entity.input_listener.sticks[0]
-		speed -= delta * 25
+
+		speed -= delta * 30
 		if speed <= -10.0:
 			set_next_state("fall")
 			return
 			
 		entity.wall_rot = entity.get_normal()
-		entity.set_velocity(Vector3(0.0, speed, -2).rotated(Vector3.RIGHT, entity.wall_rot.x))
-#		entity.velocity.y = speed
+		entity.set_velocity(Vector3(0.0, speed, 0.0).rotated(Vector3.RIGHT, entity.wall_rot.x))
+#		entity.velocity = Vector3(entity.velocity.x, speed, entity.velocity.z).rotated(Vector3.RIGHT, entity.wall_rot.x)
+		entity.add_impulse(Vector3(0.0, 0.0, -5).rotated(Vector3.RIGHT, entity.wall_rot.x))
 		entity.model.rotation.x = entity.wall_rot.x - PI * 0.25
 		entity.model_container.rotation.y = entity.wall_rot.y - PI
 		
+		entity.apply_drag(delta)
 ##func _animation_blend_started(anim_name):
 ##	print(anim_name)
 ##	set_next_state("idle")
