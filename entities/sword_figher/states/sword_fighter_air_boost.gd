@@ -17,7 +17,9 @@ func _enter_state():
 	._enter_state()
 #
 ## Inverse of enter_state.
-##func _exit_state():
+func _exit_state():
+	entity.get_node("ModelContainer/Particles2").emitting = false
+	._exit_state()
 ##	pass
 
 #func _process_state(delta):

@@ -37,4 +37,5 @@ const STATES = {
 	"tandem_rope_being_pulled" : preload("res://entities/sword_figher/states/sword_fighter_tandem_rope_being_pulled.gd"),
 	"tandem_launch_up" : preload("res://entities/sword_figher/states/sword_fighter_tandem_launch_up.gd"),
 	"air_boost" : preload("res://entities/sword_figher/states/sword_fighter_air_boost.gd"),
+	"dangle" : preload("res://entities/sword_figher/states/sword_fighter_dangle.gd"),
 	}

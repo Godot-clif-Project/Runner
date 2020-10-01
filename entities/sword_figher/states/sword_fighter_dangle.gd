@@ -1,43 +1,75 @@
 extends "res://entities/sword_figher/states/sword_fighter_fall.gd"
 
+var wall_rot
+var t = 0.0
+
 func get_animation_data():
 	# Name, seek and blend length 
-	return ["jump_start", 0.0, 16.0]
+	return ["dangle", 0.0, 16.0]
 
 ## Initialize state here: Set animation, add impulse, etc.
-#func _enter_state():
-#	entity.jump()
+func _enter_state():
+	entity.velocity = Vector3.ZERO
+#	entity.velocity.y = 0.0
+#	entity.horizontal_speed = 0.0
 ##	entity.set_animation("off_hi_r_light", 0, 16.0)
 #	entity.on_ground = false
-#	._enter_state()
+#	entity.get_normal()
+#	entity.model_container.rotation_degrees.y = entity.arrow.rotation_degrees.y + 180
+	
+	wall_rot = entity.get_normal()
+	
+	entity.model_container.rotation.y = wall_rot.y + PI
+#	entity.model.rotation.y = PI * 0.5
+	entity.add_impulse(Vector3(0, 0, -10))
+	
+	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
+	._enter_state()
 #
 ## Inverse of enter_state.
 func _exit_state():
-	entity.get_node("ModelContainer/Particles2").emitting = false
+	entity.set_velocity(Vector3(0, 10, -2))
+#	entity.model.rotation.y = PI
 	._exit_state()
+##	pass
 
 func _process_state(delta):
-	if not entity.flags.is_active:
-		return
-	else:
-		._process_state(delta)
-#	if entity.get_current_animation() == "jump_land":
-#		entity.set_velocity(Vector3(0.0, 0.0, -Vector2(entity.velocity.x, entity.velocity.z).length()))
-##		entity.apply_rotation(delta)
-#		if entity.input_listener.is_key_pressed(InputManager.RIGHT):
-#			entity.model_container.rotation_degrees.y -= delta * 270
-#
-#		elif entity.input_listener.is_key_pressed(InputManager.LEFT):
-#			entity.model_container.rotation_degrees.y += delta * 270
-#
+	entity.apply_drag(delta)
+	entity.apply_gravity(delta * 0.05 )
+#	if entity.ledge_detect_l.get_overlapping_bodies().size() != 0:
+##		if entity.ledge_detect_r.get_overlapping_bodies().size() != 0:
+##			pass
+##		else:
+#		entity.model_container.rotation_degrees.y += delta * 180
+#	elif entity.ledge_detect_r.get_overlapping_bodies().size() != 0:
+##		if entity.ledge_detect_l.get_overlapping_bodies().size() != 0:
+##			pass
+##		else:
+#		entity.model_container.rotation_degrees.y -= delta * 180
+#	entity.set_velocity(Vector3(0, 0, -10))
+	
+#	if not entity.ledge_detect_low.is_colliding():
+#		if entity.input_listener.is_key_pressed(InputManager.RUN) or entity.input_listener.is_key_pressed(InputManager.UP):
+#			set_next_state("jump")
+#			entity.add_impulse(Vector3(0.0, 0.0 , -10.0))
+#			entity.velocity.y = 10
+#			entity.set_velocity(Vector3(0.0, 30.0, -10.0))
 #		else:
-#			var stick = entity.input_listener.sticks[0]
-#			if abs(stick) > 0.1:
-#				entity.model_container.rotation_degrees.y -= stick * delta * 270
-#
-#	if entity.velocity.y < falling_speed:
-#		falling_speed = entity.velocity.y
-#
+#			entity.velocity.y = 0
+#	else:
+#		entity.velocity.y = 5
+#		pass
+
+func get_possible_transitions():
+	return [
+		"air_boost",
+		"jump",
+		"tandem_rope_pull",
+		"tandem_launch_up",
+		"wall_run",
+		"wall_run_side",
+		]
+
 #	entity.apply_drag(delta)
 #	entity.center_camera(delta)
 

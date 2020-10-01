@@ -63,7 +63,7 @@ func _process_state(delta):
 #		turn = -stick
 #		ang_momentum = clamp(ang_momentum + delta * rot_speed * -stick * 0.5, -max_turn_speed, max_turn_speed)
 #		ang_momentum = clamp(-stick * max_turn_speed, -max_turn_speed, max_turn_speed)
-		ang_momentum = lerp(ang_momentum, -stick * max_turn_speed, delta * 6)
+		ang_momentum = lerp(ang_momentum, -stick * max_turn_speed, delta * 4)
 	elif entity.input_listener.is_key_pressed(InputManager.RIGHT):
 		current_turn_dir = 1
 		turn_acc = lerp(turn_acc, 1, delta * 10)
@@ -110,10 +110,21 @@ func _process_state(delta):
 		var rot = Vector2(player_vector.x, player_vector.z).angle_to(Vector2(wall_normal.x, wall_normal.z))
 		
 #		if wall_normal.dot(player_vector) < -0.8:
-		entity.model_container.rotation.y -= (PI * 0.333) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
 		entity.velocity *= 1 - abs(wall_normal.dot(player_vector) * 0.8)
-		entity.velocity += wall_normal * entity.prev_speed * 0.25
+		if entity.target_speed <= entity.max_speed:
+			entity.model_container.rotation.y -= (PI * 0.333) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
+			entity.velocity += wall_normal * entity.prev_speed * 0.25
+		else:
+			entity.model_container.rotation.y -= (PI * 0.5) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
+			entity.velocity += wall_normal * entity.prev_speed * 0.5
+			
 		entity.acceleration = 0.0
+		
+		if entity.prev_speed > 5:
+			if rot > 0.0:
+				entity.set_animation("run_bump_l", 0.0, 20.0)
+			else:
+				entity.set_animation("run_bump_r", 0.0, 20.0)
 		
 #		if wall_normal.dot(player_vector) > -0.8:
 ##			entity.velocity *= 0.5
@@ -145,6 +156,8 @@ func _process_state(delta):
 ##	if anim_name == "off_h_r_heavy":
 #
 func _animation_finished(anim_name):
+	if anim_name == "run_bump_l" or anim_name == "run_bump_r":
+		entity.set_animation("run_loop", 0, 10.0)
 	pass
 #	if anim_name == "off_run_startup":
 #		if entity.input_listener.is_key_released(InputManager.RUN):

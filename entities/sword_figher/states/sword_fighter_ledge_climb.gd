@@ -4,7 +4,7 @@ var wall_rot
 
 func get_animation_data():
 	# Name, seek and blend length 
-	return ["run_break_loop", 0.0, 16.0]
+	return ["dangle", 0.0, 16.0]
 
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
@@ -18,7 +18,7 @@ func _enter_state():
 	wall_rot = entity.get_normal()
 	
 	entity.model_container.rotation.y = wall_rot.y + PI
-	entity.model.rotation.y = PI * 0.5
+#	entity.model.rotation.y = PI * 0.5
 	
 	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
 	._enter_state()
@@ -52,9 +52,15 @@ func _process_state(delta):
 			entity.velocity.y = 0
 	else:
 		entity.velocity.y = 5
+		pass
 	
 #	entity.apply_drag(delta)
 #	entity.center_camera(delta)
+
+func get_possible_transitions():
+	return [
+		"fall",
+		]
 
 #func _touched_surface(surface):
 #	if surface == "floor": #and entity.flags.is_active:

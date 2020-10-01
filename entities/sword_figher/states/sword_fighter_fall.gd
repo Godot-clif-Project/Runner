@@ -5,7 +5,7 @@ var turn_speed = 270.0
 
 func get_animation_data():
 	# Name, seek and blend length 
-	return ["fall", 0.0, 16.0]
+	return ["air_boost", 1.0, 16.0]
 
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
@@ -32,24 +32,34 @@ func _process_state(delta):
 		if abs(stick) > 0.1:
 			entity.model_container.rotation_degrees.y -= stick * delta * turn_speed
 	
-	if entity.input_listener.is_key_pressed(InputManager.RUN):
+	if entity.input_listener.is_key_pressed(InputManager.BREAK) or entity.input_listener.is_key_pressed(InputManager.RUN):
 		if entity.ledge_detect_low.is_colliding():
 			if entity.ledge_detect_low.get_collider().is_in_group("ledge"):
 				if not entity.ledge_detect_high.is_colliding():
 					set_next_state("ledge_climb")
 					return
 #
+#	if entity.input_listener.is_key_pressed(InputManager.BREAK):
+#		if entity.ledge_detect_low.is_colliding():
+#			set_next_state("dangle")
+#			return
+					
 	if entity.is_on_wall():
-		var wall_normal = entity.get_slide_collision(0).normal
-#		var wall_position = entity.get_slide_collision(0).position
-		var player_vector = -entity.model_container.transform.basis.z
-		var rot = Vector2(player_vector.x, player_vector.z).angle_to(Vector2(wall_normal.x, wall_normal.z))
+#			set_next_state("ledge_climb")
+#			return
+		if entity.prev_speed > 5:
+			var wall_normal = entity.get_slide_collision(0).normal
+	#		var wall_position = entity.get_slide_collision(0).position
+			var player_vector = -entity.model_container.transform.basis.z
+			var rot = Vector2(player_vector.x, player_vector.z).angle_to(Vector2(wall_normal.x, wall_normal.z))
+			
+	#		if wall_normal.dot(player_vector) < -0.8:
+			entity.model_container.rotation.y -= (PI * 0.333) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
+			entity.velocity *= 1 - abs(wall_normal.dot(player_vector) * 0.8)
+			entity.velocity += wall_normal * entity.prev_speed * 0.25
+			entity.acceleration = 0.0
+			entity.set_animation("run_bump_l", 0.0, 20.0)
 		
-#		if wall_normal.dot(player_vector) < -0.8:
-		entity.model_container.rotation.y -= (PI * 0.333) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
-		entity.velocity *= 1 - abs(wall_normal.dot(player_vector) * 0.8)
-		entity.velocity += wall_normal * entity.prev_speed * 0.25
-		entity.acceleration = 0.0
 		
 #		var new_vel = wall_normal * entity.prev_speed * 0.2
 #		entity.velocity.x = new_vel.x
@@ -99,11 +109,12 @@ func _animation_finished(anim_name):
 func get_possible_transitions():
 	return [
 		"air_boost",
-		"jump",
+#		"jump",
 		"tandem_rope_pull",
 		"tandem_launch_up",
 		"wall_run",
 		"wall_run_side",
+		"dangle",
 		]
 
 #func _received_input(key, state):

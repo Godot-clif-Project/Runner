@@ -15,7 +15,7 @@ sync = true
 [sub_resource type="AnimationNodeTimeScale" id=5]
 
 [sub_resource type="AnimationNodeAnimation" id=6]
-animation = "wall_run_top_r"
+animation = "t_pose"
 
 [sub_resource type="AnimationNodeAnimation" id=7]
 animation = "t_pose"
@@ -23,12 +23,12 @@ animation = "t_pose"
 [sub_resource type="AnimationNodeTimeSeek" id=8]
 
 [sub_resource type="AnimationNodeAnimation" id=9]
-animation = "wall_run_bottom"
+animation = "t_pose"
 
 [sub_resource type="AnimationNodeTimeSeek" id=10]
 
 [sub_resource type="AnimationNodeBlendTree" id=11]
-graph_offset = Vector2( 210, -109.75 )
+graph_offset = Vector2( 208, -81.75 )
 nodes/1_and_-1/node = SubResource( 1 )
 nodes/1_and_-1/position = Vector2( 700, -80 )
 nodes/Add2/node = SubResource( 2 )
@@ -60,10 +60,6 @@ listen_to_pads = PoolIntArray( 1 )
 [node name="AnimationTree" parent="." index="4"]
 tree_root = SubResource( 11 )
 
-[node name="Skeleton" parent="ModelContainer/sword_fighter/Armature" index="0"]
-bones/2/bound_children = [  ]
-bones/6/bound_children = [  ]
-
 [node name="Cube" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="0"]
 material/0 = ExtResource( 2 )
 
@@ -71,7 +67,7 @@ material/0 = ExtResource( 2 )
 material/0 = ExtResource( 2 )
 
 [node name="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
-transform = Transform( 0.777609, -0.627788, -0.0347165, 0.628747, 0.776423, 0.0429358, 8.11776e-08, -0.0552152, 0.998474, -0.0988407, 2.10892, -0.00510575 )
+transform = Transform( 1, 0, 0, 0, 0.998474, 0.0552152, 0, -0.0552152, 0.998474, -6.59474e-17, 2.24226, 7.43921e-09 )
 
 [editable path="ModelContainer/sword_fighter"]
 

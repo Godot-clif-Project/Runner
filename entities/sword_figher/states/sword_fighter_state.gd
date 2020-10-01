@@ -169,7 +169,15 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 #						return {"state" : "jump", "flag" : null}
 			
 	if key_state == InputManager.PRESSED:
+		
 		match key as int:
+			InputManager.BREAK:
+				for t in valid_transitions:
+					match t as String :
+						"dangle":
+							if entity.ledge_detect_low.is_colliding():
+								return {"state" : t, "flag" : null}
+								
 			InputManager.BOOST:
 				for t in valid_transitions:
 					match t as String :
