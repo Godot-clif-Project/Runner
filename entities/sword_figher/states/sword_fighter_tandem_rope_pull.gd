@@ -1,16 +1,17 @@
-extends "res://entities/sword_figher/states/sword_fighter_offensive_moves.gd"
+extends "res://entities/sword_figher/states/sword_fighter_fall.gd"
 
 func get_animation_data():
 	# Name, seek and blend length 
 	return ["air_rope", 0.0, 16.0]
 
+var initial_rot
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
 #	if entity.has_los_to_target(entity.lock_on_target):
-	entity.velocity.x *= 0.25
-	entity.velocity.z *= 0.25
+	initial_rot = entity.model_container.rotation.y
+	entity.velocity.x *= 0.9
+	entity.velocity.z *= 0.9
 	entity.velocity.y *= 0.0
-	entity.model_container.transform.basis = entity.model_container.global_transform.looking_at(entity.lock_on_target.translation, Vector3.UP).basis
 #	entity.model_container.rotation.y = atan2(vector_to_target.x, vector_to_target.z) + PI
 	
 #	entity.lock_on_target.receive_tandem_action("rope_pull", entity)
@@ -21,12 +22,13 @@ func _enter_state():
 #
 ## Inverse of enter_state.
 func _exit_state():
-	entity.model_container.rotation = Vector3(0.0, entity.model_container.rotation.y, 0.0)
+	entity.model_container.rotation = Vector3(0.0, initial_rot, 0.0)
 	entity.camera_pivot.rotation.z = 0.0
 	entity.model_container.transform = entity.model_container.transform.orthonormalized()
 	entity.camera_pivot.transform = entity.camera_pivot.transform.orthonormalized()
 #
 func _process_state(delta):
+	entity.model_container.transform.basis = entity.model_container.global_transform.looking_at(entity.lock_on_target.translation, Vector3.UP).basis
 	entity.apply_gravity(delta)
 	entity.apply_drag(delta)
 	if entity.flags.is_active:
@@ -40,7 +42,8 @@ func _process_state(delta):
 ##	set_next_state("idle")
 ##	if anim_name == "off_h_r_heavy":
 #
-#func _animation_finished(anim_name):
+func _animation_finished(anim_name):
+	set_next_state("fall")
 #	._animation_finished(anim_name)
 #	set_next_state("offensive_stance")
 #	pass

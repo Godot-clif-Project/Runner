@@ -38,4 +38,5 @@ const STATES = {
 	"tandem_launch_up" : preload("res://entities/sword_figher/states/sword_fighter_tandem_launch_up.gd"),
 	"air_boost" : preload("res://entities/sword_figher/states/sword_fighter_air_boost.gd"),
 	"dangle" : preload("res://entities/sword_figher/states/sword_fighter_dangle.gd"),
+	"slide" : preload("res://entities/sword_figher/states/sword_fighter_slide.gd"),
 	}

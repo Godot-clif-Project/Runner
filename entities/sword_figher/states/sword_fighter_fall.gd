@@ -5,7 +5,7 @@ var turn_speed = 270.0
 
 func get_animation_data():
 	# Name, seek and blend length 
-	return ["air_boost", 1.0, 16.0]
+	return ["t_pose", 0.0, 16.0]
 
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
@@ -56,7 +56,7 @@ func _process_state(delta):
 	#		if wall_normal.dot(player_vector) < -0.8:
 			entity.model_container.rotation.y -= (PI * 0.333) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
 			entity.velocity *= 1 - abs(wall_normal.dot(player_vector) * 0.8)
-			entity.velocity += wall_normal * entity.prev_speed * 0.25
+			entity.velocity += wall_normal * entity.prev_speed * 0.5
 			entity.acceleration = 0.0
 			entity.set_animation("run_bump_l", 0.0, 20.0)
 		
@@ -69,9 +69,11 @@ func _process_state(delta):
 	
 	if entity.velocity.y < 0.0:
 		entity.falling_speed = entity.velocity.y
+#		entity.apply_gravity(delta * 0.5)
+#	else:
 	
-	entity.apply_drag(delta)
 	entity.apply_gravity(delta)
+	entity.apply_drag(delta)
 	entity.center_camera(delta)
 	
 	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)

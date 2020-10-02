@@ -54,13 +54,13 @@ var horizontal_speed = 0.0
 var falling_speed = 0.0
 var acceleration = 0.0
 var target_speed = 13.0
-var max_speed = 18.0
-var boost_speed = 30.0
+var max_speed = 15.0
+var boost_speed = 50.0
 
 var prev_speed = 0.0
 #var prev_velocity : Vector3
-const MAX_AIR_BOOSTS = 2
-var air_boosts_left = 2
+const MAX_AIR_BOOSTS = 1
+var air_boosts_left = 1
 var has_wall_run = true
 var has_wall_run_side = true
 var wall_has_ledge = false
@@ -277,7 +277,7 @@ func point_camera_at_target(delta, offset):
 func apply_gravity(delta):
 	if velocity.y > TERMINAL_VELOCITY:
 		if not is_on_floor():
-			velocity.y -= 9.8 * delta * gravity_scale * 5
+			velocity.y -= 9.8 * delta * gravity_scale * 5.5
 		else:
 			velocity.y -= 9.8 * delta * gravity_scale * 0.3
 	else:
@@ -295,7 +295,11 @@ func set_velocity(_velocity : Vector3):
 	var velocity_rotated = _velocity.rotated(Vector3.UP, model_container.rotation.y)
 #	velocity = Vector3(velocity_rotated.x, velocity.y, velocity_rotated.z)
 	velocity = velocity_rotated
-	
+
+func turn(ang_momentum):
+	velocity = velocity.rotated(Vector3.UP, ang_momentum * 0.005)
+	model_container.rotation.y = atan2(velocity.x, velocity.z) + PI + ang_momentum* 0.33
+
 func accelerate(speed : float, delta):
 #	velocity = velocity.normalized() * abs(speed)
 #	velocity = velocity.normalized() * target_velocity.length()

@@ -2184,7 +2184,7 @@ material/0 = ExtResource( 12 )
 material/0 = ExtResource( 12 )
 
 [node name="BoneAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
-transform = Transform( 0.998202, -0.0172058, -0.0574213, -0.0427789, 0.466552, -0.883459, 0.0419907, 0.884326, 0.464977, -0.00605552, 1.60242, 0.131657 )
+transform = Transform( 0.148071, 0.779578, 0.60855, -0.359877, 0.61562, -0.701071, -0.921175, -0.115194, 0.371708, -0.00436896, 0.753314, -0.257788 )
 bone_name = "torso"
 
 [node name="Hurtbox" parent="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment" instance=ExtResource( 11 )]

@@ -18,6 +18,7 @@ func get_possible_transitions():
 	return [
 		"jump",
 		"run",
+		"slide",
 		"off_run_startup",
 		"walk",
 		"tandem_rope_pull",
@@ -184,6 +185,11 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 						"air_boost":
 							if entity.air_boosts_left > 0:
 								return {"state" : t, "flag" : "is_stringable"}
+			InputManager.FIRE:
+				for t in valid_transitions:
+					match t as String :
+						"slide":
+							return {"state" : t, "flag" : null}
 			
 			InputManager.LIGHT:
 				for t in valid_transitions:
