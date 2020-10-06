@@ -8,7 +8,7 @@ var released_up = false
 var ang_momentum = 0.0
 var rot_drag = 1
 var rot_speed = 60
-var max_turn_speed = 1.2
+var max_turn_speed = 4.2
 
 var speed = 0.0
 
@@ -40,7 +40,7 @@ func _process_state(delta):
 		set_next_state("fall")
 		return
 	
-	var stick = entity.input_listener.sticks[0]
+	var stick = entity.input_listener.analogs[0]
 	if abs(stick) > 0.1:
 		ang_momentum = clamp(-stick * max_turn_speed, -max_turn_speed, max_turn_speed)
 	
@@ -55,9 +55,9 @@ func _process_state(delta):
 	
 	if entity.input_listener.is_key_pressed(InputManager.BREAK):
 #		entity.ground_drag = 12.5
-		entity.ground_drag = 10
+		entity.ground_drag = 15
 	else:
-		entity.ground_drag = 5
+		entity.ground_drag = 8
 	
 	if entity.is_on_wall():
 		var wall_normal = entity.get_slide_collision(0).normal
@@ -70,7 +70,7 @@ func _process_state(delta):
 		entity.model_container.rotation.y -= (PI * 0.333) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
 		entity.velocity += wall_normal * entity.prev_speed * 0.3
 		
-	entity.model_container.rotation_degrees.y += ang_momentum
+	entity.model_container.rotation_degrees.y += ang_momentum * float(1 - entity.target_speed / entity.boost_speed * 0.5)
 	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
 	
 #	speed = clamp(speed - delta * entity.ground_drag, 0, 25)

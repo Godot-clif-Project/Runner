@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://stages/stage_env.tres" type="Environment" id=1]
 [ext_resource path="res://entities/sword_figher/sword_fighter.tscn" type="PackedScene" id=2]
@@ -26,56 +26,6 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Vector3( -25.071, 100, -2.385 ), Vector3( -25.071, 460, -2.385 ) ]
 }
-
-[sub_resource type="AnimationNodeBlend2" id=2]
-
-[sub_resource type="AnimationNodeAdd2" id=3]
-sync = true
-
-[sub_resource type="AnimationNodeBlend2" id=4]
-
-[sub_resource type="AnimationNodeTimeSeek" id=5]
-
-[sub_resource type="AnimationNodeTimeScale" id=6]
-
-[sub_resource type="AnimationNodeAnimation" id=7]
-animation = "wall_run_top_r"
-
-[sub_resource type="AnimationNodeAnimation" id=8]
-animation = "t_pose"
-
-[sub_resource type="AnimationNodeTimeSeek" id=9]
-
-[sub_resource type="AnimationNodeAnimation" id=10]
-animation = "wall_run_bottom"
-
-[sub_resource type="AnimationNodeTimeSeek" id=11]
-
-[sub_resource type="AnimationNodeBlendTree" id=12]
-resource_local_to_scene = true
-graph_offset = Vector2( 235, -145 )
-nodes/1_and_-1/node = SubResource( 2 )
-nodes/1_and_-1/position = Vector2( 700, -80 )
-nodes/Add2/node = SubResource( 3 )
-nodes/Add2/position = Vector2( 880, -140 )
-nodes/Blend2/node = SubResource( 4 )
-nodes/Blend2/position = Vector2( 880, 140 )
-nodes/Seek/node = SubResource( 5 )
-nodes/Seek/position = Vector2( 1060, 0 )
-nodes/TimeScale/node = SubResource( 6 )
-nodes/TimeScale/position = Vector2( 1180, 0 )
-nodes/add_animation/node = SubResource( 7 )
-nodes/add_animation/position = Vector2( 680, 100 )
-nodes/animation_-1/node = SubResource( 8 )
-nodes/animation_-1/position = Vector2( 300, 40 )
-nodes/animation_-1_seek/node = SubResource( 9 )
-nodes/animation_-1_seek/position = Vector2( 500, 40 )
-nodes/animation_1/node = SubResource( 10 )
-nodes/animation_1/position = Vector2( 300, -80 )
-nodes/animation_1_seek/node = SubResource( 11 )
-nodes/animation_1_seek/position = Vector2( 500, -80 )
-nodes/output/position = Vector2( 1340, 0 )
-node_connections = [ "output", 0, "TimeScale", "1_and_-1", 0, "animation_1_seek", "1_and_-1", 1, "animation_-1_seek", "Add2", 0, "1_and_-1", "Add2", 1, "add_animation", "Seek", 0, "Add2", "TimeScale", 0, "Seek", "animation_-1_seek", 0, "animation_-1", "animation_1_seek", 0, "animation_1" ]
 
 [sub_resource type="CubeMesh" id=13]
 
@@ -193,9 +143,6 @@ playback_process_mode = 0
 
 [node name="SwordFighter" parent="." instance=ExtResource( 2 )]
 target = NodePath("../SwordFighter2")
-
-[node name="AnimationTree" parent="SwordFighter" index="4"]
-tree_root = SubResource( 12 )
 
 [node name="SwordFighter2" parent="." instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.07425, 0, 0 )
@@ -379,5 +326,3 @@ material/0 = ExtResource( 10 )
 [node name="CollisionShape" type="CollisionShape" parent="RigidBody9"]
 shape = SubResource( 16 )
 [connection signal="body_entered" from="Goal" to="StageTimer" method="_on_Goal_body_entered"]
-
-[editable path="SwordFighter"]

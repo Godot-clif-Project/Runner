@@ -12,9 +12,9 @@ var aling_to_wall = true
 
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
-	speed = entity.horizontal_speed
-	if speed < 12:
-		speed = 12
+	speed = entity.prev_speed
+	if speed < 8:
+		speed = 8
 	if entity.velocity.y > 0.0:
 		speed_y = clamp(entity.velocity.y * 0.5, 0, 10)
 	
@@ -98,8 +98,8 @@ func _process_state(delta):
 #	entity.set_velocity(Vector3(speed * -entity.wall_side, speed_y, 0.0).rotated(Vector3.RIGHT, entity.wall_rot.x))
 	
 	wait -= 1
-#		entity.set_velocity(Vector3(0.0, 10, -10).rotated(Vector3.RIGHT, entity.wall_rot.x).rotated(Vector3.FORWARD, PI *entity.input_listener.sticks[0]))
-#		entity.model_container.rotation.z = PI * -entity.input_listener.sticks[0]
+#		entity.set_velocity(Vector3(0.0, 10, -10).rotated(Vector3.RIGHT, entity.wall_rot.x).rotated(Vector3.FORWARD, PI *entity.input_listener.analogs[0]))
+#		entity.model_container.rotation.z = PI * -entity.input_listener.analogs[0]
 #		entity.model.rotation.x = entity.wall_rot.x - PI * 0.5
 #			entity.velocity.y = 10
 #		entity.apply_drag(delta)

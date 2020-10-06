@@ -35,7 +35,7 @@ func _exit_state():
 #			entity.model_container.rotation_degrees.y += delta * 270
 #
 #		else:
-#			var stick = entity.input_listener.sticks[0]
+#			var stick = entity.input_listener.analogs[0]
 #			if abs(stick) > 0.1:
 #				entity.model_container.rotation_degrees.y -= stick * delta * 270
 #

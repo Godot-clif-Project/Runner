@@ -12,16 +12,24 @@ func _enter_state():
 	entity.has_wall_run = true
 	entity.has_wall_run_side = true
 	entity.air_boosts_left = entity.MAX_AIR_BOOSTS
+	entity.model.rotation.z = 0.0
 	
 	if entity.falling_speed < -25:
 		entity.set_animation("jump_land", 0.0, 8.0)
-		
+#		entity.velocity *= 0.5
 	elif entity.input_listener.is_key_pressed(InputManager.RUN) or entity.input_listener.is_key_pressed(InputManager.UP):
 #			set_next_state("off_run_startup")
+		if entity.input_listener.is_key_pressed(InputManager.FIRE):
+			set_next_state("slide")
+			return
+			
+		entity.velocity *= 0.75
 		set_next_state("run")
-		
+		return
 	else:
+		entity.velocity *= 0.75
 		set_next_state("run_stop")
+		return
 ##	entity.set_animation("off_hi_r_light", 0, 16.0)
 #	entity.on_ground = false
 #	._enter_state()
@@ -42,7 +50,7 @@ func _process_state(delta):
 		entity.model_container.rotation_degrees.y += delta * turn_speed
 		
 	else:
-		var stick = entity.input_listener.sticks[0]
+		var stick = entity.input_listener.analogs[0]
 		if abs(stick) > 0.1:
 			entity.model_container.rotation_degrees.y -= stick * delta * turn_speed
 	

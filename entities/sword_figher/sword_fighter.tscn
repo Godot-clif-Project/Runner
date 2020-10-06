@@ -1,4 +1,4 @@
-[gd_scene load_steps=98 format=2]
+[gd_scene load_steps=99 format=2]
 
 [ext_resource path="res://entities/sword_figher/model/sword_fighter.glb" type="PackedScene" id=1]
 [ext_resource path="res://entities/sword_figher/sword_fighter.gd" type="Script" id=2]
@@ -17,11 +17,12 @@
 [ext_resource path="res://effects/dust/dust.material" type="Material" id=15]
 [ext_resource path="res://effects/dust/run_dust.tres" type="Material" id=16]
 [ext_resource path="res://entities/sword_figher/animation_events.gd" type="Script" id=17]
-[ext_resource path="res://entities/sword_figher/model/Action.anim" type="Animation" id=18]
+[ext_resource path="res://entities/sword_figher/model/temp/run_loop_b.anim" type="Animation" id=18]
+[ext_resource path="res://entities/sword_figher/model/temp/run_loop_c.anim" type="Animation" id=19]
 
 [sub_resource type="CapsuleShape" id=1]
-radius = 0.459803
-height = 0.564789
+radius = 0.375497
+height = 0.731386
 
 [sub_resource type="Animation" id=2]
 
@@ -1921,6 +1922,18 @@ length = 0.833333
 
 [sub_resource type="Animation" id=51]
 length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimationFlags:is_stringable")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
 [sub_resource type="Animation" id=52]
 length = 0.833333
@@ -2176,6 +2189,10 @@ anims/blend_animation_and_space = SubResource( 56 )
 [node name="sword_fighter" parent="ModelContainer" instance=ExtResource( 1 )]
 transform = Transform( -0.6, 0, -9.05975e-08, 0, 0.6, 0, 9.05975e-08, 0, -0.6, 0, 0, 0 )
 
+[node name="Skeleton" parent="ModelContainer/sword_fighter/Armature" index="0"]
+bones/10/bound_children = [ NodePath("BoneAttachment") ]
+bones/24/bound_children = [ NodePath("ThrowAttachment") ]
+
 [node name="Cube" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="0"]
 transform = Transform( 1, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1, 0, 0, 0 )
 material/0 = ExtResource( 12 )
@@ -2184,7 +2201,7 @@ material/0 = ExtResource( 12 )
 material/0 = ExtResource( 12 )
 
 [node name="BoneAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
-transform = Transform( 0.148071, 0.779578, 0.60855, -0.359877, 0.61562, -0.701071, -0.921175, -0.115194, 0.371708, -0.00436896, 0.753314, -0.257788 )
+transform = Transform( 1, 0, 0, 0, 0.998474, 0.0552152, 0, -0.0552152, 0.998474, -6.59474e-17, 2.24226, 7.43921e-09 )
 bone_name = "torso"
 
 [node name="Hurtbox" parent="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment" instance=ExtResource( 11 )]
@@ -2196,7 +2213,8 @@ bone_name = "throw_pos"
 
 [node name="AnimationPlayer" parent="ModelContainer/sword_fighter" index="1"]
 playback_process_mode = 0
-anims/Action = ExtResource( 18 )
+anims/run_loop_b = ExtResource( 18 )
+anims/run_loop_c = ExtResource( 19 )
 blend_times = [ "def_hi_light", "offensive_stance", 1.0, "off_hi_fierce", "offensive_stance", 0.5, "offensive_stance", "off_hi_fierce", 0.2 ]
 
 [node name="Hitbox" parent="ModelContainer" instance=ExtResource( 9 )]

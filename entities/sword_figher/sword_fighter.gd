@@ -54,8 +54,9 @@ var horizontal_speed = 0.0
 var falling_speed = 0.0
 var acceleration = 0.0
 var target_speed = 13.0
-var max_speed = 15.0
-var boost_speed = 50.0
+var max_speed = 20.0
+var min_speed = 5.0
+var boost_speed = 30.0
 
 var prev_speed = 0.0
 #var prev_velocity : Vector3
@@ -222,7 +223,7 @@ func _input(event):
 		
 #			if event.axis == 2:
 #				camera_pivot.rotation.y += event.axis_value * -0.1
-#				sticks[event.axis] = event.axis_value
+#				analogs[event.axis] = event.axis_value
 	if event.is_action_pressed("debug_reset"):
 		reset()
 
@@ -234,8 +235,8 @@ func _input(event):
 func _physics_process(delta):
 	fsm._process_current_state(delta, true)
 	
-	camera_pivot.rotation.y += input_listener.sticks[2] * -0.1
-	camera_pivot.rotation.x = clamp(camera_pivot.rotation.x + input_listener.sticks[3] * -0.1, -1.5, 0.9)
+	camera_pivot.rotation.y += input_listener.analogs[2] * -0.1
+	camera_pivot.rotation.x = clamp(camera_pivot.rotation.x + input_listener.analogs[3] * -0.1, -1.5, 0.9)
 	target_rotation = camera_pivot.rotation.y
 		
 	if not rigidbodies.empty():
@@ -310,7 +311,7 @@ func accelerate(speed : float, delta):
 #	velocity.x = velocity_xz.x
 #	velocity.z = velocity_xz.y
 	
-	model.rotation_degrees.z = clamp(Vector2(velocity.x, velocity.z).angle_to(Vector2(target_velocity.x, target_velocity.z)) * 45, -30, 30)
+	model.rotation_degrees.z = clamp(Vector2(velocity.x, velocity.z).angle_to(Vector2(target_velocity.x, target_velocity.z)) * 90, -30, 30)
 	
 func lerp_velocity(delta):
 #	var interpolated_vector = Vector2(velocity.x, velocity.z).linear_interpolate(target_velocity, delta * 4.5)

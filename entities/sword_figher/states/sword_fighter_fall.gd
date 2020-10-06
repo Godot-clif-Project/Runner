@@ -12,11 +12,13 @@ func _enter_state():
 #	entity.set_animation("off_hi_r_light", 0, 16.0)
 	entity.acceleration = 0.0
 	entity.on_ground = false
-	entity.model.rotation.z = 0.0
+#	entity.model.rotation.z = rand_range(-0.5, 0.5)
 	._enter_state()
 #
 ## Inverse of enter_state.
-##func _exit_state():
+func _exit_state():
+	entity.model.rotation.z = 0.0
+	._exit_state()
 ##	pass
 
 func _process_state(delta):
@@ -28,7 +30,7 @@ func _process_state(delta):
 		entity.model_container.rotation_degrees.y += delta * turn_speed
 		
 	else:
-		var stick = entity.input_listener.sticks[0]
+		var stick = entity.input_listener.analogs[0]
 		if abs(stick) > 0.1:
 			entity.model_container.rotation_degrees.y -= stick * delta * turn_speed
 	

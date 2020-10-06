@@ -9,7 +9,7 @@ var ang_momentum = 0.0
 var rot_lerp = 10
 var rot_drag = 1
 var rot_speed = 60
-var max_turn_speed = 8.0
+var max_turn_speed = 14.0
 var initial_rot = 0.0
 
 var speed = 0.0
@@ -24,6 +24,7 @@ func _enter_state():
 #	speed = entity.horizontal_speed
 	entity.get_node("ModelContainer/Particles2").emitting = true
 	initial_rot = entity.model_container.rotation_degrees.y
+	entity.velocity *= 1.25
 	._enter_state()
 	
 #	if entity.input_listener.is_key_pressed(InputManager.DOWN):
@@ -41,15 +42,15 @@ func _exit_state():
 var t = 0.0
 var prev_momentum = 0.0
 func _process_state(delta):
-	if entity.horizontal_speed < 2.0:
-		set_next_state("offensive_stance")
+	if entity.horizontal_speed < 10.0:
+		set_next_state("run_stop")
 		return
 		
 #	if entity.feet.get_overlapping_bodies().size() == 0:
 #		set_next_state("fall")
 #		return
 	
-	var stick = clamp(entity.input_listener.sticks[0] * 1, -1.0, 1.0)
+	var stick = clamp(entity.input_listener.analogs[0] * 1, -1.0, 1.0)
 	if abs(stick) > 0.1:
 		ang_momentum = lerp(ang_momentum, -stick * max_turn_speed, delta * rot_lerp)
 		
@@ -69,9 +70,9 @@ func _process_state(delta):
 #	prev_momentum = abs(ang_momentum)
 
 	if entity.input_listener.is_key_pressed(InputManager.BREAK):
-		entity.ground_drag = 5
+		entity.ground_drag = 8
 	else:
-		entity.ground_drag = 2
+		entity.ground_drag = 8
 	
 	if entity.is_on_wall():
 		var wall_normal = entity.get_slide_collision(0).normal

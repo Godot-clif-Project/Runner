@@ -157,19 +157,25 @@ func _received_input(key, state):
 
 func test_transition_by_input(key : int, key_state : int, valid_transitions : Array):
 	# Pass valid transitions into the array in order of lowest to highest priority.
-	if key_state == InputManager.RELEASED:
+#	if key_state == InputManager.RELEASED:
+#		match key as int:
+#			InputManager.JUMP:
+#				for t in valid_transitions:
+#					match t as String :
+##						"air_boost":
+##							return {"state" : t, "flag" : "is_stringable"}
+#						"jump":
+#							return {"state" : t, "flag" : null}
+##					if valid_transitions.has("jump"):
+##						return {"state" : "jump", "flag" : null}
+			
+	if key_state == InputManager.PRESSED:
 		match key as int:
 			InputManager.JUMP:
 				for t in valid_transitions:
 					match t as String :
-#						"air_boost":
-#							return {"state" : t, "flag" : "is_stringable"}
 						"jump":
 							return {"state" : t, "flag" : null}
-#					if valid_transitions.has("jump"):
-#						return {"state" : "jump", "flag" : null}
-			
-	if key_state == InputManager.PRESSED:
 		
 		match key as int:
 			InputManager.BREAK:
@@ -189,7 +195,8 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 				for t in valid_transitions:
 					match t as String :
 						"slide":
-							return {"state" : t, "flag" : null}
+							if entity.horizontal_speed > 10:
+								return {"state" : t, "flag" : null}
 			
 			InputManager.LIGHT:
 				for t in valid_transitions:

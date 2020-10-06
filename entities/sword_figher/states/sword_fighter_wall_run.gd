@@ -58,7 +58,7 @@ func _process_state(delta):
 		if entity.wall_has_ledge:
 			if entity.input_listener.is_key_pressed(InputManager.RUN) or entity.input_listener.is_key_pressed(InputManager.UP):
 				entity.jump_str = 20
-				entity.set_velocity(Vector3(0.0, 10, -2).rotated(Vector3.RIGHT, entity.wall_rot.x))
+				entity.set_velocity(Vector3(0.0, 5, -2).rotated(Vector3.RIGHT, entity.wall_rot.x))
 				set_next_state("jump")
 				return
 			set_next_state("ledge_climb")
@@ -67,9 +67,9 @@ func _process_state(delta):
 			set_next_state("fall")
 #			entity.velocity.y = 0
 	else:
-#			entity.input_listener.sticks[0]
-#			entity.set_velocity(Vector3(0.0, 10, -10).rotated(Vector3.RIGHT, entity.wall_rot.x).rotated(Vector3.FORWARD, PI *entity.input_listener.sticks[0]))
-#			entity.model_container.rotation.z = PI * -entity.input_listener.sticks[0]
+#			entity.input_listener.analogs[0]
+#			entity.set_velocity(Vector3(0.0, 10, -10).rotated(Vector3.RIGHT, entity.wall_rot.x).rotated(Vector3.FORWARD, PI *entity.input_listener.analogs[0]))
+#			entity.model_container.rotation.z = PI * -entity.input_listener.analogs[0]
 
 		speed -= delta * 30
 		if speed <= -10.0:

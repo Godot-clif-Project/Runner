@@ -41,11 +41,15 @@ export var simulate_input = false
 
 var mouse_motion : Vector2
 
-var sticks = {
+var analogs = {
 	0 : 0.0,
 	1 : 0.0,
 	2 : 0.0,
 	3 : 0.0,
+	4 : 0.0, 
+	5 : 0.0,
+	6 : 0.0,
+	7 : 0.0,
 }
 
 signal received_input(key, state)
@@ -61,16 +65,17 @@ func _physics_process(delta):
 		held_keys[key] += 1
 
 func _input(event):
+#	print(event.as_text())
+#	print(event.axis_value)
 	if enabled:
 		if event is InputEventMouseMotion:
 			mouse_motion = event.relative
 		elif event is InputEventJoypadMotion:
 #			if event.device == listen_to_pads[0]:
-			if event.axis < 4:
-				if abs(event.axis_value) > 0.05:
-					sticks[event.axis] = event.axis_value
-				else:
-					sticks[event.axis] = 0.0
+			if abs(event.axis_value) > 0.05:
+				analogs[event.axis] = event.axis_value
+			else:
+				analogs[event.axis] = 0.0
 
 func _received_input (pad, key, state):
 	if enabled and not get_tree().paused:
@@ -202,6 +207,10 @@ func get_analog_stick(analog_index):
 			return InputManager.pad_0_stick
 		if listen_to_pads[0] == 1:
 			return InputManager.pad_1_stick
+
+#func get_analog_trigger(trigger_index):
+#	print(Input.get_joy_axis(listen_to_pads[0], trigger_index))
+#	return Input.get_joy_axis(listen_to_pads[0], trigger_index)
 
 #func get_buffered_input(pad, key, time):
 #	# Returns true as soon as it finds a correct input in the buffer
