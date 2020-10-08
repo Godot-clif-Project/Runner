@@ -26,7 +26,9 @@ func _enter_state():
 	._enter_state()
 #
 ## Inverse of enter_state.
-##func _exit_state():
+func _exit_state():
+	entity.gravity_scale = 1.0
+	._exit_state()
 ##	pass
 
 var t = 0.0
@@ -43,8 +45,8 @@ func _process_state(delta):
 		
 	t_1 += delta
 	t = t_1 * t_1 * t_1 * t_1 * t_1
-	entity.velocity = (vector_to_target * 1.25 * initial_distance_to_target * (1 - t))
-	if t >= 0.5:
+	entity.velocity = (vector_to_target * 1.5 * initial_distance_to_target * (1 - t))
+	if t >= 0.8:
 		entity.velocity = (vector_to_target * 10)
 #		entity.jump_str = 10
 		set_next_state("jump")

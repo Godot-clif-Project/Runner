@@ -169,9 +169,6 @@ cast_to = Vector3( 0, -1.5, 0 )
 transform = Transform( 0.5, -0.866025, 1.41093e-07, 0, -1.62921e-07, -1, 0.866025, 0.5, -8.14603e-08, 0, 1.47052, 0 )
 cast_to = Vector3( 0, -1.5, 0 )
 
-[node name="Particles2" parent="SwordFighter2/ModelContainer" index="12"]
-emitting = false
-
 [node name="ParticlesJump" parent="SwordFighter2/ModelContainer" index="13"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.460834, 0 )
 

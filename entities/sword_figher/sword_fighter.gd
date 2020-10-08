@@ -69,11 +69,11 @@ var wall_side = 0
 var wall_rot : Vector3
 var wall_pos : Vector3
 
+var lock_on_target = null
 var tandem_entity = null
 
 var rigidbodies = []
 
-onready var lock_on_target : Spatial = get_node(target)
 onready var input_listener = $InputListener
 onready var model = $ModelContainer/sword_fighter
 onready var camera_pivot = $CameraPointPivot
@@ -126,17 +126,19 @@ func _ready():
 	$AnimationTree.active = true
 	ready = true
 	emit_signal("ready")
+	if lock_on_target == null:
+		lock_on_target = get_node(target)
 	
 func setup(side):
 	player_side = side
 	if player_side == 1:
 		transform = get_node("../Player1Pos").transform
-		connect("hp_changed", get_node("../Lifebar"), "_on_sword_fighter_hp_changed")
+		connect("hp_changed", get_node("../UI/Lifebar"), "_on_sword_fighter_hp_changed")
 		$ModelContainer/sword_fighter/Armature/Skeleton/Cube.material_override = PLAYER_1_MATERIAL
 		$ModelContainer/sword_fighter/Armature/Skeleton/sword.material_override = PLAYER_1_MATERIAL
 	else:
 		transform = get_node("../Player2Pos").transform
-		connect("hp_changed", get_node("../Lifebar2"), "_on_sword_fighter_hp_changed")
+		connect("hp_changed", get_node("../UI/Lifebar2"), "_on_sword_fighter_hp_changed")
 		$ModelContainer/sword_fighter/Armature/Skeleton/Cube.material_override = PLAYER_2_MATERIAL
 		$ModelContainer/sword_fighter/Armature/Skeleton/sword.material_override = PLAYER_2_MATERIAL
 

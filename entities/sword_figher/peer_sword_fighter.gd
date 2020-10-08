@@ -41,6 +41,7 @@ func _on_Hurtbox_received_hit(hit, hurtbox):
 		"name" : hit.name,
 		"damage" : hit.damage,
 		"knockback" : hit.knockback,
+		"position" : hit.position,
 		"direction" : hit.direction,
 		"guard_break" : hit.guard_break,
 		"grab" : hit.grab,
@@ -114,9 +115,9 @@ remote func update_animation(id, anim_name, seek_pos, blend_speed):
 	
 remote func update_hp(id, new_hp):
 	if player_side == 1:
-		get_node("../Lifebar")._on_sword_fighter_hp_changed(new_hp)
+		get_node("../UI/Lifebar")._on_sword_fighter_hp_changed(new_hp)
 	else:
-		get_node("../Lifebar2")._on_sword_fighter_hp_changed(new_hp)
+		get_node("../UI/Lifebar2")._on_sword_fighter_hp_changed(new_hp)
 
 remote func dealt_tandem_action(id, action, args):
 	if action == "rope_pull":

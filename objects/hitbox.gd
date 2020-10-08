@@ -96,7 +96,7 @@ func build_hit(area):
 #			if collided_hurtbox.ignore_hits_from_direction == new_hit.direction:
 #				return
 	
-#	new_hit.position = global_transform.origin
+	new_hit.position = collided_hurtbox.global_transform.origin
 #	new_hit.source = entity
 	
 	# Check hit

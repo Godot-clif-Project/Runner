@@ -5,7 +5,7 @@ var turn_speed = 270.0
 
 func get_animation_data():
 	# Name, seek and blend length 
-	return ["t_pose", 0.0, 16.0]
+	return ["fall", 0.0, 16.0]
 
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
@@ -113,6 +113,7 @@ func _animation_finished(anim_name):
 func get_possible_transitions():
 	return [
 		"air_boost",
+		"air_atk_r",
 #		"jump",
 		"tandem_rope_pull",
 		"tandem_launch_up",

@@ -1,10 +1,14 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=76 format=2]
 
 [ext_resource path="res://entities/sword_figher/peer_sword_fighter.gd" type="Script" id=1]
 [ext_resource path="res://entities/sword_figher/model/sword_fighter.glb" type="PackedScene" id=2]
 [ext_resource path="res://objects/hurtbox.tscn" type="PackedScene" id=3]
 [ext_resource path="res://entities/sword_figher/dust_trail.tscn" type="PackedScene" id=4]
 [ext_resource path="res://entities/sword_figher/model/rope/rope_export.dae" type="PackedScene" id=5]
+[ext_resource path="res://entities/sword_figher/animation_events.gd" type="Script" id=6]
+[ext_resource path="res://entities/sword_figher/model/temp/fall.anim" type="Animation" id=7]
+[ext_resource path="res://entities/sword_figher/model/temp/air_atk_r.anim" type="Animation" id=8]
+[ext_resource path="res://entities/sword_figher/model/temp/run_loop_c.anim" type="Animation" id=9]
 
 [sub_resource type="AnimationNodeBlend2" id=1]
 
@@ -271,8 +275,112 @@ tracks/4/keys = {
 "values": [  ]
 }
 
+[sub_resource type="Animation" id=64]
+length = 0.483333
+
+[sub_resource type="Animation" id=18]
+length = 1.08333
+
+[sub_resource type="Animation" id=19]
+length = 1.5
+
+[sub_resource type="Animation" id=20]
+length = 1.38333
+
+[sub_resource type="Animation" id=21]
+length = 0.001
+
+[sub_resource type="Animation" id=22]
+length = 0.001
+
+[sub_resource type="Animation" id=23]
+length = 0.683333
+
+[sub_resource type="Animation" id=24]
+length = 0.5
+
+[sub_resource type="Animation" id=25]
+length = 0.5
+
+[sub_resource type="Animation" id=26]
+length = 0.5
+
+[sub_resource type="Animation" id=27]
+length = 0.5
+
 [sub_resource type="Animation" id=15]
 resource_name = "def_taunt"
+
+[sub_resource type="Animation" id=28]
+
+[sub_resource type="Animation" id=65]
+length = 0.966667
+
+[sub_resource type="Animation" id=29]
+length = 0.7
+
+[sub_resource type="Animation" id=30]
+length = 2.26667
+
+[sub_resource type="Animation" id=31]
+length = 0.001
+
+[sub_resource type="Animation" id=32]
+length = 1.33333
+
+[sub_resource type="Animation" id=33]
+length = 0.001
+
+[sub_resource type="Animation" id=34]
+length = 0.001
+
+[sub_resource type="Animation" id=35]
+length = 0.833333
+
+[sub_resource type="Animation" id=36]
+length = 0.383333
+
+[sub_resource type="Animation" id=37]
+length = 1.16667
+
+[sub_resource type="Animation" id=38]
+length = 0.916667
+
+[sub_resource type="Animation" id=39]
+length = 0.666667
+
+[sub_resource type="Animation" id=40]
+length = 0.666667
+
+[sub_resource type="Animation" id=41]
+
+[sub_resource type="Animation" id=42]
+length = 0.333333
+
+[sub_resource type="Animation" id=43]
+length = 0.583333
+
+[sub_resource type="Animation" id=44]
+length = 1.93333
+
+[sub_resource type="Animation" id=45]
+length = 2.25
+
+[sub_resource type="Animation" id=46]
+length = 0.833333
+
+[sub_resource type="Animation" id=47]
+length = 1.33333
+
+[sub_resource type="Animation" id=48]
+
+[sub_resource type="Animation" id=49]
+length = 0.833333
+
+[sub_resource type="Animation" id=50]
+length = 0.833333
+
+[sub_resource type="Animation" id=51]
 
 [sub_resource type="Animation" id=16]
 length = 2.18333
@@ -295,6 +403,45 @@ tracks/0/keys = {
 } ]
 }
 
+[sub_resource type="Animation" id=52]
+length = 0.25
+
+[sub_resource type="Animation" id=53]
+length = 0.166667
+
+[sub_resource type="Animation" id=54]
+length = 0.516667
+
+[sub_resource type="Animation" id=55]
+length = 0.516667
+
+[sub_resource type="Animation" id=56]
+length = 0.933333
+
+[sub_resource type="Animation" id=57]
+length = 0.833333
+
+[sub_resource type="Animation" id=66]
+length = 0.666667
+
+[sub_resource type="Animation" id=58]
+length = 0.45
+
+[sub_resource type="Animation" id=59]
+length = 0.416667
+
+[sub_resource type="Animation" id=60]
+length = 0.2
+
+[sub_resource type="Animation" id=61]
+length = 0.666667
+
+[sub_resource type="Animation" id=62]
+length = 0.833333
+
+[sub_resource type="Animation" id=63]
+length = 0.001
+
 [sub_resource type="CapsuleShape" id=17]
 radius = 0.459803
 height = 0.564789
@@ -309,7 +456,7 @@ tree_root = SubResource( 8 )
 anim_player = NodePath("../ModelContainer/sword_fighter/AnimationPlayer")
 process_mode = 0
 root_motion_track = NodePath("Armature/Skeleton:root")
-parameters/1_and_-1/blend_amount = 1.0
+parameters/1_and_-1/blend_amount = 0.2
 parameters/Seek/seek_position = -1.0
 parameters/TimeScale/scale = 1.0
 parameters/animation_-1_seek/seek_position = -1.0
@@ -324,29 +471,80 @@ anims/off_hi_heavy = SubResource( 13 )
 anims/walk = SubResource( 14 )
 
 [node name="AnimationEvents" type="AnimationPlayer" parent="."]
+anims/air_atk_r = SubResource( 64 )
+anims/air_boost = SubResource( 18 )
+anims/air_rope = SubResource( 19 )
+anims/dangle = SubResource( 20 )
+anims/def_block_hi = SubResource( 21 )
+anims/def_block_low = SubResource( 22 )
+anims/def_hi_light = SubResource( 23 )
+anims/def_step_b = SubResource( 24 )
+anims/def_step_f = SubResource( 25 )
+anims/def_step_l = SubResource( 26 )
+anims/def_step_r = SubResource( 27 )
 anims/def_taunt = SubResource( 15 )
+anims/defensive_stance = SubResource( 28 )
+anims/fall = SubResource( 65 )
+anims/jump_land = SubResource( 29 )
+anims/jump_start = SubResource( 30 )
+anims/knocked_down = SubResource( 31 )
+anims/off_block_break = SubResource( 32 )
+anims/off_block_hi = SubResource( 33 )
+anims/off_block_low = SubResource( 34 )
+anims/off_h_r_0001 = SubResource( 35 )
+anims/off_h_r_1 = SubResource( 36 )
+anims/off_h_r_heavy = SubResource( 37 )
+anims/off_hi_fierce = SubResource( 38 )
+anims/off_hi_l_light = SubResource( 39 )
+anims/off_hi_r_light = SubResource( 40 )
+anims/off_kick = SubResource( 41 )
+anims/off_run_startup = SubResource( 42 )
+anims/off_run_stop = SubResource( 43 )
+anims/off_taunt = SubResource( 44 )
+anims/off_throw_f = SubResource( 45 )
+anims/off_throw_f_startup = SubResource( 46 )
+anims/off_walk_back = SubResource( 47 )
+anims/off_walk_forward = SubResource( 48 )
+anims/off_walk_left = SubResource( 49 )
+anims/off_walk_right = SubResource( 50 )
+anims/offensive_stance = SubResource( 51 )
 anims/receive_off_throw_f = SubResource( 16 )
+anims/run_break = SubResource( 52 )
+anims/run_break_loop = SubResource( 53 )
+anims/run_bump_l = SubResource( 54 )
+anims/run_bump_r = SubResource( 55 )
+anims/run_loop = SubResource( 56 )
+anims/run_loop_2 = SubResource( 57 )
+anims/run_loop_c = SubResource( 66 )
+anims/run_stop = SubResource( 58 )
+anims/run_stop_dash = SubResource( 59 )
+anims/run_stop_loop = SubResource( 60 )
+anims/stance_def_to_off = SubResource( 61 )
+anims/stance_off_to_def = SubResource( 62 )
+anims/t_pose = SubResource( 63 )
+script = ExtResource( 6 )
 
 [node name="ModelContainer" type="Spatial" parent="."]
 
 [node name="sword_fighter" parent="ModelContainer" instance=ExtResource( 2 )]
 transform = Transform( -0.6, 0, -9.05975e-08, 0, 0.6, 0, 9.05975e-08, 0, -0.6, 0, 0, 0 )
 
-[node name="Skeleton" parent="ModelContainer/sword_fighter/Armature" index="0"]
-bones/2/bound_children = [ NodePath("ThrowAttachment") ]
-bones/12/bound_children = [ NodePath("BoneAttachment") ]
-
 [node name="BoneAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
-transform = Transform( 1, 0, 0, 0, 0.998474, 0.0552152, 0, -0.0552152, 0.998474, -6.59474e-17, 2.24226, 0 )
+transform = Transform( 1, 0, 0, 0, 0.998474, 0.0552152, 0, -0.0552152, 0.998474, -6.59474e-17, 2.24226, 7.43921e-09 )
 bone_name = "torso"
 
 [node name="Hurtbox" parent="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment" instance=ExtResource( 3 )]
 transform = Transform( 0.547956, -2.98023e-08, 5.21542e-08, 2.98023e-08, 0.547956, 1.49012e-07, -5.21541e-08, -1.49012e-07, 0.547957, 5.96046e-08, 0.25754, -1.19209e-07 )
 visible = false
+spawn_hit_effect = true
 
 [node name="ThrowAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="3"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2 )
 bone_name = "throw_pos"
+
+[node name="AnimationPlayer" parent="ModelContainer/sword_fighter" index="1"]
+anims/air_atk_r = ExtResource( 8 )
+anims/fall = ExtResource( 7 )
+anims/run_loop_c = ExtResource( 9 )
 
 [node name="Particles2" parent="ModelContainer" instance=ExtResource( 4 )]
 

@@ -1,6 +1,6 @@
 extends Control
 
-const STAGE = preload("res://stages/test_stage.tscn")
+const STAGE = preload("res://stages/test_stage_3.tscn")
 
 onready var label = $Label
 

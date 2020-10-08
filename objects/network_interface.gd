@@ -23,17 +23,19 @@ func _ready():
 			player_entity.connect("animation_changed", self, "player_entity_animation_changed")
 			player_entity.connect("dealt_tandem_action", self, "player_entity_dealt_tandem_action")
 #			player_entity.connect("dealt_hit", self, "player_entity_dealt_hit")
+
+			player_entity.lock_on_target = peer_entity
 			
 			if get_tree().is_network_server():
 				player_entity.setup(1)
 				peer_entity.setup(2)
-				get_node("../PlayerName1").text = NetworkManager.my_info["name"]
-				get_node("../PlayerName2").text = NetworkManager.peers[NetworkManager.peers.keys()[0]]["name"]
+				get_node("../UI/PlayerName1").text = NetworkManager.my_info["name"]
+				get_node("../UI/PlayerName2").text = NetworkManager.peers[NetworkManager.peers.keys()[0]]["name"]
 			else:
 				player_entity.setup(2)
 				peer_entity.setup(1)
-				get_node("../PlayerName1").text = NetworkManager.peers[NetworkManager.peers.keys()[0]]["name"]
-				get_node("../PlayerName2").text = NetworkManager.my_info["name"]
+				get_node("../UI/PlayerName1").text = NetworkManager.peers[NetworkManager.peers.keys()[0]]["name"]
+				get_node("../UI/PlayerName2").text = NetworkManager.my_info["name"]
 	
 func peer_disconnected(id):
 	enabled = false
@@ -82,7 +84,10 @@ remote func receive_hit_from_peer(id, hit_data):
 	var new_hit = Hit.new(Hit.INIT_TYPE.DEFAULT)
 	for key in hit_data:
 		new_hit.set(key, hit_data[key])
-	player_entity._receive_hit(new_hit)
+#	player_entity._receive_hit(new_hit)
+
+	# QUACKEADA for hit effects to appear:
+	player_entity.get_node("ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment/Hurtbox").receive_hit(new_hit)
 
 remote func receive_throw_from_peer(pos, rot, _throwing_entity):
 	player_entity.receive_throw(pos, rot, peer_entity)
@@ -96,14 +101,14 @@ remotesync func player_ready():
 	get_tree().paused = false
 
 remotesync func round_end(winner):
-	get_node("../RoundEnd").visible = true
-	get_node("../RoundEnd/Name").text = winner
-	get_node("../RoundEnd/Timer").start()
+	get_node("../UI/RoundEnd").visible = true
+	get_node("../UI/RoundEnd/Name").text = winner
+	get_node("../UI/RoundEnd/Timer").start()
 	get_tree().paused = true
 	pass
 
 remotesync func reset():
-	get_node("../RoundEnd").visible = false
+	get_node("../UI/RoundEnd").visible = false
 	player_entity.reset()
 	peer_entity.reset()
 

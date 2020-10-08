@@ -10,7 +10,7 @@ signal ip_address_invalid(ip)
 signal peer_registered()
 
 const DEFAULT_PORT = 4561 #Don't use under 1024
-const NETWORK_STAGE = preload("res://stages/network_stage.tscn")
+const NETWORK_STAGE = preload("res://stages/test_stage_3.tscn")
 
 var my_id = 1
 var peers = {}

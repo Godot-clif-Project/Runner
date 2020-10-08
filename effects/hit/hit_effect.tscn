@@ -1,0 +1,90 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://effects/hit/hexagon_2.png" type="Texture" id=1]
+[ext_resource path="res://effects/hit/hexagon.png" type="Texture" id=2]
+[ext_resource path="res://effects/hit/hit_effect.gd" type="Script" id=3]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.126016, 0.361789, 1 )
+colors = PoolColorArray( 1, 0.945313, 0.78125, 1, 0.984375, 0.808637, 0.119202, 1, 1, 0.140625, 0, 1, 1, 0.14902, 0.00784314, 0 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0.0254545, 1 ), 0.0, -8.0819, 0, 0, Vector2( 0.214545, 0.404095 ), -0.436706, -0.436706, 0, 0, Vector2( 1, 0.292026 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+gravity = Vector3( 0, 0, 0 )
+angle = 360.0
+angle_random = 1.0
+scale = 4.5
+scale_curve = SubResource( 4 )
+color_ramp = SubResource( 2 )
+
+[sub_resource type="SpatialMaterial" id=6]
+flags_transparent = true
+vertex_color_use_as_albedo = true
+params_blend_mode = 1
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_texture = ExtResource( 1 )
+
+[sub_resource type="QuadMesh" id=7]
+material = SubResource( 6 )
+size = Vector2( 0.1, 2 )
+
+[sub_resource type="Curve" id=8]
+_data = [ Vector2( 0.0254545, 1 ), 0.0, -3.30011, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=9]
+curve = SubResource( 8 )
+
+[sub_resource type="ParticlesMaterial" id=10]
+flag_align_y = true
+direction = Vector3( 0, 0, 0 )
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 10.0
+initial_velocity_random = 0.4
+damping = 33.1
+scale = 2.0
+scale_random = 0.5
+scale_curve = SubResource( 9 )
+color_ramp = SubResource( 2 )
+
+[sub_resource type="SpatialMaterial" id=11]
+flags_transparent = true
+vertex_color_use_as_albedo = true
+params_blend_mode = 1
+params_cull_mode = 2
+albedo_texture = ExtResource( 2 )
+
+[sub_resource type="QuadMesh" id=12]
+material = SubResource( 11 )
+size = Vector2( 0.5, 2 )
+
+[node name="HitEffect" type="Spatial"]
+script = ExtResource( 3 )
+
+[node name="Particles" type="Particles" parent="."]
+amount = 1
+lifetime = 0.5
+explosiveness = 1.0
+process_material = SubResource( 5 )
+draw_pass_1 = SubResource( 7 )
+
+[node name="Particles2" type="Particles" parent="."]
+amount = 10
+lifetime = 0.5
+explosiveness = 1.0
+process_material = SubResource( 10 )
+draw_pass_1 = SubResource( 12 )
+
+[node name="Timer" type="Timer" parent="."]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

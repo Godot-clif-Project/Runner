@@ -26,7 +26,9 @@ func _exit_state():
 	entity.camera_pivot.rotation.z = 0.0
 	entity.model_container.transform = entity.model_container.transform.orthonormalized()
 	entity.camera_pivot.transform = entity.camera_pivot.transform.orthonormalized()
-#
+	entity.gravity_scale = 1.0
+	._exit_state()
+
 func _process_state(delta):
 	entity.model_container.transform.basis = entity.model_container.global_transform.looking_at(entity.lock_on_target.translation, Vector3.UP).basis
 	entity.apply_gravity(delta)
