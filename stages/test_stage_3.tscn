@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://entities/sword_figher/sword_fighter.tscn" type="PackedScene" id=1]
 [ext_resource path="res://objects/interpolated_camera.tscn" type="PackedScene" id=2]
@@ -20,13 +20,16 @@
 [ext_resource path="res://objects/network_interface.tscn" type="PackedScene" id=19]
 [ext_resource path="res://ui/ui.tscn" type="PackedScene" id=20]
 
-[sub_resource type="SpatialMaterial" id=11]
-flags_vertex_lighting = true
-albedo_color = Color( 0.768627, 0.666667, 0.109804, 1 )
-
 [sub_resource type="CubeMesh" id=1]
 
 [sub_resource type="BoxShape" id=2]
+
+[sub_resource type="CylinderMesh" id=3]
+material = ExtResource( 13 )
+radial_segments = 16
+rings = 1
+
+[sub_resource type="CylinderShape" id=4]
 
 [sub_resource type="CylinderMesh" id=5]
 material = ExtResource( 13 )
@@ -35,14 +38,7 @@ rings = 1
 
 [sub_resource type="CylinderShape" id=6]
 
-[sub_resource type="CylinderMesh" id=7]
-material = ExtResource( 13 )
-radial_segments = 16
-rings = 1
-
-[sub_resource type="CylinderShape" id=8]
-
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=7]
 resource_name = "New Anim"
 length = 44.0
 loop = true
@@ -53,17 +49,17 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 2, 3.6, 4.8, 6.2, 7.9, 9.9, 10.9, 12.7, 14.2, 15.9, 17, 18.8, 20.5, 21.9, 23.5, 25.3, 26.4, 28.1, 29.6, 31.4, 32.4, 34.4, 36.1, 37.5, 38.7, 40.3, 42.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 2, 3.6, 4.8, 6.2, 7.9, 9.9, 10.9, 12.7, 14.2, 15.9, 17, 18.8, 20.5, 21.9, 23.5, 25.3, 26.4, 28.1, 29.6, 31.4, 32.4, 34.4, 36.1, 37.5, 38.7, 40.3, 42.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector3( 5.75836, 1.26516, -9.02975 ), Vector3( 6.20119, 1.26516, -24.2768 ), Vector3( -15.2389, 1.26516, -23.5752 ), Vector3( -18.196, 1.26516, -33.1777 ), Vector3( 16.8517, 1.26516, -40.8151 ), Vector3( 22.0275, 1.26516, -64.2631 ), Vector3( 18.795, 1.26516, -72.7194 ), Vector3( -5.18623, 1.26516, -71.5659 ), Vector3( -8.8, 1.26516, -90.5054 ), Vector3( 21.4401, 1.26516, -100.074 ), Vector3( 21.4603, 3.65133, -114.189 ), Vector3( 21.2415, 1.26516, -140.652 ), Vector3( -7.56524, 1.26516, -138.412 ), Vector3( -7.56524, 1.26516, -138.412 ), Vector3( 21.2415, 1.26516, -140.652 ), Vector3( 21.4603, 3.65133, -114.189 ), Vector3( 21.4401, 1.26516, -100.074 ), Vector3( -8.8, 1.26516, -90.5054 ), Vector3( -5.18623, 1.26516, -71.5659 ), Vector3( 18.795, 1.26516, -72.7194 ), Vector3( 22.0275, 1.26516, -64.2631 ), Vector3( 16.8517, 1.26516, -40.8151 ), Vector3( -18.196, 1.26516, -33.1777 ), Vector3( -15.2389, 1.26516, -23.5752 ), Vector3( 6.20119, 1.26516, -24.2768 ), Vector3( 5.75836, 1.26516, -9.02975 ), Vector3( 0, 0, 0 ) ]
+"values": [ Vector3( 2.64573, 1.74664, -4.14881 ), Vector3( 5.75836, 1.26516, -9.02975 ), Vector3( 6.20119, 1.26516, -24.2768 ), Vector3( -15.2389, 1.26516, -23.5752 ), Vector3( -18.196, 1.26516, -33.1777 ), Vector3( 16.8517, 1.26516, -40.8151 ), Vector3( 22.0275, 1.26516, -64.2631 ), Vector3( 18.795, 1.26516, -72.7194 ), Vector3( -5.18623, 1.26516, -71.5659 ), Vector3( -8.8, 1.26516, -90.5054 ), Vector3( 21.4401, 1.26516, -100.074 ), Vector3( 21.4603, 3.65133, -114.189 ), Vector3( 21.2415, 1.26516, -140.652 ), Vector3( -7.56524, 1.26516, -138.412 ), Vector3( -7.56524, 1.26516, -138.412 ), Vector3( 21.2415, 1.26516, -140.652 ), Vector3( 21.4603, 3.65133, -114.189 ), Vector3( 21.4401, 1.26516, -100.074 ), Vector3( -8.8, 1.26516, -90.5054 ), Vector3( -5.18623, 1.26516, -71.5659 ), Vector3( 18.795, 1.26516, -72.7194 ), Vector3( 22.0275, 1.26516, -64.2631 ), Vector3( 16.8517, 1.26516, -40.8151 ), Vector3( -18.196, 1.26516, -33.1777 ), Vector3( -15.2389, 1.26516, -23.5752 ), Vector3( 6.20119, 1.26516, -24.2768 ), Vector3( 5.75836, 1.26516, -9.02975 ), Vector3( 2.64573, 1.74664, -4.14881 ) ]
 }
 
-[sub_resource type="SphereMesh" id=10]
+[sub_resource type="SphereMesh" id=8]
 
-[sub_resource type="CubeMesh" id=3]
+[sub_resource type="CubeMesh" id=9]
 
-[sub_resource type="BoxShape" id=4]
+[sub_resource type="BoxShape" id=10]
 
 [node name="Stage" type="Spatial"]
 script = ExtResource( 16 )
@@ -97,19 +93,6 @@ ground_drag = 1
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.07425, 0, 0 )
 target = NodePath("../SwordFighter")
 ground_drag = 1
-
-[node name="Skeleton" parent="SwordFighter2/ModelContainer/sword_fighter/Armature" index="0"]
-bones/7/bound_children = [ NodePath("BoneAttachment") ]
-bones/23/bound_children = [ NodePath("ThrowAttachment") ]
-
-[node name="Cube" parent="SwordFighter2/ModelContainer/sword_fighter/Armature/Skeleton" index="0"]
-material/0 = SubResource( 11 )
-
-[node name="sword" parent="SwordFighter2/ModelContainer/sword_fighter/Armature/Skeleton" index="1"]
-material/0 = SubResource( 11 )
-
-[node name="BoneAttachment" parent="SwordFighter2/ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
-transform = Transform( 1, 0, 0, 0, 0.998474, 0.0552152, 0, -0.0552152, 0.998474, -6.59474e-17, 2.24226, 7.43921e-09 )
 
 [node name="InterpolatedCamera" parent="." instance=ExtResource( 2 )]
 transform = Transform( -0.00497429, -0.459186, 0.888326, 0, 0.888337, 0.459192, -0.999988, 0.00228415, -0.00441884, 5.30534, 3.75645, -0.193563 )
@@ -239,11 +222,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder"]
-mesh = SubResource( 5 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder"]
-shape = SubResource( 6 )
+shape = SubResource( 4 )
 
 [node name="Cylinder10" type="StaticBody" parent="Bounds"]
 transform = Transform( -3.12249e-07, -15.4193, 2.39744, 6.6984, -7.21813e-07, 1.08544e-07, 3.44198e-09, 5.91026, 6.25466, -15.1084, 3.13779, -240.665 )
@@ -252,11 +235,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder10"]
-mesh = SubResource( 5 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder10"]
-shape = SubResource( 6 )
+shape = SubResource( 4 )
 
 [node name="Cylinder13" type="StaticBody" parent="Bounds"]
 transform = Transform( -4.07548e-07, -20.1252, 3.12914, 8.74276, -9.42112e-07, 1.41672e-07, 4.49247e-09, 7.71409, 8.1636, -10.236, 3.13779, -268.351 )
@@ -265,11 +248,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder13"]
-mesh = SubResource( 5 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder13"]
-shape = SubResource( 6 )
+shape = SubResource( 4 )
 
 [node name="Cylinder14" type="StaticBody" parent="Bounds"]
 transform = Transform( -4.07548e-07, -20.1252, 3.12914, 8.74276, -9.42112e-07, 1.41672e-07, 4.49247e-09, 7.71409, 8.1636, 9.28903, 3.13779, -303.755 )
@@ -278,11 +261,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder14"]
-mesh = SubResource( 5 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder14"]
-shape = SubResource( 6 )
+shape = SubResource( 4 )
 
 [node name="Cylinder15" type="StaticBody" parent="Bounds"]
 transform = Transform( -4.07548e-07, -20.1252, 3.12914, 8.74276, -9.42112e-07, 1.41672e-07, 4.49247e-09, 7.71409, 8.1636, -39.291, 3.13779, -285.934 )
@@ -291,11 +274,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder15"]
-mesh = SubResource( 5 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder15"]
-shape = SubResource( 6 )
+shape = SubResource( 4 )
 
 [node name="Cylinder16" type="StaticBody" parent="Bounds"]
 transform = Transform( -4.11969e-07, -19.8644, 3.39233, 8.74276, -9.42111e-07, 1.53995e-07, 6.35385e-09, 8.36289, 8.05779, -7.25473, -5.99991, -313.117 )
@@ -304,11 +287,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder16"]
-mesh = SubResource( 5 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder16"]
-shape = SubResource( 6 )
+shape = SubResource( 4 )
 
 [node name="Cylinder19" type="StaticBody" parent="Bounds"]
 transform = Transform( 2.41876, -14.3581, 6.05506, 8.1914, 7.48254, -0.352636, -1.86721, 14.2263, 6.29665, -17.4263, 3.72558, -353.566 )
@@ -317,11 +300,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder19"]
-mesh = SubResource( 5 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder19"]
-shape = SubResource( 6 )
+shape = SubResource( 4 )
 
 [node name="Cylinder20" type="StaticBody" parent="Bounds"]
 transform = Transform( -4.44509e-07, -19.4914, 6.10357, 9.98831, -1.07633e-06, 1.61855e-07, 1.38675e-07, 15.0468, 7.90649, 28.942, 1.96995, -365.58 )
@@ -330,11 +313,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder20"]
-mesh = SubResource( 5 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder20"]
-shape = SubResource( 6 )
+shape = SubResource( 4 )
 
 [node name="Cylinder21" type="StaticBody" parent="Bounds"]
 transform = Transform( -3.89079e-07, -17.0608, 5.34245, 8.74276, -9.42112e-07, 1.41672e-07, 1.21382e-07, 13.1704, 6.92055, 21.859, -3.25615, -338.443 )
@@ -343,11 +326,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder21"]
-mesh = SubResource( 5 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder21"]
-shape = SubResource( 6 )
+shape = SubResource( 4 )
 
 [node name="Cylinder22" type="StaticBody" parent="Bounds"]
 transform = Transform( -3.89079e-07, -17.0608, 5.34245, 8.74276, -9.42112e-07, 1.41672e-07, 1.21382e-07, 13.1704, 6.92055, -33.01, 0.256375, -324.386 )
@@ -356,11 +339,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder22"]
-mesh = SubResource( 5 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder22"]
-shape = SubResource( 6 )
+shape = SubResource( 4 )
 
 [node name="Cylinder17" type="StaticBody" parent="Bounds"]
 transform = Transform( -7.78482, -9.45585, -1.05835, 3.86409, -19.3336, -8.25847e-08, -0.94937, -1.15315, 8.67846, -19.6002, 4.19956, -321.457 )
@@ -369,11 +352,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder17"]
-mesh = SubResource( 5 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder17"]
-shape = SubResource( 6 )
+shape = SubResource( 4 )
 
 [node name="Cylinder18" type="StaticBody" parent="Bounds"]
 transform = Transform( 7.62807, 9.26545, 2.03042, 3.86409, -19.3336, -8.25847e-08, 1.82134, 2.21229, -8.50372, 13.4992, 4.19956, -322.313 )
@@ -382,11 +365,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder18"]
-mesh = SubResource( 5 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder18"]
-shape = SubResource( 6 )
+shape = SubResource( 4 )
 
 [node name="Cylinder12" type="StaticBody" parent="Bounds"]
 transform = Transform( -0.107936, 0.766689, -6.6903, 6.32812, 5.4143, 1.16726e-07, 2.1936, -15.5815, -0.329198, -15.5526, 6.87457, -231.637 )
@@ -395,11 +378,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder12"]
-mesh = SubResource( 5 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder12"]
-shape = SubResource( 6 )
+shape = SubResource( 4 )
 
 [node name="Cylinder11" type="StaticBody" parent="Bounds"]
 transform = Transform( 2.94739, -13.4736, -2.51208, 5.89574, 7.83809, -7.59834e-08, 1.19238, -5.45079, 6.20951, 15.1059, 7.82625, -240.174 )
@@ -408,11 +391,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder11"]
-mesh = SubResource( 5 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder11"]
-shape = SubResource( 6 )
+shape = SubResource( 4 )
 
 [node name="Cylinder5" type="StaticBody" parent="Bounds"]
 transform = Transform( -3.55609, -6.30339, 0.237515, 2.48464, -9.03706, 0.265898, 0.0425485, 0.902036, 4.32364, -19.9987, 2.98297, -11.3473 )
@@ -421,11 +404,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder5"]
-mesh = SubResource( 7 )
+mesh = SubResource( 5 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder5"]
-shape = SubResource( 8 )
+shape = SubResource( 6 )
 
 [node name="Cylinder7" type="StaticBody" parent="Bounds"]
 transform = Transform( -3.55609, -6.30339, 0.237515, 2.48464, -9.03706, 0.265898, 0.0425485, 0.902036, 4.32364, -18.9464, 11.6754, -45.8558 )
@@ -434,11 +417,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder7"]
-mesh = SubResource( 7 )
+mesh = SubResource( 5 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder7"]
-shape = SubResource( 8 )
+shape = SubResource( 6 )
 
 [node name="Cylinder26" type="StaticBody" parent="Bounds"]
 transform = Transform( -7.93704e-08, -6.74427, 0.449268, 1.86925, -3.03704e-07, 2.41525e-10, 1.94037e-08, 1.66992, 1.81445, 17.6997, -0.312617, -113.894 )
@@ -447,11 +430,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder26"]
-mesh = SubResource( 7 )
+mesh = SubResource( 5 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder26"]
-shape = SubResource( 8 )
+shape = SubResource( 6 )
 
 [node name="Cylinder27" type="StaticBody" parent="Bounds"]
 transform = Transform( 1.19068, -0.0827655, 0.160101, 0.0284381, 3.52794, 4.34994e-10, -0.160056, 0.0111257, 1.19101, -16.5141, 10.4589, -112.541 )
@@ -460,11 +443,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder27"]
-mesh = SubResource( 7 )
+mesh = SubResource( 5 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder27"]
-shape = SubResource( 8 )
+shape = SubResource( 6 )
 
 [node name="Cylinder28" type="StaticBody" parent="Bounds"]
 transform = Transform( 1.19068, -0.0827655, 0.160101, 0.0284381, 3.52794, 4.34994e-10, -0.160056, 0.0111257, 1.19101, -17.2502, 19.309, -91.6864 )
@@ -473,11 +456,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder28"]
-mesh = SubResource( 7 )
+mesh = SubResource( 5 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder28"]
-shape = SubResource( 8 )
+shape = SubResource( 6 )
 
 [node name="Cylinder29" type="StaticBody" parent="Bounds"]
 transform = Transform( 1.19068, -0.0827655, 0.160101, 0.0284381, 3.52794, 4.34994e-10, -0.160056, 0.0111257, 1.19101, -11.8706, 25.1536, -77.278 )
@@ -486,11 +469,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder29"]
-mesh = SubResource( 7 )
+mesh = SubResource( 5 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder29"]
-shape = SubResource( 8 )
+shape = SubResource( 6 )
 
 [node name="Cylinder25" type="StaticBody" parent="Bounds"]
 transform = Transform( -1.79212e-07, -12.0308, 1.01441, 4.22063, -5.41761e-07, 5.45368e-10, 4.38121e-08, 2.97888, 4.0969, 6.70638, -0.803627, -64.3062 )
@@ -499,11 +482,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder25"]
-mesh = SubResource( 7 )
+mesh = SubResource( 5 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder25"]
-shape = SubResource( 8 )
+shape = SubResource( 6 )
 
 [node name="Cylinder3" type="StaticBody" parent="Bounds"]
 transform = Transform( -1.23484e-07, -8.28964, 0.698969, 2.90817, -3.73294e-07, 3.75779e-10, 3.01882e-08, 2.05256, 2.82292, -3.48552, 1.9995, -28.9743 )
@@ -512,11 +495,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder3"]
-mesh = SubResource( 7 )
+mesh = SubResource( 5 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder3"]
-shape = SubResource( 8 )
+shape = SubResource( 6 )
 
 [node name="Cylinder23" type="StaticBody" parent="Bounds"]
 transform = Transform( -4.04018, -8.76539, 0.595567, 5.03901, -7.08799, 7.80982e-08, 0.373516, 0.810364, 6.44201, 17.8416, 2.64748, -32.9411 )
@@ -525,11 +508,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder23"]
-mesh = SubResource( 7 )
+mesh = SubResource( 5 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder23"]
-shape = SubResource( 8 )
+shape = SubResource( 6 )
 
 [node name="Cylinder4" type="StaticBody" parent="Bounds"]
 transform = Transform( -4.19208e-07, -13.7202, 3.84626, 8.7452, -6.67786e-07, 1.72573e-07, 1.31397e-08, 6.71911, 7.85397, -15.9442, -2.51897, -45.8919 )
@@ -538,11 +521,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder4"]
-mesh = SubResource( 7 )
+mesh = SubResource( 5 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder4"]
-shape = SubResource( 8 )
+shape = SubResource( 6 )
 
 [node name="Cylinder6" type="StaticBody" parent="Bounds"]
 transform = Transform( -4.15682e-07, -14.6367, 2.50542, 8.7452, -6.67786e-07, 1.72573e-07, -5.58235e-08, 4.37678, 8.37863, 12.2598, -2.51897, -86.0675 )
@@ -551,11 +534,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder6"]
-mesh = SubResource( 7 )
+mesh = SubResource( 5 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder6"]
-shape = SubResource( 8 )
+shape = SubResource( 6 )
 
 [node name="Cylinder24" type="StaticBody" parent="Bounds"]
 transform = Transform( 5.07929e-07, 17.7806, -3.19359, 10.6676, -8.14578e-07, 2.10508e-07, 6.12566e-08, -5.57896, -10.1783, -3.9315, -2.51897, -105.714 )
@@ -564,11 +547,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Bounds/Cylinder24"]
-mesh = SubResource( 7 )
+mesh = SubResource( 5 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bounds/Cylinder24"]
-shape = SubResource( 8 )
+shape = SubResource( 6 )
 
 [node name="Cylinder8" parent="Bounds" instance=ExtResource( 4 )]
 transform = Transform( 11.5334, 0, 0, 0, 25.7409, 0, 0, 0, 11.5334, -3.57245, 13.2751, -116.202 )
@@ -581,15 +564,15 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.69807, 3.63492, -354.292 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "New Anim"
-"anims/New Anim" = SubResource( 9 )
+"anims/New Anim" = SubResource( 7 )
 
 [node name="Dummy" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.57952, 0.786451, -5.61309 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.11262, 1.67442, -4.88095 )
 script = ExtResource( 17 )
 
 [node name="Model" type="MeshInstance" parent="Dummy"]
 transform = Transform( 0.739071, 0, 0, 0, 0.739071, 0, 0, 0, 0.739071, 0, 0, 0 )
-mesh = SubResource( 10 )
+mesh = SubResource( 8 )
 material/0 = null
 
 [node name="Hurtbox" parent="Dummy/Model" instance=ExtResource( 15 )]
@@ -612,11 +595,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Spatial/RigidBody"]
-mesh = SubResource( 3 )
+mesh = SubResource( 9 )
 material/0 = ExtResource( 7 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Spatial/RigidBody"]
-shape = SubResource( 4 )
+shape = SubResource( 10 )
 
 [node name="RigidBody2" type="RigidBody" parent="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.794739, 1.06635, 0.190082 )
@@ -629,11 +612,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Spatial/RigidBody2"]
-mesh = SubResource( 3 )
+mesh = SubResource( 9 )
 material/0 = ExtResource( 7 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Spatial/RigidBody2"]
-shape = SubResource( 4 )
+shape = SubResource( 10 )
 
 [node name="RigidBody3" type="RigidBody" parent="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.30876, 1.06635, 0.190082 )
@@ -646,11 +629,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Spatial/RigidBody3"]
-mesh = SubResource( 3 )
+mesh = SubResource( 9 )
 material/0 = ExtResource( 7 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Spatial/RigidBody3"]
-shape = SubResource( 4 )
+shape = SubResource( 10 )
 
 [node name="RigidBody4" type="RigidBody" parent="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.155258, 3.07552, 0.190082 )
@@ -663,11 +646,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Spatial/RigidBody4"]
-mesh = SubResource( 3 )
+mesh = SubResource( 9 )
 material/0 = ExtResource( 7 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Spatial/RigidBody4"]
-shape = SubResource( 4 )
+shape = SubResource( 10 )
 
 [node name="RigidBody5" type="RigidBody" parent="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.99944, 3.07552, 0.190082 )
@@ -680,11 +663,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Spatial/RigidBody5"]
-mesh = SubResource( 3 )
+mesh = SubResource( 9 )
 material/0 = ExtResource( 7 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Spatial/RigidBody5"]
-shape = SubResource( 4 )
+shape = SubResource( 10 )
 
 [node name="RigidBody6" type="RigidBody" parent="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.980339, 5.11097, 0.190082 )
@@ -697,11 +680,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Spatial/RigidBody6"]
-mesh = SubResource( 3 )
+mesh = SubResource( 9 )
 material/0 = ExtResource( 7 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Spatial/RigidBody6"]
-shape = SubResource( 4 )
+shape = SubResource( 10 )
 
 [node name="RigidBody7" type="RigidBody" parent="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.155258, 3.07552, 0.190082 )
@@ -714,11 +697,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Spatial/RigidBody7"]
-mesh = SubResource( 3 )
+mesh = SubResource( 9 )
 material/0 = ExtResource( 7 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Spatial/RigidBody7"]
-shape = SubResource( 4 )
+shape = SubResource( 10 )
 
 [node name="RigidBody8" type="RigidBody" parent="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.99944, 3.07552, 0.190082 )
@@ -731,11 +714,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Spatial/RigidBody8"]
-mesh = SubResource( 3 )
+mesh = SubResource( 9 )
 material/0 = ExtResource( 7 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Spatial/RigidBody8"]
-shape = SubResource( 4 )
+shape = SubResource( 10 )
 
 [node name="RigidBody9" type="RigidBody" parent="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.980339, 5.11097, 0.190082 )
@@ -748,11 +731,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="Spatial/RigidBody9"]
-mesh = SubResource( 3 )
+mesh = SubResource( 9 )
 material/0 = ExtResource( 7 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Spatial/RigidBody9"]
-shape = SubResource( 4 )
+shape = SubResource( 10 )
 
 [node name="Scene Root" parent="." instance=ExtResource( 8 )]
 transform = Transform( -0.819572, 0, 0.572976, 0, 1, 0, -0.572976, 0, -0.819572, -11.6865, 0, 1.77445 )
@@ -761,7 +744,3 @@ transform = Transform( -0.819572, 0, 0.572976, 0, 1, 0, -0.572976, 0, -0.819572,
 [connection signal="received_hit" from="Dummy/Model/Hurtbox" to="Dummy" method="_on_Hurtbox_received_hit"]
 
 [editable path="UI"]
-
-[editable path="SwordFighter2"]
-
-[editable path="SwordFighter2/ModelContainer/sword_fighter"]

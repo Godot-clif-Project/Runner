@@ -15,17 +15,17 @@ sync = true
 animation = "t_pose"
 
 [sub_resource type="AnimationNodeAnimation" id=7]
-animation = "def_step_r"
+animation = "t_pose"
 
 [sub_resource type="AnimationNodeTimeSeek" id=8]
 
 [sub_resource type="AnimationNodeAnimation" id=9]
-animation = "run_loop"
+animation = "t_pose"
 
 [sub_resource type="AnimationNodeTimeSeek" id=10]
 
 [resource]
-graph_offset = Vector2( 151, -33 )
+graph_offset = Vector2( 22, -162.75 )
 nodes/1_and_-1/node = SubResource( 1 )
 nodes/1_and_-1/position = Vector2( 700, -80 )
 nodes/Add2/node = SubResource( 2 )

@@ -58,6 +58,7 @@ func _process_state(delta):
 		
 	entity.apply_drag(delta)
 	entity.apply_gravity(delta)
+	entity.apply_velocity(delta)
 	entity.center_camera(delta)
 
 #func _touched_surface(surface):

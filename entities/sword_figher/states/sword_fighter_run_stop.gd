@@ -77,6 +77,7 @@ func _process_state(delta):
 #	entity.accelerate(-speed, delta * 0.25)
 	entity.apply_drag(delta)
 	entity.apply_gravity(delta)
+	entity.apply_velocity(delta)
 	entity.center_camera(delta * 2)
 	
 #	._process_state(delta)

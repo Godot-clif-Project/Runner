@@ -11,6 +11,10 @@ var throwing_entity = null
 var throw_pos = Vector3.ZERO
 var throw_rot = 0.0
 
+var shake_t = 0.0
+#var hitstop = false
+#var timescale = 1.0
+
 onready var model = $ModelContainer/sword_fighter
 onready var model_container = $ModelContainer
 onready var anim_tree = $AnimationTree
@@ -22,6 +26,7 @@ onready var dust = $ModelContainer/Particles2
 
 func _ready():
 	$AnimationTree.active = true
+	set_physics_process(false)
 
 func setup(side):
 	player_side = side
@@ -45,9 +50,27 @@ func _on_Hurtbox_received_hit(hit, hurtbox):
 		"direction" : hit.direction,
 		"guard_break" : hit.guard_break,
 		"grab" : hit.grab,
+		"hitstop" : hit.hitstop,
 		}
 	network_interface.rpc("receive_hit_from_peer", NetworkManager.my_id, hit_data)
+	set_hitstop(hit.hitstop, true)
 	pass
+
+func set_hitstop(length, shake):
+	anim_tree["parameters/TimeScale/scale"] = 0.05
+	$AnimationEvents.playback_speed = 0.05
+	$ModelContainer/SlashParticles.speed_scale = 0.05
+	$HitstopTimer.start(length)
+	if shake:
+		shake_t = 50
+		set_physics_process(true)
+	else:
+		shake_t = 0
+
+func _physics_process(delta):
+	if shake_t > 0.0:
+		$ModelContainer/sword_fighter.translation = (Vector3.RIGHT * (shake_t * 0.03)) * sin(shake_t) * 0.1
+		shake_t -= delta * 50
 
 func receive_throw(pos, rot, _throwing_entity):
 	throwing_entity = _throwing_entity
@@ -78,6 +101,8 @@ remote func update_rotation(id, new_rotation):
 	model_container.rotation.y = new_rotation
 
 remote func update_animation(id, anim_name, seek_pos, blend_speed):
+	$ModelContainer/sword_fighter/slash.visible = false
+	$ModelContainer/SlashParticles.emitting = false
 	
 	if $AnimationEvents.has_animation(anim_name):
 		$AnimationEvents.play(anim_name)
@@ -125,3 +150,9 @@ remote func dealt_tandem_action(id, action, args):
 		rope_model.scale.z = translation.distance_to(args[0])
 		rope_model.look_at(args[0], Vector3.UP)
 		get_node("ModelContainer/Rope/AnimationPlayer").play("default")
+
+func _on_HitstopTimer_timeout():
+	anim_tree["parameters/TimeScale/scale"] = 1.0
+	$AnimationEvents.playback_speed = 1.0
+	$ModelContainer/SlashParticles.speed_scale = 1.0
+	set_physics_process(false)

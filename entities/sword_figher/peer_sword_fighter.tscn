@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=2]
+[gd_scene load_steps=84 format=2]
 
 [ext_resource path="res://entities/sword_figher/peer_sword_fighter.gd" type="Script" id=1]
 [ext_resource path="res://entities/sword_figher/model/sword_fighter.glb" type="PackedScene" id=2]
@@ -9,6 +9,9 @@
 [ext_resource path="res://entities/sword_figher/model/temp/fall.anim" type="Animation" id=7]
 [ext_resource path="res://entities/sword_figher/model/temp/air_atk_r.anim" type="Animation" id=8]
 [ext_resource path="res://entities/sword_figher/model/temp/run_loop_c.anim" type="Animation" id=9]
+[ext_resource path="res://effects/slash/slash.glb" type="PackedScene" id=10]
+[ext_resource path="res://effects/slash/Material.material" type="Material" id=11]
+[ext_resource path="res://effects/hit/hexagon.png" type="Texture" id=12]
 
 [sub_resource type="AnimationNodeBlend2" id=1]
 
@@ -275,26 +278,32 @@ tracks/4/keys = {
 "values": [  ]
 }
 
-[sub_resource type="Animation" id=64]
+[sub_resource type="Animation" id=15]
 length = 0.483333
 
-[sub_resource type="Animation" id=18]
+[sub_resource type="Animation" id=16]
 length = 1.08333
 
-[sub_resource type="Animation" id=19]
+[sub_resource type="Animation" id=17]
 length = 1.5
 
-[sub_resource type="Animation" id=20]
+[sub_resource type="Animation" id=18]
 length = 1.38333
 
-[sub_resource type="Animation" id=21]
+[sub_resource type="Animation" id=19]
 length = 0.001
+
+[sub_resource type="Animation" id=20]
+length = 0.001
+
+[sub_resource type="Animation" id=21]
+length = 0.683333
 
 [sub_resource type="Animation" id=22]
-length = 0.001
+length = 0.5
 
 [sub_resource type="Animation" id=23]
-length = 0.683333
+length = 0.5
 
 [sub_resource type="Animation" id=24]
 length = 0.5
@@ -303,17 +312,10 @@ length = 0.5
 length = 0.5
 
 [sub_resource type="Animation" id=26]
-length = 0.5
 
 [sub_resource type="Animation" id=27]
-length = 0.5
-
-[sub_resource type="Animation" id=15]
-resource_name = "def_taunt"
 
 [sub_resource type="Animation" id=28]
-
-[sub_resource type="Animation" id=65]
 length = 0.966667
 
 [sub_resource type="Animation" id=29]
@@ -382,7 +384,7 @@ length = 0.833333
 
 [sub_resource type="Animation" id=51]
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=52]
 length = 2.18333
 step = 0.0166667
 tracks/0/type = "method"
@@ -403,46 +405,79 @@ tracks/0/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=52]
+[sub_resource type="Animation" id=53]
 length = 0.25
 
-[sub_resource type="Animation" id=53]
-length = 0.166667
-
 [sub_resource type="Animation" id=54]
-length = 0.516667
+length = 0.166667
 
 [sub_resource type="Animation" id=55]
 length = 0.516667
 
 [sub_resource type="Animation" id=56]
-length = 0.933333
+length = 0.516667
 
 [sub_resource type="Animation" id=57]
-length = 0.833333
-
-[sub_resource type="Animation" id=66]
-length = 0.666667
+length = 0.933333
 
 [sub_resource type="Animation" id=58]
-length = 0.45
-
-[sub_resource type="Animation" id=59]
-length = 0.416667
-
-[sub_resource type="Animation" id=60]
-length = 0.2
-
-[sub_resource type="Animation" id=61]
-length = 0.666667
-
-[sub_resource type="Animation" id=62]
 length = 0.833333
 
+[sub_resource type="Animation" id=59]
+length = 0.666667
+
+[sub_resource type="Animation" id=60]
+length = 0.45
+
+[sub_resource type="Animation" id=61]
+length = 0.416667
+
+[sub_resource type="Animation" id=62]
+length = 0.2
+
 [sub_resource type="Animation" id=63]
+length = 0.666667
+
+[sub_resource type="Animation" id=64]
+length = 0.833333
+
+[sub_resource type="Animation" id=65]
 length = 0.001
 
-[sub_resource type="CapsuleShape" id=17]
+[sub_resource type="Curve" id=88]
+_data = [ Vector2( 0.250909, 0 ), 0.0, 0.055563, 0, 0, Vector2( 0.250909, 1 ), -1.38996, -1.38996, 0, 0, Vector2( 1, 0 ), -0.00435815, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=89]
+curve = SubResource( 88 )
+
+[sub_resource type="ParticlesMaterial" id=90]
+direction = Vector3( 0, 0, 1 )
+spread = 124.05
+flatness = 1.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 22.46
+tangential_accel = -169.4
+damping = 179.02
+scale = 0.1
+scale_random = 0.1
+scale_curve = SubResource( 89 )
+
+[sub_resource type="SpatialMaterial" id=91]
+flags_transparent = true
+flags_unshaded = true
+vertex_color_use_as_albedo = true
+params_blend_mode = 1
+params_cull_mode = 2
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_texture = ExtResource( 12 )
+
+[sub_resource type="QuadMesh" id=87]
+material = SubResource( 91 )
+
+[sub_resource type="CapsuleShape" id=66]
 radius = 0.459803
 height = 0.564789
 
@@ -471,20 +506,20 @@ anims/off_hi_heavy = SubResource( 13 )
 anims/walk = SubResource( 14 )
 
 [node name="AnimationEvents" type="AnimationPlayer" parent="."]
-anims/air_atk_r = SubResource( 64 )
-anims/air_boost = SubResource( 18 )
-anims/air_rope = SubResource( 19 )
-anims/dangle = SubResource( 20 )
-anims/def_block_hi = SubResource( 21 )
-anims/def_block_low = SubResource( 22 )
-anims/def_hi_light = SubResource( 23 )
-anims/def_step_b = SubResource( 24 )
-anims/def_step_f = SubResource( 25 )
-anims/def_step_l = SubResource( 26 )
-anims/def_step_r = SubResource( 27 )
-anims/def_taunt = SubResource( 15 )
-anims/defensive_stance = SubResource( 28 )
-anims/fall = SubResource( 65 )
+anims/air_atk_r = SubResource( 15 )
+anims/air_boost = SubResource( 16 )
+anims/air_rope = SubResource( 17 )
+anims/dangle = SubResource( 18 )
+anims/def_block_hi = SubResource( 19 )
+anims/def_block_low = SubResource( 20 )
+anims/def_hi_light = SubResource( 21 )
+anims/def_step_b = SubResource( 22 )
+anims/def_step_f = SubResource( 23 )
+anims/def_step_l = SubResource( 24 )
+anims/def_step_r = SubResource( 25 )
+anims/def_taunt = SubResource( 26 )
+anims/defensive_stance = SubResource( 27 )
+anims/fall = SubResource( 28 )
 anims/jump_land = SubResource( 29 )
 anims/jump_start = SubResource( 30 )
 anims/knocked_down = SubResource( 31 )
@@ -508,20 +543,20 @@ anims/off_walk_forward = SubResource( 48 )
 anims/off_walk_left = SubResource( 49 )
 anims/off_walk_right = SubResource( 50 )
 anims/offensive_stance = SubResource( 51 )
-anims/receive_off_throw_f = SubResource( 16 )
-anims/run_break = SubResource( 52 )
-anims/run_break_loop = SubResource( 53 )
-anims/run_bump_l = SubResource( 54 )
-anims/run_bump_r = SubResource( 55 )
-anims/run_loop = SubResource( 56 )
-anims/run_loop_2 = SubResource( 57 )
-anims/run_loop_c = SubResource( 66 )
-anims/run_stop = SubResource( 58 )
-anims/run_stop_dash = SubResource( 59 )
-anims/run_stop_loop = SubResource( 60 )
-anims/stance_def_to_off = SubResource( 61 )
-anims/stance_off_to_def = SubResource( 62 )
-anims/t_pose = SubResource( 63 )
+anims/receive_off_throw_f = SubResource( 52 )
+anims/run_break = SubResource( 53 )
+anims/run_break_loop = SubResource( 54 )
+anims/run_bump_l = SubResource( 55 )
+anims/run_bump_r = SubResource( 56 )
+anims/run_loop = SubResource( 57 )
+anims/run_loop_2 = SubResource( 58 )
+anims/run_loop_c = SubResource( 59 )
+anims/run_stop = SubResource( 60 )
+anims/run_stop_dash = SubResource( 61 )
+anims/run_stop_loop = SubResource( 62 )
+anims/stance_def_to_off = SubResource( 63 )
+anims/stance_off_to_def = SubResource( 64 )
+anims/t_pose = SubResource( 65 )
 script = ExtResource( 6 )
 
 [node name="ModelContainer" type="Spatial" parent="."]
@@ -545,6 +580,23 @@ bone_name = "throw_pos"
 anims/air_atk_r = ExtResource( 8 )
 anims/fall = ExtResource( 7 )
 anims/run_loop_c = ExtResource( 9 )
+
+[node name="slash" parent="ModelContainer/sword_fighter" instance=ExtResource( 10 )]
+transform = Transform( 0.94679, 0, -0.321853, 0, 1, 0, 0.321853, 0, 0.94679, 0, 2.15837, 0 )
+
+[node name="Circle011" parent="ModelContainer/sword_fighter/slash" index="0"]
+material/0 = ExtResource( 11 )
+
+[node name="SlashParticles" type="Particles" parent="ModelContainer"]
+transform = Transform( -0.564907, 0, 0.202188, 0, 0.6, 0, -0.202188, 0, -0.564907, 0, 1.28032, 0 )
+emitting = false
+amount = 133
+lifetime = 0.6
+process_material = SubResource( 90 )
+draw_pass_1 = SubResource( 87 )
+__meta__ = {
+"_editor_description_": ""
+}
 
 [node name="Particles2" parent="ModelContainer" instance=ExtResource( 4 )]
 
@@ -570,7 +622,7 @@ playback/speed = 3.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.74, 0 )
-shape = SubResource( 17 )
+shape = SubResource( 66 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -581,6 +633,11 @@ aabb = AABB( -0.05, -0.05, -0.05, 0.1, 0.1, 0.1 )
 __meta__ = {
 "_editor_description_": ""
 }
+
+[node name="HitstopTimer" type="Timer" parent="."]
 [connection signal="received_hit" from="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment/Hurtbox" to="." method="_on_Hurtbox_received_hit"]
+[connection signal="timeout" from="HitstopTimer" to="." method="_on_HitstopTimer_timeout"]
 
 [editable path="ModelContainer/sword_fighter"]
+
+[editable path="ModelContainer/sword_fighter/slash"]

@@ -22,6 +22,7 @@ func _enter_state():
 	entity.model_container.rotation.y = wall_rot.y + PI
 #	entity.model.rotation.y = PI * 0.5
 	entity.add_impulse(Vector3(0, 0, -10))
+	entity.gravity_scale = 0.05
 	
 	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
 	._enter_state()
@@ -29,13 +30,15 @@ func _enter_state():
 ## Inverse of enter_state.
 func _exit_state():
 	entity.set_velocity(Vector3(0, 10, -2))
+	entity.gravity_scale = 1.0
 #	entity.model.rotation.y = PI
 	._exit_state()
 ##	pass
 
 func _process_state(delta):
 	entity.apply_drag(delta)
-	entity.apply_gravity(delta * 0.05 )
+	entity.apply_gravity(delta)
+	entity.apply_velocity(delta)
 #	if entity.ledge_detect_l.get_overlapping_bodies().size() != 0:
 ##		if entity.ledge_detect_r.get_overlapping_bodies().size() != 0:
 ##			pass

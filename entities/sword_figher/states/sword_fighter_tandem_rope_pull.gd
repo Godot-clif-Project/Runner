@@ -33,6 +33,7 @@ func _process_state(delta):
 	entity.model_container.transform.basis = entity.model_container.global_transform.looking_at(entity.lock_on_target.translation, Vector3.UP).basis
 	entity.apply_gravity(delta)
 	entity.apply_drag(delta)
+	entity.apply_velocity(delta)
 	if entity.flags.is_active:
 #		entity.center_camera(delta * 2)
 		entity.point_camera_at_target(delta * 5, Vector3(0.0, -5.0, 0.0))

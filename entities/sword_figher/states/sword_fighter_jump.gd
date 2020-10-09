@@ -18,6 +18,7 @@ func _exit_state():
 
 func _process_state(delta):
 	if not entity.flags.is_active:
+		entity.apply_velocity(delta)
 		return
 	else:
 		._process_state(delta)

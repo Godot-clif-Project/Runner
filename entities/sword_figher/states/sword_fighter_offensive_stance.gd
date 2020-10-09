@@ -42,6 +42,7 @@ func _process_state(delta):
 #		entity.apply_tracking(delta)
 	entity.apply_drag(delta)
 	entity.apply_gravity(delta)
+	entity.apply_velocity(delta)
 	
 #	._process_state(delta)
 

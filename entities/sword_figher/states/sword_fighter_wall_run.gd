@@ -84,6 +84,7 @@ func _process_state(delta):
 		entity.model_container.rotation.y = entity.wall_rot.y - PI
 		
 		entity.apply_drag(delta)
+		entity.apply_velocity(delta)
 ##func _animation_blend_started(anim_name):
 ##	print(anim_name)
 ##	set_next_state("idle")

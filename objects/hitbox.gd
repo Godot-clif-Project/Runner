@@ -109,7 +109,6 @@ func build_hit(area):
 	collided_hurtbox.receive_hit(new_hit)
 	emit_signal("dealt_hit", new_hit, collided_entity)
 
-
 func _on_Hitbox_area_entered(area):
 #	print("ASD")
 #	overlapping_objects.append(area)

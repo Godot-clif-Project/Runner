@@ -101,6 +101,7 @@ func _process_state(delta):
 #	entity.turn(ang_momentum)
 	entity.apply_drag(delta)
 	entity.apply_gravity(delta)
+	entity.apply_velocity(delta)
 #	entity.camera_pivot.rotation.y = lerp_angle(entity.camera_pivot.rotation.y, entity.model_container.rotation.y - 0.5 * sign(ang_momentum), delta * 2)
 	entity.center_camera(delta * 2)
 	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)

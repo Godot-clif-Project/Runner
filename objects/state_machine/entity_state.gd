@@ -140,21 +140,21 @@ func _exit_state():
 func _received_input(key, state):
 	pass
 
-func determine_hit_stop(p_hit):  #TODO: Find a less hacky way to dynamically set hitstop
-	if p_hit.hit_stop > 0:
-		if entity.crushed and p_hit.knockback.x > 200:
-			entity.set_hitstop(3, p_hit.hit_stop * 1.5)
-			if p_hit.hit_stop > 0.2:
-				MainManager.camera.shake(1, 1)
-		else:
-			entity.set_hitstop(3, p_hit.hit_stop)
-			if p_hit.hit_stop > 0.2:
-				MainManager.camera.shake(1, 0.5)
+#func determine_hitstop(p_hit):  #TODO: Find a less hacky way to dynamically set hitstop
+#	if p_hit.hitstop > 0:
+#		if entity.crushed and p_hit.knockback.x > 200:
+#			entity.set_hitstop(3, p_hit.hitstop * 1.5)
+#			if p_hit.hitstop > 0.2:
+#				MainManager.camera.shake(1, 1)
+#		else:
+#			entity.set_hitstop(3, p_hit.hitstop)
+#			if p_hit.hitstop > 0.2:
+#				MainManager.camera.shake(1, 0.5)
 
 func _received_hit(p_hit):
 #	emit_signal("received_hit", p_hit)
 #	entity.hit = p_hit
-#	determine_hit_stop(p_hit)
+#	determine_hitstop(p_hit)
 	
 #	entity.tiredness += p_hit.tiredness
 #	if entity.tiredness > entity.tiredness_limit and not entity.exausted:

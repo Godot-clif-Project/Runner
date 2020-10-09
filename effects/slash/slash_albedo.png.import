@@ -1,0 +1,34 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/slash_albedo.png-908a5cf5371e3b7e1bc87895a9b31284.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://effects/slash/slash_albedo.png"
+dest_files=[ "res://.import/slash_albedo.png-908a5cf5371e3b7e1bc87895a9b31284.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=true
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=false
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+stream=false
+size_limit=0
+detect_3d=true
+svg/scale=1.0

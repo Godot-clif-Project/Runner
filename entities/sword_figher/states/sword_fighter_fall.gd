@@ -22,7 +22,6 @@ func _exit_state():
 ##	pass
 
 func _process_state(delta):
-	
 	if entity.input_listener.is_key_pressed(InputManager.RIGHT):
 		entity.model_container.rotation_degrees.y -= delta * turn_speed
 	
@@ -76,6 +75,7 @@ func _process_state(delta):
 	
 	entity.apply_gravity(delta)
 	entity.apply_drag(delta)
+	entity.apply_velocity(delta)
 	entity.center_camera(delta)
 	
 	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)

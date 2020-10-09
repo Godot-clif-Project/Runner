@@ -1,4 +1,4 @@
-[gd_scene load_steps=103 format=2]
+[gd_scene load_steps=113 format=2]
 
 [ext_resource path="res://entities/sword_figher/model/sword_fighter.glb" type="PackedScene" id=1]
 [ext_resource path="res://entities/sword_figher/sword_fighter.gd" type="Script" id=2]
@@ -21,10 +21,104 @@
 [ext_resource path="res://entities/sword_figher/model/temp/run_loop_c.anim" type="Animation" id=19]
 [ext_resource path="res://entities/sword_figher/model/temp/fall.anim" type="Animation" id=20]
 [ext_resource path="res://entities/sword_figher/model/temp/air_atk_r.anim" type="Animation" id=21]
+[ext_resource path="res://effects/slash/slash.glb" type="PackedScene" id=22]
+[ext_resource path="res://effects/slash/Material.material" type="Material" id=23]
+[ext_resource path="res://effects/hit/hexagon.png" type="Texture" id=24]
+[ext_resource path="res://entities/sword_figher/model/temp/air_atk_l.anim" type="Animation" id=25]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.375497
 height = 0.731386
+
+[sub_resource type="Animation" id=87]
+length = 0.483333
+step = 0.0166667
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ Vector3( 0, 10, 0 ) ],
+"method": "add_impulse"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:gravity_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/keys = {
+"times": PoolRealArray( 0.15 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
+"values": [ 0.5 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("ModelContainer/Hitbox:hit_name")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "off_hi_r_heavy" ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("ModelContainer/Hitbox:translation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.2, 0.255, 0.256 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Vector3( -0.186569, 1.25873, -0.900448 ), Vector3( 1.07715, 1.25873, -0.0747808 ), Vector3( -0.92285, 1.25873, -0.0747808 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("ModelContainer/Hitbox:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
+"values": [ Vector3( 1.00906, 1.00906, 1.00906 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("ModelContainer/Hitbox:active")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.2, 0.266667 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("AnimationFlags:is_stringable")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0.483333 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
+"values": [ true ]
+}
 
 [sub_resource type="Animation" id=2]
 length = 0.483333
@@ -48,7 +142,7 @@ tracks/1/path = NodePath(".:gravity_scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
-tracks/1/enabled = true
+tracks/1/enabled = false
 tracks/1/keys = {
 "times": PoolRealArray( 1 ),
 "transitions": PoolRealArray( 1 ),
@@ -74,9 +168,9 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0.166667, 0.2 ),
+"times": PoolRealArray( 0.2, 0.255 ),
 "transitions": PoolRealArray( 1, 1 ),
-"update": 2,
+"update": 1,
 "values": [ Vector3( 0.31232, 1.25873, -0.900448 ), Vector3( 1.07715, 1.25873, -0.0747808 ) ]
 }
 tracks/4/type = "value"
@@ -86,7 +180,7 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0.166667 ),
+"times": PoolRealArray( 0.2 ),
 "transitions": PoolRealArray( 1 ),
 "update": 2,
 "values": [ Vector3( 1.00906, 1.00906, 1.00906 ) ]
@@ -98,7 +192,7 @@ tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0.166667, 0.3 ),
+"times": PoolRealArray( 0.2, 0.266667 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ true, false ]
@@ -2080,23 +2174,56 @@ tracks/0/keys = {
 "values": [ 0.0, 1.0 ]
 }
 
-[sub_resource type="RayShape" id=59]
+[sub_resource type="Curve" id=59]
+_data = [ Vector2( 0.250909, 0 ), 0.0, 0.055563, 0, 0, Vector2( 0.250909, 1 ), -1.38996, -1.38996, 0, 0, Vector2( 1, 0 ), -0.00435815, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=60]
+curve = SubResource( 59 )
+
+[sub_resource type="ParticlesMaterial" id=61]
+direction = Vector3( 0, 0, 1 )
+spread = 124.05
+flatness = 1.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 22.46
+tangential_accel = -169.4
+damping = 179.02
+scale = 0.1
+scale_random = 0.1
+scale_curve = SubResource( 60 )
+
+[sub_resource type="SpatialMaterial" id=62]
+flags_transparent = true
+flags_unshaded = true
+vertex_color_use_as_albedo = true
+params_blend_mode = 1
+params_cull_mode = 2
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_texture = ExtResource( 24 )
+
+[sub_resource type="QuadMesh" id=63]
+material = SubResource( 62 )
+
+[sub_resource type="RayShape" id=64]
 length = 1.2
 
-[sub_resource type="Gradient" id=60]
+[sub_resource type="Gradient" id=65]
 offsets = PoolRealArray( 0.113821, 1 )
 colors = PoolColorArray( 0.681641, 0.489087, 0.274254, 1, 0.333984, 0.198767, 0.113503, 0 )
 
-[sub_resource type="GradientTexture" id=61]
-gradient = SubResource( 60 )
+[sub_resource type="GradientTexture" id=66]
+gradient = SubResource( 65 )
 
-[sub_resource type="Curve" id=62]
+[sub_resource type="Curve" id=67]
 _data = [ Vector2( 0, 0.517241 ), 0.0, 1.41379, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=63]
-curve = SubResource( 62 )
+[sub_resource type="CurveTexture" id=68]
+curve = SubResource( 67 )
 
-[sub_resource type="ParticlesMaterial" id=64]
+[sub_resource type="ParticlesMaterial" id=69]
 emission_shape = 2
 emission_box_extents = Vector3( 0.8, 0.7, 0.3 )
 flag_align_y = true
@@ -2109,35 +2236,35 @@ initial_velocity_random = 0.5
 damping = 4.87
 angle = 32.2
 scale = 2.0
-scale_curve = SubResource( 63 )
-color_ramp = SubResource( 61 )
+scale_curve = SubResource( 68 )
+color_ramp = SubResource( 66 )
 
-[sub_resource type="QuadMesh" id=65]
+[sub_resource type="QuadMesh" id=70]
 
-[sub_resource type="QuadMesh" id=66]
+[sub_resource type="QuadMesh" id=71]
 
-[sub_resource type="Gradient" id=67]
+[sub_resource type="Gradient" id=72]
 offsets = PoolRealArray( 0.113821, 1 )
 colors = PoolColorArray( 0.681641, 0.489087, 0.274254, 1, 0.333984, 0.198767, 0.113503, 0 )
 
-[sub_resource type="GradientTexture" id=68]
-gradient = SubResource( 67 )
+[sub_resource type="GradientTexture" id=73]
+gradient = SubResource( 72 )
 
-[sub_resource type="Curve" id=69]
+[sub_resource type="Curve" id=74]
 max_value = 100.0
 _data = [ Vector2( 0, 83.1897 ), 0.0, -228.894, 0, 0, Vector2( 1, 0 ), 6.89152, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=70]
-curve = SubResource( 69 )
+[sub_resource type="CurveTexture" id=75]
+curve = SubResource( 74 )
 
-[sub_resource type="Curve" id=71]
+[sub_resource type="Curve" id=76]
 max_value = 2.0
 _data = [ Vector2( 0, 0.662716 ), 0.0, 1.31012, 0, 0, Vector2( 1, 1.16595 ), 0.0620238, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=72]
-curve = SubResource( 71 )
+[sub_resource type="CurveTexture" id=77]
+curve = SubResource( 76 )
 
-[sub_resource type="ParticlesMaterial" id=73]
+[sub_resource type="ParticlesMaterial" id=78]
 lifetime_randomness = 0.2
 direction = Vector3( 0, 0, 0 )
 spread = 180.0
@@ -2146,38 +2273,38 @@ gravity = Vector3( 0, -2, 0 )
 initial_velocity = 12.0
 initial_velocity_random = 0.25
 angular_velocity = 10.14
-damping_curve = SubResource( 70 )
+damping_curve = SubResource( 75 )
 angle = 720.0
 angle_random = 0.5
 scale = 2.0
 scale_random = 0.5
-scale_curve = SubResource( 72 )
-color_ramp = SubResource( 68 )
+scale_curve = SubResource( 77 )
+color_ramp = SubResource( 73 )
 
-[sub_resource type="QuadMesh" id=74]
+[sub_resource type="QuadMesh" id=79]
 
-[sub_resource type="Gradient" id=75]
+[sub_resource type="Gradient" id=80]
 offsets = PoolRealArray( 0.113821, 1 )
 colors = PoolColorArray( 0.681641, 0.489087, 0.274254, 1, 0.333984, 0.198767, 0.113503, 0 )
 
-[sub_resource type="GradientTexture" id=76]
-gradient = SubResource( 75 )
+[sub_resource type="GradientTexture" id=81]
+gradient = SubResource( 80 )
 
-[sub_resource type="Curve" id=77]
+[sub_resource type="Curve" id=82]
 max_value = 100.0
 _data = [ Vector2( 0, 36.2069 ), 0.0, -111.126, 0, 0, Vector2( 1, 0 ), 6.89152, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=78]
-curve = SubResource( 77 )
+[sub_resource type="CurveTexture" id=83]
+curve = SubResource( 82 )
 
-[sub_resource type="Curve" id=79]
+[sub_resource type="Curve" id=84]
 max_value = 2.0
 _data = [ Vector2( 0, 0.662716 ), 0.0, 1.31012, 0, 0, Vector2( 1, 1.16595 ), 0.0620238, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=80]
-curve = SubResource( 79 )
+[sub_resource type="CurveTexture" id=85]
+curve = SubResource( 84 )
 
-[sub_resource type="ParticlesMaterial" id=81]
+[sub_resource type="ParticlesMaterial" id=86]
 lifetime_randomness = 0.2
 direction = Vector3( 0, 0, 0 )
 spread = 180.0
@@ -2187,12 +2314,12 @@ initial_velocity = 6.0
 initial_velocity_random = 0.25
 angular_velocity = 10.14
 linear_accel = 1.41
-damping_curve = SubResource( 78 )
+damping_curve = SubResource( 83 )
 angle = 720.0
 angle_random = 0.5
 scale_random = 0.5
-scale_curve = SubResource( 80 )
-color_ramp = SubResource( 76 )
+scale_curve = SubResource( 85 )
+color_ramp = SubResource( 81 )
 
 [node name="SwordFighter" type="KinematicBody"]
 collision_layer = 2
@@ -2224,7 +2351,7 @@ tree_root = ExtResource( 6 )
 anim_player = NodePath("../ModelContainer/sword_fighter/AnimationPlayer")
 process_mode = 0
 root_motion_track = NodePath("Armature/Skeleton:root")
-parameters/1_and_-1/blend_amount = 1.0
+parameters/1_and_-1/blend_amount = 0.2
 parameters/Add2/add_amount = 0.0
 parameters/Blend2/blend_amount = 0.0
 parameters/Seek/seek_position = -1.0
@@ -2233,6 +2360,7 @@ parameters/animation_-1_seek/seek_position = -1.0
 parameters/animation_1_seek/seek_position = -1.0
 
 [node name="AnimationEvents" type="AnimationPlayer" parent="."]
+anims/air_atk_l = SubResource( 87 )
 anims/air_atk_r = SubResource( 2 )
 anims/air_boost = SubResource( 3 )
 anims/air_rope = SubResource( 4 )
@@ -2299,6 +2427,10 @@ anims/blend_animation_and_space = SubResource( 58 )
 [node name="sword_fighter" parent="ModelContainer" instance=ExtResource( 1 )]
 transform = Transform( -0.6, 0, -9.05975e-08, 0, 0.6, 0, 9.05975e-08, 0, -0.6, 0, 0, 0 )
 
+[node name="Skeleton" parent="ModelContainer/sword_fighter/Armature" index="0"]
+bones/7/bound_children = [ NodePath("BoneAttachment") ]
+bones/23/bound_children = [ NodePath("ThrowAttachment") ]
+
 [node name="Cube" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="0"]
 transform = Transform( 1, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1, 0, 0, 0 )
 material/0 = ExtResource( 12 )
@@ -2320,14 +2452,31 @@ bone_name = "throw_pos"
 
 [node name="AnimationPlayer" parent="ModelContainer/sword_fighter" index="1"]
 playback_process_mode = 0
+anims/air_atk_l = ExtResource( 25 )
 anims/air_atk_r = ExtResource( 21 )
 anims/fall = ExtResource( 20 )
 anims/run_loop_b = ExtResource( 18 )
 anims/run_loop_c = ExtResource( 19 )
 blend_times = [ "def_hi_light", "offensive_stance", 1.0, "off_hi_fierce", "offensive_stance", 0.5, "offensive_stance", "off_hi_fierce", 0.2 ]
 
+[node name="slash" parent="ModelContainer/sword_fighter" instance=ExtResource( 22 )]
+transform = Transform( 0.94679, 0, -0.321853, 0, 1, 0, 0.321853, 0, 0.94679, 0, 2.15837, 0 )
+
+[node name="Circle011" parent="ModelContainer/sword_fighter/slash" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+material/0 = ExtResource( 23 )
+
+[node name="SlashParticles" type="Particles" parent="ModelContainer"]
+transform = Transform( -0.912333, 0, 0.140731, 0, 0.692249, 0, -0.140731, 0, -0.912333, 0, 1.28032, 0 )
+emitting = false
+amount = 150
+lifetime = 0.6
+process_material = SubResource( 61 )
+draw_pass_1 = SubResource( 63 )
+
 [node name="Hitbox" parent="ModelContainer" instance=ExtResource( 9 )]
-transform = Transform( 1.00906, 0, 0, 0, 1.00906, 0, 0, 0, 1.00906, 1.07715, 1.25873, -0.0747808 )
+transform = Transform( 1.00906, 0, 0, 0, 1.00906, 0, 0, 0, 1.00906, -0.92285, 1.25873, -0.0747808 )
+visible = false
 hit_info = ExtResource( 10 )
 hit_name = "off_hi_r_heavy"
 
@@ -2343,7 +2492,7 @@ monitorable = false
 collision_layer = 0
 
 [node name="CollisionShape" type="CollisionShape" parent="ModelContainer/Feet"]
-shape = SubResource( 59 )
+shape = SubResource( 64 )
 
 [node name="LedgeDetectLow" type="RayCast" parent="ModelContainer"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.02413, 0 )
@@ -2385,14 +2534,14 @@ material_override = ExtResource( 15 )
 emitting = false
 amount = 400
 local_coords = false
-process_material = SubResource( 64 )
-draw_pass_1 = SubResource( 65 )
+process_material = SubResource( 69 )
+draw_pass_1 = SubResource( 70 )
 
 [node name="Particles2" parent="ModelContainer" instance=ExtResource( 13 )]
 material_override = ExtResource( 15 )
 amount = 20
 process_material = ExtResource( 16 )
-draw_pass_1 = SubResource( 66 )
+draw_pass_1 = SubResource( 71 )
 
 [node name="ParticlesJump" type="Particles" parent="ModelContainer"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.193547, 0 )
@@ -2401,8 +2550,8 @@ emitting = false
 amount = 600
 lifetime = 0.75
 local_coords = false
-process_material = SubResource( 73 )
-draw_pass_1 = SubResource( 74 )
+process_material = SubResource( 78 )
+draw_pass_1 = SubResource( 79 )
 
 [node name="ParticlesLand" type="Particles" parent="ModelContainer"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.193547, 0 )
@@ -2411,8 +2560,8 @@ emitting = false
 amount = 400
 lifetime = 0.75
 local_coords = false
-process_material = SubResource( 81 )
-draw_pass_1 = SubResource( 74 )
+process_material = SubResource( 86 )
+draw_pass_1 = SubResource( 79 )
 
 [node name="VelocityArrow2" parent="ModelContainer" instance=ExtResource( 8 )]
 
@@ -2450,6 +2599,8 @@ collision_mask = 4
 [node name="CollisionShape" type="CollisionShape" parent="RigidbodyCollision"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.739593, 0 )
 shape = SubResource( 1 )
+
+[node name="HitstopTimer" type="Timer" parent="."]
 [connection signal="flag_changed" from="AnimationFlags" to="." method="_on_AnimationFlags_flag_changed"]
 [connection signal="received_input" from="InputListener" to="." method="_on_InputListener_received_input"]
 [connection signal="animation_finished" from="AnimationEvents" to="." method="_on_AnimationEvents_animation_finished"]
@@ -2460,7 +2611,10 @@ shape = SubResource( 1 )
 [connection signal="body_entered" from="ModelContainer/Feet" to="." method="_on_Feet_body_entered"]
 [connection signal="body_entered" from="RigidbodyCollision" to="." method="_on_RigidbodyCollision_body_entered"]
 [connection signal="body_exited" from="RigidbodyCollision" to="." method="_on_RigidbodyCollision_body_exited"]
+[connection signal="timeout" from="HitstopTimer" to="." method="_on_HitstopTimer_timeout"]
 
 [editable path="ModelContainer/sword_fighter"]
+
+[editable path="ModelContainer/sword_fighter/slash"]
 
 [editable path="ModelContainer/VelocityArrow2"]

@@ -21,6 +21,7 @@ func _exit_state():
 
 func _process_state(delta):
 	entity.apply_drag(delta)
+	entity.apply_velocity(delta)
 	pass
 #	entity.apply_root_motion(delta)
 #

@@ -74,6 +74,10 @@ var tandem_entity = null
 
 var rigidbodies = []
 
+var timescale = 1.0
+var hitstop = false
+var shake_t = 0.0
+
 onready var input_listener = $InputListener
 onready var model = $ModelContainer/sword_fighter
 onready var camera_pivot = $CameraPointPivot
@@ -235,36 +239,36 @@ func _input(event):
 #		print("Elapsed time: ", OS.get_ticks_msec() / 1000.0)
 
 func _physics_process(delta):
-	fsm._process_current_state(delta, true)
+	fsm._process_current_state(delta * timescale, true)
 	
 	camera_pivot.rotation.y += input_listener.analogs[2] * -0.1
 	camera_pivot.rotation.x = clamp(camera_pivot.rotation.x + input_listener.analogs[3] * -0.1, -1.5, 0.9)
 	target_rotation = camera_pivot.rotation.y
-		
+	
+	if shake_t > 0.0:
+		$ModelContainer/sword_fighter.translation = (Vector3.RIGHT * (shake_t * 0.03)) * sin(shake_t) * 0.1
+		shake_t -= delta * 50
+
+func apply_velocity(delta):
 	if not rigidbodies.empty():
 		for body in rigidbodies:
 			var body_normal = (translation - body.translation)
-			velocity += Vector3(body_normal.x, 0.0, body_normal.z)
+			velocity += Vector3(body_normal.x, 0.0, body_normal.z) * timescale
 	
 	prev_speed = horizontal_speed
 #	prev_velocity = velocity
-	
-	velocity = move_and_slide(velocity, Vector3.UP, false, 4, 0.785398, true)
-	
+#	velocity = move_and_slide(velocity, Vector3.UP, false, 4, 0.785398, true)
+	velocity = move_and_slide(velocity * timescale, Vector3.UP, false, 4, 0.785398, true) / timescale
 	horizontal_speed = Vector2(velocity.x, velocity.z).length()
+	emit_signal("position_changed", transform.origin)
+#	emit_signal("transform_changed", transform)
 	
-	if input_listener.is_key_pressed(InputManager.JUMP):
-		if jump_str < max_jump_str:
-			jump_str += max_jump_str * delta * 4
+#	if input_listener.is_key_pressed(InputManager.JUMP):
+#		if jump_str < max_jump_str:
+#			jump_str += max_jump_str * delta * 4
 	
 	vel_arrow.look_at(velocity + translation + Vector3.FORWARD * 0.01, Vector3.UP)
 	vel_arrow.scale.z = lerp(0, 1.0, horizontal_speed / 6)
-	
-#	camera_point.translation.z = lerp(3.5, 5.5, horizontal_speed / 20)
-	
-#	emit_signal("transform_changed", transform)
-	emit_signal("position_changed", transform.origin)
-	
 #	print(horizontal_speed)
 
 func center_camera(delta):
@@ -378,6 +382,7 @@ func apply_root_motion(delta):
 #	velocity = (speed).rotated(Vector3.UP, model_container.rotation.y) * 40
 	var root_motion_speed = -anim_tree.get_root_motion_transform().origin.rotated(Vector3.UP, model_container.rotation.y) * 40
 	velocity = Vector3(root_motion_speed.x, velocity.y, root_motion_speed.z)
+	apply_velocity(delta)
 #	print(-anim_tree.get_root_motion_transform().origin)
 	pass
 
@@ -516,13 +521,17 @@ func reset_hitboxes():
 func _receive_hit(hit):
 	received_hit = hit
 	fsm.receive_event("_received_hit", hit)
+	set_hitstop(hit.hitstop, true)
 
 func _on_Hurtbox_received_hit(hit, hurtbox):
 	_receive_hit(hit)
+	set_hitstop(hit.hitstop, true)
 
 func _on_Hitbox_dealt_hit(hit : Hit, collided_entity):
 	fsm.receive_event("_dealt_hit", collided_entity)
 	emit_signal("dealt_hit", hit)
+	set_hitstop(hit.hitstop, false)
+
 	
 func receive_throw(pos, rot, _throwing_entity):
 	throwing_entity = _throwing_entity
@@ -592,4 +601,25 @@ func _on_RigidbodyCollision_body_entered(body):
 
 func _on_RigidbodyCollision_body_exited(body):
 	rigidbodies.erase(body)
+	pass # Replace with function body.
+
+func set_hitstop(length, shake):
+	$HitstopTimer.start(length)
+	hitstop = true
+	timescale = 0.05
+	anim_tree["parameters/TimeScale/scale"] = timescale
+	$AnimationEvents.playback_speed = timescale
+	$ModelContainer/SlashParticles.speed_scale = timescale
+	if shake:
+		shake_t = 50
+	else:
+		shake_t = 0.0
+
+func _on_HitstopTimer_timeout():
+	hitstop = false
+	timescale = 1.0
+	anim_tree["parameters/TimeScale/scale"] = timescale
+	$AnimationEvents.playback_speed = timescale
+	$ModelContainer/SlashParticles.speed_scale = timescale
+	$ModelContainer/sword_fighter.translation = Vector3.ZERO
 	pass # Replace with function body.

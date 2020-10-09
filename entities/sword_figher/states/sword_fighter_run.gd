@@ -148,6 +148,7 @@ func _process_state(delta):
 	entity.acceleration = clamp(entity.acceleration + delta, 0, 1.0)
 	entity.accelerate(-entity.target_speed, delta * entity.acceleration * 5)
 	entity.apply_gravity(delta)
+	entity.apply_velocity(delta)
 	
 	entity.anim_tree["parameters/TimeScale/scale"] = float(entity.target_speed / entity.boost_speed * 0.25) + 1.0
 	entity.center_camera(delta)

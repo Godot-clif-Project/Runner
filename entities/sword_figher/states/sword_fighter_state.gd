@@ -38,7 +38,8 @@ func get_possible_transitions():
 
 func _enter_state():
 	var anim_data = get_animation_data()
-	entity.set_animation(anim_data[0], anim_data[1], anim_data[2])
+	if anim_data != null:
+		entity.set_animation(anim_data[0], anim_data[1], anim_data[2])
 #	entity.set_animation(name)
 #	process_resource_cost()
 #    ._enter_state(entity)
@@ -46,11 +47,10 @@ func _enter_state():
 func _process_state(delta):
 #	if entity.flags.track_target:
 #		entity.apply_tracking(delta)
-	entity.apply_root_motion(delta)
 	entity.apply_drag(delta)
 	entity.apply_gravity(delta)
-#	if entity.hitstop:
-#		return
+	entity.apply_root_motion(delta)
+#	entity.apply_velocity(delta)
 #
 #	._process_state(delta)
 

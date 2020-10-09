@@ -2,25 +2,36 @@ extends "res://entities/sword_figher/states/sword_fighter_fall.gd"
 
 func get_animation_data():
 	# Name, seek and blend length 
-	return ["air_atk_r", 0.0, 16.0]
+#	return ["air_atk_l", 0.0, 30.0]
+	return null
 
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
 	entity.velocity.y = 0.0
+	entity.model.rotation.z = 0.0
+	if entity.input_listener.analogs[0] >= 0.0:
+		entity.set_animation("air_atk_r", 0, 30.0)
+	else:
+		entity.set_animation("air_atk_l", 0, 30.0)
+		
 #	entity.jump()
-##	entity.set_animation("off_hi_r_light", 0, 16.0)
 #	entity.on_ground = false
 	._enter_state()
 #
 ## Inverse of enter_state.
 func _exit_state():
 	entity.gravity_scale = 1.0
-#	entity.get_node("ModelContainer/Particles2").emitting = false
+	entity.get_node("ModelContainer/sword_fighter/slash").visible = false
+#	entity.get_node("ModelContainer/sword_fighter/SlashParticles").visible = false
+	entity.get_node("ModelContainer/SlashParticles").emitting = false
 	._exit_state()
 
 func _process_state(delta):
 	if entity.is_on_wall():
 		entity.get_node("ModelContainer/Hitbox").active = false
+		entity.get_node("ModelContainer/sword_fighter/slash").visible = false
+#		entity.get_node("ModelContainer/sword_fighter/SlashParticles").visible = false
+		entity.get_node("ModelContainer/SlashParticles").emitting = false
 	._process_state(delta)
 #	if entity.get_current_animation() == "jump_land":
 #		entity.set_velocity(Vector3(0.0, 0.0, -Vector2(entity.velocity.x, entity.velocity.z).length()))

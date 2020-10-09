@@ -13,7 +13,7 @@ var knockback : Vector2
 var direction : Vector3
 var position : Vector3
 var stun : float = 0.4
-var hit_stop : float = 0.0
+var hitstop : float = 0.0
 var guard_break : bool = false
 var directional : bool = true
 var one_way : bool = false
@@ -43,7 +43,7 @@ enum INIT_TYPE {DEFAULT, WALL, PARRY}
 func _init(_type):
 #	if _type == INIT_TYPE.WALL:
 #		damage = 5
-#		hit_stop = 0.2
+#		hitstop = 0.2
 #	elif _type == INIT_TYPE.PARRY:
 #		damage = 20
 #		tiredness = 75

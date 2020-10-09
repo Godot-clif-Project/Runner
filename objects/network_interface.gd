@@ -84,6 +84,7 @@ remote func receive_hit_from_peer(id, hit_data):
 	var new_hit = Hit.new(Hit.INIT_TYPE.DEFAULT)
 	for key in hit_data:
 		new_hit.set(key, hit_data[key])
+	peer_entity.set_hitstop(hit_data.hitstop, false)
 #	player_entity._receive_hit(new_hit)
 
 	# QUACKEADA for hit effects to appear:
