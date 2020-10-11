@@ -112,11 +112,11 @@ func _animation_finished(anim_name):
 
 func get_possible_transitions():
 	return [
-		"air_boost",
-		"air_atk_r",
-#		"jump",
 		"tandem_rope_pull",
 		"tandem_launch_up",
+		"air_boost",
+		"air_atk",
+#		"jump",
 		"wall_run",
 		"wall_run_side",
 		"dangle",

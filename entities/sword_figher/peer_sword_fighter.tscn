@@ -1,4 +1,4 @@
-[gd_scene load_steps=84 format=2]
+[gd_scene load_steps=85 format=2]
 
 [ext_resource path="res://entities/sword_figher/peer_sword_fighter.gd" type="Script" id=1]
 [ext_resource path="res://entities/sword_figher/model/sword_fighter.glb" type="PackedScene" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://effects/slash/slash.glb" type="PackedScene" id=10]
 [ext_resource path="res://effects/slash/Material.material" type="Material" id=11]
 [ext_resource path="res://effects/hit/hexagon.png" type="Texture" id=12]
+[ext_resource path="res://entities/sword_figher/model/temp/air_atk_l.anim" type="Animation" id=13]
 
 [sub_resource type="AnimationNodeBlend2" id=1]
 
@@ -444,13 +445,13 @@ length = 0.833333
 [sub_resource type="Animation" id=65]
 length = 0.001
 
-[sub_resource type="Curve" id=88]
+[sub_resource type="Curve" id=66]
 _data = [ Vector2( 0.250909, 0 ), 0.0, 0.055563, 0, 0, Vector2( 0.250909, 1 ), -1.38996, -1.38996, 0, 0, Vector2( 1, 0 ), -0.00435815, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=89]
-curve = SubResource( 88 )
+[sub_resource type="CurveTexture" id=67]
+curve = SubResource( 66 )
 
-[sub_resource type="ParticlesMaterial" id=90]
+[sub_resource type="ParticlesMaterial" id=68]
 direction = Vector3( 0, 0, 1 )
 spread = 124.05
 flatness = 1.0
@@ -460,9 +461,9 @@ tangential_accel = -169.4
 damping = 179.02
 scale = 0.1
 scale_random = 0.1
-scale_curve = SubResource( 89 )
+scale_curve = SubResource( 67 )
 
-[sub_resource type="SpatialMaterial" id=91]
+[sub_resource type="SpatialMaterial" id=69]
 flags_transparent = true
 flags_unshaded = true
 vertex_color_use_as_albedo = true
@@ -474,10 +475,10 @@ particles_anim_v_frames = 1
 particles_anim_loop = false
 albedo_texture = ExtResource( 12 )
 
-[sub_resource type="QuadMesh" id=87]
-material = SubResource( 91 )
+[sub_resource type="QuadMesh" id=70]
+material = SubResource( 69 )
 
-[sub_resource type="CapsuleShape" id=66]
+[sub_resource type="CapsuleShape" id=71]
 radius = 0.459803
 height = 0.564789
 
@@ -491,7 +492,7 @@ tree_root = SubResource( 8 )
 anim_player = NodePath("../ModelContainer/sword_fighter/AnimationPlayer")
 process_mode = 0
 root_motion_track = NodePath("Armature/Skeleton:root")
-parameters/1_and_-1/blend_amount = 0.2
+parameters/1_and_-1/blend_amount = 0.0
 parameters/Seek/seek_position = -1.0
 parameters/TimeScale/scale = 1.0
 parameters/animation_-1_seek/seek_position = -1.0
@@ -565,7 +566,7 @@ script = ExtResource( 6 )
 transform = Transform( -0.6, 0, -9.05975e-08, 0, 0.6, 0, 9.05975e-08, 0, -0.6, 0, 0, 0 )
 
 [node name="BoneAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
-transform = Transform( 1, 0, 0, 0, 0.998474, 0.0552152, 0, -0.0552152, 0.998474, -6.59474e-17, 2.24226, 7.43921e-09 )
+transform = Transform( 0.650024, -0.143625, 0.746218, 0.544018, 0.773576, -0.324998, -0.530578, 0.617213, 0.580978, -0.0357382, 1.6184, 0.0108524 )
 bone_name = "torso"
 
 [node name="Hurtbox" parent="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment" instance=ExtResource( 3 )]
@@ -577,23 +578,25 @@ spawn_hit_effect = true
 bone_name = "throw_pos"
 
 [node name="AnimationPlayer" parent="ModelContainer/sword_fighter" index="1"]
+anims/air_atk_l = ExtResource( 13 )
 anims/air_atk_r = ExtResource( 8 )
 anims/fall = ExtResource( 7 )
 anims/run_loop_c = ExtResource( 9 )
 
 [node name="slash" parent="ModelContainer/sword_fighter" instance=ExtResource( 10 )]
-transform = Transform( 0.94679, 0, -0.321853, 0, 1, 0, 0.321853, 0, 0.94679, 0, 2.15837, 0 )
+transform = Transform( -0.94679, 0, 0.321853, 0, 1, 0, -0.321853, 0, -0.94679, 0, 2.15837, 0 )
+visible = false
 
 [node name="Circle011" parent="ModelContainer/sword_fighter/slash" index="0"]
 material/0 = ExtResource( 11 )
 
 [node name="SlashParticles" type="Particles" parent="ModelContainer"]
-transform = Transform( -0.564907, 0, 0.202188, 0, 0.6, 0, -0.202188, 0, -0.564907, 0, 1.28032, 0 )
+transform = Transform( 0.594963, 8.64912e-08, 0.0775783, 9.05974e-08, -0.6, -2.58764e-08, 0.0775783, 3.73732e-08, -0.594963, 0, 1.28032, 0 )
 emitting = false
 amount = 133
 lifetime = 0.6
-process_material = SubResource( 90 )
-draw_pass_1 = SubResource( 87 )
+process_material = SubResource( 68 )
+draw_pass_1 = SubResource( 70 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -622,7 +625,7 @@ playback/speed = 3.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.74, 0 )
-shape = SubResource( 66 )
+shape = SubResource( 71 )
 __meta__ = {
 "_editor_description_": ""
 }

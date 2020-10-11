@@ -1,5 +1,4 @@
-extends Spatial
-
+extends WorldObject
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -10,6 +9,7 @@ var angle = Vector3.RIGHT
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	set_process(false)
+	get_node("/root/Stage/NetworkInterface").add_world_object(name, self)
 	pass # Replace with function body.
 
 
@@ -23,6 +23,12 @@ func _process(delta):
 	pass
 
 func _on_Hurtbox_received_hit(hit, hurtbox):
+	receive_hit()
+	emit_signal("world_object_event", name, "hit")
+
+func receive_hit():
 	angle = angle.rotated(Vector3.UP, rand_range(-PI, PI))
 	set_process(true)
 	shake_t = 50
+	MainManager.current_level.spawn_effect(Hit.VISUAL_EFFECTS.BLUNT, translation, Vector3.ZERO)
+	

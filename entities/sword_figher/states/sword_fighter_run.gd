@@ -100,34 +100,41 @@ func _process_state(delta):
 #		entity.target_speed -= delta * 50
 		entity.target_speed = lerp(entity.target_speed, entity.min_speed, delta * 3)
 	else:
-		if entity.target_speed > entity.max_speed * entity.input_listener.analogs[7]:
-			entity.target_speed = lerp(entity.target_speed, entity.max_speed * entity.input_listener.analogs[7], delta * 0.5)
+		if entity.input_listener.is_key_pressed(InputManager.UP):
+			entity.target_speed = lerp(entity.target_speed, entity.max_speed, delta * 2)
 		else:
-			entity.target_speed = lerp(entity.target_speed, entity.max_speed * entity.input_listener.analogs[7], delta * 2)
+			if entity.target_speed > entity.max_speed * entity.input_listener.analogs[7]:
+				entity.target_speed = lerp(entity.target_speed, entity.max_speed * entity.input_listener.analogs[7], delta * 0.5)
+			else:
+				entity.target_speed = lerp(entity.target_speed, entity.max_speed * entity.input_listener.analogs[7], delta * 2)
 	
 		if entity.target_speed < entity.min_speed:
 			set_next_state("run_stop")
 			return
 	
 	if entity.is_on_wall():
+				
 		if entity.prev_speed > 10:
 			var wall_normal = entity.get_slide_collision(0).normal
-	#		var wall_position = entity.get_slide_collision(0).position
+			var wall_position = entity.get_slide_collision(0).position
 			var player_vector = -entity.model_container.transform.basis.z
 			var rot = Vector2(player_vector.x, player_vector.z).angle_to(Vector2(wall_normal.x, wall_normal.z))
 			
-	#		if wall_normal.dot(player_vector) < -0.8:
-			entity.velocity *= 1 - abs(wall_normal.dot(player_vector) * 1.5)
-			if entity.target_speed <= entity.max_speed:
-	#			entity.model_container.rotation.y -= (PI * 0.333) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
-				entity.velocity += wall_normal * entity.prev_speed * 0.25
-			else:
-	#			entity.model_container.rotation.y -= (PI * 0.5) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
-				entity.velocity += wall_normal * entity.prev_speed * 0.33
+			entity.velocity *= 1 - abs(wall_normal.dot(player_vector) * 1.0)
+#			if entity.target_speed <= entity.max_speed:
+#	#			entity.model_container.rotation.y -= (PI * 0.333) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
+#				entity.velocity += wall_normal * entity.prev_speed * 0.25
+#			else:
+#	#			entity.model_container.rotation.y -= (PI * 0.5) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
+#				entity.velocity += wall_normal * entity.prev_speed * 0.33
 				
+			entity.velocity += wall_normal * entity.prev_speed * 0.33
 			entity.acceleration = 0.0
 			
-#			if entity.prev_speed > 5:
+			var _hit = Hit.new(Hit.INIT_TYPE.WALL)
+			_hit.position = wall_position
+			entity._receive_hit(_hit)
+
 			if rot > 0.0:
 				entity.set_animation("run_bump_l", 0.0, 20.0)
 			else:
@@ -155,12 +162,8 @@ func _process_state(delta):
 	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
 	
 #	entity.translation = Vector3.ZERO
-	
-##func _animation_blend_started(anim_name):
-##	print(anim_name)
-##	set_next_state("idle")
-##	if anim_name == "off_h_r_heavy":
-#
+
+
 func _animation_finished(anim_name):
 	if anim_name == "run_bump_l" or anim_name == "run_bump_r":
 		entity.set_animation("run_loop_c", 0, 5.0)
@@ -185,9 +188,11 @@ func _animation_finished(anim_name):
 
 func get_possible_transitions():
 	return [
+		"tandem_rope_pull",
+		"tandem_launch_up",
 		"jump",
 		"slide",
-		"air_atk_r",
+		"air_atk",
 		]
 
 func _received_input(key, state):

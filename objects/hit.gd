@@ -41,9 +41,9 @@ var visual_effect_position_average = true
 enum INIT_TYPE {DEFAULT, WALL, PARRY}
 
 func _init(_type):
-#	if _type == INIT_TYPE.WALL:
-#		damage = 5
-#		hitstop = 0.2
+	if _type == INIT_TYPE.WALL:
+		damage = 80
+		hitstop = 0.05
 #	elif _type == INIT_TYPE.PARRY:
 #		damage = 20
 #		tiredness = 75

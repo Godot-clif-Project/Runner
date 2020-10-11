@@ -12,6 +12,7 @@ func _enter_state():
 	entity.velocity.x *= 0.9
 	entity.velocity.z *= 0.9
 	entity.velocity.y *= 0.0
+	entity.hp -= 250
 #	entity.model_container.rotation.y = atan2(vector_to_target.x, vector_to_target.z) + PI
 	
 #	entity.lock_on_target.receive_tandem_action("rope_pull", entity)

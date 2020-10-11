@@ -37,7 +37,8 @@ const STATES = {
 	"tandem_rope_being_pulled" : preload("res://entities/sword_figher/states/sword_fighter_tandem_rope_being_pulled.gd"),
 	"tandem_launch_up" : preload("res://entities/sword_figher/states/sword_fighter_tandem_launch_up.gd"),
 	"air_boost" : preload("res://entities/sword_figher/states/sword_fighter_air_boost.gd"),
-	"air_atk_r" : preload("res://entities/sword_figher/states/sword_fighter_air_atk_r.gd"),
+	"air_atk" : preload("res://entities/sword_figher/states/sword_fighter_air_atk.gd"),
 	"dangle" : preload("res://entities/sword_figher/states/sword_fighter_dangle.gd"),
 	"slide" : preload("res://entities/sword_figher/states/sword_fighter_slide.gd"),
+	"knockout" : preload("res://entities/sword_figher/states/sword_fighter_knockout.gd"),
 	}

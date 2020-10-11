@@ -33,13 +33,19 @@ _global_script_classes=[ {
 "class": "State",
 "language": "GDScript",
 "path": "res://objects/state_machine/state.gd"
+}, {
+"base": "Spatial",
+"class": "WorldObject",
+"language": "GDScript",
+"path": "res://objects/world_object.gd"
 } ]
 _global_script_class_icons={
 "Entity": "",
 "EntityState": "",
 "Hit": "",
 "PeerEntity": "",
-"State": ""
+"State": "",
+"WorldObject": ""
 }
 
 [application]

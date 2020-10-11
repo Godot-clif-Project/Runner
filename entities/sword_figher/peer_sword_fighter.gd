@@ -145,11 +145,12 @@ remote func update_hp(id, new_hp):
 		get_node("../UI/Lifebar2")._on_sword_fighter_hp_changed(new_hp)
 
 remote func dealt_tandem_action(id, action, args):
-	if action == "rope_pull":
-		rope_model.visible = true
-		rope_model.scale.z = translation.distance_to(args[0])
-		rope_model.look_at(args[0], Vector3.UP)
-		get_node("ModelContainer/Rope/AnimationPlayer").play("default")
+#	if action == "rope_pull":
+#		rope_model.visible = true
+#		rope_model.scale.z = translation.distance_to(args[0])
+#		rope_model.look_at(args[0], Vector3.UP)
+#		get_node("ModelContainer/Rope/AnimationPlayer").play("default")
+	pass
 
 func _on_HitstopTimer_timeout():
 	anim_tree["parameters/TimeScale/scale"] = 1.0

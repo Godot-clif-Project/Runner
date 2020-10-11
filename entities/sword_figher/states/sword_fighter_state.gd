@@ -62,11 +62,18 @@ func _process_state(delta):
 #	entity.set_hurtboxes_active(true)
 #	._exit_state()
 
-func _received_hit(hit : Hit):
-	if hit.grab:
-		set_next_state("receive_throw")
-	else:
-		set_next_state("hit_stun")
+func _received_hit(hit):
+	entity.hp -= entity.received_hit.damage
+	if entity.hp == 0.0:
+		set_next_state("knockout")
+#	else:
+#		set_next_state("hit_stun")
+
+#func _received_hit(hit : Hit):
+#	if hit.grab:
+#		set_next_state("receive_throw")
+#	else:
+#		set_next_state("hit_stun")
 #	if entity.flags.is_defending:
 #		return
 #
@@ -201,7 +208,7 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 			InputManager.LIGHT:
 				for t in valid_transitions:
 					match t as String :
-						"air_atk_r":
+						"air_atk":
 							return {"state" : t, "flag" : "is_stringable"}
 						"off_hi_light":
 							return {"state" : t, "flag" : "is_stringable"}
@@ -216,9 +223,10 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 				for t in valid_transitions:
 					match t as String :
 						"tandem_rope_pull":
-							if entity.input_listener.is_key_pressed(InputManager.EVADE):
-								if entity.has_los_to_target(entity.lock_on_target):
-									return {"state" : t, "flag" : null}
+							if entity.hp > 250: 
+								if entity.input_listener.is_key_pressed(InputManager.EVADE):
+									if entity.has_los_to_target(entity.lock_on_target):
+										return {"state" : t, "flag" : null}
 						"off_hi_heavy":
 							return {"state" : t, "flag" : "is_stringable"}
 						"off_hi_heavy_1":

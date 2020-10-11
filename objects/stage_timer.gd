@@ -11,6 +11,11 @@ func receive_input(pad, key, state):
 	if key == InputManager.START and state:
 		start_time = OS.get_ticks_msec()
 		stop_timer = false
+		
+		if not get_tree().has_network_peer():
+			get_node("../AnimationPlayer").play("New Anim")
+		elif get_tree().is_network_server():
+			get_node("../AnimationPlayer").play("New Anim")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

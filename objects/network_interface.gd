@@ -4,8 +4,11 @@ export var enabled = true
 
 var player_entity
 var peer_entity
+var remote_world_objects = {}
 
 func _ready():
+	set_physics_process(false)
+	
 	if enabled and get_tree().has_network_peer():
 		player_entity = get_node("../SwordFighter")
 		peer_entity = get_node("../PeerSwordFighter")
@@ -26,29 +29,61 @@ func _ready():
 
 			player_entity.lock_on_target = peer_entity
 			
+#			get_node("../Dummy").connect("world_object_event", self, "receive_world_object_event")
+			
 			if get_tree().is_network_server():
 				player_entity.setup(1)
 				peer_entity.setup(2)
 				get_node("../UI/PlayerName1").text = NetworkManager.my_info["name"]
 				get_node("../UI/PlayerName2").text = NetworkManager.peers[NetworkManager.peers.keys()[0]]["name"]
+				
+#				add_world_object("Dummy", "../Dummy")
+				set_physics_process(true)
 			else:
 				player_entity.setup(2)
 				peer_entity.setup(1)
 				get_node("../UI/PlayerName1").text = NetworkManager.peers[NetworkManager.peers.keys()[0]]["name"]
 				get_node("../UI/PlayerName2").text = NetworkManager.my_info["name"]
-	
+
 func peer_disconnected(id):
 	enabled = false
 	
 func server_disconnected():
 	enabled = false
+	
+func _physics_process(delta):
+	rpc_unreliable("update_world_objects", {"Dummy" : {"translation" : remote_world_objects["Dummy"].translation}})
+
+func add_world_object(_name, object):
+#	remote_world_objects[_name] = get_node(object_node_path)
+	remote_world_objects[_name] = object
+	remote_world_objects[_name].connect("world_object_event", self, "receive_world_object_event")
+#	rpc("add_remote_world_object", "Dummy", "../Dummy")
+
+#remote func add_remote_world_object(_name, object_node_path):
+#	remote_world_objects[_name] = get_node(object_node_path)
+
+remote func update_world_objects(objects_to_update):
+	for object_name in objects_to_update.keys():
+		for property in objects_to_update[object_name].keys():
+			remote_world_objects[object_name].set(property, objects_to_update[object_name][property])
+
+remote func world_object_event(object_name, event_name):
+	match event_name:
+		"get_grass":
+			remote_world_objects[object_name].grabbed()
+		_:
+			remote_world_objects[object_name].receive_hit()
+	
+func receive_world_object_event(object_name, event_name):
+	rpc("world_object_event", object_name, event_name)
 
 func player_entity_hp_changed(new_value):
 	if enabled:
 		peer_entity.rpc_unreliable("update_hp", NetworkManager.my_id, new_value)
 		
-		if new_value == 0:
-			rpc("round_end", NetworkManager.peers[NetworkManager.peers.keys()[0]]["name"])
+#		if new_value == 0:
+#			rpc("round_end", NetworkManager.peers[NetworkManager.peers.keys()[0]]["name"])
 
 func player_entity_transform_changed(new_value):
 	if enabled:

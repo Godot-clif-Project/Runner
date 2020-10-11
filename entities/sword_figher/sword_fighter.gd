@@ -133,6 +133,9 @@ func _ready():
 	if lock_on_target == null:
 		lock_on_target = get_node(target)
 	
+#	if name == "SwordFighter":
+#		setup(1)
+	
 func setup(side):
 	player_side = side
 	if player_side == 1:
@@ -248,6 +251,8 @@ func _physics_process(delta):
 	if shake_t > 0.0:
 		$ModelContainer/sword_fighter.translation = (Vector3.RIGHT * (shake_t * 0.03)) * sin(shake_t) * 0.1
 		shake_t -= delta * 50
+	
+#	$ModelContainer/sword_fighter/Armature/Skeleton/.set_bone_pose(24, Transform.IDENTITY)
 
 func apply_velocity(delta):
 	if not rigidbodies.empty():
@@ -623,3 +628,6 @@ func _on_HitstopTimer_timeout():
 	$ModelContainer/SlashParticles.speed_scale = timescale
 	$ModelContainer/sword_fighter.translation = Vector3.ZERO
 	pass # Replace with function body.
+
+func get_healing_grass(heal_amount):
+	self.hp += heal_amount

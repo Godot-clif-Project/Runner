@@ -22,7 +22,7 @@ func _enter_state():
 func _exit_state():
 	entity.gravity_scale = 1.0
 	entity.get_node("ModelContainer/sword_fighter/slash").visible = false
-#	entity.get_node("ModelContainer/sword_fighter/SlashParticles").visible = false
+#	entity.get_node("ModelContainer/SlashParticles").visible = false
 	entity.get_node("ModelContainer/SlashParticles").emitting = false
 	._exit_state()
 
@@ -30,7 +30,7 @@ func _process_state(delta):
 	if entity.is_on_wall():
 		entity.get_node("ModelContainer/Hitbox").active = false
 		entity.get_node("ModelContainer/sword_fighter/slash").visible = false
-#		entity.get_node("ModelContainer/sword_fighter/SlashParticles").visible = false
+		entity.get_node("ModelContainer/SlashParticles").visible = false
 		entity.get_node("ModelContainer/SlashParticles").emitting = false
 	._process_state(delta)
 #	if entity.get_current_animation() == "jump_land":
