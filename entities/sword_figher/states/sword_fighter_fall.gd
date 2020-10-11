@@ -45,21 +45,6 @@ func _process_state(delta):
 #			set_next_state("dangle")
 #			return
 					
-	if entity.is_on_wall():
-#			set_next_state("ledge_climb")
-#			return
-		if entity.prev_speed > 5:
-			var wall_normal = entity.get_slide_collision(0).normal
-	#		var wall_position = entity.get_slide_collision(0).position
-			var player_vector = -entity.model_container.transform.basis.z
-			var rot = Vector2(player_vector.x, player_vector.z).angle_to(Vector2(wall_normal.x, wall_normal.z))
-			
-	#		if wall_normal.dot(player_vector) < -0.8:
-			entity.model_container.rotation.y -= (PI * 0.333) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
-			entity.velocity *= 1 - abs(wall_normal.dot(player_vector) * 0.8)
-			entity.velocity += wall_normal * entity.prev_speed * 0.5
-			entity.acceleration = 0.0
-			entity.set_animation("run_bump_l", 0.0, 20.0)
 		
 		
 #		var new_vel = wall_normal * entity.prev_speed * 0.2
@@ -83,6 +68,23 @@ func _process_state(delta):
 func _touched_surface(surface):
 	if surface == "floor":
 		set_next_state("land")
+		return
+	else:
+#			set_next_state("ledge_climb")
+#			return
+		if entity.prev_speed > 5:
+			var wall_normal = entity.get_slide_collision(0).normal
+	#		var wall_position = entity.get_slide_collision(0).position
+			var player_vector = -entity.model_container.transform.basis.z
+			var rot = Vector2(player_vector.x, player_vector.z).angle_to(Vector2(wall_normal.x, wall_normal.z))
+			
+	#		if wall_normal.dot(player_vector) < -0.8:
+			entity.model_container.rotation.y -= (PI * 0.333) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
+			entity.velocity *= 1 - abs(wall_normal.dot(player_vector) * 0.8)
+			entity.velocity += wall_normal * entity.prev_speed * 0.5
+			entity.acceleration = 0.0
+			entity.set_animation("run_bump_l", 0.0, 20.0)
+		
 
 #func _process_state(delta):
 #	entity.apply_root_motion(delta)
@@ -94,6 +96,8 @@ func _touched_surface(surface):
 ##	if anim_name == "off_h_r_heavy":
 #
 func _animation_finished(anim_name):
+	if anim_name == "run_bump_l" or anim_name == "run_bump_r":
+		entity.set_animation("fall", 0.0, 20.0)
 	pass
 
 #	set_next_state("offensive_stance")

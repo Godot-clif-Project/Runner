@@ -112,33 +112,6 @@ func _process_state(delta):
 			set_next_state("run_stop")
 			return
 	
-	if entity.is_on_wall():
-				
-		if entity.prev_speed > 10:
-			var wall_normal = entity.get_slide_collision(0).normal
-			var wall_position = entity.get_slide_collision(0).position
-			var player_vector = -entity.model_container.transform.basis.z
-			var rot = Vector2(player_vector.x, player_vector.z).angle_to(Vector2(wall_normal.x, wall_normal.z))
-			
-			entity.velocity *= 1 - abs(wall_normal.dot(player_vector) * 1.0)
-#			if entity.target_speed <= entity.max_speed:
-#	#			entity.model_container.rotation.y -= (PI * 0.333) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
-#				entity.velocity += wall_normal * entity.prev_speed * 0.25
-#			else:
-#	#			entity.model_container.rotation.y -= (PI * 0.5) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
-#				entity.velocity += wall_normal * entity.prev_speed * 0.33
-				
-			entity.velocity += wall_normal * entity.prev_speed * 0.33
-			entity.acceleration = 0.0
-			
-			var _hit = Hit.new(Hit.INIT_TYPE.WALL)
-			_hit.position = wall_position
-			entity._receive_hit(_hit)
-
-			if rot > 0.0:
-				entity.set_animation("run_bump_l", 0.0, 20.0)
-			else:
-				entity.set_animation("run_bump_r", 0.0, 20.0)
 	
 	# slow down whent turning
 #	entity.target_speed *= 1 - abs(ang_momentum) / (max_turn_speed * 6)
@@ -163,6 +136,34 @@ func _process_state(delta):
 	
 #	entity.translation = Vector3.ZERO
 
+func _touched_surface(surface):
+	if surface == "wall":
+		if entity.prev_speed > 10:
+			var wall_normal = entity.get_slide_collision(0).normal
+			var wall_position = entity.get_slide_collision(0).position
+			var player_vector = -entity.model_container.transform.basis.z
+			var rot = Vector2(player_vector.x, player_vector.z).angle_to(Vector2(wall_normal.x, wall_normal.z))
+			
+			entity.velocity *= 1 - abs(wall_normal.dot(player_vector) * 1.0)
+	#			if entity.target_speed <= entity.max_speed:
+	#	#			entity.model_container.rotation.y -= (PI * 0.333) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
+	#				entity.velocity += wall_normal * entity.prev_speed * 0.25
+	#			else:
+	#	#			entity.model_container.rotation.y -= (PI * 0.5) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
+	#				entity.velocity += wall_normal * entity.prev_speed * 0.33
+				
+			entity.velocity += wall_normal * entity.prev_speed * 0.33
+			entity.acceleration = 0.0
+			
+			var _hit = Hit.new(Hit.INIT_TYPE.WALL)
+			_hit.position = wall_position
+			entity._receive_hit(_hit)
+
+			if rot > 0.0:
+				entity.set_animation("run_bump_l", 0.0, 20.0)
+			else:
+				entity.set_animation("run_bump_r", 0.0, 20.0)
+	
 
 func _animation_finished(anim_name):
 	if anim_name == "run_bump_l" or anim_name == "run_bump_r":

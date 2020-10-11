@@ -74,22 +74,6 @@ func _process_state(delta):
 	else:
 		entity.ground_drag = 8
 	
-	if entity.is_on_wall():
-		var wall_normal = entity.get_slide_collision(0).normal
-#		var wall_position = entity.get_slide_collision(0).position
-		var player_vector = -entity.model_container.transform.basis.z
-		var rot = Vector2(player_vector.x, player_vector.z).angle_to(Vector2(wall_normal.x, wall_normal.z))
-		
-#		if wall_normal.dot(player_vector) < -0.8:
-		entity.velocity *= 1 - abs(wall_normal.dot(player_vector) * 0.8)
-		entity.model_container.rotation.y -= (PI * 0.333) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
-		entity.velocity += wall_normal * entity.prev_speed * 0.3
-		
-		if entity.prev_speed > 5:
-			if rot > 0.0:
-				entity.set_animation("run_bump_l", 0.0, 20.0)
-			else:
-				entity.set_animation("run_bump_r", 0.0, 20.0)
 			
 #	entity.model_container.rotation_degrees.y = clamp(entity.model_container.rotation_degrees.y + ang_momentum, initial_rot - 90, initial_rot + 90)
 	
@@ -107,6 +91,24 @@ func _process_state(delta):
 	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
 	
 #	._process_state(delta)
+
+func _touched_surface(surface):
+	if surface == "wall":
+		var wall_normal = entity.get_slide_collision(0).normal
+#		var wall_position = entity.get_slide_collision(0).position
+		var player_vector = -entity.model_container.transform.basis.z
+		var rot = Vector2(player_vector.x, player_vector.z).angle_to(Vector2(wall_normal.x, wall_normal.z))
+		
+#		if wall_normal.dot(player_vector) < -0.8:
+		entity.velocity *= 1 - abs(wall_normal.dot(player_vector) * 0.8)
+		entity.model_container.rotation.y -= (PI * 0.333) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
+		entity.velocity += wall_normal * entity.prev_speed * 0.3
+		
+		if entity.prev_speed > 5:
+			if rot > 0.0:
+				entity.set_animation("run_bump_l", 0.0, 20.0)
+			else:
+				entity.set_animation("run_bump_r", 0.0, 20.0)
 
 func _animation_finished(anim_name):
 #	if anim_name == "run_stop":

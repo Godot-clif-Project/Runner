@@ -16,12 +16,13 @@ func _exit_state():
 	entity.get_node("ModelContainer/Particles2").emitting = false
 	._exit_state()
 
-func _process_state(delta):
-	if not entity.flags.is_active:
-		entity.apply_velocity(delta)
-		return
-	else:
-		._process_state(delta)
+#func _process_state(delta):
+#	if not entity.flags.is_active:
+#		entity.apply_velocity(delta)
+#		return
+#	else:
+#		._process_state(delta)
+
 #	if entity.get_current_animation() == "jump_land":
 #		entity.set_velocity(Vector3(0.0, 0.0, -Vector2(entity.velocity.x, entity.velocity.z).length()))
 ##		entity.apply_rotation(delta)

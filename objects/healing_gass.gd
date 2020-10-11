@@ -11,6 +11,7 @@ func _ready():
 
 func grabbed():
 	visible = false
+	
 	$Timer.start()
 
 func _on_Timer_timeout():
@@ -21,6 +22,6 @@ func _on_Area_body_entered(body):
 	if visible:
 		if body is Entity:
 			if body.hp < body.max_hp:
-				body.get_healing_grass(heal_amount)
+				body.get_healing_grass(heal_amount, self)
 				grabbed()
 				emit_signal("world_object_event", name, "get_grass")

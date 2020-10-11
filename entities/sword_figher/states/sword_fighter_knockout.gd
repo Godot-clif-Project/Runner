@@ -5,9 +5,10 @@ func get_animation_data():
 	return ["knocked_down", 0.0, 10.0]
 
 # Initialize state here: Set animation, add impulse, etc.
-#func _enter_state():
-#	entity.get_node("ModelContainer/Particles2").emitting = false
-#	._enter_state()
+func _enter_state():
+	entity.model.rotation.z = 0.0
+	entity.get_node("ModelContainer/Particles2").emitting = false
+	._enter_state()
 
 # Inverse of enter_state.
 func _exit_state():
@@ -24,7 +25,7 @@ func _process_state(delta):
 #	entity.apply_root_motion(delta)
 #	if entity.flags.track_target:
 #		entity.apply_tracking(delta)
-	entity.hp += 150 * delta
+	entity.hp += 100 * delta
 	if entity.hp == entity.max_hp:
 		set_next_state("offensive_stance")
 		return

@@ -1,6 +1,6 @@
 [gd_resource type="Environment" load_steps=3 format=2]
 
-[ext_resource path="res://objects/texel_measure_2.png" type="Texture" id=1]
+[ext_resource path="res://objects/texel_measure_3.png" type="Texture" id=1]
 
 [sub_resource type="PanoramaSky" id=1]
 panorama = ExtResource( 1 )
@@ -9,5 +9,11 @@ panorama = ExtResource( 1 )
 background_mode = 2
 background_sky = SubResource( 1 )
 background_color = Color( 0.717647, 0.368627, 0.368627, 1 )
-background_energy = 2.0
+background_energy = 0.75
 fog_color = Color( 0.352941, 0.352941, 0.352941, 1 )
+ssao_enabled = true
+ssao_radius = 3.43
+ssao_intensity = 1.48
+ssao_light_affect = 0.99
+ssao_quality = 0
+ssao_blur = 2

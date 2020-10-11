@@ -197,7 +197,7 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 					match t as String :
 						"air_boost":
 							if entity.air_boosts_left > 0:
-								return {"state" : t, "flag" : "is_stringable"}
+								return {"state" : t, "flag" : "is_evade_cancelable"}
 			InputManager.FIRE:
 				for t in valid_transitions:
 					match t as String :

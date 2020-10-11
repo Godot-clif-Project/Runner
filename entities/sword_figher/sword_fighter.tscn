@@ -264,7 +264,7 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0.983335 ),
+"times": PoolRealArray( 0.221 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ true ]
@@ -858,6 +858,18 @@ tracks/0/keys = {
 "update": 2,
 "values": [ true ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
+"values": [ true ]
+}
 
 [sub_resource type="Animation" id=17]
 length = 0.7
@@ -972,6 +984,18 @@ tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
+"values": [ true ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
 "times": PoolRealArray( 0.1 ),
 "transitions": PoolRealArray( 1 ),
 "update": 2,
@@ -2327,7 +2351,7 @@ color_ramp = SubResource( 82 )
 collision_layer = 2
 collision_mask = 2147483649
 script = ExtResource( 2 )
-ground_drag = 3
+ground_drag = 1
 
 [node name="FSM" parent="." instance=ExtResource( 4 )]
 state_list_script = ExtResource( 5 )
@@ -2337,6 +2361,7 @@ is_active = true
 is_evade_cancelable = true
 is_command_cancelable = true
 is_stringable = true
+track_target = true
 
 [node name="InputListener" parent="." instance=ExtResource( 3 )]
 enabled = true

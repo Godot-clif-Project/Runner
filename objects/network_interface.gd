@@ -44,6 +44,9 @@ func _ready():
 				peer_entity.setup(1)
 				get_node("../UI/PlayerName1").text = NetworkManager.peers[NetworkManager.peers.keys()[0]]["name"]
 				get_node("../UI/PlayerName2").text = NetworkManager.my_info["name"]
+	else:
+		player_entity = get_node("../SwordFighter")
+		player_entity.setup(1)
 
 func peer_disconnected(id):
 	enabled = false
@@ -55,10 +58,11 @@ func _physics_process(delta):
 	rpc_unreliable("update_world_objects", {"Dummy" : {"translation" : remote_world_objects["Dummy"].translation}})
 
 func add_world_object(_name, object):
-#	remote_world_objects[_name] = get_node(object_node_path)
-	remote_world_objects[_name] = object
-	remote_world_objects[_name].connect("world_object_event", self, "receive_world_object_event")
-#	rpc("add_remote_world_object", "Dummy", "../Dummy")
+	if get_tree().has_network_peer():
+	#	remote_world_objects[_name] = get_node(object_node_path)
+		remote_world_objects[_name] = object
+		remote_world_objects[_name].connect("world_object_event", self, "receive_world_object_event")
+	#	rpc("add_remote_world_object", "Dummy", "../Dummy")
 
 #remote func add_remote_world_object(_name, object_node_path):
 #	remote_world_objects[_name] = get_node(object_node_path)

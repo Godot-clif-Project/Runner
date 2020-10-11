@@ -268,6 +268,9 @@ func apply_velocity(delta):
 	emit_signal("position_changed", transform.origin)
 #	emit_signal("transform_changed", transform)
 	
+	if is_on_wall():
+		fsm.receive_event("_touched_surface", "wall")
+	
 #	if input_listener.is_key_pressed(InputManager.JUMP):
 #		if jump_str < max_jump_str:
 #			jump_str += max_jump_str * delta * 4
@@ -629,5 +632,5 @@ func _on_HitstopTimer_timeout():
 	$ModelContainer/sword_fighter.translation = Vector3.ZERO
 	pass # Replace with function body.
 
-func get_healing_grass(heal_amount):
+func get_healing_grass(heal_amount, grass):
 	self.hp += heal_amount
