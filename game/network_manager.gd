@@ -42,7 +42,7 @@ func _network_peer_connected(_id):
 func _network_peer_disconnected(_id):
 	peers.erase(_id)
 	emit_signal("peer_disconnected", _id)
-	disconnect_network()
+#	disconnect_network()
 
 # Callback from SceneTree, only for clients (not server).
 func _connected_to_server():

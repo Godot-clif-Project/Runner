@@ -26,13 +26,8 @@ func _exit_state():
 	entity.get_node("ModelContainer/SlashParticles").emitting = false
 	._exit_state()
 
-func _process_state(delta):
-	if entity.is_on_wall():
-		entity.get_node("ModelContainer/Hitbox").active = false
-		entity.get_node("ModelContainer/sword_fighter/slash").visible = false
-		entity.get_node("ModelContainer/SlashParticles").visible = false
-		entity.get_node("ModelContainer/SlashParticles").emitting = false
-	._process_state(delta)
+#func _process_state(delta):
+#	._process_state(delta)
 #	if entity.get_current_animation() == "jump_land":
 #		entity.set_velocity(Vector3(0.0, 0.0, -Vector2(entity.velocity.x, entity.velocity.z).length()))
 ##		entity.apply_rotation(delta)
@@ -53,7 +48,13 @@ func _process_state(delta):
 #	entity.apply_drag(delta)
 #	entity.center_camera(delta)
 
-#func _touched_surface(surface):
+func _touched_surface(surface):
+	if surface == "wall":
+		entity.get_node("ModelContainer/Hitbox").active = false
+		entity.get_node("ModelContainer/sword_fighter/slash").visible = false
+		entity.get_node("ModelContainer/SlashParticles").visible = false
+		entity.get_node("ModelContainer/SlashParticles").emitting = false
+	._touched_surface(surface)
 #	set_next_state("fall")
 #	return
 #	if surface == "floor": #and entity.flags.is_active:

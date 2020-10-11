@@ -70,11 +70,11 @@ func _process_state(delta):
 #		pass
 	if entity.input_listener.is_key_pressed(InputManager.RIGHT):
 		current_turn_dir = 1
-		turn_acc = lerp(turn_acc, 1, delta * 10)
+		turn_acc = lerp(turn_acc, 1, delta * 5)
 		ang_momentum = clamp(ang_momentum - delta * rot_speed * turn_acc, -max_turn_speed, max_turn_speed)
 	elif entity.input_listener.is_key_pressed(InputManager.LEFT):
 		current_turn_dir = -1
-		turn_acc = lerp(turn_acc, 1, delta * 10)
+		turn_acc = lerp(turn_acc, 1, delta * 5)
 		ang_momentum = clamp(ang_momentum + delta * rot_speed * turn_acc, -max_turn_speed, max_turn_speed) 
 	else:
 		current_turn_dir = 0

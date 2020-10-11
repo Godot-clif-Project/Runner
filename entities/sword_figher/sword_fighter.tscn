@@ -1,4 +1,4 @@
-[gd_scene load_steps=113 format=2]
+[gd_scene load_steps=118 format=2]
 
 [ext_resource path="res://entities/sword_figher/model/sword_fighter.glb" type="PackedScene" id=1]
 [ext_resource path="res://entities/sword_figher/sword_fighter.gd" type="Script" id=2]
@@ -1994,9 +1994,33 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=43]
 length = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimationFlags:is_stringable")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=44]
 length = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimationFlags:is_stringable")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=45]
 length = 0.833333
@@ -2198,6 +2222,47 @@ tracks/0/keys = {
 "values": [ 0.0, 1.0 ]
 }
 
+[sub_resource type="SpatialMaterial" id=88]
+flags_transparent = true
+flags_unshaded = true
+vertex_color_use_as_albedo = true
+params_blend_mode = 1
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_texture = ExtResource( 24 )
+
+[sub_resource type="Gradient" id=89]
+offsets = PoolRealArray( 0, 0.304878, 1 )
+colors = PoolColorArray( 0.486465, 1, 0.171875, 1, 0.742371, 1, 0.507813, 1, 0, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=90]
+gradient = SubResource( 89 )
+
+[sub_resource type="Curve" id=68]
+_data = [ Vector2( 0, 0.501078 ), 0.0, -3.99274, 0, 0, Vector2( 0.167273, 0.164871 ), -0.22578, -0.22578, 0, 0, Vector2( 1, 0.0581896 ), -0.118534, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=91]
+curve = SubResource( 68 )
+
+[sub_resource type="ParticlesMaterial" id=92]
+emission_shape = 1
+emission_sphere_radius = 1.5
+direction = Vector3( 0, 0, 0 )
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 0.4
+angular_velocity = 223.1
+angular_velocity_random = 0.24
+radial_accel = -15.05
+damping = 3.6
+scale_random = 0.83
+scale_curve = SubResource( 91 )
+color_ramp = SubResource( 90 )
+
+[sub_resource type="QuadMesh" id=71]
+
 [sub_resource type="Curve" id=60]
 _data = [ Vector2( 0.250909, 0 ), 0.0, 0.055563, 0, 0, Vector2( 0.250909, 1 ), -1.38996, -1.38996, 0, 0, Vector2( 1, 0 ), -0.00435815, 0.0, 0, 0 ]
 
@@ -2242,9 +2307,6 @@ colors = PoolColorArray( 0.681641, 0.489087, 0.274254, 1, 0.333984, 0.198767, 0.
 [sub_resource type="GradientTexture" id=67]
 gradient = SubResource( 66 )
 
-[sub_resource type="Curve" id=68]
-_data = [ Vector2( 0, 0.517241 ), 0.0, 1.41379, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
-
 [sub_resource type="CurveTexture" id=69]
 curve = SubResource( 68 )
 
@@ -2263,8 +2325,6 @@ angle = 32.2
 scale = 2.0
 scale_curve = SubResource( 69 )
 color_ramp = SubResource( 67 )
-
-[sub_resource type="QuadMesh" id=71]
 
 [sub_resource type="QuadMesh" id=72]
 material = ExtResource( 15 )
@@ -2360,7 +2420,6 @@ state_list_script = ExtResource( 5 )
 is_active = true
 is_evade_cancelable = true
 is_command_cancelable = true
-is_stringable = true
 track_target = true
 
 [node name="InputListener" parent="." instance=ExtResource( 3 )]
@@ -2462,13 +2521,23 @@ material/0 = ExtResource( 12 )
 material/0 = ExtResource( 12 )
 
 [node name="BoneAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
-transform = Transform( 1, 0, 0, 0, 0.998474, 0.0552152, 0, -0.0552152, 0.998474, -6.59474e-17, 2.24226, 7.43921e-09 )
+transform = Transform( 0.806477, 0.214895, 0.550831, -0.173874, 0.976617, -0.126435, -0.565122, 0.00619193, 0.824984, 0.00421186, 1.61083, 0.0506461 )
 bone_name = "torso"
 
 [node name="Hurtbox" parent="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment" instance=ExtResource( 11 )]
 transform = Transform( 0.547956, -1.49012e-08, 3.72529e-08, 2.98023e-08, 0.547956, -1.04308e-07, -5.21541e-08, -1.49012e-07, 0.547957, 5.96046e-08, 0.25754, -1.19209e-07 )
 visible = false
-spawn_hit_effect = true
+
+[node name="ParticlesHeal" type="Particles" parent="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment"]
+transform = Transform( 1, -4.42378e-09, 2.98023e-08, -1.55997e-08, 1, -1.39698e-09, 2.98023e-08, 1.76951e-08, 1, -5.96046e-08, 0.344416, 0 )
+material_override = SubResource( 88 )
+emitting = false
+amount = 20
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource( 92 )
+draw_pass_1 = SubResource( 71 )
 
 [node name="ThrowAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="3"]
 bone_name = "throw_pos"
@@ -2484,7 +2553,6 @@ blend_times = [ "def_hi_light", "offensive_stance", 1.0, "off_hi_fierce", "offen
 
 [node name="slash" parent="ModelContainer/sword_fighter" instance=ExtResource( 22 )]
 transform = Transform( -0.94679, 0, 0.321853, 0, 1, 0, -0.321853, 0, -0.94679, 0, 2.15837, 0 )
-visible = false
 
 [node name="Circle011" parent="ModelContainer/sword_fighter/slash" index="0"]
 material/0 = ExtResource( 23 )
@@ -2553,7 +2621,6 @@ cast_to = Vector3( 0, -1.25, 0 )
 
 [node name="ParticlesBoost" type="Particles" parent="ModelContainer"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.17098, -0.236003 )
-visible = false
 material_override = ExtResource( 15 )
 emitting = false
 amount = 400
@@ -2624,6 +2691,7 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.73
 shape = SubResource( 1 )
 
 [node name="HitstopTimer" type="Timer" parent="."]
+one_shot = true
 [connection signal="flag_changed" from="AnimationFlags" to="." method="_on_AnimationFlags_flag_changed"]
 [connection signal="received_input" from="InputListener" to="." method="_on_InputListener_received_input"]
 [connection signal="animation_finished" from="AnimationEvents" to="." method="_on_AnimationEvents_animation_finished"]

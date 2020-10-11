@@ -22,7 +22,7 @@ func _player_connected(_id):
 		$StartNetGame.disabled = false
 	else:
 		label.text = "Connected to server."
-	$Ping.disabled = false
+#	$Ping.disabled = false
 
 func _player_disconnected(_id):
 	update_peer_list()

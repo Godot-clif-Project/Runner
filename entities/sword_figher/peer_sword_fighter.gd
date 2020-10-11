@@ -71,6 +71,8 @@ func _physics_process(delta):
 	if shake_t > 0.0:
 		$ModelContainer/sword_fighter.translation = (Vector3.RIGHT * (shake_t * 0.03)) * sin(shake_t) * 0.1
 		shake_t -= delta * 50
+	else:
+		set_physics_process(false)
 
 func receive_throw(pos, rot, _throwing_entity):
 	throwing_entity = _throwing_entity
@@ -156,4 +158,4 @@ func _on_HitstopTimer_timeout():
 	anim_tree["parameters/TimeScale/scale"] = 1.0
 	$AnimationEvents.playback_speed = 1.0
 	$ModelContainer/SlashParticles.speed_scale = 1.0
-	set_physics_process(false)
+#	set_physics_process(false)

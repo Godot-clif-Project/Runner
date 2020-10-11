@@ -95,7 +95,7 @@ func _process_state(delta):
 func _touched_surface(surface):
 	if surface == "wall":
 		var wall_normal = entity.get_slide_collision(0).normal
-#		var wall_position = entity.get_slide_collision(0).position
+		var wall_position = entity.get_slide_collision(0).position
 		var player_vector = -entity.model_container.transform.basis.z
 		var rot = Vector2(player_vector.x, player_vector.z).angle_to(Vector2(wall_normal.x, wall_normal.z))
 		
@@ -103,6 +103,10 @@ func _touched_surface(surface):
 		entity.velocity *= 1 - abs(wall_normal.dot(player_vector) * 0.8)
 		entity.model_container.rotation.y -= (PI * 0.333) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
 		entity.velocity += wall_normal * entity.prev_speed * 0.3
+		
+		var _hit = Hit.new(Hit.INIT_TYPE.WALL)
+		_hit.position = wall_position
+		entity._receive_hit(_hit)
 		
 		if entity.prev_speed > 5:
 			if rot > 0.0:

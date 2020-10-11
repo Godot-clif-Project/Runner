@@ -76,7 +76,8 @@ func get_possible_transitions():
 #	entity.apply_drag(delta)
 #	entity.center_camera(delta)
 
-#func _touched_surface(surface):
+func _touched_surface(surface):
+	pass
 #	if surface == "floor": #and entity.flags.is_active:
 #		entity.on_ground = true
 ##		print(falling_speed)
