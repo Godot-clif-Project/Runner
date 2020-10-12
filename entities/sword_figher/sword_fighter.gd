@@ -263,7 +263,7 @@ func _physics_process(delta):
 				else:
 					camera_point.translation.z = distance - 0.1
 				
-		if $CameraPointPivot/Position3D/CameraCollision.get_overlapping_bodies().empty():
+		elif $CameraPointPivot/Position3D/CameraCollision.get_overlapping_bodies().empty():
 			if camera_point.translation.z < 3.5:
 				camera_point.translation.z += delta
 		camera_raycast.cast_to = camera_point.translation + Vector3(0.0, 0.0, 0.1)

@@ -118,26 +118,25 @@ remote func update_animation(id, anim_name, seek_pos, blend_speed):
 
 	# Blend animations:
 
-	if animation_blender.is_playing():
-		animation_blender.stop(false)
-#		print(animation_blender.current_animation_position)
+	animation_blender.stop_all()
 
 	if animation_slot == 1:
 		if blend_speed == -1.0:
 			anim_tree["parameters/1_and_-1/blend_amount"] = 1.0
 			pass
 		else:
-			animation_blender.play("blend_animation_1_animation_-1", -1, blend_speed)
+			animation_blender.interpolate_property(anim_tree, "parameters/1_and_-1/blend_amount", 0.0, 1.0, blend_speed, Tween.TRANS_LINEAR)
 #			prints("start blending from slot 0", anim_tree.tree_root.get_node("animation_0").animation,
 #			"to", anim_tree.tree_root.get_node("animation_1").animation)
 	else:
 		if blend_speed == -1.0:
 			anim_tree["parameters/1_and_-1/blend_amount"] = 0.0
 		else:
-			animation_blender.play("blend_animation_1_animation_-1", -1, -blend_speed, true)
+			animation_blender.interpolate_property(anim_tree, "parameters/1_and_-1/blend_amount", 1.0, 0.0, blend_speed, Tween.TRANS_LINEAR)
 #			prints("start blending from slot 1", anim_tree.tree_root.get_node("animation_1").animation,
 #			"to", anim_tree.tree_root.get_node("animation_0").animation)
-
+	
+	animation_blender.start()
 	animation_slot = -animation_slot
 	
 remote func update_hp(id, new_hp):

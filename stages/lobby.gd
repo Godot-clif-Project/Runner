@@ -117,7 +117,8 @@ func _on_StartNetGame_pressed():
 
 func _on_StartSingleGame_pressed():
 	NetworkManager.disconnect_network()
-	visible = false
+#	visible = false
+	self.queue_free()
 	get_tree().root.add_child(STAGE.instance())
 
 func _on_Port_text_changed(new_text):

@@ -238,8 +238,8 @@ amount = 20
 lifetime = 1.0
 local_coords = false
 
-[node name="AnimationPlayer" parent="SwordFighter2/ModelContainer/sword_fighter" index="1"]
-blend_times = [ "def_hi_light", "offensive_stance", 1.0, "off_hi_fierce", "offensive_stance", 0.5, "offensive_stance", "off_hi_fierce", 0.2 ]
+[node name="SlashParticles" parent="SwordFighter2/ModelContainer" index="1"]
+transform = Transform( 0.915375, 9.97891e-08, 0.119357, 1.39388e-07, -0.692249, -3.98119e-08, 0.119357, 4.31193e-08, -0.915375, 0, 1.28032, 0 )
 
 [node name="ParticlesBoost" parent="SwordFighter2/ModelContainer" index="12"]
 visible = false
@@ -247,11 +247,18 @@ visible = false
 [node name="Particles2" parent="SwordFighter2/ModelContainer" index="13"]
 material_override = ExtResource( 21 )
 
+[node name="CameraPointPivot" parent="SwordFighter2" index="8"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )
+
+[node name="Position3D" parent="SwordFighter2/CameraPointPivot" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.627604, 3.5 )
+
 [node name="CameraCollision" parent="SwordFighter2/CameraPointPivot/Position3D" index="0"]
 monitorable = true
 collision_layer = 1
 
 [node name="RayCast" parent="SwordFighter2/CameraPointPivot" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.627604, 0 )
 enabled = true
 cast_to = Vector3( 0, 0, 3.7 )
 

@@ -25,10 +25,11 @@ uniform vec3 wind_amplitude = vec3(0.1);
 void vertex(){
 	UV=UV*uv1_scale.xy+uv1_offset.xy;
 	vec4 world_pos = vec4(VERTEX, 1.0) * WORLD_MATRIX;
+//	vec4 world_pos = vec4(float(INSTANCE_ID));
 //	vec4 world_pos = vec4(1.0);
-	VERTEX.x = VERTEX.x + sin(TIME * wind_strength * sin(world_pos.x)) * wind_amplitude.x * (1.0 - UV.y);
-	VERTEX.y = VERTEX.y + cos(TIME * wind_strength * sin(world_pos.y)) * wind_amplitude.y * (1.0 - UV.y);
-	VERTEX.z = VERTEX.z + cos(TIME * wind_strength * sin(world_pos.z)) * wind_amplitude.z * (1.0 - UV.y);
+	VERTEX.x = VERTEX.x + sin(TIME * wind_strength * mod(world_pos.x, 1.0)) * wind_amplitude.x * (1.0 - UV.y);
+	VERTEX.y = VERTEX.y + cos(TIME * wind_strength * mod(world_pos.y, 1.0)) * wind_amplitude.y * (1.0 - UV.y);
+	VERTEX.z = VERTEX.z + cos(TIME * wind_strength * mod(world_pos.z, 1.0)) * wind_amplitude.z * (1.0 - UV.y);
 }
 
 void fragment() {
