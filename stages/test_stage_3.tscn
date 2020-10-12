@@ -204,7 +204,6 @@ shadow_enabled = true
 [node name="NetworkInterface" parent="." instance=ExtResource( 19 )]
 
 [node name="InterpolatedCamera" parent="." instance=ExtResource( 2 )]
-transform = Transform( -0.00497429, -0.459186, 0.888326, 0, 0.888337, 0.459192, -0.999988, 0.00228415, -0.00441885, 5.30534, 3.75645, -0.193563 )
 
 [node name="PeerSwordFighter" parent="." instance=ExtResource( 18 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -43.0515, 0, 0 )
@@ -221,55 +220,32 @@ target = NodePath("../SwordFighter")
 is_stringable = true
 track_target = false
 
-[node name="AnimationTree" parent="SwordFighter2" index="5"]
-anim_player = NodePath("../ModelContainer/sword_fighter/AnimationPlayer")
-process_mode = 0
-root_motion_track = NodePath("Armature/Skeleton:root")
-parameters/1_and_-1/blend_amount = 0.2
-parameters/Add2/add_amount = 0.0
-parameters/Blend2/blend_amount = 0.0
-parameters/Seek/seek_position = -1.0
-parameters/TimeScale/scale = 1.0
-parameters/animation_-1_seek/seek_position = -1.0
-parameters/animation_1_seek/seek_position = -1.0
-
 [node name="Skeleton" parent="SwordFighter2/ModelContainer/sword_fighter/Armature" index="0"]
 bones/7/bound_children = [ NodePath("BoneAttachment") ]
 bones/23/bound_children = [ NodePath("ThrowAttachment") ]
 
 [node name="Cube" parent="SwordFighter2/ModelContainer/sword_fighter/Armature/Skeleton" index="0"]
-transform = Transform( 1, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1, 0, 0, 0 )
 material/0 = ExtResource( 9 )
 
 [node name="sword" parent="SwordFighter2/ModelContainer/sword_fighter/Armature/Skeleton" index="1"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 material/0 = ExtResource( 9 )
 
 [node name="BoneAttachment" parent="SwordFighter2/ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
 transform = Transform( 1, 0, 0, 0, 0.998474, 0.0552152, 0, -0.0552152, 0.998474, -6.59474e-17, 2.24226, 7.43921e-09 )
-visible = true
-bone_name = "torso"
-
-[node name="Hurtbox" parent="SwordFighter2/ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment" index="0"]
-transform = Transform( 0.547956, -1.49012e-08, 3.72529e-08, 2.98023e-08, 0.547956, -1.04308e-07, -5.21541e-08, -1.49012e-07, 0.547957, 5.96046e-08, 0.25754, -1.19209e-07 )
 
 [node name="ParticlesHeal" parent="SwordFighter2/ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment" index="1"]
-transform = Transform( 1, -4.42378e-09, 2.98023e-08, -1.55997e-08, 1, -1.39698e-09, 2.98023e-08, 1.76951e-08, 1, -5.96046e-08, 0.344416, 0 )
 amount = 20
 lifetime = 1.0
 local_coords = false
 
-[node name="SlashParticles" parent="SwordFighter2/ModelContainer" index="1"]
-transform = Transform( 0.915375, 9.97891e-08, 0.119357, 1.39388e-07, -0.692249, -3.98119e-08, 0.119357, 4.31193e-08, -0.915375, 0, 1.28032, 0 )
+[node name="AnimationPlayer" parent="SwordFighter2/ModelContainer/sword_fighter" index="1"]
+blend_times = [ "def_hi_light", "offensive_stance", 1.0, "off_hi_fierce", "offensive_stance", 0.5, "offensive_stance", "off_hi_fierce", 0.2 ]
 
 [node name="ParticlesBoost" parent="SwordFighter2/ModelContainer" index="12"]
 visible = false
 
 [node name="Particles2" parent="SwordFighter2/ModelContainer" index="13"]
 material_override = ExtResource( 21 )
-
-[node name="Position3D" parent="SwordFighter2/CameraPointPivot" index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.5 )
 
 [node name="CameraCollision" parent="SwordFighter2/CameraPointPivot/Position3D" index="0"]
 monitorable = true
@@ -764,7 +740,7 @@ material/0 = null
 "anims/New Anim" = SubResource( 9 )
 
 [node name="Dummy" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.64573, 1.74664, -4.14881 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.95699, 1.69849, -4.6369 )
 script = ExtResource( 17 )
 
 [node name="Model" type="MeshInstance" parent="Dummy"]
@@ -1001,5 +977,3 @@ material/0 = null
 [editable path="SwordFighter2/ModelContainer/sword_fighter"]
 
 [editable path="Bounds/Box"]
-
-[editable path="Scene Root"]
