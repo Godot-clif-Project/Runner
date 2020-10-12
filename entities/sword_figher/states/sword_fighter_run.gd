@@ -18,7 +18,7 @@ var prev_turn_dir = 0
 
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
-	entity.set_animation("run_loop_c", 0, 10.0)
+	entity.set_animation("run_loop_c", 0, 0.05)
 #	if entity.horizontal_speed > entity.target_speed:
 #		entity.velocity = entity.velocity.normalized() * entity.target_speed
 	entity.model.rotation.z = 0.0
@@ -62,26 +62,26 @@ func _process_state(delta):
 #			entity.set_collision_mask_bit(0, true)
 		
 #	var stick = entity.input_listener.analogs[0]
-#	if abs(stick) > 0.1:
 #		turn = -stick
 #		ang_momentum = clamp(ang_momentum + delta * rot_speed * -stick * 0.5, -max_turn_speed, max_turn_speed)
 #		ang_momentum = clamp(-stick * max_turn_speed, -max_turn_speed, max_turn_speed)
 #		ang_momentum = lerp(ang_momentum, -stick * max_turn_speed, delta * rot_lerp)
 #		pass
-	if entity.input_listener.is_key_pressed(InputManager.RIGHT):
-		current_turn_dir = 1
-		turn_acc = lerp(turn_acc, 1, delta * 5)
-		ang_momentum = clamp(ang_momentum - delta * rot_speed * turn_acc, -max_turn_speed, max_turn_speed)
-	elif entity.input_listener.is_key_pressed(InputManager.LEFT):
-		current_turn_dir = -1
-		turn_acc = lerp(turn_acc, 1, delta * 5)
-		ang_momentum = clamp(ang_momentum + delta * rot_speed * turn_acc, -max_turn_speed, max_turn_speed) 
-	else:
-		current_turn_dir = 0
-#		turn = lerp(turn, 0, delta * 4)
-#		ang_momentum = lerp(ang_momentum, 0, delta * rot_lerp)
-#		var n = entity.velocity.normalized()
-#		entity.model_container.rotation.y = lerp_angle(entity.model_container.rotation.y, atan2(n.z, n.x), delta * 4)
+	if abs(entity.input_listener.analogs[0]) == 0.0:
+		if entity.input_listener.is_key_pressed(InputManager.RIGHT):
+			current_turn_dir = 1
+			turn_acc = lerp(turn_acc, 1, delta * 5)
+			ang_momentum = clamp(ang_momentum - delta * rot_speed * turn_acc, -max_turn_speed, max_turn_speed)
+		elif entity.input_listener.is_key_pressed(InputManager.LEFT):
+			current_turn_dir = -1
+			turn_acc = lerp(turn_acc, 1, delta * 5)
+			ang_momentum = clamp(ang_momentum + delta * rot_speed * turn_acc, -max_turn_speed, max_turn_speed) 
+		else:
+			current_turn_dir = 0
+	#		turn = lerp(turn, 0, delta * 4)
+	#		ang_momentum = lerp(ang_momentum, 0, delta * rot_lerp)
+	#		var n = entity.velocity.normalized()
+	#		entity.model_container.rotation.y = lerp_angle(entity.model_container.rotation.y, atan2(n.z, n.x), delta * 4)
 
 	ang_momentum = lerp(ang_momentum, -entity.input_listener.analogs[0] * max_turn_speed * (1 - (entity.target_speed / entity.boost_speed) * 0.5), delta * rot_lerp)
 #	ang_momentum = lerp(ang_momentum, -stick * max_turn_speed, delta * rot_lerp)
@@ -157,17 +157,18 @@ func _touched_surface(surface):
 			
 			var _hit = Hit.new(Hit.INIT_TYPE.WALL)
 			_hit.position = wall_position
+			_hit.damage = entity.prev_speed * 2
 			entity._receive_hit(_hit)
 
 			if rot > 0.0:
-				entity.set_animation("run_bump_l", 0.0, 20.0)
+				entity.set_animation("run_bump_l", 0.0, 0.05)
 			else:
-				entity.set_animation("run_bump_r", 0.0, 20.0)
+				entity.set_animation("run_bump_r", 0.0, 0.05)
 	
 
 func _animation_finished(anim_name):
 	if anim_name == "run_bump_l" or anim_name == "run_bump_r":
-		entity.set_animation("run_loop_c", 0, 5.0)
+		entity.set_animation("run_loop_c", 0, 0.25)
 	pass
 #	if anim_name == "off_run_startup":
 #		if entity.input_listener.is_key_released(InputManager.RUN):
@@ -192,6 +193,7 @@ func get_possible_transitions():
 		"tandem_rope_pull",
 		"tandem_launch_up",
 		"jump",
+		"sidestep",
 		"slide",
 		"air_atk",
 		]
@@ -201,7 +203,7 @@ func _received_input(key, state):
 		if key == InputManager.BREAK:
 			set_next_state("run_stop")
 			return
-		if key == InputManager.BOOST or key == InputManager.UP_UP:
+		if key == InputManager.RUN_RUN or key == InputManager.UP_UP:
 			if entity.target_speed <= entity.max_speed:
 				entity.target_speed = entity.boost_speed
 				entity.acceleration = 0.85

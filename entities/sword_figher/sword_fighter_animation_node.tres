@@ -25,7 +25,7 @@ animation = "t_pose"
 [sub_resource type="AnimationNodeTimeSeek" id=10]
 
 [resource]
-graph_offset = Vector2( 22, -162.75 )
+graph_offset = Vector2( 187, -85 )
 nodes/1_and_-1/node = SubResource( 1 )
 nodes/1_and_-1/position = Vector2( 700, -80 )
 nodes/Add2/node = SubResource( 2 )

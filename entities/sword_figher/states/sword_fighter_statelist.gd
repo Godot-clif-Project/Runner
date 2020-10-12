@@ -41,4 +41,5 @@ const STATES = {
 	"dangle" : preload("res://entities/sword_figher/states/sword_fighter_dangle.gd"),
 	"slide" : preload("res://entities/sword_figher/states/sword_fighter_slide.gd"),
 	"knockout" : preload("res://entities/sword_figher/states/sword_fighter_knockout.gd"),
+	"sidestep" : preload("res://entities/sword_figher/states/sword_fighter_sidestep.gd"),
 	}

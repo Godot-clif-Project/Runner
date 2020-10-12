@@ -5,7 +5,7 @@ var t = 0.0
 
 func get_animation_data():
 	# Name, seek and blend length 
-	return ["dangle", 0.0, 16.0]
+	return ["dangle", 0.0, 0.05]
 
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():

@@ -6,7 +6,7 @@ var initial_distance_to_target
 
 func get_animation_data():
 	# Name, seek and blend length 
-	return ["t_pose", 0.0, 16.0]
+	return ["t_pose", 0.0, 0.05]
 
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():

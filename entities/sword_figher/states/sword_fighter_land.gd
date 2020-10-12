@@ -15,7 +15,7 @@ func _enter_state():
 	entity.model.rotation.z = 0.0
 	
 	if entity.falling_speed < -25:
-		entity.set_animation("jump_land", 0.0, 8.0)
+		entity.set_animation("jump_land", 0.0, 0.05)
 #		entity.velocity *= 0.5
 	elif entity.input_listener.is_key_pressed(InputManager.RUN) or entity.input_listener.is_key_pressed(InputManager.UP):
 #			set_next_state("off_run_startup")

@@ -18,6 +18,7 @@ func get_possible_transitions():
 	return [
 		"jump",
 		"run",
+		"sidestep",
 		"slide",
 		"off_run_startup",
 		"walk",
@@ -49,8 +50,8 @@ func _process_state(delta):
 #		entity.apply_tracking(delta)
 	entity.apply_drag(delta)
 	entity.apply_gravity(delta)
-	entity.apply_root_motion(delta)
-#	entity.apply_velocity(delta)
+#	entity.apply_root_motion(delta)
+	entity.apply_velocity(delta)
 #
 #	._process_state(delta)
 
@@ -63,7 +64,7 @@ func _process_state(delta):
 #	._exit_state()
 
 func _received_hit(hit):
-	entity.hp -= entity.received_hit.damage
+	entity.hp -= hit.damage
 	if entity.hp == 0.0:
 		set_next_state("knockout")
 #	else:
@@ -201,6 +202,9 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 			InputManager.FIRE:
 				for t in valid_transitions:
 					match t as String :
+						"sidestep":
+							if entity.input_listener.is_key_pressed(InputManager.LEFT) or entity.input_listener.is_key_pressed(InputManager.RIGHT):
+								return {"state" : t, "flag" : null}
 						"slide":
 							if entity.horizontal_speed > 10:
 								return {"state" : t, "flag" : null}

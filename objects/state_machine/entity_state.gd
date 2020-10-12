@@ -28,6 +28,16 @@ func clear_received_events():
 	}
 
 func process_received_events():
+	for arg in received_events["_touched_surface"]:
+		call("_touched_surface", arg)
+		if stop_processing_events:
+			return
+			
+	for arg in received_events["_received_hit"]:
+		call("_received_hit", arg)
+		if stop_processing_events:
+			return
+	
 	received_events["_received_input"].invert()
 	for arg_array in received_events["_received_input"]:
 		callv("_received_input", arg_array)
@@ -96,16 +106,6 @@ func process_received_events():
 		
 	for arg in received_events["_animation_blend_started"]:
 		call("_animation_blend_started", arg)
-		if stop_processing_events:
-			return
-		
-	for arg in received_events["_touched_surface"]:
-		call("_touched_surface", arg)
-		if stop_processing_events:
-			return
-		
-	for arg in received_events["_received_hit"]:
-		call("_received_hit", arg)
 		if stop_processing_events:
 			return
 	

@@ -19,7 +19,7 @@ var old_direction = Vector2.ZERO
 func _enter_state():
 	add_direction()
 	old_direction = direction
-	entity.set_animation(DIRECTION_ANIMS[direction], -1, 10.0)
+	entity.set_animation(DIRECTION_ANIMS[direction], -1, 0.25)
 	pass
 
 # Inverse of enter_state.
@@ -41,7 +41,7 @@ func _process_state(delta):
 		return
 		
 	elif old_direction != direction:
-		entity.set_animation(DIRECTION_ANIMS[direction], 0, 6.0)
+		entity.set_animation(DIRECTION_ANIMS[direction], 0, 0.2)
 		old_direction = direction
 	
 #	entity.anim_tree["parameters/walk_blend/blend_position"] = direction #* blend_amount

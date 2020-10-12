@@ -21,20 +21,20 @@ extends "res://entities/sword_figher/states/sword_fighter_state.gd"
 func _animation_finished(anim_name):
 	set_next_state("offensive_stance")
 
-func _flag_changed(flag, state):
-	if flag == "is_evade_cancelable" and state:
-#		if entity.input_listener.is_key_pressed(InputManager.RUN):
-#			set_next_state("off_block")
-#			return
-		if entity.input_listener.is_key_pressed(InputManager.UP):
-			set_next_state("walk")
-		if entity.input_listener.is_key_pressed(InputManager.DOWN):
-			set_next_state("walk")
-		if entity.input_listener.is_key_pressed(InputManager.LEFT):
-			set_next_state("walk")
-		if entity.input_listener.is_key_pressed(InputManager.RIGHT):
-			set_next_state("walk")
-	pass
+#func _flag_changed(flag, state):
+#	if flag == "is_evade_cancelable" and state:
+##		if entity.input_listener.is_key_pressed(InputManager.RUN):
+##			set_next_state("off_block")
+##			return
+#		if entity.input_listener.is_key_pressed(InputManager.UP):
+#			set_next_state("walk")
+#		if entity.input_listener.is_key_pressed(InputManager.DOWN):
+#			set_next_state("walk")
+#		if entity.input_listener.is_key_pressed(InputManager.LEFT):
+#			set_next_state("walk")
+#		if entity.input_listener.is_key_pressed(InputManager.RIGHT):
+#			set_next_state("walk")
+#	pass
 
 func _dealt_hit(collided_entity):
 	entity.flags.track_target = true

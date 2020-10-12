@@ -16,7 +16,7 @@ var speed = 0.0
 
 func get_animation_data():
 	# Name, seek and blend length 
-	return ["run_stop", 0.0, 30.0]
+	return ["run_stop", 0.0, 0.05]
 
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
@@ -110,9 +110,9 @@ func _touched_surface(surface):
 		
 		if entity.prev_speed > 5:
 			if rot > 0.0:
-				entity.set_animation("run_bump_l", 0.0, 20.0)
+				entity.set_animation("run_bump_l", 0.0, 0.05)
 			else:
-				entity.set_animation("run_bump_r", 0.0, 20.0)
+				entity.set_animation("run_bump_r", 0.0, 0.05)
 
 func _animation_finished(anim_name):
 #	if anim_name == "run_stop":

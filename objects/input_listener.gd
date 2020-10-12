@@ -72,7 +72,7 @@ func _input(event):
 			mouse_motion = event.relative
 		elif event is InputEventJoypadMotion:
 #			if event.device == listen_to_pads[0]:
-			if abs(event.axis_value) > 0.05:
+			if abs(event.axis_value) > 0.1:
 				analogs[event.axis] = event.axis_value
 			else:
 				analogs[event.axis] = 0.0

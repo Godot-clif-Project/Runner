@@ -30,7 +30,7 @@ func _enter_state():
 	entity.ground_drag = 20
 	
 	entity.wall_rot = entity.get_normal()
-	entity.set_animation("run_loop", 0, 10.0)
+	entity.set_animation("run_loop", 0, 0.05)
 	entity.has_wall_run = false
 #	entity.model_container.rotation.y = entity.wall_rot.y - PI
 #	if entity.horizontal_speed > target_speed:

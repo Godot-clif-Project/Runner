@@ -2,7 +2,7 @@ extends "res://entities/sword_figher/states/sword_fighter_offensive_moves.gd"
 
 func get_animation_data():
 	# Name, seek and blend length 
-	return ["off_run_startup", 0.0, 10.0]
+	return ["off_run_startup", 0.0, 0.05]
 
 # Initialize state here: Set animation, add impulse, etc.
 func _enter_state():

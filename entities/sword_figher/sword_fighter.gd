@@ -78,11 +78,14 @@ var timescale = 1.0
 var hitstop = false
 var shake_t = 0.0
 
-onready var input_listener = $InputListener
-onready var model = $ModelContainer/sword_fighter
 onready var camera_pivot = $CameraPointPivot
 onready var camera_point = $CameraPointPivot/Position3D
+onready var camera_raycast = $CameraPointPivot/RayCast
 onready var default_camera_pos = $CameraPointPivot/Position3D.translation
+var camera = null
+
+onready var input_listener = $InputListener
+onready var model = $ModelContainer/sword_fighter
 onready var model_container = $ModelContainer
 onready var anim_tree = $AnimationTree
 onready var anim_player = $ModelContainer/sword_fighter/AnimationPlayer
@@ -132,6 +135,8 @@ func _ready():
 	emit_signal("ready")
 	if lock_on_target == null:
 		lock_on_target = get_node(target)
+	if camera != null:
+		camera_raycast.enabled = true
 	
 #	if name == "SwordFighter":
 #		setup(1)
@@ -244,9 +249,24 @@ func _input(event):
 func _physics_process(delta):
 	fsm._process_current_state(delta * timescale, true)
 	
-	camera_pivot.rotation.y += input_listener.analogs[2] * -0.1
-	camera_pivot.rotation.x = clamp(camera_pivot.rotation.x + input_listener.analogs[3] * -0.1, -1.5, 0.9)
-	target_rotation = camera_pivot.rotation.y
+	if camera != null:
+		camera_pivot.rotation.y += input_listener.analogs[2] * -0.1
+		camera_pivot.rotation.x = clamp(camera_pivot.rotation.x + input_listener.analogs[3] * -0.1, -1.5, 0.9)
+		target_rotation = camera_pivot.rotation.y
+	
+		if camera_raycast.is_colliding():
+			var distance = camera_pivot.to_local(camera_raycast.get_collision_point()).z
+			if distance < default_camera_pos.z:
+				if distance < camera_point.translation.z - 0.5:
+					camera_point.translation.z = distance - 0.1
+					camera.translation = camera_point.global_transform.origin
+				else:
+					camera_point.translation.z = distance - 0.1
+				
+		if $CameraPointPivot/Position3D/CameraCollision.get_overlapping_bodies().empty():
+			if camera_point.translation.z < 3.5:
+				camera_point.translation.z += delta
+		camera_raycast.cast_to = camera_point.translation + Vector3(0.0, 0.0, 0.1)
 	
 	if shake_t > 0.0:
 		$ModelContainer/sword_fighter.translation = (Vector3.RIGHT * (shake_t * 0.03)) * sin(shake_t) * 0.1
@@ -441,26 +461,29 @@ func set_animation(anim_name, seek_pos, blend_speed):
 
 	# Blend animations:
 
-	if animation_blender.is_playing():
-		animation_blender.stop(false)
+#	if animation_blender.is_playing():
+#		animation_blender.stop(false)
 #		print(animation_blender.current_animation_position)
+
+	animation_blender.stop_all()
 
 	if animation_slot == 1:
 		if blend_speed == -1.0:
 			anim_tree["parameters/1_and_-1/blend_amount"] = 1.0
 			pass
 		else:
-			animation_blender.play("blend_animation_1_animation_-1", -1, blend_speed)
+			animation_blender.interpolate_property(anim_tree, "parameters/1_and_-1/blend_amount", 0.0, 1.0, blend_speed, Tween.TRANS_LINEAR)
 #			prints("start blending from slot 0", anim_tree.tree_root.get_node("animation_0").animation,
 #			"to", anim_tree.tree_root.get_node("animation_1").animation)
 	else:
 		if blend_speed == -1.0:
 			anim_tree["parameters/1_and_-1/blend_amount"] = 0.0
 		else:
-			animation_blender.play("blend_animation_1_animation_-1", -1, -blend_speed, true)
+			animation_blender.interpolate_property(anim_tree, "parameters/1_and_-1/blend_amount", 1.0, 0.0, blend_speed, Tween.TRANS_LINEAR)
 #			prints("start blending from slot 1", anim_tree.tree_root.get_node("animation_1").animation,
 #			"to", anim_tree.tree_root.get_node("animation_0").animation)
-
+	
+	animation_blender.start()
 	animation_slot = -animation_slot
 	emit_signal("animation_changed", anim_name, seek_pos, blend_speed)
 
@@ -528,18 +551,18 @@ func reset_hitboxes():
 
 func _receive_hit(hit):
 	received_hit = hit
-	fsm.receive_event("_received_hit", hit)
 	MainManager.current_level.spawn_effect(Hit.VISUAL_EFFECTS.BLUNT, hit.position, Vector3.ZERO)
 	set_hitstop(hit.hitstop, true)
+	fsm.receive_event("_received_hit", hit)
 
 func _on_Hurtbox_received_hit(hit, hurtbox):
 	_receive_hit(hit)
 	set_hitstop(hit.hitstop, true)
 
 func _on_Hitbox_dealt_hit(hit : Hit, collided_entity):
-	fsm.receive_event("_dealt_hit", collided_entity)
 	emit_signal("dealt_hit", hit)
 	set_hitstop(hit.hitstop, false)
+	fsm.receive_event("_dealt_hit", collided_entity)
 
 	
 func receive_throw(pos, rot, _throwing_entity):

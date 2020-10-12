@@ -25,7 +25,7 @@ func _enter_state():
 	
 #	entity.translation = entity.wall_pos
 	entity.set_velocity(Vector3(0.0, speed_y, -speed).rotated(Vector3.RIGHT, entity.wall_rot.x))
-	entity.set_animation("run_loop", 0, 10.0)
+	entity.set_animation("run_loop", 0, 0.05)
 	entity.has_wall_run_side = false
 	
 #	entity.anim_tree["parameters/Add2/add_amount"] = 1.0

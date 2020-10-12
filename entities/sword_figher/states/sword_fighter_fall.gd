@@ -5,7 +5,7 @@ var turn_speed = 270.0
 
 func get_animation_data():
 	# Name, seek and blend length 
-	return ["fall", 0.0, 16.0]
+	return ["fall", 0.0, 0.1]
 
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
@@ -72,7 +72,7 @@ func _touched_surface(surface):
 	else:
 #			set_next_state("ledge_climb")
 #			return
-		if entity.prev_speed > 5:
+		if entity.prev_speed > 10:
 			var wall_normal = entity.get_slide_collision(0).normal
 			var wall_position = entity.get_slide_collision(0).position
 			var player_vector = -entity.model_container.transform.basis.z
@@ -87,6 +87,7 @@ func _touched_surface(surface):
 			
 			var _hit = Hit.new(Hit.INIT_TYPE.WALL)
 			_hit.position = wall_position
+			_hit.damage = entity.prev_speed * 2
 			entity._receive_hit(_hit)
 		
 

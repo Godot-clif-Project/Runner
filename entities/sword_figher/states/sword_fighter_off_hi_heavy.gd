@@ -19,7 +19,7 @@ func get_possible_transitions():
 
 func get_animation_data():
 	# Name, seek and blend length 
-	return ["off_h_r_heavy", 0.0, 5.0]
+	return ["off_h_r_heavy", 0.0, 0.1]
 
 ## Initialize state here: Set animation, add impulse, etc.
 #func _enter_state():
