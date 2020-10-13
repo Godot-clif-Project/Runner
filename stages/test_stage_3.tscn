@@ -7,7 +7,7 @@
 [ext_resource path="res://stages/static_sphere.tscn" type="PackedScene" id=5]
 [ext_resource path="res://stages/stage_env.tres" type="Environment" id=6]
 [ext_resource path="res://entities/sword_figher/sword_fighter_player_1.material" type="Material" id=7]
-[ext_resource path="res://stages/forest/tree/Tree.tscn" type="PackedScene" id=8]
+[ext_resource path="res://stages/generic/tree/Tree.tscn" type="PackedScene" id=8]
 [ext_resource path="res://entities/sword_figher/sword_fighter_player_3.material" type="Material" id=9]
 [ext_resource path="res://entities/sword_figher/sword_fighter_2.tscn" type="PackedScene" id=10]
 [ext_resource path="res://objects/stage_timer.tscn" type="PackedScene" id=11]
@@ -199,6 +199,7 @@ environment = ExtResource( 6 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( -0.997493, -0.0500847, -0.0499946, -0.0707544, 0.692642, 0.717803, -0.00132259, 0.71954, -0.694449, 0, 4, 0 )
+light_color = Color( 1, 0.972549, 0.917647, 1 )
 shadow_enabled = true
 
 [node name="NetworkInterface" parent="." instance=ExtResource( 19 )]
@@ -209,7 +210,7 @@ shadow_enabled = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -43.0515, 0, 0 )
 
 [node name="SwordFighter" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.17862, 0, -9.1532 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5185, 0, -47.4591 )
 target = NodePath("../SwordFighter2")
 
 [node name="SwordFighter2" parent="." instance=ExtResource( 10 )]
@@ -238,9 +239,6 @@ amount = 20
 lifetime = 1.0
 local_coords = false
 
-[node name="SlashParticles" parent="SwordFighter2/ModelContainer" index="1"]
-transform = Transform( 0.915375, 9.97891e-08, 0.119357, 1.39388e-07, -0.692249, -3.98119e-08, 0.119357, 4.31193e-08, -0.915375, 0, 1.28032, 0 )
-
 [node name="ParticlesBoost" parent="SwordFighter2/ModelContainer" index="12"]
 visible = false
 
@@ -262,8 +260,11 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.627604, 0 )
 enabled = true
 cast_to = Vector3( 0, 0, 3.7 )
 
-[node name="HitstopTimer" parent="SwordFighter2" index="13"]
+[node name="HitstopTimer" parent="SwordFighter2" index="12"]
 one_shot = false
+
+[node name="PlayerName" parent="SwordFighter2" index="13"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
@@ -935,10 +936,10 @@ transform = Transform( 1.44829, 0, 0, 0, 1.44829, 0, 0, 0, 1.44829, -2.96368, -0
 transform = Transform( 1.17643, 0, 0, 0, 1.17643, 0, 0, 0, 1.17643, -18.9703, -0.0107094, -24.3737 )
 
 [node name="HealingGrass3" parent="Heals" instance=ExtResource( 22 )]
-transform = Transform( 1.17643, 0, 0, 0, 1.17643, 0, 0, 0, 1.17643, 21.2979, -0.0107085, -51.0658 )
+transform = Transform( 1.17643, 0, 0, 0, 1.17643, 0, 0, 0, 1.17643, 21.2979, -0.0107085, -57.8572 )
 
 [node name="HealingGrass12" parent="Heals" instance=ExtResource( 22 )]
-transform = Transform( 1.43352, 0, 0, 0, 1.43352, 0, 0, 0, 1.43352, 19.5582, -0.0107085, -51.7313 )
+transform = Transform( 1.81672, 0, 0, 0, 1.81672, 0, 0, 0, 1.81672, 19.854, -0.173147, -58.383 )
 
 [node name="HealingGrass4" parent="Heals" instance=ExtResource( 22 )]
 transform = Transform( 1.17643, 0, 0, 0, 1.17643, 0, 0, 0, 1.17643, -5.95105, -0.0107085, -71.5508 )

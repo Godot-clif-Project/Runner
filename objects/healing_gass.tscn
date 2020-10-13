@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://stages/forest/tree/weeds.png" type="Texture" id=1]
+[ext_resource path="res://stages/generic/tree/weeds.png" type="Texture" id=1]
 [ext_resource path="res://objects/healing_gass.gd" type="Script" id=2]
 [ext_resource path="res://effects/hit/hexagon.png" type="Texture" id=3]
 [ext_resource path="res://objects/vegetation.shader" type="Shader" id=4]

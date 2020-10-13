@@ -140,10 +140,10 @@ remote func update_animation(id, anim_name, seek_pos, blend_speed):
 	animation_slot = -animation_slot
 	
 remote func update_hp(id, new_hp):
-	if player_side == 1:
-		get_node("../UI/Lifebar")._on_sword_fighter_hp_changed(new_hp)
-	else:
-		get_node("../UI/Lifebar2")._on_sword_fighter_hp_changed(new_hp)
+#	if player_side == 1:
+#		get_node("../UI/Lifebar")._on_sword_fighter_hp_changed(new_hp)
+#	else:
+	get_node("../UI/Lifebar2")._on_sword_fighter_hp_changed(new_hp)
 
 remote func dealt_tandem_action(id, action, args):
 #	if action == "rope_pull":

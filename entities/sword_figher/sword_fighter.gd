@@ -143,14 +143,14 @@ func _ready():
 	
 func setup(side):
 	player_side = side
+	connect("hp_changed", get_node("../UI/Lifebar"), "_on_sword_fighter_hp_changed")
 	if player_side == 1:
 		transform = get_node("../Player1Pos").transform
-		connect("hp_changed", get_node("../UI/Lifebar"), "_on_sword_fighter_hp_changed")
 		$ModelContainer/sword_fighter/Armature/Skeleton/Cube.material_override = PLAYER_1_MATERIAL
 		$ModelContainer/sword_fighter/Armature/Skeleton/sword.material_override = PLAYER_1_MATERIAL
 	else:
 		transform = get_node("../Player2Pos").transform
-		connect("hp_changed", get_node("../UI/Lifebar2"), "_on_sword_fighter_hp_changed")
+#		connect("hp_changed", get_node("../UI/Lifebar2"), "_on_sword_fighter_hp_changed")
 		$ModelContainer/sword_fighter/Armature/Skeleton/Cube.material_override = PLAYER_2_MATERIAL
 		$ModelContainer/sword_fighter/Armature/Skeleton/sword.material_override = PLAYER_2_MATERIAL
 
@@ -515,35 +515,35 @@ func _on_AnimationFlags_flag_changed(flag, value):
 func _on_AnimationEvents_animation_finished(anim_name):
 	fsm.receive_event("_animation_finished", anim_name)
 
-func request_camera(side):
-	if not has_camera:
-		set_camera_side(side)
-		emit_signal("requested_camera", self)
+#func request_camera(side):
+#	if not has_camera:
+#		set_camera_side(side)
+#		emit_signal("requested_camera", self)
 
-func set_camera_side(side):
+#func set_camera_side(side):
+##	if not has_camera:
+##		return
+#
+#	camera_side = side
+#	camera_point.translation.x = default_camera_pos.x * side
+#	camera_point.look_at(target_point + Vector3(0.0, 1.0, 0.0), Vector3.UP)
+#
+#func tween_camera_position(position):
 #	if not has_camera:
 #		return
-		
-	camera_side = side
-	camera_point.translation.x = default_camera_pos.x * side
-	camera_point.look_at(target_point + Vector3(0.0, 1.0, 0.0), Vector3.UP)
-
-func tween_camera_position(position):
-	if not has_camera:
-		return
-
-	$Tween.interpolate_property(
-		$CameraPointPivot/Position3D, "translation",
-		camera_point.translation, Vector3(position, camera_point.translation.y, camera_point.translation.z), 1,
-		Tween.TRANS_LINEAR, Tween.EASE_OUT)
-	if position != 0:
-		camera_side = sign(position)
+#
 #	$Tween.interpolate_property(
-#		$CameraPointPivot/Position3D, "rotation_degrees",
-#		camera_rot, Vector3(camera_rot.x, 15 * sign(position), camera_rot.z), 1,
-#		Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-		
-	$Tween.start()
+#		$CameraPointPivot/Position3D, "translation",
+#		camera_point.translation, Vector3(position, camera_point.translation.y, camera_point.translation.z), 1,
+#		Tween.TRANS_LINEAR, Tween.EASE_OUT)
+#	if position != 0:
+#		camera_side = sign(position)
+##	$Tween.interpolate_property(
+##		$CameraPointPivot/Position3D, "rotation_degrees",
+##		camera_rot, Vector3(camera_rot.x, 15 * sign(position), camera_rot.z), 1,
+##		Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+#
+#	$Tween.start()
 
 func reset_hitboxes():
 	$ModelContainer/Hitbox.active = false
@@ -584,21 +584,21 @@ func receive_tandem_action(action_name, entity):
 	fsm.receive_event("_received_tandem_action", [action_name, entity])
 	pass
 
-func _on_RSide_body_entered(body):
-	if not body == self and body is KinematicBody:
-		if body.get_current_animation() == "run_loop":
-			if has_camera:
-				body.request_camera(-1)
-			else:
-				request_camera(-1)
-
-func _on_LSide_body_entered(body):
-	if not body == self and body is KinematicBody:
-		if body.get_current_animation() == "run_loop":
-			if has_camera:
-				body.request_camera(1)
-			else:
-				request_camera(1)
+#func _on_RSide_body_entered(body):
+#	if not body == self and body is KinematicBody:
+#		if body.get_current_animation() == "run_loop":
+#			if has_camera:
+#				body.request_camera(-1)
+#			else:
+#				request_camera(-1)
+#
+#func _on_LSide_body_entered(body):
+#	if not body == self and body is KinematicBody:
+#		if body.get_current_animation() == "run_loop":
+#			if has_camera:
+#				body.request_camera(1)
+#			else:
+#				request_camera(1)
 
 func _on_Feet_body_entered(body):
 	if not on_ground:

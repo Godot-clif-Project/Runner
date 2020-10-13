@@ -26,24 +26,23 @@ func _ready():
 			player_entity.connect("animation_changed", self, "player_entity_animation_changed")
 			player_entity.connect("dealt_tandem_action", self, "player_entity_dealt_tandem_action")
 #			player_entity.connect("dealt_hit", self, "player_entity_dealt_hit")
-
 			player_entity.lock_on_target = peer_entity
-			
-#			get_node("../Dummy").connect("world_object_event", self, "receive_world_object_event")
 			
 			if get_tree().is_network_server():
 				player_entity.setup(1)
 				peer_entity.setup(2)
-				get_node("../UI/PlayerName1").text = NetworkManager.my_info["name"]
-				get_node("../UI/PlayerName2").text = NetworkManager.peers[NetworkManager.peers.keys()[0]]["name"]
-				
-#				add_world_object("Dummy", "../Dummy")
 				set_physics_process(true)
+				
 			else:
 				player_entity.setup(2)
 				peer_entity.setup(1)
-				get_node("../UI/PlayerName1").text = NetworkManager.peers[NetworkManager.peers.keys()[0]]["name"]
-				get_node("../UI/PlayerName2").text = NetworkManager.my_info["name"]
+#				get_node("../UI/PlayerName1").text = NetworkManager.peers[NetworkManager.peers.keys()[0]]["name"]
+#				get_node("../UI/PlayerName2").text = NetworkManager.my_info["name"]
+				
+			get_node("../UI/PlayerName1").text = NetworkManager.my_info["name"]
+			get_node("../UI/PlayerName2").text = NetworkManager.peers[NetworkManager.peers.keys()[0]]["name"]
+			player_entity.get_node("PlayerName/ViewportContainer/Viewport/Label").text = NetworkManager.my_info["name"]
+			peer_entity.get_node("PlayerName/ViewportContainer/Viewport/Label").text = NetworkManager.peers[NetworkManager.peers.keys()[0]]["name"]
 	else:
 		player_entity = get_node("../SwordFighter")
 		player_entity.setup(1)
@@ -59,13 +58,8 @@ func _physics_process(delta):
 
 func add_world_object(_name, object):
 	if get_tree().has_network_peer():
-	#	remote_world_objects[_name] = get_node(object_node_path)
 		remote_world_objects[_name] = object
 		remote_world_objects[_name].connect("world_object_event", self, "receive_world_object_event")
-	#	rpc("add_remote_world_object", "Dummy", "../Dummy")
-
-#remote func add_remote_world_object(_name, object_node_path):
-#	remote_world_objects[_name] = get_node(object_node_path)
 
 remote func update_world_objects(objects_to_update):
 	for object_name in objects_to_update.keys():

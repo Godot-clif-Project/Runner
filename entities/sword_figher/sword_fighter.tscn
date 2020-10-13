@@ -1,4 +1,4 @@
-[gd_scene load_steps=117 format=2]
+[gd_scene load_steps=118 format=2]
 
 [ext_resource path="res://entities/sword_figher/model/sword_fighter.glb" type="PackedScene" id=1]
 [ext_resource path="res://entities/sword_figher/sword_fighter.gd" type="Script" id=2]
@@ -25,6 +25,7 @@
 [ext_resource path="res://effects/slash/Material.material" type="Material" id=23]
 [ext_resource path="res://effects/hit/hexagon.png" type="Texture" id=24]
 [ext_resource path="res://entities/sword_figher/model/temp/air_atk_l.anim" type="Animation" id=25]
+[ext_resource path="res://objects/player_name.tscn" type="PackedScene" id=26]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.375497
@@ -2525,7 +2526,7 @@ material/0 = ExtResource( 12 )
 material/0 = ExtResource( 12 )
 
 [node name="BoneAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
-transform = Transform( 0.326458, -0.295979, -0.897676, -0.274191, 0.879218, -0.389609, 0.904568, 0.373326, 0.205873, 0.112911, 1.5083, -0.458656 )
+transform = Transform( 1, 0, 0, 0, 0.998474, 0.0552152, 0, -0.0552152, 0.998474, -6.59474e-17, 2.24226, 7.43921e-09 )
 bone_name = "torso"
 
 [node name="Hurtbox" parent="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment" instance=ExtResource( 11 )]
@@ -2687,10 +2688,6 @@ shape = SubResource( 91 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.235243, -0.00321921 )
 cast_to = Vector3( 0, 0, 3.5 )
 
-[node name="Tween" type="Tween" parent="."]
-playback_speed = 3.0
-playback/speed = 3.0
-
 [node name="VelocityArrow" parent="." instance=ExtResource( 8 )]
 
 [node name="VisibilityNotifier" type="VisibilityNotifier" parent="."]
@@ -2708,6 +2705,9 @@ shape = SubResource( 1 )
 
 [node name="HitstopTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="PlayerName" parent="." instance=ExtResource( 26 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0 )
 [connection signal="flag_changed" from="AnimationFlags" to="." method="_on_AnimationFlags_flag_changed"]
 [connection signal="received_input" from="InputListener" to="." method="_on_InputListener_received_input"]
 [connection signal="animation_finished" from="AnimationEvents" to="." method="_on_AnimationEvents_animation_finished"]

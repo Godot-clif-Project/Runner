@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=2]
+[gd_scene load_steps=80 format=2]
 
 [ext_resource path="res://entities/sword_figher/peer_sword_fighter.gd" type="Script" id=1]
 [ext_resource path="res://entities/sword_figher/model/sword_fighter.glb" type="PackedScene" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://effects/slash/Material.material" type="Material" id=11]
 [ext_resource path="res://effects/hit/hexagon.png" type="Texture" id=12]
 [ext_resource path="res://entities/sword_figher/model/temp/air_atk_l.anim" type="Animation" id=13]
+[ext_resource path="res://objects/player_name.tscn" type="PackedScene" id=14]
 
 [sub_resource type="AnimationNodeBlend2" id=1]
 
@@ -403,6 +404,9 @@ __meta__ = {
 
 [node name="HitstopTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="PlayerName" parent="." instance=ExtResource( 14 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
 [connection signal="received_hit" from="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment/Hurtbox" to="." method="_on_Hurtbox_received_hit"]
 [connection signal="timeout" from="HitstopTimer" to="." method="_on_HitstopTimer_timeout"]
 
