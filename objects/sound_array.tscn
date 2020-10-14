@@ -1,0 +1,56 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://sounds/steps/step-01.wav" type="AudioStream" id=1]
+[ext_resource path="res://sounds/steps/step-05.wav" type="AudioStream" id=2]
+[ext_resource path="res://sounds/steps/step-03.wav" type="AudioStream" id=3]
+[ext_resource path="res://sounds/steps/stop.wav" type="AudioStream" id=4]
+[ext_resource path="res://sounds/steps/slash.wav" type="AudioStream" id=5]
+[ext_resource path="res://sounds/steps/step-02.wav" type="AudioStream" id=6]
+[ext_resource path="res://sounds/steps/step-04.wav" type="AudioStream" id=7]
+[ext_resource path="res://sounds/steps/punch.wav" type="AudioStream" id=8]
+[ext_resource path="res://sounds/steps/jump.wav" type="AudioStream" id=9]
+[ext_resource path="res://sounds/steps/land.wav" type="AudioStream" id=10]
+[ext_resource path="res://sounds/steps/boost.wav" type="AudioStream" id=11]
+[ext_resource path="res://sounds/steps/hit_random.tres" type="AudioStream" id=12]
+[ext_resource path="res://sounds/steps/step-06.wav" type="AudioStream" id=13]
+[ext_resource path="res://sounds/steps/step-07.wav" type="AudioStream" id=14]
+[ext_resource path="res://sounds/steps/slash_2.wav" type="AudioStream" id=15]
+[ext_resource path="res://sounds/steps/slash_random.tres" type="AudioStream" id=16]
+[ext_resource path="res://sounds/steps/heal.wav" type="AudioStream" id=17]
+[ext_resource path="res://objects/sound_array.gd" type="Script" id=18]
+
+[node name="Sound" type="Spatial"]
+script = ExtResource( 18 )
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 1 )
+unit_db = 20.0
+max_db = 6.0
+
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 1 )
+unit_db = 20.0
+max_db = 6.0
+
+[node name="AudioStreamPlayer3D3" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 1 )
+unit_db = 20.0
+max_db = 6.0
+
+[node name="AudioStreamPlayer3D4" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 1 )
+unit_db = 20.0
+max_db = 6.0
+
+[node name="AudioStreamPlayer3D5" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 1 )
+unit_db = 20.0
+max_db = 6.0
+
+[node name="ResourcePreloader" type="ResourcePreloader" parent="."]
+resources = [ PoolStringArray( "boost", "heal", "hit_random", "jump", "land", "punch", "slash", "slash_2", "slash_random", "step-01", "step-02", "step-03", "step-04", "step-05", "step-06", "step-07", "stop" ), [ ExtResource( 11 ), ExtResource( 17 ), ExtResource( 12 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 8 ), ExtResource( 5 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 1 ), ExtResource( 6 ), ExtResource( 3 ), ExtResource( 7 ), ExtResource( 2 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 4 ) ] ]
+[connection signal="finished" from="AudioStreamPlayer3D" to="." method="_on_AudioStreamPlayer3D_finished"]
+[connection signal="finished" from="AudioStreamPlayer3D2" to="." method="_on_AudioStreamPlayer3D2_finished"]
+[connection signal="finished" from="AudioStreamPlayer3D3" to="." method="_on_AudioStreamPlayer3D3_finished"]
+[connection signal="finished" from="AudioStreamPlayer3D4" to="." method="_on_AudioStreamPlayer3D4_finished"]
+[connection signal="finished" from="AudioStreamPlayer3D5" to="." method="_on_AudioStreamPlayer3D5_finished"]

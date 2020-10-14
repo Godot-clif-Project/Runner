@@ -1,13 +1,13 @@
 [gd_resource type="Environment" load_steps=3 format=2]
 
-[sub_resource type="StreamTexture" id=2]
+[sub_resource type="StreamTexture" id=1]
 flags = 4
 load_path = "res://.import/sky.jpg-d5f77e6aca1fd4596dd04f0ded3fba9d.stex"
 
-[sub_resource type="PanoramaSky" id=1]
-panorama = SubResource( 2 )
+[sub_resource type="PanoramaSky" id=2]
+panorama = SubResource( 1 )
 
 [resource]
 background_mode = 2
-background_sky = SubResource( 1 )
+background_sky = SubResource( 2 )
 background_energy = 2.5

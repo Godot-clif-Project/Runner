@@ -18,8 +18,7 @@ func _enter_state():
 	speed = entity.horizontal_speed
 	entity.get_node("ModelContainer/Particles2").emitting = true
 	entity.set_animation("run_break", 0, 0.05)
-	
-#	if entity.input_listener.is_key_pressed(InputManager.DOWN):
+	#	if entity.input_listener.is_key_pressed(InputManager.DOWN):
 #		entity.ground_drag = 20
 #	else:
 #		entity.ground_drag = entity.default_ground_drag
@@ -29,6 +28,7 @@ func _enter_state():
 ## Inverse of enter_state.
 func _exit_state():
 	entity.model.rotation.z = 0.0
+#	entity.get_node("Sound/Stop").stop()
 	._exit_state()
 	
 func _process_state(delta):
@@ -107,6 +107,7 @@ func get_possible_transitions():
 	return [
 		"jump",
 		"off_run_startup",
+		"air_atk",
 		]
 
 func _received_input(key, state):

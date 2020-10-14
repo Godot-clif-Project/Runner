@@ -2,7 +2,7 @@
 
 [ext_resource path="res://stages/generic/tree/weeds.png" type="Texture" id=1]
 [ext_resource path="res://objects/healing_gass.gd" type="Script" id=2]
-[ext_resource path="res://effects/hit/hexagon.png" type="Texture" id=3]
+[ext_resource path="res://effects/glow_3.png" type="Texture" id=3]
 [ext_resource path="res://objects/vegetation.shader" type="Shader" id=4]
 
 [sub_resource type="QuadMesh" id=1]
@@ -19,7 +19,7 @@ shader_param/uv1_scale = Vector3( 0.244, 0.646, 1 )
 shader_param/uv1_offset = Vector3( 0.745, 0.329, 0 )
 shader_param/uv2_scale = Vector3( 1, 1, 1 )
 shader_param/uv2_offset = Vector3( 0, 0, 0 )
-shader_param/wind_strength = 3.0
+shader_param/wind_strength = 4.0
 shader_param/wind_amplitude = Vector3( 0.1, 0.1, 0.1 )
 shader_param/texture_albedo = ExtResource( 1 )
 
@@ -51,12 +51,12 @@ tangential_accel = 0.34
 tangential_accel_random = 0.43
 angle = 720.0
 angle_random = 1.0
-scale = 0.1
+scale = 0.2
 scale_random = 0.05
 scale_curve = SubResource( 7 )
 color_ramp = SubResource( 5 )
 
-[sub_resource type="SpatialMaterial" id=9]
+[sub_resource type="SpatialMaterial" id=92]
 flags_transparent = true
 flags_unshaded = true
 vertex_color_use_as_albedo = true
@@ -65,10 +65,11 @@ params_billboard_mode = 3
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1
 particles_anim_loop = false
+albedo_color = Color( 1.25, 1.25, 1.25, 1 )
 albedo_texture = ExtResource( 3 )
 
 [sub_resource type="QuadMesh" id=10]
-material = SubResource( 9 )
+material = SubResource( 92 )
 
 [node name="HealingGrass" type="Spatial"]
 script = ExtResource( 2 )

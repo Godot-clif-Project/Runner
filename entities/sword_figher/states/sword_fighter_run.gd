@@ -130,7 +130,7 @@ func _process_state(delta):
 	entity.apply_gravity(delta)
 	entity.apply_velocity(delta)
 	
-	entity.anim_tree["parameters/TimeScale/scale"] = float(entity.target_speed / entity.boost_speed * 0.25) + 1.0
+	entity.anim_tree["parameters/TimeScale/scale"] = float(entity.target_speed / entity.boost_speed * 0.25) + 1.1 
 	entity.center_camera(delta)
 	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
 	
@@ -164,6 +164,7 @@ func _touched_surface(surface):
 				entity.set_animation("run_bump_l", 0.0, 0.05)
 			else:
 				entity.set_animation("run_bump_r", 0.0, 0.05)
+			entity.play_sound("step")
 	
 
 func _animation_finished(anim_name):
@@ -193,7 +194,7 @@ func get_possible_transitions():
 		"tandem_rope_pull",
 		"tandem_launch_up",
 		"jump",
-		"sidestep",
+#		"sidestep",
 		"slide",
 		"air_atk",
 		]

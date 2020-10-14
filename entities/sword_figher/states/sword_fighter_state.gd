@@ -35,6 +35,7 @@ func get_possible_transitions():
 		"off_kick",
 #		"off_block",
 		"stance_switch",
+		"emote",
 		]
 
 func _enter_state():
@@ -325,5 +326,9 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 			InputManager.THROW:
 				if valid_transitions.has("off_throw_f"):
 					return {"state" : "off_throw_f", "flag" : "is_command_cancelable"}
+					
+			InputManager.TAUNT:
+				if valid_transitions.has("emote"):
+					return {"state" : "emote", "flag" : "is_stringable"}
 					
 	return {"state" : null , "flag" : null}

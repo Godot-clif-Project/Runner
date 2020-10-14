@@ -36,6 +36,8 @@ func _ready():
 			else:
 				player_entity.setup(2)
 				peer_entity.setup(1)
+				AudioServer.set_bus_mute(0, true)
+				
 #				get_node("../UI/PlayerName1").text = NetworkManager.peers[NetworkManager.peers.keys()[0]]["name"]
 #				get_node("../UI/PlayerName2").text = NetworkManager.my_info["name"]
 				
@@ -61,20 +63,8 @@ func add_world_object(_name, object):
 		remote_world_objects[_name] = object
 		remote_world_objects[_name].connect("world_object_event", self, "receive_world_object_event")
 
-remote func update_world_objects(objects_to_update):
-	for object_name in objects_to_update.keys():
-		for property in objects_to_update[object_name].keys():
-			remote_world_objects[object_name].set(property, objects_to_update[object_name][property])
-
-remote func world_object_event(object_name, event_name):
-	match event_name:
-		"get_grass":
-			remote_world_objects[object_name].grabbed()
-		_:
-			remote_world_objects[object_name].receive_hit()
-	
-func receive_world_object_event(object_name, event_name):
-	rpc("world_object_event", object_name, event_name)
+func receive_world_object_event(object_name, event_name, arg_array):
+	rpc("world_object_event", object_name, event_name, arg_array)
 
 func player_entity_hp_changed(new_value):
 	if enabled:
@@ -102,6 +92,18 @@ func player_entity_animation_changed(anim_name, seek_pos, blend_speed):
 func player_entity_dealt_tandem_action(action, args):
 	peer_entity.rpc("dealt_tandem_action", NetworkManager.my_id, action, args)
 
+remote func update_world_objects(objects_to_update):
+	for object_name in objects_to_update.keys():
+		for property in objects_to_update[object_name].keys():
+			remote_world_objects[object_name].set(property, objects_to_update[object_name][property])
+
+remote func world_object_event(object_name, event_name, arg_array):
+	match event_name:
+		"get_grass":
+			remote_world_objects[object_name].grabbed()
+		_:
+			remote_world_objects[object_name].receive_hit(arg_array[0])
+			
 #func player_entity_dealt_hit(hit):
 #	if enabled:
 #		var hit_data = {

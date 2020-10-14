@@ -13,6 +13,7 @@ func _enter_state():
 	entity.has_wall_run_side = true
 	entity.air_boosts_left = entity.MAX_AIR_BOOSTS
 	entity.model.rotation.z = 0.0
+	entity.play_sound("land")
 	
 	if entity.falling_speed < -25:
 		entity.set_animation("jump_land", 0.0, 0.05)
@@ -27,8 +28,12 @@ func _enter_state():
 		set_next_state("run")
 		return
 	else:
-		entity.velocity *= 0.75
-		set_next_state("run_stop")
+		if entity.horizontal_speed < 4:
+			set_next_state("offensive_stance")
+#			entity.set_animation("run_break", 0.0, 0.05)
+		else:
+			entity.velocity *= 0.75
+			set_next_state("run_stop")
 		return
 ##	entity.set_animation("off_hi_r_light", 0, 16.0)
 #	entity.on_ground = false
@@ -81,6 +86,9 @@ func _animation_finished(anim_name):
 		else:
 			set_next_state("run_stop")
 			return
+	else:
+		set_next_state("offensive_stance")
+		
 #
 #func _flag_changed(flag, state):
 #	if flag == "is_evade_cancelable" and state:

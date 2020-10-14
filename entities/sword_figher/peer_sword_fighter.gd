@@ -54,6 +54,7 @@ func _on_Hurtbox_received_hit(hit, hurtbox):
 		}
 	network_interface.rpc("receive_hit_from_peer", NetworkManager.my_id, hit_data)
 	set_hitstop(hit.hitstop, true)
+	play_sound("hit_random")
 	pass
 
 func set_hitstop(length, shake):
@@ -158,3 +159,6 @@ func _on_HitstopTimer_timeout():
 	$AnimationEvents.playback_speed = 1.0
 	$ModelContainer/SlashParticles.speed_scale = 1.0
 #	set_physics_process(false)
+
+func play_sound(sound_name):
+	$Sound.play(sound_name)

@@ -2,7 +2,7 @@ extends Spatial
 class_name WorldObject
 
 # warning-ignore:unused_signal
-signal world_object_event(_name, event_name)
+signal world_object_event(_name, event_name, arg_array)
 
 # Called when the node enters the scene tree for the first time.
 #func _ready():

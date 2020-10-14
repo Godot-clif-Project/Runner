@@ -23,4 +23,4 @@ func _on_Area_body_entered(body):
 			if body.hp < body.max_hp:
 				body.get_healing_grass(heal_amount, self)
 				grabbed()
-				emit_signal("world_object_event", name, "get_grass")
+				emit_signal("world_object_event", name, "get_grass", [])

@@ -440,6 +440,7 @@ func jump():
 		velocity.z = v.y
 		
 	on_ground = false
+	play_sound("jump")
 #	jump_str = min_jump_str
 
 func get_current_animation():
@@ -553,6 +554,7 @@ func _receive_hit(hit):
 	received_hit = hit
 	MainManager.current_level.spawn_effect(Hit.VISUAL_EFFECTS.BLUNT, hit.position, Vector3.ZERO)
 	set_hitstop(hit.hitstop, true)
+	play_sound("hit_random")
 	fsm.receive_event("_received_hit", hit)
 
 func _on_Hurtbox_received_hit(hit, hurtbox):
@@ -659,4 +661,8 @@ func _on_HitstopTimer_timeout():
 func get_healing_grass(heal_amount, grass):
 	$ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment/ParticlesHeal.restart()
 	$ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment/ParticlesHeal.emitting = true
+	play_sound("heal")
 	self.hp += heal_amount
+
+func play_sound(sound_name : String):
+	$Sound.play(sound_name)

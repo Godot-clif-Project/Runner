@@ -1,4 +1,4 @@
-[gd_scene load_steps=80 format=2]
+[gd_scene load_steps=84 format=2]
 
 [ext_resource path="res://entities/sword_figher/peer_sword_fighter.gd" type="Script" id=1]
 [ext_resource path="res://entities/sword_figher/model/sword_fighter.glb" type="PackedScene" id=2]
@@ -14,6 +14,9 @@
 [ext_resource path="res://effects/hit/hexagon.png" type="Texture" id=12]
 [ext_resource path="res://entities/sword_figher/model/temp/air_atk_l.anim" type="Animation" id=13]
 [ext_resource path="res://objects/player_name.tscn" type="PackedScene" id=14]
+[ext_resource path="res://entities/sword_figher/model/temp/def_taunt.anim" type="Animation" id=15]
+[ext_resource path="res://entities/sword_figher/model/temp/off_taunt.anim" type="Animation" id=16]
+[ext_resource path="res://objects/sound_array.tscn" type="PackedScene" id=17]
 
 [sub_resource type="AnimationNodeBlend2" id=1]
 
@@ -50,8 +53,39 @@ nodes/animation_1_seek/position = Vector2( 620, -80 )
 nodes/output/position = Vector2( 1340, 0 )
 node_connections = [ "output", 0, "TimeScale", "1_and_-1", 0, "animation_1_seek", "1_and_-1", 1, "animation_-1_seek", "Seek", 0, "1_and_-1", "TimeScale", 0, "Seek", "animation_-1_seek", 0, "animation_-1", "animation_1_seek", 0, "animation_1" ]
 
+[sub_resource type="Animation" id=66]
+length = 0.483333
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.116667 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "slash_random" ],
+"method": "play_sound"
+} ]
+}
+
 [sub_resource type="Animation" id=9]
 length = 0.483333
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.116667 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "slash_random" ],
+"method": "play_sound"
+} ]
+}
 
 [sub_resource type="Animation" id=10]
 length = 1.08333
@@ -272,6 +306,7 @@ parameters/animation_1_seek/seek_position = -1.0
 [node name="AnimationBlender" type="Tween" parent="."]
 
 [node name="AnimationEvents" type="AnimationPlayer" parent="."]
+anims/air_atk_l = SubResource( 66 )
 anims/air_atk_r = SubResource( 9 )
 anims/air_boost = SubResource( 10 )
 anims/air_rope = SubResource( 11 )
@@ -345,7 +380,9 @@ bone_name = "throw_pos"
 [node name="AnimationPlayer" parent="ModelContainer/sword_fighter" index="1"]
 anims/air_atk_l = ExtResource( 13 )
 anims/air_atk_r = ExtResource( 8 )
+anims/def_taunt = ExtResource( 15 )
 anims/fall = ExtResource( 7 )
+anims/off_taunt = ExtResource( 16 )
 anims/run_loop_c = ExtResource( 9 )
 
 [node name="slash" parent="ModelContainer/sword_fighter" instance=ExtResource( 10 )]
@@ -407,6 +444,8 @@ one_shot = true
 
 [node name="PlayerName" parent="." instance=ExtResource( 14 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
+
+[node name="Sound" parent="." instance=ExtResource( 17 )]
 [connection signal="received_hit" from="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment/Hurtbox" to="." method="_on_Hurtbox_received_hit"]
 [connection signal="timeout" from="HitstopTimer" to="." method="_on_HitstopTimer_timeout"]
 
