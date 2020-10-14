@@ -1,4 +1,4 @@
-[gd_scene load_steps=122 format=2]
+[gd_scene load_steps=121 format=2]
 
 [ext_resource path="res://entities/sword_figher/model/sword_fighter.glb" type="PackedScene" id=1]
 [ext_resource path="res://entities/sword_figher/sword_fighter.gd" type="Script" id=2]
@@ -2363,23 +2363,14 @@ colors = PoolColorArray( 0.681641, 0.489087, 0.274254, 1, 0.333984, 0.198767, 0.
 [sub_resource type="GradientTexture" id=72]
 gradient = SubResource( 71 )
 
-[sub_resource type="CurveTexture" id=73]
-curve = SubResource( 60 )
-
 [sub_resource type="ParticlesMaterial" id=74]
-emission_shape = 2
-emission_box_extents = Vector3( 0.8, 0.7, 0.3 )
 flag_align_y = true
 flag_rotate_y = true
-direction = Vector3( 0, 0, 1 )
+direction = Vector3( 0, 0, 0 )
 spread = 0.0
 gravity = Vector3( 0, 0, 0 )
-initial_velocity = 5.0
-initial_velocity_random = 0.5
 damping = 4.87
 angle = 32.2
-scale = 2.0
-scale_curve = SubResource( 73 )
 color_ramp = SubResource( 72 )
 
 [sub_resource type="QuadMesh" id=75]
@@ -2725,6 +2716,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.22309, 0 )
 [node name="Rope" parent="ModelContainer" instance=ExtResource( 14 )]
 transform = Transform( 1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 1.32887, -0.819866 )
 visible = false
+
+[node name="BombPoint" type="Position3D" parent="ModelContainer"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.46138, -0.412573 )
 
 [node name="CameraPointPivot" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0 )

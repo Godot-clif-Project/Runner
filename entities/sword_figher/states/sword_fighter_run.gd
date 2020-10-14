@@ -16,6 +16,8 @@ var turn_acc = 0.0
 var current_turn_dir = 0
 var prev_turn_dir = 0
 
+var bomb_throw_str = 5.0
+
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
 	entity.set_animation("run_loop_c", 0, 0.05)
@@ -136,36 +138,43 @@ func _process_state(delta):
 	
 #	entity.translation = Vector3.ZERO
 
+	if entity.input_listener.is_key_pressed(InputManager.HEAVY):
+		bomb_throw_str = clamp(bomb_throw_str + delta * 60, 3.0, 30.0)
+
 func _touched_surface(surface):
 	if surface == "wall":
-		if entity.prev_speed > 10:
+		if entity.prev_speed > entity.max_speed * 0.5:
 			var wall_normal = entity.get_slide_collision(0).normal
-			var wall_position = entity.get_slide_collision(0).position
-			var player_vector = -entity.model_container.transform.basis.z
-			var rot = Vector2(player_vector.x, player_vector.z).angle_to(Vector2(wall_normal.x, wall_normal.z))
-			
-			entity.velocity *= 1 - abs(wall_normal.dot(player_vector) * 1.0)
-	#			if entity.target_speed <= entity.max_speed:
-	#	#			entity.model_container.rotation.y -= (PI * 0.333) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
-	#				entity.velocity += wall_normal * entity.prev_speed * 0.25
-	#			else:
-	#	#			entity.model_container.rotation.y -= (PI * 0.5) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
-	#				entity.velocity += wall_normal * entity.prev_speed * 0.33
+#			print(entity.prev_velocity.normalized().dot(wall_normal))
+			if entity.prev_velocity.normalized().dot(wall_normal) < -0.4:
 				
-			entity.velocity += wall_normal * entity.prev_speed * 0.33
-			entity.acceleration = 0.0
-			
-			var _hit = Hit.new(Hit.INIT_TYPE.WALL)
-			_hit.position = wall_position
-			_hit.damage = entity.prev_speed * 2
-			entity._receive_hit(_hit)
+				var player_vector = -entity.model_container.transform.basis.z
+				var wall_position = entity.get_slide_collision(0).position
+				var dot = wall_normal.dot(player_vector)
+				entity.velocity *= 1 - abs(dot * 1.0)
+		#			if entity.target_speed <= entity.max_speed:
+		#	#			entity.model_container.rotation.y -= (PI * 0.333) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
+		#				entity.velocity += wall_normal * entity.prev_speed * 0.25
+		#			else:
+		#	#			entity.model_container.rotation.y -= (PI * 0.5) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
+		#				entity.velocity += wall_normal * entity.prev_speed * 0.33
+					
+				entity.velocity += wall_normal * entity.prev_speed * 0.33
+				entity.acceleration = 0.0
+		
+					
+				var rot = Vector2(player_vector.x, player_vector.z).angle_to(Vector2(wall_normal.x, wall_normal.z))
+				if rot > 0.0:
+					entity.set_animation("run_bump_l", 0.0, 0.05)
+				else:
+					entity.set_animation("run_bump_r", 0.0, 0.05)
+				entity.play_sound("step")
+				
+				var _hit = Hit.new(Hit.INIT_TYPE.WALL)
+				_hit.position = wall_position
+				_hit.damage = entity.prev_speed * 4
+				entity._receive_hit(_hit)
 
-			if rot > 0.0:
-				entity.set_animation("run_bump_l", 0.0, 0.05)
-			else:
-				entity.set_animation("run_bump_r", 0.0, 0.05)
-			entity.play_sound("step")
-	
 
 func _animation_finished(anim_name):
 	if anim_name == "run_bump_l" or anim_name == "run_bump_r":
@@ -208,7 +217,12 @@ func _received_input(key, state):
 			if entity.target_speed <= entity.max_speed:
 				entity.target_speed = entity.boost_speed
 				entity.acceleration = 0.85
-#	else:
+		
+	else:
+		if key == InputManager.HEAVY:
+			entity.throw_stamina_bomb(Vector3(0.0, bomb_throw_str * 0.25, -bomb_throw_str))
+			bomb_throw_str = 0.0
+			
 #		if key == InputManager.FIRE:
 #			if entity.target_speed <= entity.max_speed:
 #				entity.target_speed = entity.boost_speed * boost_charge

@@ -59,7 +59,7 @@ var min_speed = 5.0
 var boost_speed = 30.0
 
 var prev_speed = 0.0
-#var prev_velocity : Vector3
+var prev_velocity : Vector3
 const MAX_AIR_BOOSTS = 1
 var air_boosts_left = 1
 var has_wall_run = true
@@ -242,9 +242,6 @@ func _input(event):
 		reset()
 
 #func _process(delta):
-#	velocity = move_and_slide(velocity, Vector3.UP, false, 4, 0.785398, true)
-#		print("Elapsed time: ", OS.get_ticks_msec() - start_time)	
-#		print("Elapsed time: ", OS.get_ticks_msec() / 1000.0)
 
 func _physics_process(delta):
 	fsm._process_current_state(delta * timescale, true)
@@ -272,7 +269,9 @@ func _physics_process(delta):
 		$ModelContainer/sword_fighter.translation = (Vector3.RIGHT * (shake_t * 0.03)) * sin(shake_t) * 0.1
 		shake_t -= delta * 50
 	
-#	$ModelContainer/sword_fighter/Armature/Skeleton/.set_bone_pose(24, Transform.IDENTITY)
+#	if hp < max_hp:
+#		self.hp += delta * 10
+	
 
 func apply_velocity(delta):
 	if not rigidbodies.empty():
@@ -281,7 +280,7 @@ func apply_velocity(delta):
 			velocity += Vector3(body_normal.x, 0.0, body_normal.z) * timescale
 	
 	prev_speed = horizontal_speed
-#	prev_velocity = velocity
+	prev_velocity = velocity
 #	velocity = move_and_slide(velocity, Vector3.UP, false, 4, 0.785398, true)
 	velocity = move_and_slide(velocity * timescale, Vector3.UP, false, 4, 0.785398, true) / timescale
 	horizontal_speed = Vector2(velocity.x, velocity.z).length()
@@ -666,3 +665,11 @@ func get_healing_grass(heal_amount, grass):
 
 func play_sound(sound_name : String):
 	$Sound.play(sound_name)
+
+const STAMINA_BOMB = preload("res://objects/stamina_bomb/stamina_bomb.tscn")
+
+func throw_stamina_bomb(_velocity : Vector3):
+	var bomb = STAMINA_BOMB.instance()
+	bomb.velocity = _velocity.rotated(Vector3.UP, model_container.rotation.y)
+	bomb.translation = $ModelContainer/BombPoint.global_transform.origin
+	MainManager.current_level.add_child(bomb)
