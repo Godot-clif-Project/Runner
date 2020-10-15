@@ -1,0 +1,261 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://misc/Path.gd" type="Script" id=1]
+[ext_resource path="res://effects/glow_2.png" type="Texture" id=3]
+
+[sub_resource type="Curve3D" id=1]
+_data = {
+"points": PoolVector3Array( 0.00419271, 0.293373, 1.00613, 0, 0.496213, 0.623961, 0, 0, 1, 0, -0.178006, 0.976298, 0.124766, -1.08134, -1.02181, 0, 0, -1 ),
+"tilts": PoolRealArray( 0, 0 )
+}
+
+[sub_resource type="QuadMesh" id=6]
+size = Vector2( 0.1, 0.1 )
+
+[sub_resource type="SpatialMaterial" id=5]
+flags_transparent = true
+flags_unshaded = true
+params_billboard_mode = 1
+albedo_color = Color( 0.831373, 0.831373, 0.831373, 1 )
+albedo_texture = ExtResource( 3 )
+
+[sub_resource type="Animation" id=7]
+resource_name = "Pull"
+length = 2.0
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/path = NodePath("Position3D:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.5, 0.7, 0.766667, 0.833333, 0.983333, 1.16667, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0.234283, 0.000295863, -0.64717 ), Vector3( 0.234283, 0.000295863, -0.64717 ), Vector3( 0, 0.000295863, -0.64717 ), Vector3( 0, -0.0455355, -0.589117 ), Vector3( 0, -0.00275964, -0.494399 ), Vector3( 0, 0.176132, -0.309699 ), Vector3( 0, 0.496213, 0.623961 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Position3D2:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.5, 0.7, 0.766667, 0.833333, 0.983333, 1.1, 1.18333, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -0.206325, 0.00106642, 0.501423 ), Vector3( -0.206325, 0.00106642, 0.501423 ), Vector3( 0, 0.00106642, 0.501423 ), Vector3( 0, 0.0866181, 0.177549 ), Vector3( 0, 0.000510894, 0.374762 ), Vector3( 0, 0.00106642, 0.501423 ), Vector3( 0, 0.130714, 0.888555 ), Vector3( 0, -0.178006, 0.976298 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Path/PathFollow:unit_offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5, 0.833333, 1.1, 1.4 ),
+"transitions": PoolRealArray( 0.34151, 0.34151, 1, 1.56917, 0.183011 ),
+"update": 0,
+"values": [ 0.0, 0.0, 1.0, 1.0, 0.0 ]
+}
+
+[sub_resource type="SpatialMaterial" id=8]
+flags_unshaded = true
+flags_use_point_size = true
+params_point_size = 23.0
+albedo_texture = ExtResource( 3 )
+
+[node name="Rope" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="Path" type="Path" parent="."]
+curve = SubResource( 1 )
+
+[node name="PathFollow" type="PathFollow" parent="Path"]
+transform = Transform( -0.999911, -0.00915148, 0.00414721, -0.00470265, 0.791077, 0.61168, -0.00887847, 0.611649, -0.791055, 0, 0, 1 )
+rotation_mode = 0
+cubic_interp = false
+loop = false
+
+[node name="Node" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance4" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance5" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance6" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance7" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance8" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance9" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance10" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance11" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance12" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance13" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance14" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance15" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance16" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance17" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance18" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance19" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance20" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance21" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance22" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance23" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance24" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance25" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance26" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance27" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance28" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance29" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance30" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance31" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance32" type="MeshInstance" parent="Node"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Pull = SubResource( 7 )
+
+[node name="Position3D" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.496213, 0.623961 )
+
+[node name="Position3D2" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.178006, 0.976298 )
+
+[node name="Start" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+
+[node name="End" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1 )
+
+[node name="ImmediateGeometry" type="ImmediateGeometry" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05, -0.05, -1 )
+material_override = SubResource( 8 )

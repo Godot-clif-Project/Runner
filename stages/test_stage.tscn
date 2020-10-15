@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://stages/stage_env.tres" type="Environment" id=1]
 [ext_resource path="res://entities/sword_figher/sword_fighter.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://entities/sword_figher/sword_fighter_2.tscn" type="PackedScene" id=8]
 [ext_resource path="res://objects/stage_timer.tscn" type="PackedScene" id=9]
 [ext_resource path="res://entities/sword_figher/sword_fighter_player_1.material" type="Material" id=10]
+[ext_resource path="res://stages/stage.gd" type="Script" id=11]
 
 [sub_resource type="Animation" id=1]
 length = 60.0
@@ -27,15 +28,16 @@ tracks/0/keys = {
 "values": [ Vector3( -25.071, 100, -2.385 ), Vector3( -25.071, 460, -2.385 ) ]
 }
 
-[sub_resource type="CubeMesh" id=13]
+[sub_resource type="CubeMesh" id=2]
 
-[sub_resource type="BoxShape" id=14]
+[sub_resource type="BoxShape" id=3]
 
-[sub_resource type="CubeMesh" id=15]
+[sub_resource type="CubeMesh" id=4]
 
-[sub_resource type="BoxShape" id=16]
+[sub_resource type="BoxShape" id=5]
 
 [node name="Stage" type="Spatial"]
+script = ExtResource( 11 )
 
 [node name="StageTimer" parent="." instance=ExtResource( 9 )]
 
@@ -152,7 +154,7 @@ target = NodePath("../SwordFighter")
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 0.31253, 0, 0, 0, 0.31253, 0, 0, 0, 0.31253, 0, -0.257058, 0 )
-mesh = SubResource( 13 )
+mesh = SubResource( 2 )
 material/0 = null
 
 [node name="Player1Pos" type="Position3D" parent="."]
@@ -171,7 +173,7 @@ texture = ExtResource( 7 )
 transform = Transform( 5.09698, 0, -0.425677, 0, 5.11473, 0, 0.425677, 0, 5.09698, 53.4341, 37.0923, 51.869 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Goal"]
-shape = SubResource( 14 )
+shape = SubResource( 3 )
 
 [node name="RigidBody" type="RigidBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.90519, 1.06634, 31.2651 )
@@ -184,11 +186,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="RigidBody"]
-mesh = SubResource( 15 )
+mesh = SubResource( 4 )
 material/0 = ExtResource( 10 )
 
 [node name="CollisionShape" type="CollisionShape" parent="RigidBody"]
-shape = SubResource( 16 )
+shape = SubResource( 5 )
 
 [node name="RigidBody2" type="RigidBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.795449, 1.06634, 31.2651 )
@@ -201,11 +203,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="RigidBody2"]
-mesh = SubResource( 15 )
+mesh = SubResource( 4 )
 material/0 = ExtResource( 10 )
 
 [node name="CollisionShape" type="CollisionShape" parent="RigidBody2"]
-shape = SubResource( 16 )
+shape = SubResource( 5 )
 
 [node name="RigidBody3" type="RigidBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.308, 1.06634, 31.2651 )
@@ -218,11 +220,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="RigidBody3"]
-mesh = SubResource( 15 )
+mesh = SubResource( 4 )
 material/0 = ExtResource( 10 )
 
 [node name="CollisionShape" type="CollisionShape" parent="RigidBody3"]
-shape = SubResource( 16 )
+shape = SubResource( 5 )
 
 [node name="RigidBody4" type="RigidBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.154484, 3.07551, 31.2651 )
@@ -235,11 +237,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="RigidBody4"]
-mesh = SubResource( 15 )
+mesh = SubResource( 4 )
 material/0 = ExtResource( 10 )
 
 [node name="CollisionShape" type="CollisionShape" parent="RigidBody4"]
-shape = SubResource( 16 )
+shape = SubResource( 5 )
 
 [node name="RigidBody5" type="RigidBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.00022, 3.07551, 31.2651 )
@@ -252,11 +254,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="RigidBody5"]
-mesh = SubResource( 15 )
+mesh = SubResource( 4 )
 material/0 = ExtResource( 10 )
 
 [node name="CollisionShape" type="CollisionShape" parent="RigidBody5"]
-shape = SubResource( 16 )
+shape = SubResource( 5 )
 
 [node name="RigidBody6" type="RigidBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.981103, 5.11096, 31.2651 )
@@ -269,11 +271,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="RigidBody6"]
-mesh = SubResource( 15 )
+mesh = SubResource( 4 )
 material/0 = ExtResource( 10 )
 
 [node name="CollisionShape" type="CollisionShape" parent="RigidBody6"]
-shape = SubResource( 16 )
+shape = SubResource( 5 )
 
 [node name="RigidBody7" type="RigidBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.154484, 3.07551, 31.2651 )
@@ -286,11 +288,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="RigidBody7"]
-mesh = SubResource( 15 )
+mesh = SubResource( 4 )
 material/0 = ExtResource( 10 )
 
 [node name="CollisionShape" type="CollisionShape" parent="RigidBody7"]
-shape = SubResource( 16 )
+shape = SubResource( 5 )
 
 [node name="RigidBody8" type="RigidBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.00022, 3.07551, 31.2651 )
@@ -303,11 +305,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="RigidBody8"]
-mesh = SubResource( 15 )
+mesh = SubResource( 4 )
 material/0 = ExtResource( 10 )
 
 [node name="CollisionShape" type="CollisionShape" parent="RigidBody8"]
-shape = SubResource( 16 )
+shape = SubResource( 5 )
 
 [node name="RigidBody9" type="RigidBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.981103, 5.11096, 31.2651 )
@@ -320,9 +322,9 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="RigidBody9"]
-mesh = SubResource( 15 )
+mesh = SubResource( 4 )
 material/0 = ExtResource( 10 )
 
 [node name="CollisionShape" type="CollisionShape" parent="RigidBody9"]
-shape = SubResource( 16 )
+shape = SubResource( 5 )
 [connection signal="body_entered" from="Goal" to="StageTimer" method="_on_Goal_body_entered"]

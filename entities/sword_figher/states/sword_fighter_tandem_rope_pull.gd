@@ -18,6 +18,8 @@ func _enter_state():
 #	entity.lock_on_target.receive_tandem_action("rope_pull", entity)
 #	entity.play_rope_animation(entity.lock_on_target.rope_point.global_transform.origin)
 #	entity.emit_signal("dealt_tandem_action", "rope_pull", [entity.lock_on_target.rope_point.global_transform.origin])
+	entity.get_node("../Rope").visible = true
+	entity.get_node("../Rope/AnimationPlayer").play("Pull")
 
 	._enter_state()
 #
@@ -28,6 +30,7 @@ func _exit_state():
 	entity.model_container.transform = entity.model_container.transform.orthonormalized()
 	entity.camera_pivot.transform = entity.camera_pivot.transform.orthonormalized()
 	entity.gravity_scale = 1.0
+	entity.get_node("../Rope").visible = false
 	._exit_state()
 
 func _process_state(delta):
@@ -38,6 +41,13 @@ func _process_state(delta):
 	if entity.flags.is_active:
 #		entity.center_camera(delta * 2)
 		entity.point_camera_at_target(delta * 5, Vector3(0.0, -5.0, 0.0))
+	
+#	entity.get_node("../Rope/Start").translation = entity.get_node("ModelContainer/sword_fighter/Armature/Skeleton/RHandAttachment").global_transform.origin
+	entity.get_node("../Rope").translation = entity.get_node("ModelContainer/sword_fighter/Armature/Skeleton/RHandAttachment").global_transform.origin
+	entity.get_node("../Rope").rotation.y = entity.model_container.rotation.y
+	entity.get_node("../Rope/End").translation = entity.get_node("../Rope").to_local(entity.lock_on_target.translation + Vector3.UP)
+	
+#	entity.get_node("../Path/Path/PathFollow").unit_offset = 1.0
 #	entity.apply_root_motion(delta)
 ##	pass
 #

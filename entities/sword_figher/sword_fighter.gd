@@ -244,6 +244,7 @@ func _input(event):
 #func _process(delta):
 
 func _physics_process(delta):
+	
 	fsm._process_current_state(delta * timescale, true)
 	
 	if camera != null:

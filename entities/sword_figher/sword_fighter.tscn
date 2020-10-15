@@ -2563,10 +2563,6 @@ script = ExtResource( 17 )
 [node name="sword_fighter" parent="ModelContainer" instance=ExtResource( 1 )]
 transform = Transform( -0.6, 0, -9.05975e-08, 0, 0.6, 0, 9.05975e-08, 0, -0.6, 0, 0, 0 )
 
-[node name="Skeleton" parent="ModelContainer/sword_fighter/Armature" index="0"]
-bones/7/bound_children = [ NodePath("BoneAttachment") ]
-bones/23/bound_children = [ NodePath("ThrowAttachment") ]
-
 [node name="Cube" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="0"]
 transform = Transform( 1, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1, 0, 0, 0 )
 material/0 = ExtResource( 12 )
@@ -2575,7 +2571,7 @@ material/0 = ExtResource( 12 )
 material/0 = ExtResource( 12 )
 
 [node name="BoneAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
-transform = Transform( 1, 0, 0, 0, 0.998474, 0.0552152, 0, -0.0552152, 0.998474, -6.59474e-17, 2.24226, 7.43921e-09 )
+transform = Transform( 1, 1.82941e-16, -7.97051e-17, -1.78276e-16, 0.63957, -0.768733, -8.96559e-17, 0.768733, 0.63957, -2.82754e-17, 1.62452, -0.0301426 )
 bone_name = "torso"
 
 [node name="Hurtbox" parent="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment" instance=ExtResource( 11 )]
@@ -2594,6 +2590,10 @@ draw_pass_1 = SubResource( 64 )
 
 [node name="ThrowAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="3"]
 bone_name = "throw_pos"
+
+[node name="RHandAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="4"]
+transform = Transform( 0.47543, -0.863728, -0.167153, -0.860954, -0.495864, 0.113477, -0.180898, 0.0899605, -0.979379, -1.02677, 2.10723, 0.0651102 )
+bone_name = "hand_r"
 
 [node name="AnimationPlayer" parent="ModelContainer/sword_fighter" index="1"]
 playback_process_mode = 0
