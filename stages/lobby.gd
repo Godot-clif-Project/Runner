@@ -82,11 +82,11 @@ func _on_Join_pressed():
 func _on_Disconnect_pressed():
 	if get_tree().has_network_peer():
 		NetworkManager.disconnect_network()
-		update_gui(false)
-		update_peer_list()
 		label.text = "Disconnected."
 	else:
 		label.text = "No connections active."
+	update_gui(false)
+	update_peer_list()
 
 func _on_Ping_pressed():
 	if get_tree().has_network_peer():
@@ -147,6 +147,7 @@ func update_gui(is_connected):
 		$Port.editable = true
 		$Ping.disabled = true
 		$StartSingleGame.disabled = false
+		$StartNetGame.disabled = true
 
 
 

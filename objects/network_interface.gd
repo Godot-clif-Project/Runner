@@ -4,10 +4,11 @@ export var enabled = true
 
 var player_entity
 var peer_entity
-var remote_world_objects = {}
+var remote_networked_objects = {}
 
 func _ready():
 	set_physics_process(false)
+	NetworkManager.network_interface = self
 	
 	if enabled and get_tree().has_network_peer():
 		player_entity = get_node("../SwordFighter")
@@ -48,6 +49,7 @@ func _ready():
 	else:
 		player_entity = get_node("../SwordFighter")
 		player_entity.setup(1)
+		enabled = false
 
 func peer_disconnected(id):
 	enabled = false
@@ -56,22 +58,31 @@ func server_disconnected():
 	enabled = false
 	
 func _physics_process(delta):
-	rpc_unreliable("update_world_objects", {"Dummy" : {"translation" : remote_world_objects["Dummy"].translation}})
+	var dummy_id = $"../Dummy".object_id
+	rpc_unreliable("update_networked_objects", {dummy_id : {"translation" : remote_networked_objects[dummy_id].translation}})
 
-func add_world_object(_name, object):
+func create_new_networked_object(object_id : int, resource_name : String, args : Dictionary):
+	if enabled:
+		rpc("peer_created_networked_object", NetworkManager.my_id, object_id, resource_name, args)
+	pass
+
+func add_networked_object(object_id, object):
+#	if get_tree().has_network_peer():
+		remote_networked_objects[object_id] = object
+		remote_networked_objects[object_id].connect("networked_object_event", self, "receive_networked_object_event")
+		
+func remove_networked_object(object_id):
 	if get_tree().has_network_peer():
-		remote_world_objects[_name] = object
-		remote_world_objects[_name].connect("world_object_event", self, "receive_world_object_event")
+		if remote_networked_objects.has(object_id):
+			remote_networked_objects.erase(object_id)
 
-func receive_world_object_event(object_name, event_name, arg_array):
-	rpc("world_object_event", object_name, event_name, arg_array)
+func receive_networked_object_event(object_id : int, function_name : String, args : Array):
+	if enabled:
+		rpc("receive_networked_object_event_from_peer", object_id, function_name, args)
 
 func player_entity_hp_changed(new_value):
 	if enabled:
 		peer_entity.rpc_unreliable("update_hp", NetworkManager.my_id, new_value)
-		
-#		if new_value == 0:
-#			rpc("round_end", NetworkManager.peers[NetworkManager.peers.keys()[0]]["name"])
 
 func player_entity_transform_changed(new_value):
 	if enabled:
@@ -92,18 +103,24 @@ func player_entity_animation_changed(anim_name, seek_pos, blend_speed):
 func player_entity_dealt_tandem_action(action, args):
 	peer_entity.rpc("dealt_tandem_action", NetworkManager.my_id, action, args)
 
-remote func update_world_objects(objects_to_update):
+remote func update_networked_objects(objects_to_update):
 	for object_name in objects_to_update.keys():
 		for property in objects_to_update[object_name].keys():
-			remote_world_objects[object_name].set(property, objects_to_update[object_name][property])
+			remote_networked_objects[object_name].set(property, objects_to_update[object_name][property])
 
-remote func world_object_event(object_name, event_name, arg_array):
-	match event_name:
-		"get_grass":
-			remote_world_objects[object_name].grabbed()
-		_:
-			remote_world_objects[object_name].receive_hit(arg_array[0])
-			
+remote func peer_created_networked_object(owner_id, object_id : int, object_resource_name : String, args : Dictionary):
+	args["owner_id"] = owner_id
+#	args["name"] = object_name
+	MainManager.current_level.create_object(object_resource_name, args)
+	NetworkManager.uid = object_id
+#	prints("name", NetworkManager.my_id, args["name"])
+
+remote func receive_networked_object_event_from_peer(object_id : int, function_name : String, args : Array):
+	if remote_networked_objects.has(object_id):
+		remote_networked_objects[object_id].callv(function_name, args)
+#	else:
+#		prints(object_name, "not found in networked_objects")
+	
 #func player_entity_dealt_hit(hit):
 #	if enabled:
 #		var hit_data = {

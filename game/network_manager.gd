@@ -19,6 +19,13 @@ var my_info = {
 }
 
 var lobby_scene
+var network_interface
+
+var uid = -1
+
+func get_new_uid() -> int:
+	uid += 1
+	return uid
 
 func get_my_id():
 	if get_tree().has_network_peer():
@@ -84,10 +91,10 @@ func join_game(ip, port):
 		my_id = host.get_unique_id()
 
 func disconnect_network():
-	if get_tree().has_network_peer() and get_tree().network_peer.get_connection_status() == NetworkedMultiplayerPeer.CONNECTION_CONNECTED:
+	if get_tree().has_network_peer():
 		get_tree().network_peer.close_connection()
 		peers.clear()
-#		call_deferred("delete_network_peer")
+		call_deferred("delete_network_peer")
 
 func delete_network_peer():
 	get_tree().network_peer = null

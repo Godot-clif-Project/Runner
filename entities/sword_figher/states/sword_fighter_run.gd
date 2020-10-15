@@ -139,7 +139,7 @@ func _process_state(delta):
 #	entity.translation = Vector3.ZERO
 
 	if entity.input_listener.is_key_pressed(InputManager.HEAVY):
-		bomb_throw_str = clamp(bomb_throw_str + delta * 60, 3.0, 30.0)
+		bomb_throw_str = clamp(bomb_throw_str + delta * 50, 3.0, 30.0)
 
 func _touched_surface(surface):
 	if surface == "wall":

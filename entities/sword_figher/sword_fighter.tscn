@@ -2363,7 +2363,7 @@ colors = PoolColorArray( 0.681641, 0.489087, 0.274254, 1, 0.333984, 0.198767, 0.
 [sub_resource type="GradientTexture" id=72]
 gradient = SubResource( 71 )
 
-[sub_resource type="ParticlesMaterial" id=74]
+[sub_resource type="ParticlesMaterial" id=73]
 flag_align_y = true
 flag_rotate_y = true
 direction = Vector3( 0, 0, 0 )
@@ -2373,31 +2373,31 @@ damping = 4.87
 angle = 32.2
 color_ramp = SubResource( 72 )
 
-[sub_resource type="QuadMesh" id=75]
+[sub_resource type="QuadMesh" id=74]
 material = ExtResource( 15 )
 
-[sub_resource type="Gradient" id=76]
+[sub_resource type="Gradient" id=75]
 offsets = PoolRealArray( 0.113821, 1 )
 colors = PoolColorArray( 0.681641, 0.489087, 0.274254, 1, 0.333984, 0.198767, 0.113503, 0 )
 
-[sub_resource type="GradientTexture" id=77]
-gradient = SubResource( 76 )
+[sub_resource type="GradientTexture" id=76]
+gradient = SubResource( 75 )
 
-[sub_resource type="Curve" id=78]
+[sub_resource type="Curve" id=77]
 max_value = 100.0
 _data = [ Vector2( 0, 83.1897 ), 0.0, -228.894, 0, 0, Vector2( 1, 0 ), 6.89152, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=79]
-curve = SubResource( 78 )
+[sub_resource type="CurveTexture" id=78]
+curve = SubResource( 77 )
 
-[sub_resource type="Curve" id=80]
+[sub_resource type="Curve" id=79]
 max_value = 2.0
 _data = [ Vector2( 0, 0.662716 ), 0.0, 1.31012, 0, 0, Vector2( 1, 1.16595 ), 0.0620238, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=81]
-curve = SubResource( 80 )
+[sub_resource type="CurveTexture" id=80]
+curve = SubResource( 79 )
 
-[sub_resource type="ParticlesMaterial" id=82]
+[sub_resource type="ParticlesMaterial" id=81]
 lifetime_randomness = 0.2
 direction = Vector3( 0, 0, 0 )
 spread = 180.0
@@ -2406,38 +2406,38 @@ gravity = Vector3( 0, -2, 0 )
 initial_velocity = 12.0
 initial_velocity_random = 0.25
 angular_velocity = 10.14
-damping_curve = SubResource( 79 )
+damping_curve = SubResource( 78 )
 angle = 720.0
 angle_random = 0.5
 scale = 2.0
 scale_random = 0.5
-scale_curve = SubResource( 81 )
-color_ramp = SubResource( 77 )
+scale_curve = SubResource( 80 )
+color_ramp = SubResource( 76 )
 
-[sub_resource type="QuadMesh" id=83]
+[sub_resource type="QuadMesh" id=82]
 
-[sub_resource type="Gradient" id=84]
+[sub_resource type="Gradient" id=83]
 offsets = PoolRealArray( 0.113821, 1 )
 colors = PoolColorArray( 0.681641, 0.489087, 0.274254, 1, 0.333984, 0.198767, 0.113503, 0 )
 
-[sub_resource type="GradientTexture" id=85]
-gradient = SubResource( 84 )
+[sub_resource type="GradientTexture" id=84]
+gradient = SubResource( 83 )
 
-[sub_resource type="Curve" id=86]
+[sub_resource type="Curve" id=85]
 max_value = 100.0
 _data = [ Vector2( 0, 36.2069 ), 0.0, -111.126, 0, 0, Vector2( 1, 0 ), 6.89152, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=87]
-curve = SubResource( 86 )
+[sub_resource type="CurveTexture" id=86]
+curve = SubResource( 85 )
 
-[sub_resource type="Curve" id=88]
+[sub_resource type="Curve" id=87]
 max_value = 2.0
 _data = [ Vector2( 0, 0.662716 ), 0.0, 1.31012, 0, 0, Vector2( 1, 1.16595 ), 0.0620238, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=89]
-curve = SubResource( 88 )
+[sub_resource type="CurveTexture" id=88]
+curve = SubResource( 87 )
 
-[sub_resource type="ParticlesMaterial" id=90]
+[sub_resource type="ParticlesMaterial" id=89]
 lifetime_randomness = 0.2
 direction = Vector3( 0, 0, 0 )
 spread = 180.0
@@ -2447,14 +2447,14 @@ initial_velocity = 6.0
 initial_velocity_random = 0.25
 angular_velocity = 10.14
 linear_accel = 1.41
-damping_curve = SubResource( 87 )
+damping_curve = SubResource( 86 )
 angle = 720.0
 angle_random = 0.5
 scale_random = 0.5
-scale_curve = SubResource( 89 )
-color_ramp = SubResource( 85 )
+scale_curve = SubResource( 88 )
+color_ramp = SubResource( 84 )
 
-[sub_resource type="SphereShape" id=91]
+[sub_resource type="SphereShape" id=90]
 radius = 0.2
 
 [node name="SwordFighter" type="KinematicBody"]
@@ -2562,6 +2562,10 @@ script = ExtResource( 17 )
 
 [node name="sword_fighter" parent="ModelContainer" instance=ExtResource( 1 )]
 transform = Transform( -0.6, 0, -9.05975e-08, 0, 0.6, 0, 9.05975e-08, 0, -0.6, 0, 0, 0 )
+
+[node name="Skeleton" parent="ModelContainer/sword_fighter/Armature" index="0"]
+bones/7/bound_children = [ NodePath("BoneAttachment") ]
+bones/23/bound_children = [ NodePath("ThrowAttachment") ]
 
 [node name="Cube" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="0"]
 transform = Transform( 1, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1, 0, 0, 0 )
@@ -2677,13 +2681,13 @@ material_override = ExtResource( 15 )
 emitting = false
 amount = 400
 local_coords = false
-process_material = SubResource( 74 )
+process_material = SubResource( 73 )
 draw_pass_1 = SubResource( 64 )
 
 [node name="Particles2" parent="ModelContainer" instance=ExtResource( 13 )]
 amount = 20
 process_material = ExtResource( 16 )
-draw_pass_1 = SubResource( 75 )
+draw_pass_1 = SubResource( 74 )
 
 [node name="ParticlesJump" type="Particles" parent="ModelContainer"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.193547, 0 )
@@ -2692,8 +2696,8 @@ emitting = false
 amount = 600
 lifetime = 0.75
 local_coords = false
-process_material = SubResource( 82 )
-draw_pass_1 = SubResource( 83 )
+process_material = SubResource( 81 )
+draw_pass_1 = SubResource( 82 )
 
 [node name="ParticlesLand" type="Particles" parent="ModelContainer"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.193547, 0 )
@@ -2702,8 +2706,8 @@ emitting = false
 amount = 400
 lifetime = 0.75
 local_coords = false
-process_material = SubResource( 90 )
-draw_pass_1 = SubResource( 83 )
+process_material = SubResource( 89 )
+draw_pass_1 = SubResource( 82 )
 
 [node name="VelocityArrow2" parent="ModelContainer" instance=ExtResource( 8 )]
 
@@ -2731,7 +2735,7 @@ monitorable = false
 collision_layer = 0
 
 [node name="CollisionShape" type="CollisionShape" parent="CameraPointPivot/Position3D/CameraCollision"]
-shape = SubResource( 91 )
+shape = SubResource( 90 )
 
 [node name="RayCast" type="RayCast" parent="CameraPointPivot"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.235243, -0.00321921 )

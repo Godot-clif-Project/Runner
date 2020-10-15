@@ -1,9 +1,9 @@
-extends WorldObject
+extends NetworkedObject
 
 export var heal_amount = 200
 
-func _ready():
-	get_node("/root/Stage/NetworkInterface").add_world_object(name, self)
+#func _ready():
+#	NetworkManager.network_interface.add_networked_object(name, self)
 #	pass # Replace with function body.
 
 #func _process(delta):
@@ -23,4 +23,4 @@ func _on_Area_body_entered(body):
 			if body.hp < body.max_hp:
 				body.get_healing_grass(heal_amount, self)
 				grabbed()
-				emit_signal("world_object_event", name, "get_grass", [])
+				emit_signal("networked_object_event", object_id, "grabbed", [])

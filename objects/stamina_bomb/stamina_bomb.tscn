@@ -16,12 +16,12 @@ height = 0.5
 radial_segments = 8
 rings = 4
 
-[sub_resource type="Gradient" id=9]
+[sub_resource type="Gradient" id=4]
 offsets = PoolRealArray( 0, 0.028, 1 )
 colors = PoolColorArray( 0.0338876, 0.0714286, 0.0273438, 1, 0.6, 3, 0.4, 1, 0, 0, 0, 1 )
 
 [sub_resource type="GradientTexture" id=5]
-gradient = SubResource( 9 )
+gradient = SubResource( 4 )
 
 [sub_resource type="ParticlesMaterial" id=6]
 emission_shape = 1
@@ -32,6 +32,7 @@ gravity = Vector3( 0, 0, 0 )
 initial_velocity = 10.0
 damping = 16.49
 scale = 0.25
+scale_random = 0.25
 color_ramp = SubResource( 5 )
 
 [sub_resource type="SpatialMaterial" id=7]
@@ -48,14 +49,14 @@ albedo_texture = ExtResource( 3 )
 [sub_resource type="QuadMesh" id=8]
 material = SubResource( 7 )
 
-[sub_resource type="Gradient" id=10]
+[sub_resource type="Gradient" id=9]
 offsets = PoolRealArray( 0, 0.5, 1 )
-colors = PoolColorArray( 0, 0, 0, 1, 0.122044, 0.203125, 0.10791, 1, 0, 0, 0, 1 )
+colors = PoolColorArray( 0, 0, 0, 1, 0.125226, 0.23584, 0.105944, 1, 0, 0, 0, 1 )
 
-[sub_resource type="GradientTexture" id=11]
-gradient = SubResource( 10 )
+[sub_resource type="GradientTexture" id=10]
+gradient = SubResource( 9 )
 
-[sub_resource type="ParticlesMaterial" id=12]
+[sub_resource type="ParticlesMaterial" id=11]
 emission_shape = 2
 emission_box_extents = Vector3( 1.5, 1.5, 1.5 )
 direction = Vector3( 0, 0, 0 )
@@ -63,9 +64,9 @@ spread = 180.0
 gravity = Vector3( 0, 0, 0 )
 damping = 16.49
 scale = 4.0
-color_ramp = SubResource( 11 )
+color_ramp = SubResource( 10 )
 
-[sub_resource type="SpatialMaterial" id=13]
+[sub_resource type="SpatialMaterial" id=12]
 flags_transparent = true
 flags_unshaded = true
 vertex_color_use_as_albedo = true
@@ -76,8 +77,8 @@ particles_anim_v_frames = 1
 particles_anim_loop = false
 albedo_texture = ExtResource( 1 )
 
-[sub_resource type="QuadMesh" id=14]
-material = SubResource( 13 )
+[sub_resource type="QuadMesh" id=13]
+material = SubResource( 12 )
 
 [node name="StaminaBomb" type="Spatial"]
 script = ExtResource( 2 )
@@ -114,8 +115,8 @@ emitting = false
 amount = 10
 lifetime = 2.0
 explosiveness = 0.41
-process_material = SubResource( 12 )
-draw_pass_1 = SubResource( 14 )
+process_material = SubResource( 11 )
+draw_pass_1 = SubResource( 13 )
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 10.0

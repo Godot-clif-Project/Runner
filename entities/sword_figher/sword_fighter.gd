@@ -666,10 +666,10 @@ func get_healing_grass(heal_amount, grass):
 func play_sound(sound_name : String):
 	$Sound.play(sound_name)
 
-const STAMINA_BOMB = preload("res://objects/stamina_bomb/stamina_bomb.tscn")
+#const STAMINA_BOMB = preload("res://objects/stamina_bomb/stamina_bomb.tscn")
 
 func throw_stamina_bomb(_velocity : Vector3):
-	var bomb = STAMINA_BOMB.instance()
-	bomb.velocity = _velocity.rotated(Vector3.UP, model_container.rotation.y)
-	bomb.translation = $ModelContainer/BombPoint.global_transform.origin
-	MainManager.current_level.add_child(bomb)
+	MainManager.current_level.create_object("stamina_bomb", {
+		"velocity" : _velocity.rotated(Vector3.UP, model_container.rotation.y),
+		"translation" : $ModelContainer/BombPoint.global_transform.origin
+	})
