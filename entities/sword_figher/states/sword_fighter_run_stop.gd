@@ -14,7 +14,7 @@ var speed = 0.0
 
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
-	entity.acceleration = 0.0
+#	entity.acceleration = 0.0
 	speed = entity.horizontal_speed
 	entity.get_node("ModelContainer/Particles2").emitting = true
 	entity.set_animation("run_break", 0, 0.05)
@@ -32,6 +32,8 @@ func _exit_state():
 	._exit_state()
 	
 func _process_state(delta):
+	entity.acceleration = clamp(entity.acceleration - delta, 0.0, 1.0)
+	
 	if entity.horizontal_speed < 2.0:
 		set_next_state("offensive_stance")
 		return
@@ -59,16 +61,6 @@ func _process_state(delta):
 	else:
 		entity.ground_drag = 8
 	
-	if entity.is_on_wall():
-		var wall_normal = entity.get_slide_collision(0).normal
-#		var wall_position = entity.get_slide_collision(0).position
-		var player_vector = -entity.model_container.transform.basis.z
-		var rot = Vector2(player_vector.x, player_vector.z).angle_to(Vector2(wall_normal.x, wall_normal.z))
-		
-#		if wall_normal.dot(player_vector) < -0.8:
-		entity.velocity *= 1 - abs(wall_normal.dot(player_vector) * 0.8)
-		entity.model_container.rotation.y -= (PI * 0.333) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
-		entity.velocity += wall_normal * entity.prev_speed * 0.3
 		
 	entity.model_container.rotation_degrees.y += ang_momentum * float(1 - entity.target_speed / entity.boost_speed * 0.5)
 	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
@@ -81,6 +73,21 @@ func _process_state(delta):
 	entity.center_camera(delta * 2)
 	
 #	._process_state(delta)
+
+func _touched_surface(surface):
+	if surface == "wall":
+		var wall_normal = entity.get_slide_collision(0).normal
+#		var wall_position = entity.get_slide_collision(0).position
+		var player_vector = -entity.model_container.transform.basis.z
+		var rot = Vector2(player_vector.x, player_vector.z).angle_to(Vector2(wall_normal.x, wall_normal.z))
+		
+#		if wall_normal.dot(player_vector) < -0.8:
+		entity.velocity *= 1 - abs(wall_normal.dot(player_vector) * 0.8)
+		entity.model_container.rotation.y -= (PI * 0.333) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
+		entity.velocity += wall_normal * entity.prev_speed * 0.3
+		
+		MainManager.current_level.spawn_effect("weak_hit", entity.translation + Vector3.UP, Vector3.ZERO)
+		entity.play_sound("hit_random")
 
 func _animation_finished(anim_name):
 #	if anim_name == "off_run_startup":

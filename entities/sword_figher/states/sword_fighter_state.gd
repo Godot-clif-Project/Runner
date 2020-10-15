@@ -207,7 +207,7 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 							if entity.input_listener.is_key_pressed(InputManager.LEFT) or entity.input_listener.is_key_pressed(InputManager.RIGHT):
 								return {"state" : t, "flag" : null}
 						"slide":
-							if entity.horizontal_speed > 10:
+							if entity.horizontal_speed > 5 and entity.hp > 0:
 								return {"state" : t, "flag" : null}
 			
 			InputManager.LIGHT:

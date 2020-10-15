@@ -24,7 +24,8 @@ func _enter_state():
 #	speed = entity.horizontal_speed
 	entity.get_node("ModelContainer/Particles2").emitting = true
 	initial_rot = entity.model_container.rotation_degrees.y
-	entity.velocity *= 1.25
+	entity.velocity = entity.velocity.normalized() * clamp(entity.horizontal_speed * 1.33, 0.0, entity.boost_speed * 1.25)
+	entity.hp -= 40
 	._enter_state()
 	
 #	if entity.input_listener.is_key_pressed(InputManager.DOWN):
@@ -39,9 +40,14 @@ func _exit_state():
 #	entity.model.rotation.z = 0.0
 	._exit_state()
 
-var t = 0.0
+var t = 1.25
 var prev_momentum = 0.0
 func _process_state(delta):
+	entity.hp -= 30 * delta
+	if entity.feet.get_overlapping_bodies().size() == 0:
+		set_next_state("running_fall")
+		return
+	
 	if entity.horizontal_speed < 10.0:
 		set_next_state("run_stop")
 		return
@@ -63,6 +69,8 @@ func _process_state(delta):
 	else:
 		ang_momentum = lerp(ang_momentum, 0, delta * rot_lerp)
 	
+	t = clamp(t - delta * 0.5, 0.5, 2.0)
+	
 #	t += delta * sign(ang_momentum) * 0.05 * stick
 
 #	if abs(ang_momentum) < prev_momentum - 0.25:
@@ -78,7 +86,7 @@ func _process_state(delta):
 #	entity.model_container.rotation_degrees.y = clamp(entity.model_container.rotation_degrees.y + ang_momentum, initial_rot - 90, initial_rot + 90)
 	
 #	speed = clamp(speed - delta * entity.ground_drag, 0, 25)
-	entity.velocity = entity.velocity.rotated(Vector3.UP, ang_momentum * 0.005 + t)
+	entity.velocity = entity.velocity.rotated(Vector3.UP, (ang_momentum * 0.005) * t)
 	var vel_angle = atan2(entity.velocity.x, entity.velocity.z)
 	entity.model_container.rotation.y = vel_angle + PI + ang_momentum * 0.1
 	
@@ -159,13 +167,15 @@ func _received_input(key, state):
 			entity.target_speed = entity.boost_speed
 			entity.acceleration = 1.0
 			return
-		elif key == InputManager.BOOST:
-			entity.set_animation("run_stop_dash", 0.0, 20.0)
-			entity.target_speed = entity.boost_speed
-#			entity.acceleration = 0.8
-			return
-#		if key == InputManager.DOWN:
+#		elif key == InputManager.BOOST:
+#			entity.set_animation("run_stop_dash", 0.0, 20.0)
+#			entity.target_speed = entity.boost_speed
+##			entity.acceleration = 0.8
+#			return
+		if key == InputManager.BREAK:
 #			entity.ground_drag = 20
+			set_next_state("run_stop")
+			return
 	else:
 		if key == InputManager.FIRE:
 			set_next_state("run")

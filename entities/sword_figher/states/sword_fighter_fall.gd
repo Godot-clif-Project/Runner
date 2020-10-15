@@ -59,7 +59,7 @@ func _process_state(delta):
 #	else:
 	
 	entity.apply_gravity(delta)
-	entity.apply_drag(delta)
+#	entity.apply_drag(delta * 0.1)
 	entity.apply_velocity(delta)
 	entity.center_camera(delta)
 	

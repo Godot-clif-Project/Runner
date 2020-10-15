@@ -979,9 +979,9 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
-tracks/1/enabled = true
+tracks/1/enabled = false
 tracks/1/keys = {
-"times": PoolRealArray( 0.1 ),
+"times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -995,7 +995,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0.1 ),
+"times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 2,
 "values": [ true ]
@@ -1007,7 +1007,7 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0.1 ),
+"times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [ "ParticlesJump" ],
@@ -1015,49 +1015,37 @@ tracks/3/keys = {
 } ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("AnimationFlags:gravity")
+tracks/4/path = NodePath("ModelContainer/Particles2:emitting")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 0.1 ),
+"times": PoolRealArray( 0, 0.4 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 2,
-"values": [ false, true ]
+"values": [ true, false ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("ModelContainer/Particles2:emitting")
+tracks/5/path = NodePath("AnimationFlags:is_stringable")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0.1, 0.4 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 2,
-"values": [ true, false ]
+"values": [ true ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("AnimationFlags:is_stringable")
+tracks/6/path = NodePath("AnimationFlags:is_evade_cancelable")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
-"times": PoolRealArray( 0.1 ),
-"transitions": PoolRealArray( 1 ),
-"update": 2,
-"values": [ true ]
-}
-tracks/7/type = "value"
-tracks/7/path = NodePath("AnimationFlags:is_evade_cancelable")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/keys = {
-"times": PoolRealArray( 0.1 ),
+"times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 2,
 "values": [ true ]
@@ -2210,7 +2198,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 2,
-"values": [ 10 ]
+"values": [ 18 ]
 }
 
 [sub_resource type="Animation" id=50]
@@ -2461,7 +2449,7 @@ radius = 0.2
 collision_layer = 2
 collision_mask = 2147483649
 script = ExtResource( 2 )
-ground_drag = 1
+ground_drag = 5
 
 [node name="FSM" parent="." instance=ExtResource( 4 )]
 state_list_script = ExtResource( 5 )
@@ -2563,6 +2551,9 @@ script = ExtResource( 17 )
 [node name="sword_fighter" parent="ModelContainer" instance=ExtResource( 1 )]
 transform = Transform( -0.6, 0, -9.05975e-08, 0, 0.6, 0, 9.05975e-08, 0, -0.6, 0, 0, 0 )
 
+[node name="Armature" parent="ModelContainer/sword_fighter" index="0"]
+transform = Transform( 1, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1, 0, 0, 0 )
+
 [node name="Cube" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="0"]
 transform = Transform( 1, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1, 0, 0, 0 )
 material/0 = ExtResource( 12 )
@@ -2571,7 +2562,7 @@ material/0 = ExtResource( 12 )
 material/0 = ExtResource( 12 )
 
 [node name="BoneAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
-transform = Transform( 1, 1.82941e-16, -7.97051e-17, -1.78276e-16, 0.63957, -0.768733, -8.96559e-17, 0.768733, 0.63957, -2.82754e-17, 1.62452, -0.0301426 )
+transform = Transform( 0.846415, -0.135702, -0.514944, -0.444422, 0.352727, -0.823451, 0.293379, 0.925833, 0.238245, 0.0186716, 1.94279, 0.314848 )
 bone_name = "torso"
 
 [node name="Hurtbox" parent="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment" instance=ExtResource( 11 )]
@@ -2592,7 +2583,7 @@ draw_pass_1 = SubResource( 64 )
 bone_name = "throw_pos"
 
 [node name="RHandAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="4"]
-transform = Transform( 0.47543, -0.863728, -0.167153, -0.860954, -0.495864, 0.113477, -0.180898, 0.0899605, -0.979379, -1.02677, 2.10723, 0.0651102 )
+transform = Transform( 0.166665, 0.459386, 0.87246, -0.985331, 0.110502, 0.130043, -0.0366687, -0.881336, 0.471065, -0.365749, 2.0652, -0.206427 )
 bone_name = "hand_r"
 
 [node name="AnimationPlayer" parent="ModelContainer/sword_fighter" index="1"]
@@ -2636,11 +2627,15 @@ hit_name = "off_hi_r_heavy"
 
 [node name="Feet" type="Area" parent="ModelContainer"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1, 0 )
+visible = false
 monitorable = false
 collision_layer = 0
 
 [node name="CollisionShape" type="CollisionShape" parent="ModelContainer/Feet"]
 shape = SubResource( 70 )
+
+[node name="RayCastFloor" type="RayCast" parent="ModelContainer"]
+cast_to = Vector3( 0, -0.2, 0 )
 
 [node name="LedgeDetectLow" type="RayCast" parent="ModelContainer"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.02413, 0 )

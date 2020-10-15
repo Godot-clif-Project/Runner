@@ -270,6 +270,10 @@ target = NodePath("../SwordFighter2")
 [node name="SwordFighter2" parent="." instance=ExtResource( 10 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.104375, 0, -9.1532 )
 target = NodePath("../SwordFighter")
+ground_drag = 1
+
+[node name="Armature" parent="SwordFighter2/ModelContainer/sword_fighter" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="Skeleton" parent="SwordFighter2/ModelContainer/sword_fighter/Armature" index="0"]
 bones/7/bound_children = [ NodePath("BoneAttachment") ]
@@ -277,13 +281,16 @@ bones/16/bound_children = [ NodePath("RHandAttachment") ]
 bones/23/bound_children = [ NodePath("ThrowAttachment") ]
 
 [node name="Cube" parent="SwordFighter2/ModelContainer/sword_fighter/Armature/Skeleton" index="0"]
+transform = Transform( 1, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1, 0, 0, 0 )
 material/0 = ExtResource( 21 )
 
 [node name="sword" parent="SwordFighter2/ModelContainer/sword_fighter/Armature/Skeleton" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 material/0 = ExtResource( 21 )
 
 [node name="BoneAttachment" parent="SwordFighter2/ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
 transform = Transform( 1, 0, 0, 0, 0.998474, 0.0552152, 0, -0.0552152, 0.998474, -6.59474e-17, 2.24226, 7.43921e-09 )
+bone_name = "torso"
 
 [node name="RHandAttachment" parent="SwordFighter2/ModelContainer/sword_fighter/Armature/Skeleton" index="4"]
 transform = Transform( 0.603443, -0.596163, -0.529571, -0.529571, -0.796131, 0.292799, -0.596163, 0.103758, -0.79613, -0.775657, 2.00929, -0.00336646 )
@@ -293,6 +300,12 @@ visible = false
 
 [node name="SlashParticles" parent="SwordFighter2/ModelContainer" index="1"]
 transform = Transform( 0.915375, 9.97891e-08, 0.119357, 1.39388e-07, -0.692249, -3.98119e-08, 0.119357, 4.31193e-08, -0.915375, 0, 1.28032, 0 )
+
+[node name="Feet" parent="SwordFighter2/ModelContainer" index="4"]
+visible = true
+
+[node name="RayCastFloor" parent="SwordFighter2/ModelContainer" index="5"]
+enabled = true
 
 [node name="PlayerName" parent="SwordFighter2" index="13"]
 visible = true
@@ -342,6 +355,12 @@ transform = Transform( 31.4222, 0, 0, 0, 25.8258, 0, 0, 0, 9.21304, 0, 26.2991, 
 
 [node name="Box7" parent="Navigation/NavigationMeshInstance/Bounds" instance=ExtResource( 3 )]
 transform = Transform( 3.87761, 0, 3.00735, 0, 4.90714, 0, -3.00735, 0, 3.87761, 21.8162, -1.04427, 9.62363 )
+
+[node name="Box32" parent="Navigation/NavigationMeshInstance/Bounds" instance=ExtResource( 3 )]
+transform = Transform( 4.90714, 0, 0, 0, 3.15425, 3.75909, 0, -3.75909, 3.15425, -10.99, -3.6106, 15.1682 )
+
+[node name="Box33" parent="Navigation/NavigationMeshInstance/Bounds" instance=ExtResource( 3 )]
+transform = Transform( 4.90714, 0, 0, 0, 4.50256, 1.95114, 0, -1.95114, 4.50256, -3.20037, -3.6106, 15.1682 )
 
 [node name="Box17" parent="Navigation/NavigationMeshInstance/Bounds" instance=ExtResource( 3 )]
 transform = Transform( 2.96461, 0, 6.12523, 0, 6.80495, 0, -6.12523, 0, 2.96461, -18.7406, -1.04427, 56.2347 )

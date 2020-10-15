@@ -6,7 +6,7 @@ extends "res://entities/sword_figher/states/sword_fighter_offensive_moves.gd"
 
 var released_up = false
 var ang_momentum = 0.0
-var rot_lerp = 4.0
+var rot_lerp = 3.5
 var max_turn_speed = 4.5
 var rot_speed = 30
 
@@ -16,7 +16,10 @@ var turn_acc = 0.0
 var current_turn_dir = 0
 var prev_turn_dir = 0
 
-var bomb_throw_str = 5.0
+var bomb_throw_str = 30.0
+
+var t = 0.0
+var t_2 = 0.0
 
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
@@ -35,13 +38,19 @@ func _exit_state():
 	entity.anim_tree["parameters/TimeScale/scale"] = 1
 	._exit_state()
 
-var t = 0.0
-var t_2 = 0.0
 func _process_state(delta):
-		
 	if entity.feet.get_overlapping_bodies().size() == 0:
-		set_next_state("fall")
-		return
+		if entity.target_speed > entity.max_speed:
+			set_next_state("running_fall")
+			return
+		else:
+			set_next_state("fall")
+			return
+			
+#		if t > 0.05:
+#			set_next_state("running_fall")
+#			return
+#		t += delta
 		
 	# Small ledge:
 #	if t <= 0.0:
@@ -100,7 +109,8 @@ func _process_state(delta):
 	
 	if entity.target_speed > entity.max_speed:
 #		entity.target_speed -= delta * 50
-		entity.target_speed = lerp(entity.target_speed, entity.min_speed, delta * 3)
+		entity.target_speed = lerp(entity.target_speed, entity.max_speed - 1, delta * 1)
+#		print(entity.target_speed)
 	else:
 		if entity.input_listener.is_key_pressed(InputManager.UP):
 			entity.target_speed = lerp(entity.target_speed, entity.max_speed, delta * 2)
@@ -126,6 +136,9 @@ func _process_state(delta):
 	# rotate character dependant on velocity
 #	var vel_angle = atan2(entity.velocity.x, entity.velocity.z)
 #	entity.model_container.rotation.y = vel_angle + PI + ang_momentum * 0.25
+
+#	entity.model.look_at(-entity.raycast_floor.get_collision_normal() + entity.translation, Vector3.UP)
+#	entity.model.rotation.y = -PI
 	
 	entity.acceleration = clamp(entity.acceleration + delta, 0, 1.0)
 	entity.accelerate(-entity.target_speed, delta * entity.acceleration * 5)
@@ -138,8 +151,8 @@ func _process_state(delta):
 	
 #	entity.translation = Vector3.ZERO
 
-	if entity.input_listener.is_key_pressed(InputManager.HEAVY):
-		bomb_throw_str = clamp(bomb_throw_str + delta * 50, 3.0, 30.0)
+#	if entity.input_listener.is_key_pressed(InputManager.HEAVY):
+#		bomb_throw_str = clamp(bomb_throw_str + delta * 600, 3.0, 30.0)
 
 func _touched_surface(surface):
 	if surface == "wall":
@@ -174,7 +187,9 @@ func _touched_surface(surface):
 				_hit.position = wall_position
 				_hit.damage = entity.prev_speed * 4
 				entity._receive_hit(_hit)
-
+#			else:
+#				MainManager.current_level.spawn_effect("weak_hit", entity.translation + Vector3.UP, Vector3.ZERO)
+#				entity.play_sound("hit_random")
 
 func _animation_finished(anim_name):
 	if anim_name == "run_bump_l" or anim_name == "run_bump_r":
@@ -214,14 +229,16 @@ func _received_input(key, state):
 			set_next_state("run_stop")
 			return
 		if key == InputManager.RUN_RUN or key == InputManager.UP_UP:
-			if entity.target_speed <= entity.max_speed:
+#			if entity.target_speed <= entity.max_speed:
+			if entity.hp > 0:
+				entity.hp -= 60
 				entity.target_speed = entity.boost_speed
 				entity.acceleration = 0.85
 		
 	else:
 		if key == InputManager.HEAVY:
 			entity.throw_stamina_bomb(Vector3(0.0, bomb_throw_str * 0.25, -bomb_throw_str))
-			bomb_throw_str = 0.0
+#			bomb_throw_str = 0.0
 			
 #		if key == InputManager.FIRE:
 #			if entity.target_speed <= entity.max_speed:

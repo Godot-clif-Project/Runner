@@ -2,6 +2,7 @@ extends Spatial
 
 const EFFECTS = {
 	Hit.VISUAL_EFFECTS.BLUNT : preload("res://effects/hit/hit_effect.tscn"),
+	"weak_hit" : preload("res://effects/hit/weak_hit_effect.tscn")
 #	Hit.VISUAL_EFFECTS.PARRY : preload("res://effects/hit_effect_2/hit_effect_parry.tscn"),
 #	Hit.VISUAL_EFFECTS.GUARD_BREAK : preload("res://effects/hit_effect_2/hit_effect_parry.tscn"),
 #	Hit.VISUAL_EFFECTS.SHOT : preload("res://effects/hit_effect.tscn"),

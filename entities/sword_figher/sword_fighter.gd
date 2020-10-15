@@ -54,9 +54,9 @@ var horizontal_speed = 0.0
 var falling_speed = 0.0
 var acceleration = 0.0
 var target_speed = 13.0
-var max_speed = 20.0
-var min_speed = 5.0
-var boost_speed = 30.0
+const max_speed = 18.0
+const min_speed = 5.0
+const boost_speed = 30.0
 
 var prev_speed = 0.0
 var prev_velocity : Vector3
@@ -97,6 +97,7 @@ onready var feet = $ModelContainer/Feet
 onready var ledge_detect_low = $ModelContainer/LedgeDetectLow
 onready var ledge_detect_high = $ModelContainer/LedgeDetectHigh
 onready var raycast = $ModelContainer/RayCast
+onready var raycast_floor = $ModelContainer/RayCastFloor
 
 onready var rope_point = $ModelContainer/RopePoint
 onready var rope_model = $ModelContainer/Rope
@@ -283,7 +284,7 @@ func apply_velocity(delta):
 	prev_speed = horizontal_speed
 	prev_velocity = velocity
 #	velocity = move_and_slide(velocity, Vector3.UP, false, 4, 0.785398, true)
-	velocity = move_and_slide(velocity * timescale, Vector3.UP, false, 4, 0.785398, true) / timescale
+	velocity = move_and_slide(velocity * timescale, Vector3.UP, false, 4, deg2rad(50), true) / timescale
 	horizontal_speed = Vector2(velocity.x, velocity.z).length()
 	emit_signal("position_changed", transform.origin)
 #	emit_signal("transform_changed", transform)
@@ -314,7 +315,7 @@ func apply_gravity(delta):
 		if not is_on_floor():
 			velocity.y -= 9.8 * delta * gravity_scale * 5.5
 		else:
-			velocity.y -= 9.8 * delta * gravity_scale * 0.3
+			velocity.y -= 9.8 * delta * gravity_scale * 0.5
 	else:
 		velocity.y = TERMINAL_VELOCITY
 
