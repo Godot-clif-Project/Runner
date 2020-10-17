@@ -8,6 +8,7 @@ func get_animation_data():
 
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
+	entity.air_boosts_left = 1
 	entity.velocity = Vector3.ZERO
 	entity.horizontal_speed = 0.0
 ##	entity.set_animation("off_hi_r_light", 0, 16.0)

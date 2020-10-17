@@ -70,25 +70,36 @@ func _touched_surface(surface):
 		set_next_state("land")
 		return
 	else:
-#			set_next_state("ledge_climb")
-#			return
-		if entity.prev_speed > 10:
+		if entity.prev_speed > entity.max_speed * 0.5:
 			var wall_normal = entity.get_slide_collision(0).normal
-			var wall_position = entity.get_slide_collision(0).position
-			var player_vector = -entity.model_container.transform.basis.z
-			var rot = Vector2(player_vector.x, player_vector.z).angle_to(Vector2(wall_normal.x, wall_normal.z))
-			
-	#		if wall_normal.dot(player_vector) < -0.8:
-			entity.model_container.rotation.y -= (PI * 0.333) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
-			entity.velocity *= 1 - abs(wall_normal.dot(player_vector) * 0.8)
-			entity.velocity += wall_normal * entity.prev_speed * 0.5
-			entity.acceleration = 0.0
-			entity.set_animation("run_bump_l", 0.0, 20.0)
-			
-			var _hit = Hit.new(Hit.INIT_TYPE.WALL)
-			_hit.position = wall_position
-			_hit.damage = entity.prev_speed * 2
-			entity._receive_hit(_hit)
+#			print(entity.prev_velocity.normalized().dot(wall_normal))
+			if entity.prev_velocity.normalized().dot(wall_normal) < -0.4:
+				
+				var player_vector = -entity.model_container.transform.basis.z
+				var wall_position = entity.get_slide_collision(0).position
+				var dot = wall_normal.dot(player_vector)
+				entity.velocity *= 1 - abs(dot * 1.0)
+		#			if entity.target_speed <= entity.max_speed:
+		#	#			entity.model_container.rotation.y -= (PI * 0.333) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
+		#				entity.velocity += wall_normal * entity.prev_speed * 0.25
+		#			else:
+		#	#			entity.model_container.rotation.y -= (PI * 0.5) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
+		#				entity.velocity += wall_normal * entity.prev_speed * 0.33
+					
+				entity.velocity += wall_normal * entity.prev_speed * 0.33
+				entity.acceleration = 0.0
+		
+					
+				var rot = Vector2(player_vector.x, player_vector.z).angle_to(Vector2(wall_normal.x, wall_normal.z))
+				if rot > 0.0:
+					entity.set_animation("run_bump_l", 0.0, 0.05)
+				else:
+					entity.set_animation("run_bump_r", 0.0, 0.05)
+				
+				var _hit = Hit.new(Hit.INIT_TYPE.WALL)
+				_hit.position = wall_position
+				_hit.damage = entity.prev_speed * 4
+				entity.receive_hit(_hit)
 		
 
 #func _process_state(delta):

@@ -42,7 +42,7 @@ animation = "t_pose"
 
 [sub_resource type="AnimationNodeTimeSeek" id=10]
 
-[sub_resource type="AnimationNodeBlendTree" id=67]
+[sub_resource type="AnimationNodeBlendTree" id=11]
 resource_local_to_scene = true
 graph_offset = Vector2( 186, -142 )
 nodes/1_and_-1/node = SubResource( 1 )
@@ -66,146 +66,146 @@ nodes/animation_1/position = Vector2( 300, -80 )
 nodes/animation_1_seek/node = SubResource( 10 )
 nodes/animation_1_seek/position = Vector2( 500, -80 )
 nodes/output/position = Vector2( 1340, 0 )
-node_connections = [ "output", 0, "TimeScale", "animation_1_seek", 0, "animation_1", "animation_-1_seek", 0, "animation_-1", "TimeScale", 0, "Seek", "Seek", 0, "Add2", "Add2", 0, "1_and_-1", "Add2", 1, "add_animation", "1_and_-1", 0, "animation_1_seek", "1_and_-1", 1, "animation_-1_seek" ]
-
-[sub_resource type="Animation" id=68]
-length = 0.483333
-tracks/0/type = "method"
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0.116667 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [ "slash_random" ],
-"method": "play_sound"
-} ]
-}
-
-[sub_resource type="Animation" id=69]
-length = 0.483333
-tracks/0/type = "method"
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0.116667 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [ "slash_random" ],
-"method": "play_sound"
-} ]
-}
-
-[sub_resource type="Animation" id=11]
-length = 1.08333
+node_connections = [ "output", 0, "TimeScale", "TimeScale", 0, "Seek", "1_and_-1", 0, "animation_1_seek", "1_and_-1", 1, "animation_-1_seek", "Seek", 0, "Add2", "Add2", 0, "1_and_-1", "Add2", 1, "add_animation", "animation_-1_seek", 0, "animation_-1", "animation_1_seek", 0, "animation_1" ]
 
 [sub_resource type="Animation" id=12]
-length = 1.5
+length = 0.483333
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.116667 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "slash_random" ],
+"method": "play_sound"
+} ]
+}
 
 [sub_resource type="Animation" id=13]
-length = 1.38333
+length = 0.483333
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.116667 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "slash_random" ],
+"method": "play_sound"
+} ]
+}
 
 [sub_resource type="Animation" id=14]
-length = 0.001
+length = 1.08333
 
 [sub_resource type="Animation" id=15]
-length = 0.001
+length = 1.5
 
 [sub_resource type="Animation" id=16]
-length = 0.683333
+length = 1.38333
 
 [sub_resource type="Animation" id=17]
-length = 0.5
+length = 0.001
 
 [sub_resource type="Animation" id=18]
-length = 0.5
+length = 0.001
 
 [sub_resource type="Animation" id=19]
-length = 0.5
+length = 0.683333
 
 [sub_resource type="Animation" id=20]
 length = 0.5
 
 [sub_resource type="Animation" id=21]
+length = 0.5
 
 [sub_resource type="Animation" id=22]
+length = 0.5
 
 [sub_resource type="Animation" id=23]
-length = 0.966667
+length = 0.5
 
 [sub_resource type="Animation" id=24]
-length = 0.7
 
 [sub_resource type="Animation" id=25]
-length = 2.26667
 
 [sub_resource type="Animation" id=26]
-length = 0.001
+length = 0.966667
 
 [sub_resource type="Animation" id=27]
-length = 1.33333
+length = 0.7
 
 [sub_resource type="Animation" id=28]
-length = 0.001
+length = 2.26667
 
 [sub_resource type="Animation" id=29]
 length = 0.001
 
 [sub_resource type="Animation" id=30]
-length = 0.833333
-
-[sub_resource type="Animation" id=31]
-length = 0.383333
-
-[sub_resource type="Animation" id=32]
-length = 1.16667
-
-[sub_resource type="Animation" id=33]
-length = 0.916667
-
-[sub_resource type="Animation" id=34]
-length = 0.666667
-
-[sub_resource type="Animation" id=35]
-length = 0.666667
-
-[sub_resource type="Animation" id=36]
-
-[sub_resource type="Animation" id=37]
-length = 0.333333
-
-[sub_resource type="Animation" id=38]
-length = 0.583333
-
-[sub_resource type="Animation" id=39]
-length = 1.93333
-
-[sub_resource type="Animation" id=40]
-length = 2.25
-
-[sub_resource type="Animation" id=41]
-length = 0.833333
-
-[sub_resource type="Animation" id=42]
 length = 1.33333
 
+[sub_resource type="Animation" id=31]
+length = 0.001
+
+[sub_resource type="Animation" id=32]
+length = 0.001
+
+[sub_resource type="Animation" id=33]
+length = 0.833333
+
+[sub_resource type="Animation" id=34]
+length = 0.383333
+
+[sub_resource type="Animation" id=35]
+length = 1.16667
+
+[sub_resource type="Animation" id=36]
+length = 0.916667
+
+[sub_resource type="Animation" id=37]
+length = 0.666667
+
+[sub_resource type="Animation" id=38]
+length = 0.666667
+
+[sub_resource type="Animation" id=39]
+
+[sub_resource type="Animation" id=40]
+length = 0.333333
+
+[sub_resource type="Animation" id=41]
+length = 0.583333
+
+[sub_resource type="Animation" id=42]
+length = 1.93333
+
 [sub_resource type="Animation" id=43]
+length = 2.25
 
 [sub_resource type="Animation" id=44]
 length = 0.833333
 
 [sub_resource type="Animation" id=45]
-length = 0.833333
+length = 1.33333
 
 [sub_resource type="Animation" id=46]
 
 [sub_resource type="Animation" id=47]
+length = 0.833333
+
+[sub_resource type="Animation" id=48]
+length = 0.833333
+
+[sub_resource type="Animation" id=49]
+
+[sub_resource type="Animation" id=50]
 length = 2.18333
 step = 0.0166667
 tracks/0/type = "method"
@@ -226,52 +226,52 @@ tracks/0/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=48]
+[sub_resource type="Animation" id=51]
 length = 0.25
 
-[sub_resource type="Animation" id=49]
+[sub_resource type="Animation" id=52]
 length = 0.166667
 
-[sub_resource type="Animation" id=50]
-length = 0.516667
-
-[sub_resource type="Animation" id=51]
-length = 0.516667
-
-[sub_resource type="Animation" id=52]
-length = 0.933333
-
 [sub_resource type="Animation" id=53]
-length = 0.833333
+length = 0.516667
 
 [sub_resource type="Animation" id=54]
-length = 0.666667
+length = 0.516667
 
 [sub_resource type="Animation" id=55]
-length = 0.45
+length = 0.933333
 
 [sub_resource type="Animation" id=56]
-length = 0.416667
-
-[sub_resource type="Animation" id=57]
-length = 0.2
-
-[sub_resource type="Animation" id=58]
-length = 0.666667
-
-[sub_resource type="Animation" id=59]
 length = 0.833333
 
+[sub_resource type="Animation" id=57]
+length = 0.666667
+
+[sub_resource type="Animation" id=58]
+length = 0.45
+
+[sub_resource type="Animation" id=59]
+length = 0.416667
+
 [sub_resource type="Animation" id=60]
+length = 0.2
+
+[sub_resource type="Animation" id=61]
+length = 0.666667
+
+[sub_resource type="Animation" id=62]
+length = 0.833333
+
+[sub_resource type="Animation" id=63]
 length = 0.001
 
-[sub_resource type="Curve" id=61]
+[sub_resource type="Curve" id=64]
 _data = [ Vector2( 0.250909, 0 ), 0.0, 0.055563, 0, 0, Vector2( 0.250909, 1 ), -1.38996, -1.38996, 0, 0, Vector2( 1, 0 ), -0.00435815, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=62]
-curve = SubResource( 61 )
+[sub_resource type="CurveTexture" id=65]
+curve = SubResource( 64 )
 
-[sub_resource type="ParticlesMaterial" id=63]
+[sub_resource type="ParticlesMaterial" id=66]
 direction = Vector3( 0, 0, 1 )
 spread = 124.05
 flatness = 1.0
@@ -281,9 +281,9 @@ tangential_accel = -169.4
 damping = 179.02
 scale = 0.1
 scale_random = 0.1
-scale_curve = SubResource( 62 )
+scale_curve = SubResource( 65 )
 
-[sub_resource type="SpatialMaterial" id=64]
+[sub_resource type="SpatialMaterial" id=67]
 flags_transparent = true
 flags_unshaded = true
 vertex_color_use_as_albedo = true
@@ -295,10 +295,10 @@ particles_anim_v_frames = 1
 particles_anim_loop = false
 albedo_texture = ExtResource( 12 )
 
-[sub_resource type="QuadMesh" id=65]
-material = SubResource( 64 )
+[sub_resource type="QuadMesh" id=68]
+material = SubResource( 67 )
 
-[sub_resource type="CapsuleShape" id=66]
+[sub_resource type="CapsuleShape" id=69]
 radius = 0.459803
 height = 0.564789
 
@@ -308,7 +308,7 @@ collision_mask = 0
 script = ExtResource( 1 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 67 )
+tree_root = SubResource( 11 )
 anim_player = NodePath("../ModelContainer/sword_fighter/AnimationPlayer")
 active = true
 process_mode = 0
@@ -324,58 +324,58 @@ parameters/animation_1_seek/seek_position = -1.0
 [node name="AnimationBlender" type="Tween" parent="."]
 
 [node name="AnimationEvents" type="AnimationPlayer" parent="."]
-anims/air_atk_l = SubResource( 68 )
-anims/air_atk_r = SubResource( 69 )
-anims/air_boost = SubResource( 11 )
-anims/air_rope = SubResource( 12 )
-anims/dangle = SubResource( 13 )
-anims/def_block_hi = SubResource( 14 )
-anims/def_block_low = SubResource( 15 )
-anims/def_hi_light = SubResource( 16 )
-anims/def_step_b = SubResource( 17 )
-anims/def_step_f = SubResource( 18 )
-anims/def_step_l = SubResource( 19 )
-anims/def_step_r = SubResource( 20 )
-anims/def_taunt = SubResource( 21 )
-anims/defensive_stance = SubResource( 22 )
-anims/fall = SubResource( 23 )
-anims/jump_land = SubResource( 24 )
-anims/jump_start = SubResource( 25 )
-anims/knocked_down = SubResource( 26 )
-anims/off_block_break = SubResource( 27 )
-anims/off_block_hi = SubResource( 28 )
-anims/off_block_low = SubResource( 29 )
-anims/off_h_r_0001 = SubResource( 30 )
-anims/off_h_r_1 = SubResource( 31 )
-anims/off_h_r_heavy = SubResource( 32 )
-anims/off_hi_fierce = SubResource( 33 )
-anims/off_hi_l_light = SubResource( 34 )
-anims/off_hi_r_light = SubResource( 35 )
-anims/off_kick = SubResource( 36 )
-anims/off_run_startup = SubResource( 37 )
-anims/off_run_stop = SubResource( 38 )
-anims/off_taunt = SubResource( 39 )
-anims/off_throw_f = SubResource( 40 )
-anims/off_throw_f_startup = SubResource( 41 )
-anims/off_walk_back = SubResource( 42 )
-anims/off_walk_forward = SubResource( 43 )
-anims/off_walk_left = SubResource( 44 )
-anims/off_walk_right = SubResource( 45 )
-anims/offensive_stance = SubResource( 46 )
-anims/receive_off_throw_f = SubResource( 47 )
-anims/run_break = SubResource( 48 )
-anims/run_break_loop = SubResource( 49 )
-anims/run_bump_l = SubResource( 50 )
-anims/run_bump_r = SubResource( 51 )
-anims/run_loop = SubResource( 52 )
-anims/run_loop_2 = SubResource( 53 )
-anims/run_loop_c = SubResource( 54 )
-anims/run_stop = SubResource( 55 )
-anims/run_stop_dash = SubResource( 56 )
-anims/run_stop_loop = SubResource( 57 )
-anims/stance_def_to_off = SubResource( 58 )
-anims/stance_off_to_def = SubResource( 59 )
-anims/t_pose = SubResource( 60 )
+anims/air_atk_l = SubResource( 12 )
+anims/air_atk_r = SubResource( 13 )
+anims/air_boost = SubResource( 14 )
+anims/air_rope = SubResource( 15 )
+anims/dangle = SubResource( 16 )
+anims/def_block_hi = SubResource( 17 )
+anims/def_block_low = SubResource( 18 )
+anims/def_hi_light = SubResource( 19 )
+anims/def_step_b = SubResource( 20 )
+anims/def_step_f = SubResource( 21 )
+anims/def_step_l = SubResource( 22 )
+anims/def_step_r = SubResource( 23 )
+anims/def_taunt = SubResource( 24 )
+anims/defensive_stance = SubResource( 25 )
+anims/fall = SubResource( 26 )
+anims/jump_land = SubResource( 27 )
+anims/jump_start = SubResource( 28 )
+anims/knocked_down = SubResource( 29 )
+anims/off_block_break = SubResource( 30 )
+anims/off_block_hi = SubResource( 31 )
+anims/off_block_low = SubResource( 32 )
+anims/off_h_r_0001 = SubResource( 33 )
+anims/off_h_r_1 = SubResource( 34 )
+anims/off_h_r_heavy = SubResource( 35 )
+anims/off_hi_fierce = SubResource( 36 )
+anims/off_hi_l_light = SubResource( 37 )
+anims/off_hi_r_light = SubResource( 38 )
+anims/off_kick = SubResource( 39 )
+anims/off_run_startup = SubResource( 40 )
+anims/off_run_stop = SubResource( 41 )
+anims/off_taunt = SubResource( 42 )
+anims/off_throw_f = SubResource( 43 )
+anims/off_throw_f_startup = SubResource( 44 )
+anims/off_walk_back = SubResource( 45 )
+anims/off_walk_forward = SubResource( 46 )
+anims/off_walk_left = SubResource( 47 )
+anims/off_walk_right = SubResource( 48 )
+anims/offensive_stance = SubResource( 49 )
+anims/receive_off_throw_f = SubResource( 50 )
+anims/run_break = SubResource( 51 )
+anims/run_break_loop = SubResource( 52 )
+anims/run_bump_l = SubResource( 53 )
+anims/run_bump_r = SubResource( 54 )
+anims/run_loop = SubResource( 55 )
+anims/run_loop_2 = SubResource( 56 )
+anims/run_loop_c = SubResource( 57 )
+anims/run_stop = SubResource( 58 )
+anims/run_stop_dash = SubResource( 59 )
+anims/run_stop_loop = SubResource( 60 )
+anims/stance_def_to_off = SubResource( 61 )
+anims/stance_off_to_def = SubResource( 62 )
+anims/t_pose = SubResource( 63 )
 script = ExtResource( 6 )
 
 [node name="ModelContainer" type="Spatial" parent="."]
@@ -390,7 +390,6 @@ bone_name = "torso"
 [node name="Hurtbox" parent="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment" instance=ExtResource( 3 )]
 transform = Transform( 0.547956, -2.98023e-08, 5.21542e-08, 2.98023e-08, 0.547956, 1.49012e-07, -5.21541e-08, -1.49012e-07, 0.547957, 5.96046e-08, 0.25754, -1.19209e-07 )
 visible = false
-spawn_hit_effect = true
 
 [node name="ThrowAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="3"]
 bone_name = "throw_pos"
@@ -415,8 +414,8 @@ transform = Transform( 0.991606, 1.44152e-07, 0.129297, 1.50996e-07, -1, -4.3127
 emitting = false
 amount = 133
 lifetime = 0.6
-process_material = SubResource( 63 )
-draw_pass_1 = SubResource( 65 )
+process_material = SubResource( 66 )
+draw_pass_1 = SubResource( 68 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -445,7 +444,7 @@ playback/speed = 3.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.74, 0 )
-shape = SubResource( 66 )
+shape = SubResource( 69 )
 __meta__ = {
 "_editor_description_": ""
 }

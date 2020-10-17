@@ -90,28 +90,23 @@ func receive_networked_object_event(object_id : int, function_name : String, arg
 
 func player_entity_hp_changed(new_value):
 	if enabled:
-		for peer in peer_entities:
-			peer_entities[peer].rpc_unreliable("update_hp", NetworkManager.my_id, new_value)
+		rpc_unreliable("update_peer_hp", NetworkManager.my_id, new_value)
 
 func player_entity_transform_changed(new_value):
 	if enabled:
-		for peer in peer_entities:
-			peer_entities[peer].rpc_unreliable("update_transform", NetworkManager.my_id, new_value)
+		rpc_unreliable("update_peer_transform", NetworkManager.my_id, new_value)
 
-func player_entity_position_changed(new_value):
+func player_entity_position_changed(new_value, new_velocity):
 	if enabled:
-		for peer in peer_entities:
-			peer_entities[peer].rpc_unreliable("update_position", NetworkManager.my_id, new_value)
+		rpc_unreliable("update_peer_position", NetworkManager.my_id, new_value, new_velocity)
 
 func player_entity_rotation_changed(new_value):
 	if enabled:
-		for peer in peer_entities:
-			peer_entities[peer].rpc_unreliable("update_rotation", NetworkManager.my_id, new_value)
+		rpc_unreliable("update_peer_rotation", NetworkManager.my_id, new_value)
 	
 func player_entity_animation_changed(anim_name, seek_pos, blend_speed):
 	if enabled:
-		for peer in peer_entities:
-			peer_entities[peer].rpc("update_animation", NetworkManager.my_id, anim_name, seek_pos, blend_speed)
+		rpc("update_peer_animation", NetworkManager.my_id, anim_name, seek_pos, blend_speed)
 
 func player_entity_dealt_tandem_action(action, args):
 	if enabled:
@@ -147,6 +142,22 @@ remote func receive_networked_object_event_from_peer(object_id : int, function_n
 #			}
 #		rpc("receive_hit_from_peer", NetworkManager.my_id, hit_data)
 
+remote func update_peer_hp(id, new_hp):
+	peer_entities[id].my_lifebar._on_sword_fighter_hp_changed(new_hp)
+
+remote func update_peer_transform(id, new_transform):
+	peer_entities[id].transform = new_transform
+
+remote func update_peer_position(id, new_position, velocity):
+	peer_entities[id].velocity = velocity
+	peer_entities[id].transform.origin = new_position
+
+remote func update_peer_rotation(id, new_rotation):
+	peer_entities[id].model_container.rotation.y = new_rotation
+
+remote func update_peer_animation(id, anim_name, seek_pos, blend_speed):
+	peer_entities[id].set_animation(anim_name, seek_pos, blend_speed)
+
 remote func peer_received_hit_from_peer(id, hit_data):
 	peer_entities[id].receive_hit(hit_data)
 
@@ -154,23 +165,23 @@ remote func receive_hit_from_peer(id, hit_data):
 	var new_hit = Hit.new(Hit.INIT_TYPE.DEFAULT)
 	for key in hit_data:
 		new_hit.set(key, hit_data[key])
-	player_entity.set_hitstop(hit_data.hitstop, false)
-
-	# QUACKEADA for hit effects to appear:
-	player_entity.get_node("ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment/Hurtbox").receive_hit(new_hit)
+	player_entity.receive_hit(new_hit)
 	
 	# send notification of hit to other peers except the one that just hit me.
 	for peer in peer_entities:
 		if peer != id:
 			rpc_id(peer, "peer_received_hit_from_peer", NetworkManager.my_id, hit_data)
 	
+#	get_tree().network_peer.set_target_peer(-id)
+#	rpc("peer_received_hit_from_peer", NetworkManager.my_id, hit_data)
+#	get_tree().network_peer.set_target_peer(NetworkedMultiplayerPeer.TARGET_PEER_BROADCAST)
 
 remote func receive_throw_from_peer(pos, rot, _throwing_entity):
 	player_entity.receive_throw(pos, rot, _throwing_entity)
 	pass
 
-remote func receive_tandem_action_from_peer(action_name, _tandem_entity):
-	player_entity.receive_tandem_action(action_name, _tandem_entity)
+remote func receive_tandem_action_from_peer(id, action_name, _tandem_entity):
+	player_entity.receive_tandem_action(action_name, peer_entities[id])
 	pass
 
 #remotesync func player_ready():

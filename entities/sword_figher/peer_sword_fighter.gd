@@ -13,6 +13,7 @@ var animation_slot = 1
 var throwing_entity = null
 var throw_pos = Vector3.ZERO
 var throw_rot = 0.0
+var velocity : Vector3
 
 var shake_t = 0.0
 #var hitstop = false
@@ -32,7 +33,7 @@ func _ready():
 #	$AnimationTree.active = true
 #	var new_resource = 
 	$AnimationTree.tree_root = ANIMATION_NODE_RESOURCE.duplicate(true)
-	set_physics_process(false)
+#	set_physics_process(false)
 
 func setup(_number):
 	number = _number
@@ -84,11 +85,13 @@ func set_hitstop(length, shake):
 		shake_t = 0
 
 func _physics_process(delta):
+	move_and_slide(velocity, Vector3.UP, false, 4, 0.785398, true)
+	
 	if shake_t > 0.0:
 		$ModelContainer/sword_fighter.translation = (Vector3.RIGHT * (shake_t * 0.03)) * sin(shake_t) * 0.1
 		shake_t -= delta * 50
-	else:
-		set_physics_process(false)
+#	else:
+#		set_physics_process(false)
 
 func receive_throw(pos, rot, _throwing_entity):
 	throwing_entity = _throwing_entity
@@ -107,61 +110,60 @@ func throw_ended():
 	remove_collision_exception_with(throwing_entity)
 
 func receive_tandem_action(action_name, entity):
-	network_interface.rpc("receive_tandem_action_from_peer", action_name, entity)
+	network_interface.rpc_id(owner_id, "receive_tandem_action_from_peer", NetworkManager.my_id, action_name, entity)
 
-remote func update_transform(id, new_transform):
-	if id == owner_id:
-		transform = new_transform
-
-remote func update_position(id, new_position):
-	if id == owner_id:
-		transform.origin = new_position
-
-remote func update_rotation(id, new_rotation):
-	if id == owner_id:
-		model_container.rotation.y = new_rotation
-
-remote func update_animation(id, anim_name, seek_pos, blend_speed):
-	if id == owner_id:
-		$ModelContainer/sword_fighter/slash.visible = false
-		$ModelContainer/SlashParticles.emitting = false
-		
-		if $AnimationEvents.has_animation(anim_name):
-			$AnimationEvents.play(anim_name)
-		
-		if animation_slot == -1:
-			anim_tree.tree_root.get_node("animation_1").animation = anim_name
-			anim_tree["parameters/animation_1_seek/seek_position"] = seek_pos
-		else:
-			anim_tree.tree_root.get_node("animation_-1").animation = anim_name
-			anim_tree["parameters/animation_-1_seek/seek_position"] = seek_pos
-
-		# Blend animations:
-
-		animation_blender.stop_all()
-
-		if animation_slot == 1:
-			if blend_speed == -1.0:
-				anim_tree["parameters/1_and_-1/blend_amount"] = 1.0
-				pass
-			else:
-				animation_blender.interpolate_property(anim_tree, "parameters/1_and_-1/blend_amount", 0.0, 1.0, blend_speed, Tween.TRANS_LINEAR)
-	#			prints("start blending from slot 0", anim_tree.tree_root.get_node("animation_0").animation,
-	#			"to", anim_tree.tree_root.get_node("animation_1").animation)
-		else:
-			if blend_speed == -1.0:
-				anim_tree["parameters/1_and_-1/blend_amount"] = 0.0
-			else:
-				animation_blender.interpolate_property(anim_tree, "parameters/1_and_-1/blend_amount", 1.0, 0.0, blend_speed, Tween.TRANS_LINEAR)
-	#			prints("start blending from slot 1", anim_tree.tree_root.get_node("animation_1").animation,
-	#			"to", anim_tree.tree_root.get_node("animation_0").animation)
-		
-		animation_blender.start()
-		animation_slot = -animation_slot
+func set_animation(anim_name, seek_pos, blend_speed):
+	$ModelContainer/sword_fighter/slash.visible = false
+	$ModelContainer/SlashParticles.emitting = false
 	
-remote func update_hp(id, new_hp):
-	if id == owner_id:
-		my_lifebar._on_sword_fighter_hp_changed(new_hp)
+	if $AnimationEvents.has_animation(anim_name):
+		$AnimationEvents.play(anim_name)
+	
+	if animation_slot == -1:
+		anim_tree.tree_root.get_node("animation_1").animation = anim_name
+		anim_tree["parameters/animation_1_seek/seek_position"] = seek_pos
+	else:
+		anim_tree.tree_root.get_node("animation_-1").animation = anim_name
+		anim_tree["parameters/animation_-1_seek/seek_position"] = seek_pos
+
+	# Blend animations:
+
+	animation_blender.stop_all()
+
+	if animation_slot == 1:
+		if blend_speed == -1.0:
+			anim_tree["parameters/1_and_-1/blend_amount"] = 1.0
+			pass
+		else:
+			animation_blender.interpolate_property(anim_tree, "parameters/1_and_-1/blend_amount", 0.0, 1.0, blend_speed, Tween.TRANS_LINEAR)
+#			prints("start blending from slot 0", anim_tree.tree_root.get_node("animation_0").animation,
+#			"to", anim_tree.tree_root.get_node("animation_1").animation)
+	else:
+		if blend_speed == -1.0:
+			anim_tree["parameters/1_and_-1/blend_amount"] = 0.0
+		else:
+			animation_blender.interpolate_property(anim_tree, "parameters/1_and_-1/blend_amount", 1.0, 0.0, blend_speed, Tween.TRANS_LINEAR)
+#			prints("start blending from slot 1", anim_tree.tree_root.get_node("animation_1").animation,
+#			"to", anim_tree.tree_root.get_node("animation_0").animation)
+	
+	animation_blender.start()
+	animation_slot = -animation_slot
+	
+#remote func update_transform(id, new_transform):
+#	if id == owner_id:
+#		transform = new_transform
+#
+#remote func update_position(id, new_position):
+#	if id == owner_id:
+#		transform.origin = new_position
+#
+#remote func update_rotation(id, new_rotation):
+#	if id == owner_id:
+#		model_container.rotation.y = new_rotation
+
+#remote func update_hp(id, new_hp):
+#	if id == owner_id:
+#		my_lifebar._on_sword_fighter_hp_changed(new_hp)
 
 remote func dealt_tandem_action(id, action, args):
 #	if action == "rope_pull":

@@ -4,7 +4,7 @@ class_name Entity
 signal hp_changed(new_value)
 # warning-ignore:unused_signal
 signal transform_changed(new_value)
-signal position_changed(new_value)
+signal position_changed(new_value, new_velocity)
 signal rotation_changed(new_value)
 signal animation_changed(anim_name, seek_pos, blend_speed)
 signal dealt_hit(hit)
@@ -234,12 +234,14 @@ func _on_InputListener_received_input(key, state):
 			if lock_on_scroll > $"../NetworkInterface".peer_entities.size() - 1:
 				lock_on_scroll = 0
 				
-			camera.ally_indicator.visible = true
-			camera._process(true)
-	else:
-		if key == InputManager.EVADE:
-			camera.ally_indicator.visible = false
-			camera._process(false)
+#			camera.ally_indicator.visible = true
+#			camera._process(true)
+
+#			lock_on_target = $"../SwordFighter2"
+#	else:
+#		if key == InputManager.EVADE:
+#			camera.ally_indicator.visible = false
+#			camera._process(false)
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -297,7 +299,7 @@ func apply_velocity(delta):
 #	velocity = move_and_slide(velocity, Vector3.UP, false, 4, 0.785398, true)
 	velocity = move_and_slide(velocity * timescale, Vector3.UP, false, 4, deg2rad(50), true) / timescale
 	horizontal_speed = Vector2(velocity.x, velocity.z).length()
-	emit_signal("position_changed", transform.origin)
+	emit_signal("position_changed", transform.origin, velocity)
 #	emit_signal("transform_changed", transform)
 	
 	if is_on_wall():
@@ -313,6 +315,7 @@ func apply_velocity(delta):
 
 func center_camera(delta):
 	camera_pivot.rotation.y = lerp_angle(camera_pivot.rotation.y, model_container.rotation.y, delta * 2)
+	camera_pivot.rotation.x = lerp_angle(camera_pivot.rotation.x, 0.0, delta * 2)
 
 func point_camera_at_target(delta, offset):
 	var current_camera_direction = Quat(camera_pivot.global_transform.basis)
@@ -562,7 +565,7 @@ func reset_hitboxes():
 	$ModelContainer/Hitbox.active = false
 	$ModelContainer/Hitbox2.active = false
 
-func _receive_hit(hit):
+func receive_hit(hit):
 	received_hit = hit
 	MainManager.current_level.spawn_effect(Hit.VISUAL_EFFECTS.BLUNT, hit.position, Vector3.ZERO)
 	set_hitstop(hit.hitstop, true)
@@ -570,14 +573,13 @@ func _receive_hit(hit):
 	fsm.receive_event("_received_hit", hit)
 
 func _on_Hurtbox_received_hit(hit, hurtbox):
-	_receive_hit(hit)
+	receive_hit(hit)
 	set_hitstop(hit.hitstop, true)
 
 func _on_Hitbox_dealt_hit(hit : Hit, collided_entity):
 	emit_signal("dealt_hit", hit)
 	set_hitstop(hit.hitstop, false)
 	fsm.receive_event("_dealt_hit", collided_entity)
-
 	
 func receive_throw(pos, rot, _throwing_entity):
 	throwing_entity = _throwing_entity

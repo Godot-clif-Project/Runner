@@ -209,6 +209,9 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 						"slide":
 							if entity.horizontal_speed > 5 and entity.hp > 0:
 								return {"state" : t, "flag" : null}
+						"air_boost":
+							if entity.air_boosts_left > 0:
+								return {"state" : t, "flag" : "is_evade_cancelable"}
 			
 			InputManager.LIGHT:
 				for t in valid_transitions:

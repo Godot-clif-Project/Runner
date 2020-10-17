@@ -186,7 +186,7 @@ func _touched_surface(surface):
 				var _hit = Hit.new(Hit.INIT_TYPE.WALL)
 				_hit.position = wall_position
 				_hit.damage = entity.prev_speed * 4
-				entity._receive_hit(_hit)
+				entity.receive_hit(_hit)
 #			else:
 #				MainManager.current_level.spawn_effect("weak_hit", entity.translation + Vector3.UP, Vector3.ZERO)
 #				entity.play_sound("hit_random")
