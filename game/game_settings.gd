@@ -10,3 +10,5 @@ export var D_I_S_P_L_A_Y = ""
 export(int, 5) var zoom = 1
 export var fullscreen = false
 export var center_window = false
+
+

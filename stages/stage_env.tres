@@ -12,7 +12,6 @@ background_sky_orientation = Basis( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0
 background_color = Color( 0.717647, 0.368627, 0.368627, 1 )
 background_energy = 2.0
 fog_color = Color( 0.352941, 0.352941, 0.352941, 1 )
-ssao_enabled = true
 ssao_radius = 3.43
 ssao_intensity = 1.48
 ssao_light_affect = 0.99

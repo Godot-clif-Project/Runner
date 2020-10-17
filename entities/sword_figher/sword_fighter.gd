@@ -30,7 +30,7 @@ export var weight = 70
 export var gravity_scale = 1.0
 
 var ready = false
-var player_side = 0
+var player_number = 0
 var hp = 1000 setget set_hp
 var received_hit : Hit
 var has_camera = false setget set_has_camera
@@ -134,26 +134,22 @@ func _ready():
 	$AnimationTree.active = true
 	ready = true
 	emit_signal("ready")
-	if lock_on_target == null:
-		lock_on_target = get_node(target)
+#	if lock_on_target == null:
+#		lock_on_target = get_node(target)
 	if camera != null:
 		camera_raycast.enabled = true
 	
 #	if name == "SwordFighter":
 #		setup(1)
 	
-func setup(side):
-	player_side = side
-	connect("hp_changed", get_node("../UI/Lifebar"), "_on_sword_fighter_hp_changed")
-	if player_side == 1:
-		transform = get_node("../Player1Pos").transform
-		$ModelContainer/sword_fighter/Armature/Skeleton/Cube.material_override = PLAYER_1_MATERIAL
-		$ModelContainer/sword_fighter/Armature/Skeleton/sword.material_override = PLAYER_1_MATERIAL
-	else:
-		transform = get_node("../Player2Pos").transform
-#		connect("hp_changed", get_node("../UI/Lifebar2"), "_on_sword_fighter_hp_changed")
-		$ModelContainer/sword_fighter/Armature/Skeleton/Cube.material_override = PLAYER_2_MATERIAL
-		$ModelContainer/sword_fighter/Armature/Skeleton/sword.material_override = PLAYER_2_MATERIAL
+func setup(number):
+	player_number = number
+	get_node("../UI/MyName").text = NetworkManager.my_info["name"]
+	connect("hp_changed", get_node("../UI/MyLifebar"), "_on_sword_fighter_hp_changed")
+	transform = get_node(str("../Player", number, "Pos")).transform
+	$PlayerName/ViewportContainer/Viewport/Label.text = NetworkManager.my_info["name"]
+	$ModelContainer/sword_fighter/Armature/Skeleton/Cube.material_override = $"..".PLAYER_MATERIALS[number]
+	$ModelContainer/sword_fighter/Armature/Skeleton/sword.material_override = $"..".PLAYER_MATERIALS[number]
 
 func reset():
 	self.hp = max_hp
@@ -164,7 +160,7 @@ func reset():
 	fsm.setup()
 	if throwing_entity != null:
 		remove_collision_exception_with(throwing_entity)
-	if player_side == 1:
+	if player_number == 1:
 		translation = get_node("../Player1Pos").translation
 	else:
 		translation = get_node("../Player2Pos").translation
@@ -224,11 +220,26 @@ func play_rope_animation():
 #	get_node("ModelContainer/Rope/AnimationPlayer").stop()
 #	get_node("ModelContainer/Rope/AnimationPlayer").play("default")
 
+var lock_on_scroll = 0
+
 func _on_InputListener_received_input(key, state):
 	fsm.receive_event("_received_input", [key, state])
 	
-	if key == InputManager.JUMP and state:
-		jump_str = min_jump_str
+	if state:
+		if key == InputManager.JUMP:
+			jump_str = min_jump_str
+		if key == InputManager.EVADE:
+			lock_on_target = $"../NetworkInterface".get_peer_at_index(lock_on_scroll)
+			lock_on_scroll += 1
+			if lock_on_scroll > $"../NetworkInterface".peer_entities.size() - 1:
+				lock_on_scroll = 0
+				
+			camera.ally_indicator.visible = true
+			camera._process(true)
+	else:
+		if key == InputManager.EVADE:
+			camera.ally_indicator.visible = false
+			camera._process(false)
 
 func _input(event):
 	if event is InputEventMouseMotion:

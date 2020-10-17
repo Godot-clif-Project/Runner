@@ -1,55 +1,63 @@
 extends Node
 
+const PEER_SCENE = preload("res://entities/sword_figher/peer_sword_fighter.tscn")
+
 export var enabled = true
 
 var player_entity
-var peer_entity
+var peer_entities : Dictionary
 var remote_networked_objects = {}
+
+func get_peer_at_index(i):
+	return peer_entities[peer_entities.keys()[i]]
 
 func _ready():
 	set_physics_process(false)
 	NetworkManager.network_interface = self
 	
 	if enabled and get_tree().has_network_peer():
-		player_entity = get_node("../SwordFighter")
-		peer_entity = get_node("../PeerSwordFighter")
-		peer_entity.network_interface = self
+		NetworkManager.connect("peer_disconnected", self, "peer_disconnected")
+		NetworkManager.connect("server_disconnected", self, "server_disconnected")
 		
-		if get_tree().network_peer.get_connection_status() == NetworkedMultiplayerPeer.CONNECTION_CONNECTED:
-			NetworkManager.connect("peer_disconnected", self, "peer_disconnected")
-			NetworkManager.connect("server_disconnected", self, "server_disconnected")
+		player_entity = get_node("../SwordFighter")
+		
+		if get_tree().is_network_server():
+			set_physics_process(true)
+#		else:
+#			AudioServer.set_bus_mute(0, true)
 			
-			player_entity.connect("ready", self, "player_ready")
-			player_entity.connect("hp_changed", self, "player_entity_hp_changed")
-			player_entity.connect("transform_changed", self, "player_entity_transform_changed")
-			player_entity.connect("position_changed", self, "player_entity_position_changed")
-			player_entity.connect("rotation_changed", self, "player_entity_rotation_changed")
-			player_entity.connect("animation_changed", self, "player_entity_animation_changed")
-			player_entity.connect("dealt_tandem_action", self, "player_entity_dealt_tandem_action")
-#			player_entity.connect("dealt_hit", self, "player_entity_dealt_hit")
-			player_entity.lock_on_target = peer_entity
-			
-			if get_tree().is_network_server():
-				player_entity.setup(1)
-				peer_entity.setup(2)
-				set_physics_process(true)
-				
+#		player_entity.connect("ready", self, "player_ready")
+		player_entity.connect("hp_changed", self, "player_entity_hp_changed")
+		player_entity.connect("transform_changed", self, "player_entity_transform_changed")
+		player_entity.connect("position_changed", self, "player_entity_position_changed")
+		player_entity.connect("rotation_changed", self, "player_entity_rotation_changed")
+		player_entity.connect("animation_changed", self, "player_entity_animation_changed")
+		player_entity.connect("dealt_tandem_action", self, "player_entity_dealt_tandem_action")
+		
+		var i = 0
+		
+		for peer_id in NetworkManager.peers.keys():
+			if peer_id == NetworkManager.my_id:
+				player_entity.setup(NetworkManager.peers[NetworkManager.my_id]["player_number"])
 			else:
-				player_entity.setup(2)
-				peer_entity.setup(1)
-				AudioServer.set_bus_mute(0, true)
+				var new_peer_entity = PEER_SCENE.instance()
+				peer_entities[peer_id] = new_peer_entity
+				peer_entities[peer_id].owner_id = peer_id
+				peer_entities[peer_id].network_interface = self
+				$"../UI/PlayerNames".get_children()[i].text = NetworkManager.peers[peer_id]["name"]
+				peer_entities[peer_id].my_lifebar = $"../UI/Lifebars".get_children()[i]
+				i += 1
 				
-#				get_node("../UI/PlayerName1").text = NetworkManager.peers[NetworkManager.peers.keys()[0]]["name"]
-#				get_node("../UI/PlayerName2").text = NetworkManager.my_info["name"]
+				call_deferred("add_peer_entity", new_peer_entity, NetworkManager.peers[peer_id]["player_number"])
 				
-			get_node("../UI/PlayerName1").text = NetworkManager.my_info["name"]
-			get_node("../UI/PlayerName2").text = NetworkManager.peers[NetworkManager.peers.keys()[0]]["name"]
-			player_entity.get_node("PlayerName/ViewportContainer/Viewport/Label").text = NetworkManager.my_info["name"]
-			peer_entity.get_node("PlayerName/ViewportContainer/Viewport/Label").text = NetworkManager.peers[NetworkManager.peers.keys()[0]]["name"]
-	else:
+	else: # Singleplayer
 		player_entity = get_node("../SwordFighter")
 		player_entity.setup(1)
 		enabled = false
+
+func add_peer_entity(new_peer_entity, player_number):
+	$"..".add_child(new_peer_entity)
+	new_peer_entity.setup(player_number)
 
 func peer_disconnected(id):
 	enabled = false
@@ -82,26 +90,33 @@ func receive_networked_object_event(object_id : int, function_name : String, arg
 
 func player_entity_hp_changed(new_value):
 	if enabled:
-		peer_entity.rpc_unreliable("update_hp", NetworkManager.my_id, new_value)
+		for peer in peer_entities:
+			peer_entities[peer].rpc_unreliable("update_hp", NetworkManager.my_id, new_value)
 
 func player_entity_transform_changed(new_value):
 	if enabled:
-		peer_entity.rpc_unreliable("update_transform", NetworkManager.my_id, new_value)
+		for peer in peer_entities:
+			peer_entities[peer].rpc_unreliable("update_transform", NetworkManager.my_id, new_value)
 
 func player_entity_position_changed(new_value):
 	if enabled:
-		peer_entity.rpc_unreliable("update_position", NetworkManager.my_id, new_value)
+		for peer in peer_entities:
+			peer_entities[peer].rpc_unreliable("update_position", NetworkManager.my_id, new_value)
 
 func player_entity_rotation_changed(new_value):
 	if enabled:
-		peer_entity.rpc_unreliable("update_rotation", NetworkManager.my_id, new_value)
+		for peer in peer_entities:
+			peer_entities[peer].rpc_unreliable("update_rotation", NetworkManager.my_id, new_value)
 	
 func player_entity_animation_changed(anim_name, seek_pos, blend_speed):
 	if enabled:
-		peer_entity.rpc("update_animation", NetworkManager.my_id, anim_name, seek_pos, blend_speed)
+		for peer in peer_entities:
+			peer_entities[peer].rpc("update_animation", NetworkManager.my_id, anim_name, seek_pos, blend_speed)
 
 func player_entity_dealt_tandem_action(action, args):
-	peer_entity.rpc("dealt_tandem_action", NetworkManager.my_id, action, args)
+	if enabled:
+		for peer in peer_entities:
+			peer_entities[peer].rpc("dealt_tandem_action", NetworkManager.my_id, action, args)
 
 remote func update_networked_objects(objects_to_update):
 	for object_name in objects_to_update.keys():
@@ -132,26 +147,34 @@ remote func receive_networked_object_event_from_peer(object_id : int, function_n
 #			}
 #		rpc("receive_hit_from_peer", NetworkManager.my_id, hit_data)
 
+remote func peer_received_hit_from_peer(id, hit_data):
+	peer_entities[id].receive_hit(hit_data)
+
 remote func receive_hit_from_peer(id, hit_data):
 	var new_hit = Hit.new(Hit.INIT_TYPE.DEFAULT)
 	for key in hit_data:
 		new_hit.set(key, hit_data[key])
-	peer_entity.set_hitstop(hit_data.hitstop, false)
-#	player_entity._receive_hit(new_hit)
+	player_entity.set_hitstop(hit_data.hitstop, false)
 
 	# QUACKEADA for hit effects to appear:
 	player_entity.get_node("ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment/Hurtbox").receive_hit(new_hit)
+	
+	# send notification of hit to other peers except the one that just hit me.
+	for peer in peer_entities:
+		if peer != id:
+			rpc_id(peer, "peer_received_hit_from_peer", NetworkManager.my_id, hit_data)
+	
 
 remote func receive_throw_from_peer(pos, rot, _throwing_entity):
-	player_entity.receive_throw(pos, rot, peer_entity)
+	player_entity.receive_throw(pos, rot, _throwing_entity)
 	pass
 
-remote func receive_tandem_action_from_peer(action_name, entity):
-	player_entity.receive_tandem_action(action_name, peer_entity)
+remote func receive_tandem_action_from_peer(action_name, _tandem_entity):
+	player_entity.receive_tandem_action(action_name, _tandem_entity)
 	pass
 
-remotesync func player_ready():
-	get_tree().paused = false
+#remotesync func player_ready():
+#	get_tree().paused = false
 
 remotesync func round_end(winner):
 	get_node("../UI/RoundEnd").visible = true
@@ -163,7 +186,8 @@ remotesync func round_end(winner):
 remotesync func reset():
 	get_node("../UI/RoundEnd").visible = false
 	player_entity.reset()
-	peer_entity.reset()
+	for peer in peer_entities:
+		peer_entities[peer].reset()
 
 func _on_Timer_timeout():
 	rpc("reset")

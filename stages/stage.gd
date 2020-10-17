@@ -1,5 +1,12 @@
 extends Spatial
 
+const PLAYER_MATERIALS = {
+	1 : preload("res://entities/sword_figher/sword_fighter_player_1.material"),
+	2 : preload("res://entities/sword_figher/sword_fighter_player_2.material"),
+	3 : preload("res://entities/sword_figher/sword_fighter_player_3.material"),
+	4 : preload("res://entities/sword_figher/sword_fighter_player_4.material"),
+	}
+
 const EFFECTS = {
 	Hit.VISUAL_EFFECTS.BLUNT : preload("res://effects/hit/hit_effect.tscn"),
 	"weak_hit" : preload("res://effects/hit/weak_hit_effect.tscn")

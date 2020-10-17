@@ -10,7 +10,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PlayerName1" type="Label" parent="."]
+[node name="MyName" type="Label" parent="."]
 margin_left = 32.0
 margin_top = 23.0
 margin_right = 280.0
@@ -22,15 +22,48 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PlayerName2" type="Label" parent="."]
+[node name="PlayerNames" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerName2" type="Label" parent="PlayerNames"]
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -8.0
-margin_top = 88.0
+margin_top = 80.0
 margin_right = 241.0
-margin_bottom = 102.0
+margin_bottom = 94.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Player 2"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerName3" type="Label" parent="PlayerNames"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -8.0
+margin_top = 112.0
+margin_right = 241.0
+margin_bottom = 126.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "Player 3"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerName4" type="Label" parent="PlayerNames"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -8.0
+margin_top = 144.0
+margin_right = 241.0
+margin_bottom = 158.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "Player 4"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -105,13 +138,38 @@ margin_right = 597.0
 margin_bottom = 732.0
 rect_scale = Vector2( 0.75, 0.75 )
 
-[node name="Lifebar" parent="." instance=ExtResource( 3 )]
+[node name="MyLifebar" parent="." instance=ExtResource( 3 )]
 
-[node name="Lifebar2" parent="." instance=ExtResource( 3 )]
+[node name="Lifebars" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Lifebar2" parent="Lifebars" instance=ExtResource( 3 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 15.0
-margin_top = 80.0
+margin_top = 72.0
 margin_right = 1295.0
-margin_bottom = 840.0
+margin_bottom = 832.0
+rect_scale = Vector2( 0.5, 0.5 )
+
+[node name="Lifebar3" parent="Lifebars" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 15.0
+margin_top = 104.0
+margin_right = 1295.0
+margin_bottom = 864.0
+rect_scale = Vector2( 0.5, 0.5 )
+
+[node name="Lifebar4" parent="Lifebars" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 15.0
+margin_top = 136.0
+margin_right = 1295.0
+margin_bottom = 896.0
 rect_scale = Vector2( 0.5, 0.5 )

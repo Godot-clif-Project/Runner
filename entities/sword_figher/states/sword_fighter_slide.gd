@@ -25,7 +25,7 @@ func _enter_state():
 	entity.get_node("ModelContainer/Particles2").emitting = true
 	initial_rot = entity.model_container.rotation_degrees.y
 	entity.velocity = entity.velocity.normalized() * clamp(entity.horizontal_speed * 1.33, 0.0, entity.boost_speed * 1.25)
-	entity.hp -= 40
+#	entity.hp -= 40
 	._enter_state()
 	
 #	if entity.input_listener.is_key_pressed(InputManager.DOWN):
@@ -43,7 +43,7 @@ func _exit_state():
 var t = 1.25
 var prev_momentum = 0.0
 func _process_state(delta):
-	entity.hp -= 30 * delta
+	entity.hp -= 40 * delta
 	if entity.feet.get_overlapping_bodies().size() == 0:
 		set_next_state("running_fall")
 		return
