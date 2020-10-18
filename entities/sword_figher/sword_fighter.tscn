@@ -2752,14 +2752,16 @@ collision_mask = 4
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.739593, 0 )
 shape = SubResource( 1 )
 
-[node name="HitstopTimer" type="Timer" parent="."]
-one_shot = true
-
 [node name="PlayerName" parent="." instance=ExtResource( 26 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0 )
 visible = false
 
 [node name="Sound" parent="." instance=ExtResource( 29 )]
+
+[node name="HitstopTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="BombTween" type="Tween" parent="."]
 [connection signal="flag_changed" from="AnimationFlags" to="." method="_on_AnimationFlags_flag_changed"]
 [connection signal="received_input" from="InputListener" to="." method="_on_InputListener_received_input"]
 [connection signal="animation_finished" from="AnimationEvents" to="." method="_on_AnimationEvents_animation_finished"]
@@ -2770,6 +2772,7 @@ visible = false
 [connection signal="body_entered" from="RigidbodyCollision" to="." method="_on_RigidbodyCollision_body_entered"]
 [connection signal="body_exited" from="RigidbodyCollision" to="." method="_on_RigidbodyCollision_body_exited"]
 [connection signal="timeout" from="HitstopTimer" to="." method="_on_HitstopTimer_timeout"]
+[connection signal="tween_all_completed" from="BombTween" to="." method="_on_BombTween_tween_all_completed"]
 
 [editable path="ModelContainer/sword_fighter"]
 

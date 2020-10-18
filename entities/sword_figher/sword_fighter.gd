@@ -134,8 +134,9 @@ func _ready():
 	$AnimationTree.active = true
 	ready = true
 	emit_signal("ready")
-#	if lock_on_target == null:
-#		lock_on_target = get_node(target)
+	if target != null:
+		lock_on_target = get_node(target)
+		
 	if camera != null:
 		camera_raycast.enabled = true
 	
@@ -229,10 +230,11 @@ func _on_InputListener_received_input(key, state):
 		if key == InputManager.JUMP:
 			jump_str = min_jump_str
 		if key == InputManager.EVADE:
-			lock_on_target = $"../NetworkInterface".get_peer_at_index(lock_on_scroll)
-			lock_on_scroll += 1
-			if lock_on_scroll > $"../NetworkInterface".peer_entities.size() - 1:
-				lock_on_scroll = 0
+			if target == null:
+				lock_on_target = $"../NetworkInterface".get_peer_at_index(lock_on_scroll)
+				lock_on_scroll += 1
+				if lock_on_scroll > $"../NetworkInterface".peer_entities.size() - 1:
+					lock_on_scroll = 0
 				
 #			camera.ally_indicator.visible = true
 #			camera._process(true)
@@ -684,7 +686,15 @@ func play_sound(sound_name : String):
 #const STAMINA_BOMB = preload("res://objects/stamina_bomb/stamina_bomb.tscn")
 
 func throw_stamina_bomb(_velocity : Vector3):
-	MainManager.current_level.create_object("stamina_bomb", {
-		"velocity" : _velocity.rotated(Vector3.UP, model_container.rotation.y),
-		"translation" : $ModelContainer/BombPoint.global_transform.origin
-	})
+	if not $BombTween.is_active():
+		$"../UI/BombCooldown".modulate = Color.white
+#		$"../UI/BombCooldown".value = 0
+		$BombTween.interpolate_property($"../UI/BombCooldown", "value", 0, 100, 120.0, Tween.TRANS_LINEAR)
+		$BombTween.start()
+		MainManager.current_level.create_object("stamina_bomb", {
+			"velocity" : _velocity.rotated(Vector3.UP, model_container.rotation.y),
+			"translation" : $ModelContainer/BombPoint.global_transform.origin
+		})
+
+func _on_BombTween_tween_all_completed():
+	$"../UI/BombCooldown".modulate = Color(0.470588, 0.87451, 0.223529)

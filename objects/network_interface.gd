@@ -45,7 +45,9 @@ func _ready():
 				peer_entities[peer_id].owner_id = peer_id
 				peer_entities[peer_id].network_interface = self
 				$"../UI/PlayerNames".get_children()[i].text = NetworkManager.peers[peer_id]["name"]
+				$"../UI/PlayerNames".get_children()[i].visible = true
 				peer_entities[peer_id].my_lifebar = $"../UI/Lifebars".get_children()[i]
+				peer_entities[peer_id].my_lifebar.visible = true
 				i += 1
 				
 				call_deferred("add_peer_entity", new_peer_entity, NetworkManager.peers[peer_id]["player_number"])

@@ -46,10 +46,15 @@ func _process_state(delta):
 	
 #	._process_state(delta)
 
-#func _received_input(key, state):
+func _received_input(key, state):
+	if state:
+		if key == InputManager.FIRE:
+			if entity.input_listener.is_key_pressed(InputManager.EVADE):
+				entity.throw_stamina_bomb(Vector3(0.0, 5, -5))
+				return
+	._received_input(key, state)
 #	print(entity.flags.is_stringable)
 #	if entity.get_current_animation() != "stance_off_to_def":
-#	._received_input(key, state)
 		
 #		if state:
 #			if key == InputManager.LIGHT:

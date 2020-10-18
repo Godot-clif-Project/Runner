@@ -77,8 +77,9 @@ func get_possible_transitions():
 #	entity.center_camera(delta)
 
 func _touched_surface(surface):
-	pass
-#	if surface == "floor": #and entity.flags.is_active:
+	if surface == "floor": #and entity.flags.is_active:
+#		entity.velocity = Vector3.ZERO
+		set_next_state("land")
 #		entity.on_ground = true
 ##		print(falling_speed)
 #		if falling_speed < -22:

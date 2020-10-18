@@ -25,6 +25,7 @@ func _enter_state():
 	entity.get_node("ModelContainer/Particles2").emitting = true
 	initial_rot = entity.model_container.rotation_degrees.y
 	entity.velocity = entity.velocity.normalized() * clamp(entity.horizontal_speed * 1.33, 0.0, entity.boost_speed * 1.25)
+	entity.play_sound("stop")
 #	entity.hp -= 40
 	._enter_state()
 	
@@ -114,7 +115,7 @@ func _touched_surface(surface):
 		
 		var _hit = Hit.new(Hit.INIT_TYPE.WALL)
 		_hit.position = wall_position
-		entity._receive_hit(_hit)
+		entity.receive_hit(_hit)
 		
 		if entity.prev_speed > 5:
 			if rot > 0.0:

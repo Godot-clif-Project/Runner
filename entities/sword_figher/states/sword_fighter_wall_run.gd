@@ -59,6 +59,7 @@ func _process_state(delta):
 			if entity.input_listener.is_key_pressed(InputManager.RUN) or entity.input_listener.is_key_pressed(InputManager.UP):
 				entity.jump_str = 20
 				entity.set_velocity(Vector3(0.0, 5, -2).rotated(Vector3.RIGHT, entity.wall_rot.x))
+				entity.air_boosts_left = 1
 				set_next_state("jump")
 				return
 			set_next_state("ledge_climb")

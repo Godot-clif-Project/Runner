@@ -225,6 +225,10 @@ func get_possible_transitions():
 
 func _received_input(key, state):
 	if state:
+		if key == InputManager.FIRE:
+			if entity.input_listener.is_key_pressed(InputManager.EVADE):
+				entity.throw_stamina_bomb(Vector3(0.0, bomb_throw_str * 0.25, -bomb_throw_str))
+				return
 		if key == InputManager.BREAK:
 			set_next_state("run_stop")
 			return
@@ -234,10 +238,7 @@ func _received_input(key, state):
 				entity.hp -= 60
 				entity.target_speed = entity.boost_speed
 				entity.acceleration = 0.85
-		
-	else:
-		if key == InputManager.HEAVY:
-			entity.throw_stamina_bomb(Vector3(0.0, bomb_throw_str * 0.25, -bomb_throw_str))
+				entity.play_sound("boost")
 #			bomb_throw_str = 0.0
 			
 #		if key == InputManager.FIRE:

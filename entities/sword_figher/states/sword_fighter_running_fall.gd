@@ -13,6 +13,7 @@ func _enter_state():
 	entity.gravity_scale = 0.25
 	entity.velocity.y = 0.0
 	entity.add_impulse(Vector3(0.0, 6.0 , -3.0 * (entity.prev_speed / entity.max_speed)))
+	entity.play_sound("boost")
 	._enter_state()
 #
 ## Inverse of enter_state.

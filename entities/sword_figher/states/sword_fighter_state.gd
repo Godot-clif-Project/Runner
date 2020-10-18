@@ -252,8 +252,8 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 					match t as String:
 						"off_run_startup":
 							return {"state" : t, "flag" : "is_evade_cancelable"}
-						"run":
-							return {"state" : t, "flag" : "is_evade_cancelable"}
+#						"run":
+#							return {"state" : t, "flag" : "is_evade_cancelable"}
 						"wall_run":
 							if entity.has_wall_run:
 #								entity.raycast.force_raycast_update()
@@ -303,8 +303,13 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 							return {"state" : "walk", "flag" : "is_stringable"}
 							
 			InputManager.RUN_RUN:
-				if valid_transitions.has("off_run_startup"):
-					return {"state" : "off_run_startup", "flag" : "is_evade_cancelable"}
+				for t in valid_transitions:
+					match t as String:
+						"off_run_startup":
+							return {"state" : t, "flag" : "is_evade_cancelable"}
+						"air_boost":
+							if entity.air_boosts_left > 0:
+								return {"state" : t, "flag" : "is_evade_cancelable"}
 					
 			InputManager.UP:
 				if valid_transitions.has("walk"):

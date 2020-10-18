@@ -62,7 +62,14 @@ func add_direction():
 	if entity.input_listener.is_key_pressed(InputManager.RIGHT):
 		direction += Vector2.RIGHT
 
-#func _received_input(key, state):
+func _received_input(key, state):
+	if state:
+		if key == InputManager.FIRE:
+			if entity.input_listener.is_key_pressed(InputManager.EVADE):
+				entity.throw_stamina_bomb(Vector3(0.0, 5, -5))
+				return
+	._received_input(key, state)
+		
 #	if key == InputManager.LIGHT:
 #		set_next_state("off_hi_light")
 #	elif key == InputManager.HEAVY:
