@@ -44,7 +44,7 @@ func _exit_state():
 var t = 1.25
 var prev_momentum = 0.0
 func _process_state(delta):
-	entity.hp -= 40 * delta
+	entity.hp -= 25 * delta
 	if entity.feet.get_overlapping_bodies().size() == 0:
 		set_next_state("running_fall")
 		return
@@ -78,10 +78,10 @@ func _process_state(delta):
 #		set_next_state("run")
 #	prev_momentum = abs(ang_momentum)
 
-	if entity.input_listener.is_key_pressed(InputManager.BREAK):
-		entity.ground_drag = 8
-	else:
-		entity.ground_drag = 8
+#	if entity.input_listener.is_key_pressed(InputManager.BREAK):
+#		entity.ground_drag = 8
+#	else:
+#		entity.ground_drag = 8
 	
 			
 #	entity.model_container.rotation_degrees.y = clamp(entity.model_container.rotation_degrees.y + ang_momentum, initial_rot - 90, initial_rot + 90)

@@ -185,7 +185,7 @@ func _touched_surface(surface):
 				
 				var _hit = Hit.new(Hit.INIT_TYPE.WALL)
 				_hit.position = wall_position
-				_hit.damage = entity.prev_speed * 4
+				_hit.damage = entity.prev_speed * 2
 				entity.receive_hit(_hit)
 #			else:
 #				MainManager.current_level.spawn_effect("weak_hit", entity.translation + Vector3.UP, Vector3.ZERO)
@@ -229,16 +229,22 @@ func _received_input(key, state):
 			if entity.input_listener.is_key_pressed(InputManager.EVADE):
 				entity.throw_stamina_bomb(Vector3(0.0, bomb_throw_str * 0.25, -bomb_throw_str))
 				return
+				
 		if key == InputManager.BREAK:
 			set_next_state("run_stop")
 			return
+			
 		if key == InputManager.RUN_RUN or key == InputManager.UP_UP:
 #			if entity.target_speed <= entity.max_speed:
 			if entity.hp > 0:
-				entity.hp -= 60
+				entity.hp -= 50
 				entity.target_speed = entity.boost_speed
 				entity.acceleration = 0.85
 				entity.play_sound("boost")
+				
+#		if key == InputManager.JUMP:
+#			set_next_state("running_fall")
+#			return
 #			bomb_throw_str = 0.0
 			
 #		if key == InputManager.FIRE:

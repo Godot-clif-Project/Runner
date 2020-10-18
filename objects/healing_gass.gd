@@ -1,4 +1,4 @@
-extends NetworkedObject
+extends Spatial
 
 export var heal_amount = 200
 
@@ -20,7 +20,7 @@ func _on_Timer_timeout():
 func _on_Area_body_entered(body):
 	if visible:
 		if body is Entity:
-			if body.hp < body.max_hp:
-				body.get_healing_grass(heal_amount, self)
-				grabbed()
-				emit_signal("networked_object_event", object_id, "grabbed", [])
+#			if body.hp < body.max_hp:
+			body.get_healing_grass(heal_amount, self)
+#			grabbed()
+#			emit_signal("networked_object_event", object_id, "grabbed", [])

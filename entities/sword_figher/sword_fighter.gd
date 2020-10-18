@@ -56,7 +56,7 @@ var acceleration = 0.0
 var target_speed = 13.0
 const max_speed = 18.0
 const min_speed = 5.0
-const boost_speed = 30.0
+const boost_speed = 25.0
 
 var prev_speed = 0.0
 var prev_velocity : Vector3
@@ -77,6 +77,8 @@ var rigidbodies = []
 var timescale = 1.0
 var hitstop = false
 var shake_t = 0.0
+
+var bomb_charge = 100.0
 
 onready var camera_pivot = $CameraPointPivot
 onready var camera_point = $CameraPointPivot/Position3D
@@ -112,6 +114,7 @@ onready var raycast_side_high = {
 }
 
 onready var vel_arrow = $VelocityArrow
+onready var bomb_ui = $"../UI/BombCooldown"
 
 func set_hp(value):
 	hp = clamp(value, 0, max_hp)
@@ -285,6 +288,14 @@ func _physics_process(delta):
 	if shake_t > 0.0:
 		$ModelContainer/sword_fighter.translation = (Vector3.RIGHT * (shake_t * 0.03)) * sin(shake_t) * 0.1
 		shake_t -= delta * 50
+	
+	if bomb_charge < 100.0:
+		bomb_charge += delta
+		bomb_ui.value = bomb_charge
+		if bomb_charge >= 100.0:
+			bomb_charge = 100.0
+			bomb_ui.value = 100
+			bomb_ui.modulate = Color(0.470588, 0.87451, 0.223529)
 	
 #	if hp < max_hp:
 #		self.hp += delta * 10
@@ -675,6 +686,27 @@ func _on_HitstopTimer_timeout():
 	pass # Replace with function body.
 
 func get_healing_grass(heal_amount, grass):
+	if hp < max_hp or bomb_charge < 100.0:
+#		heal(heal_amount)
+#		grass.grabbed()
+#	elif bomb_charge < 100.0:
+		heal(heal_amount)
+		grass.grabbed()
+		bomb_charge += heal_amount * 0.01
+		bomb_ui.value = bomb_charge
+		if bomb_charge >= 100.0:
+			bomb_charge = 100.0
+			bomb_ui.value = 100
+			bomb_ui.modulate = Color(0.470588, 0.87451, 0.223529)
+	
+#			$BombTween.stop_all()
+#		else:
+#			$BombTween.stop_all()
+#			$BombTween.interpolate_property($"../UI/BombCooldown", "value", bomb_charge, 100, 120.0 * (bomb_charge / 100.0), Tween.TRANS_LINEAR)
+#			$BombTween.interpolate_property(self, "bomb_charge", bomb_charge, 100, 120.0 * (bomb_charge / 100.0), Tween.TRANS_LINEAR)
+#			$BombTween.start()
+
+func heal(heal_amount):
 	$ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment/ParticlesHeal.restart()
 	$ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment/ParticlesHeal.emitting = true
 	play_sound("heal")
@@ -686,11 +718,15 @@ func play_sound(sound_name : String):
 #const STAMINA_BOMB = preload("res://objects/stamina_bomb/stamina_bomb.tscn")
 
 func throw_stamina_bomb(_velocity : Vector3):
-	if not $BombTween.is_active():
-		$"../UI/BombCooldown".modulate = Color.white
-#		$"../UI/BombCooldown".value = 0
-		$BombTween.interpolate_property($"../UI/BombCooldown", "value", 0, 100, 120.0, Tween.TRANS_LINEAR)
-		$BombTween.start()
+	if bomb_charge == 100.0:
+		bomb_ui.modulate = Color.white
+		bomb_charge = 0
+		bomb_ui.value = 0
+		
+#		$BombTween.stop_all()
+#		$BombTween.interpolate_property($"../UI/BombCooldown", "value", 0, 100, 120.0, Tween.TRANS_LINEAR)
+#		$BombTween.interpolate_property(self, "bomb_charge", 0, 100, 120.0, Tween.TRANS_LINEAR)
+#		$BombTween.start()
 		MainManager.current_level.create_object("stamina_bomb", {
 			"velocity" : _velocity.rotated(Vector3.UP, model_container.rotation.y),
 			"translation" : $ModelContainer/BombPoint.global_transform.origin

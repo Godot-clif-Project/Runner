@@ -10,6 +10,6 @@ pad_1_device = 1
 keyboard_pad = 0
 reticle_control = 1
 D_I_S_P_L_A_Y = ""
-zoom = 1
+zoom = 2
 fullscreen = false
 center_window = false

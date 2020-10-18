@@ -42,7 +42,7 @@ func _on_Collision_body_entered(body):
 func _on_Buff_body_entered(body):
 	if state == ACTIVE:
 		if body is Entity:
-			body.get_healing_grass(1000, null)
+			body.heal(1000)
 			consume_charge()
 			emit_signal("networked_object_event", object_id, "consume_charge", [])
 
