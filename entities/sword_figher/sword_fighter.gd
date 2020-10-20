@@ -54,9 +54,9 @@ var horizontal_speed = 0.0
 var falling_speed = 0.0
 var acceleration = 0.0
 var target_speed = 13.0
-const max_speed = 18.0
-const min_speed = 5.0
-const boost_speed = 25.0
+const min_speed = 3.0
+const max_speed = 14.0
+const boost_speed = 19.0
 
 var prev_speed = 0.0
 var prev_velocity : Vector3
@@ -102,7 +102,6 @@ onready var raycast = $ModelContainer/RayCast
 onready var raycast_floor = $ModelContainer/RayCastFloor
 
 onready var rope_point = $ModelContainer/RopePoint
-onready var rope_model = $ModelContainer/Rope
 
 onready var raycast_side = {
 	-1 : $ModelContainer/RayCastL,
@@ -142,9 +141,6 @@ func _ready():
 		
 	if camera != null:
 		camera_raycast.enabled = true
-	
-#	if name == "SwordFighter":
-#		setup(1)
 	
 func setup(number):
 	player_number = number
@@ -204,7 +200,7 @@ func get_normal():
 	return t.basis.get_euler()
 
 func has_los_to_target(_target):
-	if translation.distance_to(_target.rope_point.global_transform.origin) > 35:
+	if translation.distance_to(_target.rope_point.global_transform.origin) > 50:
 		return false
 	else:
 		var space_state = get_world().direct_space_state
@@ -263,7 +259,6 @@ func _input(event):
 #func _process(delta):
 
 func _physics_process(delta):
-	
 	fsm._process_current_state(delta * timescale, true)
 	
 	if camera != null:
@@ -282,8 +277,9 @@ func _physics_process(delta):
 				
 		elif $CameraPointPivot/Position3D/CameraCollision.get_overlapping_bodies().empty():
 			if camera_point.translation.z < 3.5:
-				camera_point.translation.z += delta
-		camera_raycast.cast_to = camera_point.translation + Vector3(0.0, 0.0, 0.1)
+				camera_point.translation.z += delta * 3
+				
+		camera_raycast.cast_to = camera_point.translation + Vector3(0.0, 0.0, 0.2)
 	
 	if shake_t > 0.0:
 		$ModelContainer/sword_fighter.translation = (Vector3.RIGHT * (shake_t * 0.03)) * sin(shake_t) * 0.1
@@ -302,13 +298,14 @@ func _physics_process(delta):
 	
 
 func apply_velocity(delta):
-	if not rigidbodies.empty():
-		for body in rigidbodies:
-			var body_normal = (translation - body.translation)
-			velocity += Vector3(body_normal.x, 0.0, body_normal.z) * timescale
+#	if not rigidbodies.empty():
+#		for body in rigidbodies:
+#			var body_normal = (translation - body.translation)
+#			velocity += Vector3(body_normal.x, 0.0, body_normal.z) * timescale
 	
 	prev_speed = horizontal_speed
 	prev_velocity = velocity
+	
 #	velocity = move_and_slide(velocity, Vector3.UP, false, 4, 0.785398, true)
 	velocity = move_and_slide(velocity * timescale, Vector3.UP, false, 4, deg2rad(50), true) / timescale
 	horizontal_speed = Vector2(velocity.x, velocity.z).length()
@@ -317,18 +314,34 @@ func apply_velocity(delta):
 	
 	if is_on_wall():
 		fsm.receive_event("_touched_surface", "wall")
-	
-#	if input_listener.is_key_pressed(InputManager.JUMP):
-#		if jump_str < max_jump_str:
-#			jump_str += max_jump_str * delta * 4
+	if not on_ground and is_on_floor():
+		fsm.receive_event("_touched_surface", "floor")
 	
 	vel_arrow.look_at(velocity + translation + Vector3.FORWARD * 0.01, Vector3.UP)
 	vel_arrow.scale.z = lerp(0, 1.0, horizontal_speed / 6)
+	
 #	print(horizontal_speed)
 
+func align_to_floor(delta):
+	if raycast_floor.is_colliding():
+		var floor_normal = raycast_floor.get_collision_normal()
+#	#		model.rotation.x = atan2(floor_normal.y, floor_normal.x) - PI * 0.5
+		model.look_at((translation + floor_normal.cross(-model_container.transform.basis.x)), Vector3.UP)
+#		model.look_at((translation + floor_normal), Vector3.UP)
+##		model.rotation.y = PI
+##		print(translation + (floor_normal).cross(Vector3.FORWARD.rotated(Vector3.UP, model_container.rotation.y)))
+	else:
+		model.rotation = Vector3(0, PI, model.rotation.z)
+	
+
 func center_camera(delta):
-	camera_pivot.rotation.y = lerp_angle(camera_pivot.rotation.y, model_container.rotation.y, delta * 2)
-	camera_pivot.rotation.x = lerp_angle(camera_pivot.rotation.x, 0.0, delta * 2)
+	var at = atan2(velocity.y, velocity.z)
+	if abs(at) < 0.01 or abs(at) > 3.1:
+		at = 0.0
+	else:
+		at = clamp(atan2(velocity.y, velocity.z), -PI * 0.15, PI * 0.15)
+	camera_pivot.rotation.x = lerp_angle(camera_pivot.rotation.x, at, delta)
+	camera_pivot.rotation.y = lerp_angle(camera_pivot.rotation.y, model_container.rotation.y, delta)
 
 func point_camera_at_target(delta, offset):
 	var current_camera_direction = Quat(camera_pivot.global_transform.basis)
@@ -630,8 +643,9 @@ func receive_tandem_action(action_name, entity):
 #				request_camera(1)
 
 func _on_Feet_body_entered(body):
-	if not on_ground:
-		fsm.receive_event("_touched_surface", "floor")
+#	if not on_ground:
+#		fsm.receive_event("_touched_surface", "floor")
+	pass
 
 func emit_one_shot(_name : String):
 	var node = get_node("ModelContainer/" + _name)
@@ -734,3 +748,11 @@ func throw_stamina_bomb(_velocity : Vector3):
 
 func _on_BombTween_tween_all_completed():
 	$"../UI/BombCooldown".modulate = Color(0.470588, 0.87451, 0.223529)
+
+
+func _on_ObstacleCollision_body_entered(body):
+	fsm.receive_event("_touched_surface", "obstacle")
+
+
+func _on_ObstacleCollision_area_entered(area):
+	fsm.receive_event("_touched_surface", "obstacle")

@@ -6,7 +6,7 @@ extends "res://entities/sword_figher/states/sword_fighter_offensive_moves.gd"
 
 var released_up = false
 var ang_momentum = 0.0
-var rot_lerp = 3.5
+var rot_lerp = 4.5
 var max_turn_speed = 4.5
 var rot_speed = 30
 
@@ -34,18 +34,19 @@ func _enter_state():
 #
 ## Inverse of enter_state.
 func _exit_state():
-	entity.set_collision_mask_bit(0, true)
+	entity.model.rotation = Vector3(0, PI, 0.0)
+#	entity.set_collision_mask_bit(0, true)
 	entity.anim_tree["parameters/TimeScale/scale"] = 1
 	._exit_state()
 
 func _process_state(delta):
 	if entity.feet.get_overlapping_bodies().size() == 0:
-		if entity.target_speed > entity.max_speed:
-			set_next_state("running_fall")
-			return
-		else:
-			set_next_state("fall")
-			return
+#		if entity.target_speed > entity.max_speed:
+#			set_next_state("running_fall")
+#			return
+#		else:
+		set_next_state("fall")
+		return
 			
 #		if t > 0.05:
 #			set_next_state("running_fall")
@@ -107,22 +108,26 @@ func _process_state(delta):
 #		entity.target_speed -= delta * 8
 #	print(entity.target_speed)
 	
-	if entity.target_speed > entity.max_speed:
-#		entity.target_speed -= delta * 50
-		entity.target_speed = lerp(entity.target_speed, entity.max_speed - 1, delta * 1)
-#		print(entity.target_speed)
+	if entity.input_listener.is_key_pressed(InputManager.FIRE):
+		entity.target_speed = entity.boost_speed
+		entity.hp -= 50 * delta
 	else:
-		if entity.input_listener.is_key_pressed(InputManager.UP):
-			entity.target_speed = lerp(entity.target_speed, entity.max_speed, delta * 2)
+		if entity.target_speed > entity.max_speed:
+	#		entity.target_speed -= delta * 50
+			entity.target_speed = lerp(entity.target_speed, entity.max_speed - 1, delta * 1.5)
+	#		print(entity.target_speed)
 		else:
-			if entity.target_speed > entity.max_speed * entity.input_listener.analogs[7]:
-				entity.target_speed = lerp(entity.target_speed, entity.max_speed * entity.input_listener.analogs[7], delta * 0.5)
+			if entity.input_listener.is_key_pressed(InputManager.UP):
+				entity.target_speed = lerp(entity.target_speed, entity.max_speed, delta * 2)
 			else:
-				entity.target_speed = lerp(entity.target_speed, entity.max_speed * entity.input_listener.analogs[7], delta * 2)
-	
-		if entity.target_speed < entity.min_speed:
-			set_next_state("run_stop")
-			return
+				if entity.target_speed > entity.max_speed * entity.input_listener.analogs[7]:
+					entity.target_speed = lerp(entity.target_speed, entity.max_speed * entity.input_listener.analogs[7], delta * 0.5)
+				else:
+					entity.target_speed = lerp(entity.target_speed, entity.max_speed * entity.input_listener.analogs[7], delta * 2)
+		
+			if entity.target_speed < entity.min_speed:
+				set_next_state("run_stop")
+				return
 	
 	
 	# slow down whent turning
@@ -139,14 +144,14 @@ func _process_state(delta):
 
 #	entity.model.look_at(-entity.raycast_floor.get_collision_normal() + entity.translation, Vector3.UP)
 #	entity.model.rotation.y = -PI
-	
+	entity.align_to_floor(delta)
 	entity.acceleration = clamp(entity.acceleration + delta, 0, 1.0)
 	entity.accelerate(-entity.target_speed, delta * entity.acceleration * 5)
 	entity.apply_gravity(delta)
 	entity.apply_velocity(delta)
 	
-	entity.anim_tree["parameters/TimeScale/scale"] = float(entity.target_speed / entity.boost_speed * 0.25) + 1.1 
-	entity.center_camera(delta)
+	entity.anim_tree["parameters/TimeScale/scale"] = float(entity.target_speed / (entity.boost_speed * 0.75)) + 0.4# + (0.75 - entity.acceleration * 0.75)
+	entity.center_camera(delta * 2)
 	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
 	
 #	entity.translation = Vector3.ZERO
@@ -187,7 +192,11 @@ func _touched_surface(surface):
 				_hit.position = wall_position
 				_hit.damage = entity.prev_speed * 2
 				entity.receive_hit(_hit)
-#			else:
+				
+	elif surface == "obstacle":
+		entity.set_animation("run_bump_r", 0.0, 0.05)
+		entity.play_sound("step")
+		entity.velocity *= 0.25
 #				MainManager.current_level.spawn_effect("weak_hit", entity.translation + Vector3.UP, Vector3.ZERO)
 #				entity.play_sound("hit_random")
 
@@ -234,17 +243,22 @@ func _received_input(key, state):
 			set_next_state("run_stop")
 			return
 			
-		if key == InputManager.RUN_RUN or key == InputManager.UP_UP:
+#		if key == InputManager.RUN_RUN or key == InputManager.UP_UP or key == InputManager.FIRE:
 #			if entity.target_speed <= entity.max_speed:
-			if entity.hp > 0:
-				entity.hp -= 50
-				entity.target_speed = entity.boost_speed
-				entity.acceleration = 0.85
-				entity.play_sound("boost")
+##			if entity.hp > 0:
+#				entity.hp -= 25
+#				entity.target_speed = entity.boost_speed
+#				entity.acceleration = 0.85
+#				entity.play_sound("boost")
 				
-#		if key == InputManager.JUMP:
-#			set_next_state("running_fall")
-#			return
+		if key == InputManager.JUMP:
+			if entity.input_listener.is_key_pressed(InputManager.BREAK):
+				set_next_state("jump")
+				return
+			else:
+				set_next_state("running_fall")
+				return
+				
 #			bomb_throw_str = 0.0
 			
 #		if key == InputManager.FIRE:

@@ -62,6 +62,7 @@ func _process_state(delta):
 func get_possible_transitions():
 	return [
 		"fall",
+		"jump",
 		]
 
 #func _touched_surface(surface):

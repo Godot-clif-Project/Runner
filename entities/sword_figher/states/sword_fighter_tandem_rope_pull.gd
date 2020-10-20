@@ -18,6 +18,7 @@ func _enter_state():
 #	entity.lock_on_target.receive_tandem_action("rope_pull", entity)
 #	entity.play_rope_animation(entity.lock_on_target.rope_point.global_transform.origin)
 #	entity.emit_signal("dealt_tandem_action", "rope_pull", [entity.lock_on_target.rope_point.global_transform.origin])
+	entity.get_node("../Rope").set_process(true)
 	entity.get_node("../Rope").visible = true
 	entity.get_node("../Rope/AnimationPlayer").play("Pull")
 
@@ -31,6 +32,7 @@ func _exit_state():
 	entity.camera_pivot.transform = entity.camera_pivot.transform.orthonormalized()
 	entity.gravity_scale = 1.0
 	entity.get_node("../Rope").visible = false
+	entity.get_node("../Rope").set_process(false)
 	._exit_state()
 
 func _process_state(delta):

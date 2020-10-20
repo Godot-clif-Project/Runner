@@ -185,8 +185,11 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 					match t as String :
 						"jump":
 							return {"state" : t, "flag" : null}
-		
-		match key as int:
+						"running_fall":
+							return {"state" : t, "flag" : null}
+						"air_boost":
+							if entity.air_boosts_left > 0:
+								return {"state" : t, "flag" : "is_evade_cancelable"}
 			InputManager.BREAK:
 				for t in valid_transitions:
 					match t as String :
@@ -206,12 +209,30 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 						"sidestep":
 							if entity.input_listener.is_key_pressed(InputManager.LEFT) or entity.input_listener.is_key_pressed(InputManager.RIGHT):
 								return {"state" : t, "flag" : null}
+#						"slide":
+#							if entity.horizontal_speed > 5:# and entity.hp > 0:
+#								return {"state" : t, "flag" : null}
+						"wall_run":
+							if entity.has_wall_run:
+#								entity.raycast.force_raycast_update()
+								if entity.raycast.is_colliding():
+									return {"state" : t, "flag" : null}
+						"wall_run_side":
+							if entity.has_wall_run_side:
+#								entity.raycast_side[-1].force_raycast_update()
+#								entity.raycast_side[1].force_raycast_update()
+								if entity.raycast_side[-1].is_colliding():
+									entity.wall_side = -1
+									return {"state" : t, "flag" : null}
+								elif entity.raycast_side[1].is_colliding():
+									entity.wall_side = 1
+									return {"state" : t, "flag" : null}
+			InputManager.SLIDE:
+				for t in valid_transitions:
+					match t as String :
 						"slide":
-							if entity.horizontal_speed > 5 and entity.hp > 0:
+							if entity.horizontal_speed > 5:# and entity.hp > 0:
 								return {"state" : t, "flag" : null}
-						"air_boost":
-							if entity.air_boosts_left > 0:
-								return {"state" : t, "flag" : "is_evade_cancelable"}
 			
 			InputManager.LIGHT:
 				for t in valid_transitions:
@@ -250,25 +271,10 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 			InputManager.RUN:
 				for t in valid_transitions:
 					match t as String:
-						"off_run_startup":
-							return {"state" : t, "flag" : "is_evade_cancelable"}
-#						"run":
+#						"off_run_startup":
 #							return {"state" : t, "flag" : "is_evade_cancelable"}
-						"wall_run":
-							if entity.has_wall_run:
-#								entity.raycast.force_raycast_update()
-								if entity.raycast.is_colliding():
-									return {"state" : t, "flag" : null}
-						"wall_run_side":
-							if entity.has_wall_run_side:
-#								entity.raycast_side[-1].force_raycast_update()
-#								entity.raycast_side[1].force_raycast_update()
-								if entity.raycast_side[-1].is_colliding():
-									entity.wall_side = -1
-									return {"state" : t, "flag" : null}
-								elif entity.raycast_side[1].is_colliding():
-									entity.wall_side = 1
-									return {"state" : t, "flag" : null}
+						"run":
+							return {"state" : t, "flag" : "is_evade_cancelable"}
 #						"off_kick":
 #							return {"state" : t, "flag" : "is_command_cancelable"}
 #						"off_block":
@@ -307,9 +313,9 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 					match t as String:
 						"off_run_startup":
 							return {"state" : t, "flag" : "is_evade_cancelable"}
-						"air_boost":
-							if entity.air_boosts_left > 0:
-								return {"state" : t, "flag" : "is_evade_cancelable"}
+#						"air_boost":
+#							if entity.air_boosts_left > 0:
+#								return {"state" : t, "flag" : "is_evade_cancelable"}
 					
 			InputManager.UP:
 				if valid_transitions.has("walk"):

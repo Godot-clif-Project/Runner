@@ -8,8 +8,8 @@ extends Spatial
 
 
 # Called when the node enters the scene tree for the first time.
-#func _ready():
-#	set_process(false)
+func _ready():
+	set_process(false)
 #	curve.add_point(Vector3(0.0, 0.0, 1.0), Vector3.ZERO, Vector3.ZERO, 0)
 #	curve.add_point(Vector3(0.0, 1.0, 0.0), Vector3.ZERO, Vector3.ZERO, 1)
 #	curve.add_point(Vector3(0.0, 0.0, -1.0), Vector3.ZERO, Vector3.ZERO, 2)

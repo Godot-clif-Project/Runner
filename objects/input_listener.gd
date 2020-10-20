@@ -34,7 +34,9 @@ var input_chains ={
 	InputManager.DOWN_DOWN : [InputManager.DOWN, InputManager.DOWN],
 	InputManager.RUN_RUN : [InputManager.RUN, InputManager.RUN],
 	InputManager.BREAK_BREAK : [InputManager.BREAK, InputManager.BREAK],
-	InputManager.BOOST : [InputManager.FIRE, InputManager.RUN],
+	InputManager.BOOST : [InputManager.FIRE, InputManager.FIRE],
+	InputManager.SLIDE : [InputManager.DOWN, InputManager.FIRE],
+	InputManager.SLIDE : [InputManager.DOWN, InputManager.FIRE],
 	}
 
 export var simulate_input = false

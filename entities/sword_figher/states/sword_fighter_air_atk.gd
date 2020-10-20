@@ -26,26 +26,29 @@ func _exit_state():
 	entity.get_node("ModelContainer/SlashParticles").emitting = false
 	._exit_state()
 
-#func _process_state(delta):
-#	._process_state(delta)
-#	if entity.get_current_animation() == "jump_land":
-#		entity.set_velocity(Vector3(0.0, 0.0, -Vector2(entity.velocity.x, entity.velocity.z).length()))
-##		entity.apply_rotation(delta)
-#		if entity.input_listener.is_key_pressed(InputManager.RIGHT):
-#			entity.model_container.rotation_degrees.y -= delta * 270
-#
-#		elif entity.input_listener.is_key_pressed(InputManager.LEFT):
-#			entity.model_container.rotation_degrees.y += delta * 270
-#
-#		else:
-#			var stick = entity.input_listener.analogs[0]
-#			if abs(stick) > 0.1:
-#				entity.model_container.rotation_degrees.y -= stick * delta * 270
-#
-#	if entity.velocity.y < falling_speed:
-#		falling_speed = entity.velocity.y
-#
-#	entity.apply_drag(delta)
+func _process_state(delta):
+	if entity.input_listener.is_key_pressed(InputManager.RIGHT):
+		entity.model_container.rotation_degrees.y -= delta * turn_speed * 0.5
+	
+	elif entity.input_listener.is_key_pressed(InputManager.LEFT):
+		entity.model_container.rotation_degrees.y += delta * turn_speed * 0.5
+		
+	else:
+		var stick = entity.input_listener.analogs[0]
+		if abs(stick) > 0.1:
+			entity.model_container.rotation_degrees.y -= stick * delta * turn_speed * 0.5
+	
+	if entity.velocity.y < 0.0:
+		entity.falling_speed = entity.velocity.y
+#		entity.apply_gravity(delta * 0.5)
+#	else:
+	
+	entity.apply_gravity(delta)
+#	entity.apply_drag(delta * 0.1)
+	entity.apply_velocity(delta)
+	entity.center_camera(delta)
+	
+	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
 #	entity.center_camera(delta)
 
 func _touched_surface(surface):
@@ -54,7 +57,8 @@ func _touched_surface(surface):
 		entity.get_node("ModelContainer/sword_fighter/slash").visible = false
 		entity.get_node("ModelContainer/SlashParticles").visible = false
 		entity.get_node("ModelContainer/SlashParticles").emitting = false
-	._touched_surface(surface)
+	if entity.flags.is_active:
+		._touched_surface(surface)
 #	set_next_state("fall")
 #	return
 #	if surface == "floor": #and entity.flags.is_active:

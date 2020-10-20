@@ -65,12 +65,12 @@ func _process_state(delta):
 
 func get_possible_transitions():
 	return [
-		"air_boost",
 		"jump",
 		"tandem_rope_pull",
 		"tandem_launch_up",
 		"wall_run",
 		"wall_run_side",
+		"air_boost",
 		]
 
 #	entity.apply_drag(delta)

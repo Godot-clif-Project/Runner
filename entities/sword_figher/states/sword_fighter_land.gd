@@ -7,24 +7,26 @@ var turn_speed = 180
 
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
-	entity.emit_one_shot("ParticlesLand")
 	entity.on_ground = true
 	entity.has_wall_run = true
 	entity.has_wall_run_side = true
 	entity.air_boosts_left = entity.MAX_AIR_BOOSTS
 	entity.model.rotation.z = 0.0
+	entity.emit_one_shot("ParticlesLand")
 	entity.play_sound("land")
 	
+#	entity.velocity *= 0.75
+
 	if entity.falling_speed < -25:
 		entity.set_animation("jump_land", 0.0, 0.05)
+		entity.hp -= 300 * (entity.falling_speed / -50.0)
 #		entity.velocity *= 0.5
+	elif entity.input_listener.is_key_pressed(InputManager.FIRE):
+		set_next_state("slide")
+		return
 	elif entity.input_listener.is_key_pressed(InputManager.RUN):# or entity.input_listener.is_key_pressed(InputManager.UP):
 #			set_next_state("off_run_startup")
-		if entity.input_listener.is_key_pressed(InputManager.FIRE):
-			set_next_state("slide")
-			return
 			
-		entity.velocity *= 0.75
 		set_next_state("run")
 		return
 	else:

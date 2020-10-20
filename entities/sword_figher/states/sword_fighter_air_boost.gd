@@ -8,8 +8,8 @@ func get_animation_data():
 func _enter_state():
 #	print(entity.velocity)
 	entity.air_boosts_left -= 1
-	entity.velocity.x *= 0.75
-	entity.velocity.z *= 0.75
+#	entity.velocity.x *= 0.75
+#	entity.velocity.z *= 0.75
 	entity.velocity.y *= 0.2
 #	print(entity.velocity)
 ##	entity.set_animation("off_hi_r_light", 0, 16.0)
@@ -59,9 +59,10 @@ func _exit_state():
 #
 func _flag_changed(flag, state):
 	if flag == "is_active":
-		var strength = clamp(entity.jump_str * 1.5, entity.min_jump_str, entity.max_jump_str)
+#		var strength = clamp(entity.jump_str * 1.5, entity.min_jump_str, entity.max_jump_str)
 #		entity.set_velocity(Vector3(0.0, strength * 0.5 , -strength * 0.75))
-		entity.add_impulse(Vector3(0.0, strength * 0.5 , -strength * 0.5))
+#		entity.add_impulse(Vector3(0.0, strength * 0.5 , -strength * 0.5))
+		entity.add_impulse(Vector3(0.0, 5.0 , -5.0))
 		var length = entity.velocity.length()
 		entity.velocity = entity.velocity.normalized() * clamp(length, 0, 20)
 #		entity.set_velocity(Vector3(0.0, entity.jump_str * 0.5 , -entity.jump_str * 0.6))

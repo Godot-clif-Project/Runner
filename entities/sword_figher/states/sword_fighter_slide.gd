@@ -39,15 +39,16 @@ func _enter_state():
 ## Inverse of enter_state.
 func _exit_state():
 #	entity.model.rotation.z = 0.0
+	entity.model.rotation = Vector3(0, PI, 0.0)
 	._exit_state()
 
 var t = 1.25
 var prev_momentum = 0.0
 func _process_state(delta):
-	entity.hp -= 25 * delta
-	if entity.feet.get_overlapping_bodies().size() == 0:
-		set_next_state("running_fall")
-		return
+#	entity.hp -= 25 * delta
+#	if entity.feet.get_overlapping_bodies().size() == 0:
+#		set_next_state("running_fall")
+#		return
 	
 	if entity.horizontal_speed < 10.0:
 		set_next_state("run_stop")
@@ -83,15 +84,22 @@ func _process_state(delta):
 #	else:
 #		entity.ground_drag = 8
 	
+	entity.ground_drag = clamp(8 + entity.velocity.y,0, 20)
 			
 #	entity.model_container.rotation_degrees.y = clamp(entity.model_container.rotation_degrees.y + ang_momentum, initial_rot - 90, initial_rot + 90)
 	
 #	speed = clamp(speed - delta * entity.ground_drag, 0, 25)
 	entity.velocity = entity.velocity.rotated(Vector3.UP, (ang_momentum * 0.005) * t)
+	if entity.horizontal_speed > 40:
+		var y = entity.velocity.y
+		entity.velocity = entity.velocity.normalized() * 40
+		entity.velocity.y = y
+	
 	var vel_angle = atan2(entity.velocity.x, entity.velocity.z)
 	entity.model_container.rotation.y = vel_angle + PI + ang_momentum * 0.1
 	
 #	entity.turn(ang_momentum)
+	entity.align_to_floor(delta)
 	entity.apply_drag(delta)
 	entity.apply_gravity(delta)
 	entity.apply_velocity(delta)
@@ -156,7 +164,8 @@ func _flag_changed(flag, state):
 
 func get_possible_transitions():
 	return [
-		"jump",
+		"running_fall",
+#		"jump",
 		"off_run_startup",
 		]
 
@@ -177,9 +186,9 @@ func _received_input(key, state):
 #			entity.ground_drag = 20
 			set_next_state("run_stop")
 			return
-	else:
-		if key == InputManager.FIRE:
-			set_next_state("run")
+#	else:
+#		if key == InputManager.FIRE:
+#			set_next_state("run")
 #			entity.ground_drag = entity.default_ground_drag
 		
 	

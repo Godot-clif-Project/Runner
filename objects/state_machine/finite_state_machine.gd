@@ -42,9 +42,9 @@ func reset():
 #	next_state = null
 
 func change_state(next_state : String):
-	CurrentState._exit_state()
-	
 	if StateList.STATES.has(next_state):
+		CurrentState._exit_state()
+		
 		CurrentState = StateList.STATES[next_state].new()
 		CurrentState.entity = entity
 		CurrentState.name = next_state
@@ -82,6 +82,9 @@ func _process_current_state(delta, process_state):
 		if process_events:
 			CurrentState.process_received_events()
 		
+		# Run state update
+		if process_state:
+			CurrentState._process_state(delta)
 #		next_state = CurrentState._get_next_state()
 		
 		# Change to a different state
@@ -102,6 +105,3 @@ func _process_current_state(delta, process_state):
 #
 #			emit_signal("state_changed", CurrentState.name)
 		
-		# Run state update
-		if process_state:
-			CurrentState._process_state(delta)

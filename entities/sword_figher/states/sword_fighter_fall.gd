@@ -67,9 +67,10 @@ func _process_state(delta):
 	
 func _touched_surface(surface):
 	if surface == "floor":
+		entity.falling_speed = entity.prev_velocity.y
 		set_next_state("land")
 		return
-	else:
+	elif surface == "wall":
 		if entity.prev_speed > entity.max_speed * 0.5:
 			var wall_normal = entity.get_slide_collision(0).normal
 #			print(entity.prev_velocity.normalized().dot(wall_normal))

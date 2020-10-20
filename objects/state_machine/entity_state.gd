@@ -1,7 +1,7 @@
 extends State
 class_name EntityState
 
-var received_events
+var received_events : Dictionary
 var stop_processing_events = false
 
 func _init():
