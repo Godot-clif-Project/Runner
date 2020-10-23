@@ -12,8 +12,7 @@ var charges = 4
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if owner_id == NetworkManager.my_id:
-		NetworkManager.network_interface.create_new_networked_object(object_id, "stamina_bomb", {
-#				"name" : name,
+		NetworkManager.network_interface.create_new_networked_object(id, "stamina_bomb", {
 				"velocity" : velocity,
 				"translation" : translation,
 			})
@@ -44,7 +43,7 @@ func _on_Buff_body_entered(body):
 		if body is Entity:
 			body.heal(1000)
 			consume_charge()
-			emit_signal("networked_object_event", object_id, "consume_charge", [])
+			emit_signal("networked_object_event", id, "consume_charge", [])
 
 func _on_Timer_timeout():
 	if state == ACTIVE:
@@ -57,7 +56,7 @@ func consume_charge():
 	charges -= 1
 	if charges == 0:
 		turn_off()
-		emit_signal("networked_object_event", object_id, "turn_off", [])
+		emit_signal("networked_object_event", id, "turn_off", [])
 
 func turn_off():
 	state = FADE

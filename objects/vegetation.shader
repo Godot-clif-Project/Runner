@@ -1,6 +1,6 @@
 // My custom shader for implementing dithered alpha
 shader_type spatial;
-render_mode blend_mix,depth_draw_alpha_prepass,cull_disabled,diffuse_burley,specular_schlick_ggx;
+render_mode blend_mix,depth_draw_alpha_prepass,cull_disabled,diffuse_burley,specular_disabled;
 
 // Texture maps
 uniform sampler2D texture_albedo : hint_albedo;
@@ -13,6 +13,7 @@ uniform vec4 modulate : hint_color = vec4(1.0);
 uniform float specular = 0.5;
 uniform float metallic = 0.0;
 uniform float roughness : hint_range(0,1) = 0.5;
+uniform float transmission : hint_range(0,1) = 0.5;
 uniform float normal_strength : hint_range(0,2) = 1.0;
 uniform vec3 uv1_scale = vec3(1.0);
 uniform vec3 uv1_offset;
@@ -46,7 +47,7 @@ void fragment() {
     ROUGHNESS = roughness * masks_tex.g;
     NORMALMAP = texture(texture_normal, UV).rgb;
     NORMALMAP_DEPTH = normal_strength;
-	TRANSMISSION = vec3(0.8, 0.8, 0.8);
+	TRANSMISSION = vec3(1.0, 1.0, 1.0) * transmission;
 
     // Fancy dithered alpha stuff
 //    float opacity = albedo_tex.a * modulate.a + 0.055;

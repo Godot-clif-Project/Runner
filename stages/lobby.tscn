@@ -1,15 +1,16 @@
-[gd_scene load_steps=57 format=2]
+[gd_scene load_steps=58 format=2]
 
 [ext_resource path="res://stages/lobby.gd" type="Script" id=1]
 [ext_resource path="res://stages/generic/sky.jpg" type="Texture" id=2]
 [ext_resource path="res://objects/dither_opacity_shadermaterial.tres" type="Material" id=3]
 [ext_resource path="res://stages/static_box.tscn" type="PackedScene" id=4]
-[ext_resource path="res://stages/generic/tree/Tree.tscn" type="PackedScene" id=5]
-[ext_resource path="res://objects/healing_gass.tscn" type="PackedScene" id=6]
+[ext_resource path="res://stages/generic/tree/tree.tscn" type="PackedScene" id=5]
+[ext_resource path="res://objects/healing_grass.tscn" type="PackedScene" id=6]
 [ext_resource path="res://effects/hit/hexagon.png" type="Texture" id=7]
 [ext_resource path="res://effects/glow.png" type="Texture" id=8]
 [ext_resource path="res://effects/glow_3.png" type="Texture" id=9]
 [ext_resource path="res://effects/dust/dust.material" type="Material" id=10]
+[ext_resource path="res://stages/generic/rock/rock.glb" type="PackedScene" id=11]
 
 [sub_resource type="PanoramaSky" id=1]
 panorama = ExtResource( 2 )
@@ -473,7 +474,7 @@ __meta__ = {
 transform = Transform( 11.2894, 0, 0, 0, 11.2894, 0, 0, 0, 11.2894, 6.31001, -11.3791, 35.0467 )
 
 [node name="Scene Root" parent="Stage" instance=ExtResource( 5 )]
-transform = Transform( -0.929371, 0, -0.369146, 0, 1, 0, 0.369146, 0, -0.929371, -0.300808, 0, 1.20538 )
+transform = Transform( -0.665058, 0, 0.893448, 0, 1.1138, 0, -0.893448, 0, -0.665058, -0.300808, 0, 1.20538 )
 
 [node name="Heals" type="Spatial" parent="Stage"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.75098, 0, -32.8856 )
@@ -565,6 +566,12 @@ draw_pass_1 = SubResource( 44 )
 transform = Transform( 0.407001, 0, 0, 0, 0.407001, 0, 0, 0, 0.407001, 0, 0, 0 )
 mesh = SubResource( 45 )
 material/0 = SubResource( 46 )
+
+[node name="rock" parent="." instance=ExtResource( 11 )]
+transform = Transform( -1.39869, 0, 1.06864, 0, 1.76021, 0, -1.06864, 0, -1.39869, -7.72062, 0.266002, 4.56609 )
+
+[node name="rock2" parent="." instance=ExtResource( 11 )]
+transform = Transform( -0.540851, 0.20405, 1.23011, -0.395206, 1.24366, -0.38006, -1.18263, -0.508918, -0.435557, 4.09356, 0.266002, 1.32252 )
 [connection signal="text_changed" from="Adress" to="." method="_on_Adress_text_changed"]
 [connection signal="text_changed" from="Port" to="." method="_on_Port_text_changed"]
 [connection signal="pressed" from="Host" to="." method="_on_Host_pressed"]

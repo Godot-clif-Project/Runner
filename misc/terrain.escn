@@ -1,0 +1,71 @@
+[gd_scene load_steps=1 format=2]
+
+[node type="Spatial" name="Scene"]
+
+[node name="Plane" type="MeshInstance" parent="."]
+
+transform = Transform(1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0)
+
+[node name="Cube" type="MeshInstance" parent="."]
+
+transform = Transform(1.0, 0.0, 0.0, 0.0, 2.0, 0.0, 0.0, 0.0, 1.0, 11.1644, 27.7114, -240.78)
+
+[node name="pillars" type="Spatial" parent="."]
+
+transform = Transform(1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0)
+
+[node name="pillar001" type="MeshInstance" parent="pillars"]
+
+transform = Transform(-0.651827, 0.0, -0.758368, 0.0, 1.0, 0.0, 0.758368, 0.0, -0.651827, 28.4779, 11.7843, -23.467)
+
+[node name="pillar002" type="MeshInstance" parent="pillars"]
+
+transform = Transform(0.368526, 0.0, 0.929617, 0.0, 1.0, 0.0, -0.929617, 0.0, 0.368526, 12.8947, 10.4855, 2.11848)
+
+[node name="pillar003" type="MeshInstance" parent="pillars"]
+
+transform = Transform(-0.539687, 0.0, -0.841866, 0.0, 1.0, 0.0, 0.841866, 0.0, -0.539687, 38.2985, 14.1892, -16.4874)
+
+[node name="pillar004" type="MeshInstance" parent="pillars"]
+
+transform = Transform(0.699754, 0.0, 0.714384, 0.0, 1.0, 0.0, -0.714384, 0.0, 0.699754, 25.2554, 10.5913, 4.9275)
+
+[node name="Cube001" type="MeshInstance" parent="."]
+
+transform = Transform(1.0, 0.0, 0.0, 0.0, 2.0, 0.0, 0.0, 0.0, 1.0, 11.2264, 26.1765, -232.007)
+
+[node name="Cube002" type="MeshInstance" parent="."]
+
+transform = Transform(1.16182, -4.34804, 0.0919891, 2.15963, 2.27862, -0.35015, 0.266116, 0.490916, 2.44, 5.33273, 23.5357, -250.947)
+
+[node name="Cube003" type="MeshInstance" parent="."]
+
+transform = Transform(1.7266, 3.34185, 0.558127, -1.09812, 0.819447, 2.17046, 1.37755, -3.53541, 1.03065, 23.9827, 37.8431, -223.664)
+
+[node name="Cube004" type="MeshInstance" parent="."]
+
+transform = Transform(5.96546, 0.0, 0.0, 0.0, 5.96546, 0.0, 0.0, 0.0, 5.96546, 25.1645, 43.9216, -250.311)
+
+[node name="Cube005" type="MeshInstance" parent="."]
+
+transform = Transform(5.95118, -2.94349, -0.549374, 1.47989, 11.9488, 0.0259361, 0.527051, -0.314332, 6.13041, 55.02, 3.18763, -149.817)
+
+[node name="rocks" type="Spatial" parent="."]
+
+transform = Transform(1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0)
+
+[node name="rock" type="MeshInstance" parent="rocks"]
+
+transform = Transform(0.0700985, -0.247557, 2.44139, -0.127613, 2.43872, 0.250949, -2.45059, -0.134076, 0.0567673, 9.40237, 11.6265, 0.78527)
+
+[node name="rock001" type="MeshInstance" parent="rocks"]
+
+transform = Transform(0.671481, -0.107768, -2.35884, 0.0482429, 2.45247, -0.0983128, 2.3608, -0.0194638, 0.672931, 15.9616, 13.0205, 4.52673)
+
+[node name="rock001001" type="MeshInstance" parent="rocks"]
+
+transform = Transform(2.86377, -0.0771303, -0.518784, 0.0572136, 2.9085, -0.116594, 0.521357, 0.104491, 2.86243, 36.2662, 12.9868, -16.8717)
+
+[node name="rock001002" type="MeshInstance" parent="rocks"]
+
+transform = Transform(-2.72099, 0.770329, 0.692135, -0.879297, -2.74646, -0.400037, 0.547078, -0.582912, 2.7995, 41.3329, 14.7118, -12.5101)

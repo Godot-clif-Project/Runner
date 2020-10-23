@@ -7,6 +7,7 @@ func get_animation_data():
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
 	entity.jump()
+	entity.jump_str = entity.min_jump_str
 ##	entity.set_animation("off_hi_r_light", 0, 16.0)
 #	entity.on_ground = false
 	._enter_state()

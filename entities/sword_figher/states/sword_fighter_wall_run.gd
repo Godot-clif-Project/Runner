@@ -56,14 +56,14 @@ func _process_state(delta):
 	
 	if not entity.ledge_detect_low.is_colliding():
 		if entity.wall_has_ledge:
-			if entity.input_listener.is_key_pressed(InputManager.RUN) or entity.input_listener.is_key_pressed(InputManager.UP):
-				entity.jump_str = 20
-				entity.set_velocity(Vector3(0.0, 5, -2).rotated(Vector3.RIGHT, entity.wall_rot.x))
-				entity.air_boosts_left = 1
-				set_next_state("jump")
-				return
-			set_next_state("ledge_climb")
+#			if entity.input_listener.is_key_pressed(InputManager.RUN) or entity.input_listener.is_key_pressed(InputManager.UP):
+#				entity.jump_str = 20
+			entity.set_velocity(Vector3(0.0, 5, -2).rotated(Vector3.RIGHT, entity.wall_rot.x))
+			entity.air_boosts_left = 1
+			set_next_state("jump")
 			return
+#			set_next_state("ledge_climb")
+#			return
 		else:
 			set_next_state("fall")
 #			entity.velocity.y = 0
@@ -86,6 +86,7 @@ func _process_state(delta):
 		
 		entity.apply_drag(delta)
 		entity.apply_velocity(delta)
+		
 ##func _animation_blend_started(anim_name):
 ##	print(anim_name)
 ##	set_next_state("idle")

@@ -49,14 +49,14 @@ var throwing_entity = null
 var receive_throw_pos = Vector3.ZERO
 var receive_throw_rot = 0.0
 
-var jump_str = 0
+var jump_str = 15
 var horizontal_speed = 0.0
 var falling_speed = 0.0
 var acceleration = 0.0
 var target_speed = 13.0
 const min_speed = 3.0
-const max_speed = 14.0
-const boost_speed = 19.0
+const max_speed = 16.0
+const boost_speed = 22.0
 
 var prev_speed = 0.0
 var prev_velocity : Vector3
@@ -136,7 +136,7 @@ func _ready():
 	$AnimationTree.active = true
 	ready = true
 	emit_signal("ready")
-	if target != null:
+	if not target.is_empty():
 		lock_on_target = get_node(target)
 		
 	if camera != null:
@@ -156,6 +156,8 @@ func reset():
 	velocity = Vector3.ZERO
 	has_wall_run = true
 	has_wall_run_side = true
+	air_boosts_left = 1
+	gravity_scale = 1.0
 	model_container.rotation.y = 0.0
 	fsm.setup()
 	if throwing_entity != null:
@@ -226,10 +228,10 @@ func _on_InputListener_received_input(key, state):
 	fsm.receive_event("_received_input", [key, state])
 	
 	if state:
-		if key == InputManager.JUMP:
-			jump_str = min_jump_str
+#		if key == InputManager.JUMP:
+#			jump_str = min_jump_str
 		if key == InputManager.EVADE:
-			if target == null:
+			if target.is_empty():
 				lock_on_target = $"../NetworkInterface".get_peer_at_index(lock_on_scroll)
 				lock_on_scroll += 1
 				if lock_on_scroll > $"../NetworkInterface".peer_entities.size() - 1:
@@ -339,8 +341,8 @@ func center_camera(delta):
 	if abs(at) < 0.01 or abs(at) > 3.1:
 		at = 0.0
 	else:
-		at = clamp(atan2(velocity.y, velocity.z), -PI * 0.15, PI * 0.15)
-	camera_pivot.rotation.x = lerp_angle(camera_pivot.rotation.x, at, delta)
+		at = clamp(atan2(velocity.y, velocity.z), -PI * 0.1, PI * 0.1)
+	camera_pivot.rotation.x = lerp_angle(camera_pivot.rotation.x, at, delta * 0.5)
 	camera_pivot.rotation.y = lerp_angle(camera_pivot.rotation.y, model_container.rotation.y, delta)
 
 func point_camera_at_target(delta, offset):
@@ -457,6 +459,7 @@ func apply_root_motion(delta):
 
 func jump():
 	velocity.y = 0.0
+	velocity *= 0.75
 	
 	var direction = Vector2.ZERO
 	if input_listener.is_key_pressed(InputManager.RUN) or input_listener.is_key_pressed(InputManager.UP):
@@ -475,10 +478,10 @@ func jump():
 	add_impulse(Vector3(0.0, jump_str , direction.y))
 #	add_impulse(Vector3(0.0, jump_str , -5))
 	
-	if Vector2(velocity.x, velocity.z).length() > 20:
-		var v = Vector2(velocity.x, velocity.z).normalized() * 20
-		velocity.x = v.x
-		velocity.z = v.y
+#	if Vector2(velocity.x, velocity.z).length() > 20:
+#		var v = Vector2(velocity.x, velocity.z).normalized() * 20
+#		velocity.x = v.x
+#		velocity.z = v.y
 		
 	on_ground = false
 	play_sound("jump")

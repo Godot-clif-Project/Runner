@@ -1,4 +1,4 @@
-[gd_scene load_steps=104 format=2]
+[gd_scene load_steps=106 format=2]
 
 [ext_resource path="res://entities/sword_figher/sword_fighter.tscn" type="PackedScene" id=1]
 [ext_resource path="res://objects/interpolated_camera.tscn" type="PackedScene" id=2]
@@ -7,7 +7,7 @@
 [ext_resource path="res://stages/static_sphere.tscn" type="PackedScene" id=5]
 [ext_resource path="res://stages/stage_env.tres" type="Environment" id=6]
 [ext_resource path="res://objects/rope_path.tscn" type="PackedScene" id=7]
-[ext_resource path="res://stages/generic/tree/Tree.tscn" type="PackedScene" id=8]
+[ext_resource path="res://stages/generic/tree/tree.tscn" type="PackedScene" id=8]
 [ext_resource path="res://objects/stamina_bomb/stamina_bomb.tscn" type="PackedScene" id=9]
 [ext_resource path="res://stages/static_box.tscn" type="PackedScene" id=10]
 [ext_resource path="res://objects/stage_timer.tscn" type="PackedScene" id=11]
@@ -17,9 +17,11 @@
 [ext_resource path="res://objects/hurtbox.tscn" type="PackedScene" id=15]
 [ext_resource path="res://stages/stage.gd" type="Script" id=16]
 [ext_resource path="res://objects/dummy.gd" type="Script" id=17]
+[ext_resource path="res://stages/generic/pillar/pillar.tscn" type="PackedScene" id=18]
 [ext_resource path="res://objects/network_interface.tscn" type="PackedScene" id=19]
 [ext_resource path="res://ui/ui.tscn" type="PackedScene" id=20]
-[ext_resource path="res://objects/healing_gass.tscn" type="PackedScene" id=22]
+[ext_resource path="res://misc/LevelObjects.tscn" type="PackedScene" id=21]
+[ext_resource path="res://objects/healing_grass.tscn" type="PackedScene" id=22]
 [ext_resource path="res://objects/dither_opacity_shadermaterial.tres" type="Material" id=23]
 [ext_resource path="res://sounds/steps/wind.ogg" type="AudioStream" id=34]
 [ext_resource path="res://sounds/steps/hit_random.tres" type="AudioStream" id=35]
@@ -2805,6 +2807,12 @@ transform = Transform( 10.0976, -2.09686, 1.33893, 1.83004, 10.0517, 1.94037, -1
 [node name="Box4" parent="Navigation" instance=ExtResource( 10 )]
 transform = Transform( 8.6709, -2.5698, 5.13443, 1.83004, 10.0517, 1.94037, -5.44216, -0.71431, 8.83308, 58.046, 13.5802, -187.316 )
 
+[node name="pillar" parent="Navigation" instance=ExtResource( 18 )]
+transform = Transform( 1.46674, -0.160842, 0, 0.160842, 1.46674, 0, 0, 0, 1.47554, -5.33375, -55.349, 227.506 )
+
+[node name="pillar2" parent="Navigation" instance=ExtResource( 18 )]
+transform = Transform( 1.46737, 0.154978, 0, -0.154978, 1.46737, 0, 0, 0, 1.47554, -17.2066, -57.8799, 240.986 )
+
 [node name="Positions" type="Node" parent="Navigation"]
 
 [node name="0" type="Position3D" parent="Navigation/Positions"]
@@ -2907,6 +2915,9 @@ material/0 = null
 
 [node name="Rope" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.46201, 0 )
+
+[node name="LevelObjects" parent="." instance=ExtResource( 21 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -45.4748, -75.1725, 332.074 )
 [connection signal="received_hit" from="Dummy/Hurtbox" to="Dummy" method="_on_Hurtbox_received_hit"]
 
 [editable path="UI"]

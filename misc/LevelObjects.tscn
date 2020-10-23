@@ -1,0 +1,74 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://stages/generic/tree/tree.tscn" type="PackedScene" id=1]
+[ext_resource path="res://stages/generic/rock/rock.tscn" type="PackedScene" id=2]
+[ext_resource path="res://stages/generic/pillar/pillar.tscn" type="PackedScene" id=3]
+[ext_resource path="res://objects/healing_grass.gd" type="Script" id=4]
+[ext_resource path="res://objects/healing_grass.tscn" type="PackedScene" id=5]
+
+[node name="LevelObjects" type="Spatial"]
+
+[node name="pillar000" type="Spatial" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.994853, 0.100467, -0.0131528, -0.100687, 0.994769, -0.0172415, 0.0113518, 0.0184771, 0.999765, 2.45188, -0.104121, 4.1498 )
+
+[node name="rock000" type="Spatial" parent="." instance=ExtResource( 2 )]
+transform = Transform( -1.54197, 0, 1.11862, 0, 1.90499, 0, -1.11862, 0, -1.54197, -0.298699, 0.547974, -12.6043 )
+
+[node name="tree000" type="Spatial" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.46736, -0.0329847, 0 )
+
+[node name="rock001" type="Spatial" parent="." instance=ExtResource( 2 )]
+transform = Transform( 2.70418, 0.140285, -1.71814, -0.139813, 3.2036, 0.0415194, 1.71818, 0.0398957, 2.7075, -5.59546, 0.9463, -9.62081 )
+
+[node name="rock002" type="Spatial" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1.64923, 0.0566921, 3.06938, 0.0604408, 3.48299, -0.0968075, -3.0693, 0.0990495, 1.64736, -4.5486, 1.73905, -17.1921 )
+
+[node name="pillar001" type="Spatial" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.998553, -0.0534154, 0.00625009, 0.0533537, 0.998529, 0.0096531, -0.00675652, -0.00930567, 0.999934, 0.2091, -0.442232, -7.59317 )
+
+[node name="pillar002" type="Spatial" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.0105339, -0.942195, 0.334901, 0.761755, 0.224527, 0.607715, -0.64778, 0.248711, 0.720086, 17.7345, 0.25849, 9.41979 )
+
+[node name="pillar003" type="Spatial" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.996018, -0.0886763, 0.00921751, 0.0887576, 0.996014, -0.00882513, -0.00839819, 0.00960811, 0.999919, 9.29273, -0.104335, -7.90061 )
+
+[node name="tree001" type="Spatial" parent="." instance=ExtResource( 1 )]
+transform = Transform( -1.02654, 0, -1.31034, 0, 1.66456, 0, 1.31034, 0, -1.02654, 12.3604, -0.119279, -11.622 )
+
+[node name="rock003" type="Spatial" parent="." instance=ExtResource( 2 )]
+transform = Transform( -0.22124, 0, 1.99584, 0, 2.00807, 0, -1.99584, 0, -0.22124, 9.46995, 0.547974, -18.0526 )
+
+[node name="rock004" type="Spatial" parent="." instance=ExtResource( 2 )]
+transform = Transform( -1.74958, 0, -3.01384, 0, 3.48486, 0, 3.01384, 0, -1.74958, 3.83734, 0.547974, -17.4152 )
+
+[node name="rock005" type="Spatial" parent="." instance=ExtResource( 2 )]
+transform = Transform( -3.10292, 0.149245, -0.796169, 0.150462, 3.20335, 0.014085, 0.79594, -0.0237262, -3.10648, -3.75901, 1.03179, -2.4368 )
+
+[node name="healing_grass000" type="Spatial" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11, -0.148864, 0 )
+script = ExtResource( 4 )
+
+[node name="healing_grass001" type="Spatial" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.31238, -0.209393, 4.61535 )
+script = ExtResource( 4 )
+
+[node name="healing_grass002" type="Spatial" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.47587, -0.148864, -12.3546 )
+script = ExtResource( 4 )
+
+[node name="healing_grass003" type="Spatial" parent="." instance=ExtResource( 5 )]
+transform = Transform( 0.901653, 0, 0, 0, 0.901653, 0, 0, 0, 0.901653, 6.44207, -0.280878, -12.1043 )
+script = ExtResource( 4 )
+
+[node name="pillar004" type="Spatial" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.141817, -0.448186, -0.88262, 0.937105, 0.348066, -0.0261726, 0.31894, -0.823395, 0.469359, 5.42901, 0.398738, -10.8625 )
+
+[node name="tree002" type="Spatial" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1.04247, 0.0391765, 1.29711, -0.0204524, 1.6641, -0.0338232, -1.29754, 0.0052451, 1.04266, 18.0307, -0.213359, 4.78724 )
+
+[node name="healing_grass004" type="Spatial" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.74128, 1.90413, -15.9676 )
+script = ExtResource( 4 )
+
+[node name="pillar006" type="Spatial" parent="." instance=ExtResource( 3 )]
+transform = Transform( -0.0565957, 0.336996, -0.939804, -0.998297, -0.00578573, 0.0580436, 0.014123, 0.941488, 0.336749, 11.8147, 0.591661, 6.15902 )

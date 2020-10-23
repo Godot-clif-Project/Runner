@@ -15,6 +15,9 @@ onready var navigation = $"../Navigation"
 onready var positions = $"../Navigation/Positions".get_children()
 onready var target = $"../SwordFighter"
 
+func add_properties_to_update():
+	get_node("/root/Stage/NetworkInterface").objects_to_update[self.id] = ["translation"]
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 #	path = $"../Navigation".get_simple_path(translation, $"../Navigation/Position3D".translation)
@@ -31,7 +34,7 @@ func receive_input(pad, key, state):
 			start()
 		elif get_tree().is_network_server():
 			start()
-			$"../NetworkInterface".receive_networked_object_event(object_id, "start", [])
+#			$"../NetworkInterface".receive_networked_object_event(id, "start", [])
 			
 func start():
 	get_node("../AnimationPlayer").play("New Anim")
@@ -97,7 +100,7 @@ func move():
 
 func _on_Hurtbox_received_hit(hit, hurtbox):
 	receive_hit(hit.damage)
-	emit_signal("networked_object_event", object_id, "receive_hit", [hit.damage])
+	emit_signal("networked_object_event", id, "receive_hit", [hit.damage])
 
 func receive_hit(damage):
 	hp -= damage
@@ -112,5 +115,5 @@ func receive_hit(damage):
 	
 	if hp <= 0:
 		reset()
-		emit_signal("networked_object_event", object_id, "reset", [])
+		emit_signal("networked_object_event", id, "reset", [])
 	

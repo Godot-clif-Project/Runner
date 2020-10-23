@@ -2223,6 +2223,18 @@ tracks/2/keys = {
 "update": 2,
 "values": [ 6 ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("AnimationFlags:is_stringable")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
 [sub_resource type="Animation" id=50]
 length = 0.416667
@@ -2574,9 +2586,6 @@ script = ExtResource( 17 )
 [node name="sword_fighter" parent="ModelContainer" instance=ExtResource( 1 )]
 transform = Transform( -0.6, 0, -9.05975e-08, 0, 0.6, 0, 9.05975e-08, 0, -0.6, 0, 0, 0 )
 
-[node name="Armature" parent="ModelContainer/sword_fighter" index="0"]
-transform = Transform( 1, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1, 0, 0, 0 )
-
 [node name="Skeleton" parent="ModelContainer/sword_fighter/Armature" index="0"]
 bones/7/bound_children = [ NodePath("BoneAttachment") ]
 bones/16/bound_children = [ NodePath("RHandAttachment") ]
@@ -2590,7 +2599,7 @@ material/0 = ExtResource( 12 )
 material/0 = ExtResource( 12 )
 
 [node name="BoneAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
-transform = Transform( 1, 0, 0, 0, 0.998474, 0.0552152, 0, -0.0552152, 0.998474, -6.59474e-17, 2.24226, 7.43921e-09 )
+transform = Transform( 0.962242, 0.0131659, 0.271875, -0.0432698, 0.993527, 0.105031, -0.268733, -0.112829, 0.956584, 0.0833953, 2.00573, 0.267321 )
 bone_name = "torso"
 
 [node name="Hurtbox" parent="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment" instance=ExtResource( 11 )]
@@ -2611,7 +2620,7 @@ draw_pass_1 = SubResource( 64 )
 bone_name = "throw_pos"
 
 [node name="RHandAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="4"]
-transform = Transform( 0.603443, -0.596163, -0.529571, -0.529571, -0.796131, 0.292799, -0.596163, 0.103758, -0.79613, -0.775657, 2.00929, -0.00336646 )
+transform = Transform( 0.72511, 0.212603, 0.654992, 0.129017, 0.892365, -0.432481, -0.676438, 0.398102, 0.619634, -0.318125, 2.75742, 0.878995 )
 bone_name = "hand_r"
 
 [node name="AnimationPlayer" parent="ModelContainer/sword_fighter" index="1"]

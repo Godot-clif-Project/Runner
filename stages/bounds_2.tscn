@@ -1,10 +1,11 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://stages/static_box.tscn" type="PackedScene" id=1]
-[ext_resource path="res://stages/generic/tree/Tree.tscn" type="PackedScene" id=2]
+[ext_resource path="res://stages/generic/tree/tree.tscn" type="PackedScene" id=2]
 [ext_resource path="res://stages/static_cylinder.tscn" type="PackedScene" id=3]
 [ext_resource path="res://stages/static_sphere.tscn" type="PackedScene" id=4]
 [ext_resource path="res://objects/test_material.material" type="Material" id=5]
+
 
 
 [node name="Bounds" type="Spatial"]

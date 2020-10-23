@@ -24,7 +24,7 @@ func _enter_state():
 #	speed = entity.horizontal_speed
 	entity.get_node("ModelContainer/Particles2").emitting = true
 	initial_rot = entity.model_container.rotation_degrees.y
-	entity.velocity = entity.velocity.normalized() * clamp(entity.horizontal_speed * 1.33, 0.0, entity.boost_speed * 1.25)
+	entity.velocity = entity.velocity.normalized() * clamp(entity.horizontal_speed * 1.33, 0.0, entity.boost_speed * 1.5)
 	entity.play_sound("stop")
 #	entity.hp -= 40
 	._enter_state()
@@ -164,6 +164,7 @@ func _flag_changed(flag, state):
 
 func get_possible_transitions():
 	return [
+		"air_atk",
 		"running_fall",
 #		"jump",
 		"off_run_startup",

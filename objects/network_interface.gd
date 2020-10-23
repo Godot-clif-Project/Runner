@@ -1,12 +1,18 @@
 extends Node
 
 const PEER_SCENE = preload("res://entities/sword_figher/peer_sword_fighter.tscn")
+const NETWORK_UPDATE_RATE = 0.016
 
 export var enabled = true
 
 var player_entity
 var peer_entities : Dictionary
-var remote_networked_objects = {}
+# Each NetworkedObject that is created by any player adds it's id here. This variable is kept in synch for all peers.
+var remote_networked_objects : Dictionary
+var update_time : float
+# Each NetworkedObject that is created by the server adds it's id and list of properties to update here.
+var objects_to_update : Dictionary
+
 
 func get_peer_at_index(i):
 	return peer_entities[peer_entities.keys()[i]]
@@ -68,20 +74,30 @@ func server_disconnected():
 	enabled = false
 	
 func _physics_process(delta):
-	var dummy_id = $"../Dummy".object_id
-	rpc_unreliable("update_networked_objects", {dummy_id : {"translation" : remote_networked_objects[dummy_id].translation}})
+	if update_time >= NETWORK_UPDATE_RATE:
+		var update_data = Dictionary()
+		
+		for object_id in objects_to_update.keys():
+			update_data[object_id] = Dictionary()
+			for property in objects_to_update[object_id]:
+				update_data[object_id][property] = remote_networked_objects[object_id].get(property)
+			
+			rpc_unreliable("update_networked_objects", update_data)
+			
+		update_time = 0.0
+	else:
+		update_time += delta
 
 func create_new_networked_object(object_id : int, resource_name : String, args : Dictionary):
 	if enabled:
 		rpc("peer_created_networked_object", NetworkManager.my_id, object_id, resource_name, args)
-	pass
 
-func add_networked_object(object_id, object):
+func add_to_networked_objects(object_id, object):
 #	if get_tree().has_network_peer():
 		remote_networked_objects[object_id] = object
 		remote_networked_objects[object_id].connect("networked_object_event", self, "receive_networked_object_event")
 		
-func remove_networked_object(object_id):
+func remove_from_networked_object(object_id):
 	if get_tree().has_network_peer():
 		if remote_networked_objects.has(object_id):
 			remote_networked_objects.erase(object_id)
@@ -115,34 +131,24 @@ func player_entity_dealt_tandem_action(action, args):
 		for peer in peer_entities:
 			peer_entities[peer].rpc("dealt_tandem_action", NetworkManager.my_id, action, args)
 
-remote func update_networked_objects(objects_to_update):
-	for object_name in objects_to_update.keys():
-		for property in objects_to_update[object_name].keys():
-			remote_networked_objects[object_name].set(property, objects_to_update[object_name][property])
 
-remote func peer_created_networked_object(owner_id, object_id : int, object_resource_name : String, args : Dictionary):
+remote func peer_created_networked_object(owner_id : int, object_id : int, object_resource_name : String, args : Dictionary):
 	args["owner_id"] = owner_id
 #	args["name"] = object_name
 	MainManager.current_level.create_object(object_resource_name, args)
 	NetworkManager.uid = object_id
 #	prints("name", NetworkManager.my_id, args["name"])
 
+remote func update_networked_objects(update_data):
+	for object_id in update_data.keys():
+		for property in update_data[object_id].keys():
+			remote_networked_objects[object_id].set(property, update_data[object_id][property])
+
 remote func receive_networked_object_event_from_peer(object_id : int, function_name : String, args : Array):
 	if remote_networked_objects.has(object_id):
 		remote_networked_objects[object_id].callv(function_name, args)
 #	else:
 #		prints(object_name, "not found in networked_objects")
-	
-#func player_entity_dealt_hit(hit):
-#	if enabled:
-#		var hit_data = {
-#			"name" : hit.name,
-#			"damage" : hit.damage,
-#			"knockback" : hit.knockback,
-#			"direction" : hit.direction,
-#			"grab" : hit.grab,
-#			}
-#		rpc("receive_hit_from_peer", NetworkManager.my_id, hit_data)
 
 remote func update_peer_hp(id, new_hp):
 	peer_entities[id].my_lifebar._on_sword_fighter_hp_changed(new_hp)

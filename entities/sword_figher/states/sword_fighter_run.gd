@@ -10,7 +10,7 @@ var rot_lerp = 4.5
 var max_turn_speed = 4.5
 var rot_speed = 30
 
-var boost_charge = 0.0
+var boost = false
 
 var turn_acc = 0.0
 var current_turn_dir = 0
@@ -108,7 +108,8 @@ func _process_state(delta):
 #		entity.target_speed -= delta * 8
 #	print(entity.target_speed)
 	
-	if entity.input_listener.is_key_pressed(InputManager.FIRE):
+#	if entity.input_listener.is_key_pressed(InputManager.FIRE):
+	if boost:
 		entity.target_speed = entity.boost_speed
 		entity.hp -= 50 * delta
 	else:
@@ -161,7 +162,7 @@ func _process_state(delta):
 
 func _touched_surface(surface):
 	if surface == "wall":
-		if entity.prev_speed > entity.max_speed * 0.5:
+		if entity.prev_speed > entity.max_speed * 0.75:
 			var wall_normal = entity.get_slide_collision(0).normal
 #			print(entity.prev_velocity.normalized().dot(wall_normal))
 			if entity.prev_velocity.normalized().dot(wall_normal) < -0.4:
@@ -244,6 +245,9 @@ func _received_input(key, state):
 			return
 			
 #		if key == InputManager.RUN_RUN or key == InputManager.UP_UP or key == InputManager.FIRE:
+		if key == InputManager.RUN_RUN or key == InputManager.UP_UP:
+			boost = true
+			entity.play_sound("boost")
 #			if entity.target_speed <= entity.max_speed:
 ##			if entity.hp > 0:
 #				entity.hp -= 25
@@ -258,7 +262,10 @@ func _received_input(key, state):
 			else:
 				set_next_state("running_fall")
 				return
-				
+	else:
+		if key == InputManager.RUN:
+			boost = false
+		
 #			bomb_throw_str = 0.0
 			
 #		if key == InputManager.FIRE:

@@ -31,8 +31,11 @@ func _exit_state():
 #	entity.get_node("Sound/Stop").stop()
 	._exit_state()
 	
+var t = 0
 func _process_state(delta):
 	entity.acceleration = clamp(entity.acceleration - delta, 0.0, 1.0)
+	entity.jump_str = clamp(entity.horizontal_speed + 2 - t, 15, 28)
+	t += delta
 	
 	if entity.horizontal_speed < 2.0:
 		set_next_state("offensive_stance")
