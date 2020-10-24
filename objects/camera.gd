@@ -36,18 +36,6 @@ func _process(delta):
 			var origin = DisplayManager.BASE_RESOLUTION * DisplayManager.window_zoom * 0.5
 			ally_indicator.position = screen_bounds.curve.get_closest_point(origin - u_position)
 
-
-func _on_sword_fighter_requested_camera(entity):
-	$AnimationPlayer.play("switch_player")
-	$AnimationPlayer.advance(0)
-#	get_tree().paused = true
-	tracked_entity.has_camera = false
-	tracked_entity = entity
-	tracked_entity.has_camera = true
-	target = entity.get_node("CameraPointPivot/Position3D").get_path()
-#	speed = 3
-#	$Timer.start()
-
 func _on_Timer_timeout():
 	speed = default_speed
 	get_tree().paused = false

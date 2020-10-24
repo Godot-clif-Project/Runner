@@ -136,6 +136,7 @@ r_trigger_-={
 3d_physics/layer_2="player_col"
 3d_physics/layer_3="rigidbody_col"
 3d_physics/layer_4="obstacles"
+3d_physics/layer_5="enemy_col"
 3d_physics/layer_11="hurtboxes"
 
 [rendering]

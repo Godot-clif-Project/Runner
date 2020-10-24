@@ -501,7 +501,7 @@ current = true
 fov = 70.0772
 
 [node name="Spatial" type="Spatial" parent="Stage"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.12128, 1.31491, 5.35524 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.48289, 0.436127, 5.35524 )
 
 [node name="Particles3" type="Particles" parent="Stage/Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25693, 0 )

@@ -72,6 +72,8 @@ var wall_pos : Vector3
 var lock_on_target = null
 var tandem_entity = null
 
+var clinging_to_entity = null
+
 var rigidbodies = []
 
 var timescale = 1.0
@@ -98,8 +100,9 @@ onready var flags = $AnimationFlags
 onready var feet = $ModelContainer/Feet
 onready var ledge_detect_low = $ModelContainer/LedgeDetectLow
 onready var ledge_detect_high = $ModelContainer/LedgeDetectHigh
-onready var raycast = $ModelContainer/RayCast
+onready var raycast_cling = $ModelContainer/RayCastCling
 onready var raycast_floor = $ModelContainer/RayCastFloor
+onready var clingbox = $ModelContainer/Clingbox
 
 onready var rope_point = $ModelContainer/RopePoint
 
@@ -162,10 +165,7 @@ func reset():
 	fsm.setup()
 	if throwing_entity != null:
 		remove_collision_exception_with(throwing_entity)
-	if player_number == 1:
-		translation = get_node("../Player1Pos").translation
-	else:
-		translation = get_node("../Player2Pos").translation
+	translation = get_node("../Player" + str(player_number) + "Pos").translation
 	emit_signal("ready")
 
 #const arrow = preload("res://misc/arrow.tscn")
@@ -186,13 +186,13 @@ func get_normal_side(side):
 	return t.basis.get_euler()
 
 func get_normal():
-	raycast.force_raycast_update()
-	wall_pos = raycast.get_collision_point()
-	var normal = raycast.get_collision_normal()
+	ledge_detect_low.force_raycast_update()
+	wall_pos = ledge_detect_low.get_collision_point()
+	var normal = ledge_detect_low.get_collision_normal()
 	var t = Transform.IDENTITY.looking_at(normal, Vector3.UP)
 	
-	if raycast.is_colliding():
-		wall_has_ledge = raycast.get_collider().is_in_group("ledge")
+	if ledge_detect_low.is_colliding():
+		wall_has_ledge = ledge_detect_low.get_collider().is_in_group("ledge")
 	else:
 		wall_has_ledge = false
 		
@@ -205,8 +205,8 @@ func has_los_to_target(_target):
 	if translation.distance_to(_target.rope_point.global_transform.origin) > 50:
 		return false
 	else:
-		var space_state = get_world().direct_space_state
-		var result = space_state.intersect_ray(rope_point.global_transform.origin, _target.rope_point.global_transform.origin, [self], 0b00000000000000000011)
+#		var space_state = get_world().direct_space_state
+		var result = get_world().direct_space_state.intersect_ray(rope_point.global_transform.origin, _target.rope_point.global_transform.origin, [self], 0b00000000000000000011)
 		if not result.empty() and result["collider"] is KinematicBody:
 			return true
 		else:
@@ -233,6 +233,7 @@ func _on_InputListener_received_input(key, state):
 		if key == InputManager.EVADE:
 			if target.is_empty():
 				lock_on_target = $"../NetworkInterface".get_peer_at_index(lock_on_scroll)
+				camera.ally_indicator.get_node("Label").text = NetworkManager.peers[lock_on_target.owner_id]["name"]
 				lock_on_scroll += 1
 				if lock_on_scroll > $"../NetworkInterface".peer_entities.size() - 1:
 					lock_on_scroll = 0
@@ -309,15 +310,17 @@ func apply_velocity(delta):
 	prev_velocity = velocity
 	
 #	velocity = move_and_slide(velocity, Vector3.UP, false, 4, 0.785398, true)
-	velocity = move_and_slide(velocity * timescale, Vector3.UP, false, 4, deg2rad(50), true) / timescale
+#	velocity = move_and_slide(velocity * timescale, Vector3.UP, false, 4, deg2rad(50), true) / timescale
+	velocity = move_and_slide(velocity * timescale, Vector3.UP, true, 1, deg2rad(50), true) / timescale
 	horizontal_speed = Vector2(velocity.x, velocity.z).length()
 	emit_signal("position_changed", transform.origin, velocity)
 #	emit_signal("transform_changed", transform)
-	
-	if is_on_wall():
-		fsm.receive_event("_touched_surface", "wall")
-	if not on_ground and is_on_floor():
-		fsm.receive_event("_touched_surface", "floor")
+
+	if get_slide_count() != 0 and get_slide_collision(0).collider is StaticBody:
+		if is_on_wall():
+			fsm.receive_event("_touched_surface", "wall")
+		if not on_ground and is_on_floor():
+			fsm.receive_event("_touched_surface", "floor")
 	
 	vel_arrow.look_at(velocity + translation + Vector3.FORWARD * 0.01, Vector3.UP)
 	vel_arrow.scale.z = lerp(0, 1.0, horizontal_speed / 6)

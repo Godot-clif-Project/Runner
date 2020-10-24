@@ -2,10 +2,10 @@ extends Resource
 
 const INITIAL_STATE = "offensive_stance"
 
-const RESOURCE_COSTS = {
-#	"state" : [sp, bullets, tension]
-#	"cross_drive" : [100, 0, 0],
-}
+#const RESOURCE_COSTS = {
+##	"state" : [sp, bullets, tension]
+##	"cross_drive" : [100, 0, 0],
+#}
 
 const STATES = {
 	"offensive_stance" : preload("res://entities/sword_figher/states/sword_fighter_offensive_stance.gd"),
@@ -44,4 +44,5 @@ const STATES = {
 	"sidestep" : preload("res://entities/sword_figher/states/sword_fighter_sidestep.gd"),
 	"emote" : preload("res://entities/sword_figher/states/sword_fighter_emote.gd"),
 	"running_fall" : preload("res://entities/sword_figher/states/sword_fighter_running_fall.gd"),
+	"cling" : preload("res://entities/sword_figher/states/sword_fighter_cling.gd"),
 	}

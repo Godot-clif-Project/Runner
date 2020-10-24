@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://entities/sword_figher/sword_fighter.tscn" type="PackedScene" id=1]
 [ext_resource path="res://objects/interpolated_camera.tscn" type="PackedScene" id=2]
@@ -204,6 +204,9 @@ albedo_color = Color( 1, 0.788235, 0.301961, 1 )
 [sub_resource type="SphereMesh" id=13]
 radial_segments = 16
 rings = 16
+
+[sub_resource type="SphereShape" id=17]
+radius = 0.729519
 
 [sub_resource type="ArrayMesh" id=14]
 surfaces/0 = {
@@ -753,7 +756,7 @@ transform = Transform( 11.5334, 0, 0, 0, 25.7409, 0, 0, 0, 11.5334, -3.57245, 13
 transform = Transform( 3.93354, 0, 0, 0, 15.8217, 0, 0, 0, 3.93354, 0.195222, 32.1601, -170.392 )
 
 [node name="Scene Root" parent="Navigation/NavigationMeshInstance" instance=ExtResource( 8 )]
-transform = Transform( -0.369146, 0, 0.929371, 0, 1, 0, -0.929371, 0, -0.369146, 5.45017, 0, 34.091 )
+transform = Transform( -0.457934, 0, 1.1529, 0, 1.24052, 0, -1.1529, 0, -0.457934, 5.45017, 0, 34.091 )
 
 [node name="Positions" type="Node" parent="Navigation"]
 
@@ -793,9 +796,16 @@ playback_speed = 0.75
 "anims/New Anim" = SubResource( 10 )
 "anims/New Anim (2)" = SubResource( 11 )
 
-[node name="Dummy" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.64573, 1.74664, -4.14881 )
+[node name="Dummy" type="KinematicBody" parent="."]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 3.26826, 1.65034, -5.125 )
+collision_layer = 16
+collision_mask = 0
 script = ExtResource( 17 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Network" type="Node" parent="Dummy"]
 
 [node name="Model" type="MeshInstance" parent="Dummy"]
 transform = Transform( 0.739071, 0, 0, 0, 0.739071, 0, 0, 0, 0.739071, 0, 0, 0 )
@@ -811,6 +821,18 @@ visible = false
 stream = ExtResource( 35 )
 unit_db = 20.0
 bus = "Effects"
+
+[node name="CollisionShape" type="CollisionShape" parent="Dummy"]
+shape = SubResource( 17 )
+
+[node name="Body" type="Area" parent="Dummy"]
+monitoring = false
+monitorable = false
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape" type="CollisionShape" parent="Dummy/Body"]
+shape = SubResource( 17 )
 
 [node name="Heals" type="Spatial" parent="."]
 

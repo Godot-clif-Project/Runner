@@ -12,6 +12,9 @@ func _enter_state():
 	entity.has_wall_run_side = true
 	entity.air_boosts_left = entity.MAX_AIR_BOOSTS
 	entity.model.rotation.z = 0.0
+#	entity.raycast_cling.enabled = false
+#	entity.clingbox.monitoring = false
+	
 	entity.emit_one_shot("ParticlesLand")
 	entity.play_sound("land")
 	

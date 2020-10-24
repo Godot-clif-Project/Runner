@@ -12,6 +12,8 @@ func _enter_state():
 #	entity.set_animation("off_hi_r_light", 0, 16.0)
 	entity.acceleration = 0.0
 	entity.on_ground = false
+#	entity.raycast_cling.enabled = true
+#	entity.clingbox.monitoring = true
 #	entity.model.rotation.z = rand_range(-0.5, 0.5)
 	._enter_state()
 #
@@ -145,6 +147,7 @@ func get_possible_transitions():
 		"air_boost",
 		"air_atk",
 #		"jump",
+		"cling",
 		"wall_run",
 		"wall_run_side",
 		"dangle",

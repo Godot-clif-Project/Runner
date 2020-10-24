@@ -132,19 +132,19 @@ func _flag_changed(flag, state):
 #		else:
 #			frame_count += 1
 
-func set_next_state(state):
-#	if next_state == null:
-	if state_list.RESOURCE_COSTS.has(state):
-		if entity.sp >= state_list.RESOURCE_COSTS[state][0]:
-			if entity.bullets >= state_list.RESOURCE_COSTS[state][1]:
-				if entity.tension >= state_list.RESOURCE_COSTS[state][2]:
-#					entity.sp -= state_list.RESOURCE_COSTS[state][0]
-#					entity.bullets -= state_list.RESOURCE_COSTS[state][1]
-					.set_next_state(state)
-		else:
-			return
-	else:
-		.set_next_state(state)
+#func set_next_state(state):
+##	if next_state == null:
+#	if state_list.RESOURCE_COSTS.has(state):
+#		if entity.sp >= state_list.RESOURCE_COSTS[state][0]:
+#			if entity.bullets >= state_list.RESOURCE_COSTS[state][1]:
+#				if entity.tension >= state_list.RESOURCE_COSTS[state][2]:
+##					entity.sp -= state_list.RESOURCE_COSTS[state][0]
+##					entity.bullets -= state_list.RESOURCE_COSTS[state][1]
+#					.set_next_state(state)
+#		else:
+#			return
+#	else:
+#		.set_next_state(state)
 
 func set_next_state_buffered(state, buffer_flag):
 #	if next_state_buffer == null:
@@ -212,10 +212,14 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 #						"slide":
 #							if entity.horizontal_speed > 5:# and entity.hp > 0:
 #								return {"state" : t, "flag" : null}
+						"cling":
+#							if entity.raycast_cling.is_colliding():
+							if not entity.clingbox.get_overlapping_bodies().empty():
+								return {"state" : t, "flag" : null}
 						"wall_run":
 							if entity.has_wall_run:
 #								entity.raycast.force_raycast_update()
-								if entity.raycast.is_colliding():
+								if entity.ledge_detect_low.is_colliding():
 									return {"state" : t, "flag" : null}
 						"wall_run_side":
 							if entity.has_wall_run_side:

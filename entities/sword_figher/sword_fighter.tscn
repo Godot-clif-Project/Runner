@@ -1,4 +1,4 @@
-[gd_scene load_steps=120 format=2]
+[gd_scene load_steps=121 format=2]
 
 [ext_resource path="res://entities/sword_figher/model/sword_fighter.glb" type="PackedScene" id=1]
 [ext_resource path="res://entities/sword_figher/sword_fighter.gd" type="Script" id=2]
@@ -990,7 +990,7 @@ tracks/0/path = NodePath(".:ground_drag")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
-tracks/0/enabled = true
+tracks/0/enabled = false
 tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -2379,6 +2379,9 @@ material = SubResource( 68 )
 [sub_resource type="RayShape" id=70]
 length = 1.2
 
+[sub_resource type="SphereShape" id=91]
+radius = 0.6
+
 [sub_resource type="Gradient" id=71]
 offsets = PoolRealArray( 0.113821, 1 )
 colors = PoolColorArray( 0.681641, 0.489087, 0.274254, 1, 0.333984, 0.198767, 0.113503, 0 )
@@ -2482,9 +2485,9 @@ radius = 0.3
 
 [node name="SwordFighter" type="KinematicBody"]
 collision_layer = 2
-collision_mask = 2147483649
+collision_mask = 2147483665
 script = ExtResource( 2 )
-ground_drag = 5
+ground_drag = 1
 
 [node name="FSM" parent="." instance=ExtResource( 4 )]
 state_list_script = ExtResource( 5 )
@@ -2586,11 +2589,6 @@ script = ExtResource( 17 )
 [node name="sword_fighter" parent="ModelContainer" instance=ExtResource( 1 )]
 transform = Transform( -0.6, 0, -9.05975e-08, 0, 0.6, 0, 9.05975e-08, 0, -0.6, 0, 0, 0 )
 
-[node name="Skeleton" parent="ModelContainer/sword_fighter/Armature" index="0"]
-bones/7/bound_children = [ NodePath("BoneAttachment") ]
-bones/16/bound_children = [ NodePath("RHandAttachment") ]
-bones/23/bound_children = [ NodePath("ThrowAttachment") ]
-
 [node name="Cube" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="0"]
 transform = Transform( 1, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1, 0, 0, 0 )
 material/0 = ExtResource( 12 )
@@ -2599,7 +2597,7 @@ material/0 = ExtResource( 12 )
 material/0 = ExtResource( 12 )
 
 [node name="BoneAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
-transform = Transform( 0.962242, 0.0131659, 0.271875, -0.0432698, 0.993527, 0.105031, -0.268733, -0.112829, 0.956584, 0.0833953, 2.00573, 0.267321 )
+transform = Transform( 0.966887, 0.195107, 0.16451, 0.107235, 0.274347, -0.955633, -0.231584, 0.94163, 0.24434, -0.13698, 1.2935, -0.298398 )
 bone_name = "torso"
 
 [node name="Hurtbox" parent="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment" instance=ExtResource( 11 )]
@@ -2620,7 +2618,7 @@ draw_pass_1 = SubResource( 64 )
 bone_name = "throw_pos"
 
 [node name="RHandAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="4"]
-transform = Transform( 0.72511, 0.212603, 0.654992, 0.129017, 0.892365, -0.432481, -0.676438, 0.398102, 0.619634, -0.318125, 2.75742, 0.878995 )
+transform = Transform( 0.470016, -0.627147, -0.621104, -0.535657, -0.761951, 0.36401, -0.701539, 0.161608, -0.694065, -0.561032, 0.600016, 0.1955 )
 bone_name = "hand_r"
 
 [node name="AnimationPlayer" parent="ModelContainer/sword_fighter" index="1"]
@@ -2636,7 +2634,6 @@ blend_times = [ "def_hi_light", "offensive_stance", 1.0, "off_hi_fierce", "offen
 
 [node name="slash" parent="ModelContainer/sword_fighter" instance=ExtResource( 22 )]
 transform = Transform( -0.94679, 0, 0.321853, 0, 1, 0, -0.321853, 0, -0.94679, 0, 2.15837, 0 )
-visible = false
 
 [node name="Circle011" parent="ModelContainer/sword_fighter/slash" index="0"]
 material/0 = ExtResource( 23 )
@@ -2672,9 +2669,18 @@ collision_layer = 0
 [node name="CollisionShape" type="CollisionShape" parent="ModelContainer/Feet"]
 shape = SubResource( 70 )
 
+[node name="Clingbox" type="Area" parent="ModelContainer"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -0.522502 )
+monitorable = false
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape" type="CollisionShape" parent="ModelContainer/Clingbox"]
+shape = SubResource( 91 )
+
 [node name="RayCastFloor" type="RayCast" parent="ModelContainer"]
 enabled = true
-cast_to = Vector3( 0, -0.4, 0 )
+cast_to = Vector3( 0, -0.2, 0 )
 
 [node name="LedgeDetectLow" type="RayCast" parent="ModelContainer"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.02413, 0 )
@@ -2686,10 +2692,11 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.47
 enabled = true
 cast_to = Vector3( 0, -1.5, 0 )
 
-[node name="RayCast" type="RayCast" parent="ModelContainer"]
+[node name="RayCastCling" type="RayCast" parent="ModelContainer"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.746612, 0 )
-enabled = true
 cast_to = Vector3( 0, -1.5, 0 )
+collision_mask = 16
+collide_with_areas = true
 
 [node name="RayCastL" type="RayCast" parent="ModelContainer"]
 transform = Transform( 0.258819, 0.965925, -1.57369e-07, 0, -1.62921e-07, -1, -0.965925, 0.258819, -4.21671e-08, 0, 0.746612, 0 )

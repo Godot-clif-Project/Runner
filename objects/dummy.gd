@@ -1,4 +1,4 @@
-extends NetworkedObject
+extends KinematicBody
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -10,6 +10,8 @@ var hp = 1000
 var path : Array
 var speed = 10.0
 var dir : Vector3
+var prev_pos : Vector3
+var velocity : Vector3
 
 onready var navigation = $"../Navigation"
 onready var positions = $"../Navigation/Positions".get_children()
@@ -52,6 +54,10 @@ var i = 0
 var pos_i = 0
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #var prev_pos
+func _physics_process(delta):
+	velocity = (translation - prev_pos) * 60
+	prev_pos = translation
+
 func _process(delta):
 #	if has_los():
 #		dir = translation.direction_to(target.translation + Vector3.UP)
@@ -75,6 +81,7 @@ func _process(delta):
 #		path = navigation.get_simple_path(translation, target.translation)
 #		i = 0
 ##		print((prev_pos - translation).length())
+#	print(velocity)
 	
 	if shake_t > 0.0:
 		$Model.translation = (angle * (shake_t * 0.03)) * sin(shake_t) * 0.5
@@ -100,7 +107,7 @@ func move():
 
 func _on_Hurtbox_received_hit(hit, hurtbox):
 	receive_hit(hit.damage)
-	emit_signal("networked_object_event", id, "receive_hit", [hit.damage])
+#	emit_signal("networked_object_event", id, "receive_hit", [hit.damage])
 
 func receive_hit(damage):
 	hp -= damage
@@ -115,5 +122,5 @@ func receive_hit(damage):
 	
 	if hp <= 0:
 		reset()
-		emit_signal("networked_object_event", id, "reset", [])
+#		emit_signal("networked_object_event", id, "reset", [])
 	
