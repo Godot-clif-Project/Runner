@@ -24,6 +24,10 @@ export var window_for_multiple_input = 3
 var multiple_inputs = {
 	[InputManager.LIGHT, InputManager.RUN] : InputManager.THROW,
 	[InputManager.RUN, InputManager.LIGHT] : InputManager.THROW,
+#	[InputManager.DOWN, InputManager.RUN] : InputManager.QUICK_TURN,
+#	[InputManager.RUN, InputManager.DOWN] : InputManager.QUICK_TURN,
+#	[InputManager.FIRE, InputManager.DOWN] : InputManager.SLIDE,
+#	[InputManager.DOWN, InputManager.FIRE] : InputManager.SLIDE,
 	}
 
 export var window_for_input_chain = 15
@@ -36,7 +40,9 @@ var input_chains ={
 	InputManager.BREAK_BREAK : [InputManager.BREAK, InputManager.BREAK],
 	InputManager.BOOST : [InputManager.FIRE, InputManager.FIRE],
 	InputManager.SLIDE : [InputManager.DOWN, InputManager.FIRE],
-	InputManager.SLIDE : [InputManager.DOWN, InputManager.FIRE],
+#	InputManager.SLIDE : [InputManager.FIRE, InputManager.DOWN],
+	InputManager.QUICK_TURN : [InputManager.DOWN, InputManager.RUN],
+#	InputManager.QUICK_TURN : [InputManager.RUN, InputManager.DOWN],
 	}
 
 export var simulate_input = false
@@ -69,14 +75,22 @@ func _physics_process(delta):
 func _input(event):
 #	print(event.as_text())
 #	print(event.axis_value)
-	if enabled:
+	if enabled and not get_tree().paused:
 		if event is InputEventMouseMotion:
 			mouse_motion = event.relative
 		elif event is InputEventJoypadMotion:
-#			if event.device == listen_to_pads[0]:
 			if abs(event.axis_value) > 0.1:
+				if InputManager.pad_0_stick_mapping.has(event.axis):
+					if analogs[event.axis] == 0.0:
+						emit_signal("received_input", InputManager.pad_0_stick_mapping[event.axis][int(sign(event.axis_value))], InputManager.PRESSED)
+						
 				analogs[event.axis] = event.axis_value
 			else:
+				if InputManager.pad_0_stick_mapping.has(event.axis):
+					if analogs[event.axis] != 0.0:
+						if event.axis_value != 0.0:
+							emit_signal("received_input", InputManager.pad_0_stick_mapping[event.axis][int(sign(event.axis_value))], InputManager.RELEASED)
+							
 				analogs[event.axis] = 0.0
 
 func _received_input (pad, key, state):

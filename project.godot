@@ -24,7 +24,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://objects/hit.gd"
 }, {
-"base": "Spatial",
+"base": "Node",
 "class": "NetworkedObject",
 "language": "GDScript",
 "path": "res://objects/networked_object.gd"

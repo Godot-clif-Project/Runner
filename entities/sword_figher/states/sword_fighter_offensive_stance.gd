@@ -2,16 +2,12 @@ extends "res://entities/sword_figher/states/sword_fighter_state.gd"
 
 func get_animation_data():
 	# Name, seek and blend length 
-	return ["offensive_stance", 0.0, 0.5]
+	return ["idle", 0.0, 0.5]
 
 # Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
 	entity.get_node("ModelContainer/Particles2").emitting = false
-	entity.current_stance = entity.Stances.OFFENSIVE
 	
-#	if entity.input_listener.is_key_pressed(InputManager.RUN):
-#		set_next_state("off_block")
-#		return
 	if entity.input_listener.is_key_pressed(InputManager.UP) and entity.input_listener.is_key_released(InputManager.DOWN):
 		set_next_state("walk")
 		return
@@ -37,6 +33,9 @@ func _enter_state():
 #	._animation_finished(anim_name)
 
 func _process_state(delta):
+	if Vector2(entity.input_listener.analogs[0], entity.input_listener.analogs[1]) != Vector2.ZERO:
+		set_next_state("walk")
+		return
 #	entity.apply_root_motion(delta)
 #	if entity.flags.track_target:
 #		entity.apply_tracking(delta)
@@ -48,6 +47,10 @@ func _process_state(delta):
 
 func _received_input(key, state):
 	if state:
+		if key == InputManager.QUICK_TURN:
+			entity.model_container.rotation.y += PI
+			set_next_state("run")
+			return
 		if key == InputManager.FIRE:
 			if entity.input_listener.is_key_pressed(InputManager.EVADE):
 				entity.throw_stamina_bomb(Vector3(0.0, 5, -5))

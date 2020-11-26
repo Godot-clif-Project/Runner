@@ -19,6 +19,8 @@
 [ext_resource path="res://sounds/steps/heal.wav" type="AudioStream" id=17]
 [ext_resource path="res://objects/sound_array.gd" type="Script" id=18]
 
+
+
 [node name="Sound" type="Spatial"]
 script = ExtResource( 18 )
 

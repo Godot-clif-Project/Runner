@@ -6,8 +6,8 @@ extends "res://entities/sword_figher/states/sword_fighter_offensive_moves.gd"
 
 var released_up = false
 var ang_momentum = 0.0
-var rot_lerp = 4.5
-var max_turn_speed = 4.5
+var rot_lerp = 6.0
+var max_turn_speed = 5.5
 var rot_speed = 30
 
 var boost = false

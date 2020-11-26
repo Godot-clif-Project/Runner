@@ -1,4 +1,8 @@
-extends NetworkedObject
+extends Spatial
+
+#signal created(velocity, translation)
+#signal consumed_charge
+#signal ended
 
 enum {FLYING, ACTIVE, FADE}
 const LIFETIME = 10.0
@@ -9,15 +13,14 @@ var gravity = Vector3(0.0, -9.8, 0.0)
 var state = FLYING
 var charges = 4
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	if owner_id == NetworkManager.my_id:
-		NetworkManager.network_interface.create_new_networked_object(id, "stamina_bomb", {
-				"velocity" : velocity,
-				"translation" : translation,
-			})
+var owner_id = null
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _ready():
+	$NetworkComponent.create("stamina_bomb", {
+			"velocity" : velocity,
+			"translation" : translation,
+		})
+
 func _physics_process(delta):
 	if state == FLYING:
 		velocity += gravity * delta * 2
@@ -43,24 +46,23 @@ func _on_Buff_body_entered(body):
 		if body is Entity:
 			body.heal(1000)
 			consume_charge()
-			emit_signal("networked_object_event", id, "consume_charge", [])
+			$NetworkComponent.event("consume_charge", [])
 
 func _on_Timer_timeout():
 	if state == ACTIVE:
 		turn_off()
 	else:
-		remove_from_networked_objects()
+		$NetworkComponent.remove_from_networked_objects()
 		queue_free()
 
 func consume_charge():
 	charges -= 1
 	if charges == 0:
 		turn_off()
-		emit_signal("networked_object_event", id, "turn_off", [])
+		$NetworkComponent.event("turn_off", [])
 
 func turn_off():
 	state = FADE
 	$Particles.emitting = false
 	$Particles2.emitting = false
 	$Timer.start(FADETIME)
-

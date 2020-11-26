@@ -2,8 +2,11 @@ extends Node
 
 enum {RELEASED, PRESSED}
 enum {
-	UP, DOWN, LEFT, RIGHT, LIGHT, HEAVY, JUMP, RUN, BREAK, FIRE, TAUNT, EVADE, START,
-	RIGHT_RIGHT, LEFT_LEFT, UP_UP, DOWN_DOWN, RUN_RUN, BREAK_BREAK, SLIDE,
+	UP, DOWN, LEFT, RIGHT,
+	LS_UP, LS_DOWN, LS_LEFT, LS_RIGHT,
+	RS_UP, RS_DOWN, RS_LEFT, RS_RIGHT,
+	LIGHT, HEAVY, JUMP, RUN, BREAK, FIRE, TAUNT, EVADE, START,
+	RIGHT_RIGHT, LEFT_LEFT, UP_UP, DOWN_DOWN, RUN_RUN, BREAK_BREAK, SLIDE, QUICK_TURN,
 	THROW, BOOST,
 }
 
@@ -14,6 +17,10 @@ const KEY_TO_DIRECTIONS = {
 	DOWN : Vector2.DOWN,
 	LEFT : Vector2.LEFT,
 	RIGHT : Vector2.RIGHT,
+	LS_UP : Vector2.UP,
+	LS_DOWN : Vector2.DOWN,
+	LS_LEFT : Vector2.LEFT,
+	LS_RIGHT : Vector2.RIGHT,
 	}
 	
 const DIRECTIONS_TO_KEYS = {
@@ -92,9 +99,11 @@ var pad_0_keys_joystick = {
 	15 : [RIGHT],
 	}
 
-var pad_0_stick_joystick = {
-	"x_axis" : 0,
-	"y_axis" : 1
+var pad_0_stick_mapping = {
+	0 : {1 : LS_RIGHT, -1 : LS_LEFT},
+	1 : {-1 : LS_UP, 1 : LS_DOWN},
+	2 : {1 : RS_RIGHT, -1 : RS_LEFT},
+	3 : {1 : RS_UP, -1 : RS_DOWN},
 	}
 
 var pad_1_keys_joystick = {
@@ -121,7 +130,7 @@ var pad_1_stick_joystick = {
 	}
 
 var keys_keyboard = {
-	KEY_SPACE : [JUMP, BOOST],
+	KEY_SPACE : [JUMP],
 	KEY_Q : [BREAK],
 	KEY_SHIFT : [FIRE],
 	KEY_CONTROL : [EVADE],
@@ -160,7 +169,7 @@ var keys_mouse = {
 	}
 	
 var analog_to_digital_threshold = 0.5
-var analog_to_digital = true
+var analog_to_digital = false
 
 onready var pad_mappings = {
 	0 : pad_0_keys_joystick,
@@ -231,22 +240,22 @@ func _input(event):
 					emit_signal("key_changed", keyboard_pad, binding, RELEASED)
 		return
 	
-	elif event is InputEventJoypadMotion:
-		if event.device == pad_0_device:
-			if event.axis == pad_0_stick_joystick["x_axis"]:
-				pad_0_stick.x = event.axis_value
-				analog_to_digital_x(0, event.axis_value)
-			elif event.axis == pad_0_stick_joystick["y_axis"]:
-				pad_0_stick.y = event.axis_value
-				analog_to_digital_y(0, event.axis_value)
-		if event.device == pad_1_device:
-			if event.axis == pad_1_stick_joystick["x_axis"]:
-				pad_1_stick.x = event.axis_value
-				analog_to_digital_x(1, event.axis_value)
-			elif event.axis == pad_1_stick_joystick["y_axis"]:
-				pad_1_stick.y = event.axis_value
-				analog_to_digital_y(1, event.axis_value)
-		
+#	elif event is InputEventJoypadMotion:
+#		if event.device == pad_0_device:
+#			if event.axis == pad_0_stick_joystick["x_axis"]:
+#				pad_0_stick.x = event.axis_value
+#				analog_to_digital_x(0, event.axis_value)
+#			elif event.axis == pad_0_stick_joystick["y_axis"]:
+#				pad_0_stick.y = event.axis_value
+#				analog_to_digital_y(0, event.axis_value)
+#		if event.device == pad_1_device:
+#			if event.axis == pad_1_stick_joystick["x_axis"]:
+#				pad_1_stick.x = event.axis_value
+#				analog_to_digital_x(1, event.axis_value)
+#			elif event.axis == pad_1_stick_joystick["y_axis"]:
+#				pad_1_stick.y = event.axis_value
+#				analog_to_digital_y(1, event.axis_value)
+#
 
 func analog_to_digital_x(pad, axis_value):
 	if not analog_to_digital:

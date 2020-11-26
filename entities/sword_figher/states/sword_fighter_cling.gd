@@ -2,7 +2,7 @@ extends "res://entities/sword_figher/states/sword_fighter_fall.gd"
 
 var offset : Vector3
 var cling_normal : Vector3
-var input_dir : Vector3
+var input_dir : Vector2
 #var cling_position : Vector3
 
 func get_animation_data():
@@ -23,7 +23,6 @@ func _enter_state():
 		[], 0b00000000000000010000, true, true
 		)
 	if not result.empty():
-#		entity.model_container.rotation.y = atan2(dir.z, dir.x)
 		cling_normal = result.normal
 		entity.model.look_at(entity.translation + cling_normal, Vector3.UP)
 		entity.translation = result.position + cling_normal * 0.5
@@ -43,32 +42,24 @@ func _exit_state():
 ##	pass
 
 func _process_state(delta):
-	if entity.input_listener.is_key_pressed(InputManager.RIGHT):
-		input_dir = -entity.model.global_transform.basis.x
-	elif entity.input_listener.is_key_pressed(InputManager.LEFT):
-		input_dir = entity.model.global_transform.basis.x
-	elif entity.input_listener.is_key_pressed(InputManager.UP):
-		input_dir = entity.model.global_transform.basis.y
-	elif entity.input_listener.is_key_pressed(InputManager.DOWN):
-		input_dir = -entity.model.global_transform.basis.y
-	else:
-		input_dir = Vector3.ZERO
-		
-	if input_dir != Vector3.ZERO:
-		var result = entity.get_world().direct_space_state.intersect_ray(
-#		entity.translation + entity.model.transform.xform(-Vector3(input_dir.x, input_dir.y, 0.0)) * 0.1,
-		entity.translation + input_dir * 0.1,
+	if input_dir != Vector2.ZERO:
+		var from = entity.translation + entity.model_container.transform.xform(entity.model.transform.xform(-Vector3(input_dir.x, input_dir.y, 5.0))) * delta * 5
+		var to = from + entity.model.global_transform.basis.z * 5
+		var result = entity.get_world().direct_space_state.intersect_ray(from, to, 
+#		entity.translation + input_dir * 0.1,
 #		entity.translation + entity.model.transform.xform(-Vector3(dir.x, dir.y, -1.0)) * 0.1,
-		entity.clinging_to_entity.translation,
+#		entity.clinging_to_entity.translation,
 		[], 0b00000000000000010000, true, true
 		)
 		if not result.empty():
 			cling_normal = result.normal
+			entity.translation = result.position 
+			entity.model_container.rotation.y = atan2(entity.model.global_transform.basis.z.x,  entity.model.global_transform.basis.z.z) + PI
 			entity.model.look_at(entity.translation + cling_normal, Vector3.UP)
-			entity.translation = result.position + cling_normal * 0.5
 		
 	entity.velocity = entity.clinging_to_entity.velocity
 	entity.apply_velocity(delta)
+	entity.center_camera(delta * 2)
 	pass
 
 func get_possible_transitions():
@@ -111,20 +102,10 @@ func _touched_surface(surface):
 #func _flag_changed(flag, state):
 
 func _received_input(key, state):
-#	if state:
-#		if key == InputManager.UP:
-#			input_dir = entity.model.global_transform.basis.y * 0.1
-#		if key == InputManager.DOWN:
-#			input_dir = -entity.model.global_transform.basis.y * 0.1
-#		if key == InputManager.RIGHT:
-#			input_dir = -entity.model.global_transform.basis.x * 0.1
-#		if key == InputManager.LEFT:
-#			input_dir = entity.model.global_transform.basis.x * 0.1
-		
-#	if key == InputManager.UP or key == InputManager.DOWN or key == InputManager.RIGHT or key == InputManager.LEFT:
-#		if state:
-#			input_dir += InputManager.KEY_TO_DIRECTIONS[key]
-#		else:
-#			input_dir -= InputManager.KEY_TO_DIRECTIONS[key]
-#	else:
+	if InputManager.KEY_TO_DIRECTIONS.has(key):
+		if state:
+			input_dir += InputManager.KEY_TO_DIRECTIONS[key]
+		else:
+			input_dir -= InputManager.KEY_TO_DIRECTIONS[key]
+	else:
 		._received_input(key, state)

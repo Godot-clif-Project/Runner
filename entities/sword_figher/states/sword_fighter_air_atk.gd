@@ -52,11 +52,11 @@ func _process_state(delta):
 #	entity.center_camera(delta)
 
 func _touched_surface(surface):
-	if surface == "wall":
-		entity.get_node("ModelContainer/Hitbox").active = false
-		entity.get_node("ModelContainer/sword_fighter/slash").visible = false
-		entity.get_node("ModelContainer/SlashParticles").visible = false
-		entity.get_node("ModelContainer/SlashParticles").emitting = false
+#	if surface == "wall":
+#		entity.get_node("ModelContainer/Hitbox").active = false
+#		entity.get_node("ModelContainer/sword_fighter/slash").visible = false
+#		entity.get_node("ModelContainer/SlashParticles").visible = false
+#		entity.get_node("ModelContainer/SlashParticles").emitting = false
 	if entity.flags.is_active:
 		._touched_surface(surface)
 #	set_next_state("fall")

@@ -84,7 +84,7 @@ func _process_state(delta):
 #	else:
 #		entity.ground_drag = 8
 	
-	entity.ground_drag = clamp(8 + entity.velocity.y,0, 20)
+	entity.ground_drag = clamp(8 + entity.velocity.y, 0, 20)
 			
 #	entity.model_container.rotation_degrees.y = clamp(entity.model_container.rotation_degrees.y + ang_momentum, initial_rot - 90, initial_rot + 90)
 	
@@ -98,12 +98,10 @@ func _process_state(delta):
 	var vel_angle = atan2(entity.velocity.x, entity.velocity.z)
 	entity.model_container.rotation.y = vel_angle + PI + ang_momentum * 0.1
 	
-#	entity.turn(ang_momentum)
 	entity.align_to_floor(delta)
 	entity.apply_drag(delta)
 	entity.apply_gravity(delta)
 	entity.apply_velocity(delta)
-#	entity.camera_pivot.rotation.y = lerp_angle(entity.camera_pivot.rotation.y, entity.model_container.rotation.y - 0.5 * sign(ang_momentum), delta * 2)
 	entity.center_camera(delta * 2)
 	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
 	

@@ -18,6 +18,7 @@ func _enter_state():
 	speed = entity.horizontal_speed
 	entity.get_node("ModelContainer/Particles2").emitting = true
 	entity.set_animation("run_break", 0, 0.05)
+	entity.ground_drag = 8
 	#	if entity.input_listener.is_key_pressed(InputManager.DOWN):
 #		entity.ground_drag = 20
 #	else:
@@ -34,10 +35,10 @@ func _exit_state():
 var t = 0
 func _process_state(delta):
 	entity.acceleration = clamp(entity.acceleration - delta, 0.0, 1.0)
-	entity.jump_str = clamp(entity.horizontal_speed + 2 - t, 15, 28)
-	t += delta
+	entity.jump_str = clamp(entity.horizontal_speed + 4 - t, 18, 28)
+#	t += delta
 	
-	if entity.horizontal_speed < 2.0:
+	if entity.horizontal_speed < 4.0:
 		set_next_state("offensive_stance")
 		return
 		
@@ -58,8 +59,7 @@ func _process_state(delta):
 	else:
 		ang_momentum = lerp(ang_momentum, 0, delta * rot_drag)
 	
-	if entity.input_listener.is_key_pressed(InputManager.BREAK):
-#		entity.ground_drag = 12.5
+	if entity.input_listener.is_key_pressed(InputManager.FIRE):
 		entity.ground_drag = 15
 	else:
 		entity.ground_drag = 8
@@ -68,9 +68,9 @@ func _process_state(delta):
 	entity.model_container.rotation_degrees.y += ang_momentum * float(1 - entity.target_speed / entity.boost_speed * 0.5)
 	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
 	
-#	speed = clamp(speed - delta * entity.ground_drag, 0, 25)
-#	entity.accelerate(-speed, delta * 0.25)
 	entity.apply_drag(delta)
+	entity.target_speed = entity.horizontal_speed
+	
 	entity.apply_gravity(delta)
 	entity.apply_velocity(delta)
 	entity.center_camera(delta * 2)
@@ -122,6 +122,12 @@ func get_possible_transitions():
 
 func _received_input(key, state):
 	if state:
+		if key == InputManager.QUICK_TURN:
+			if entity.horizontal_speed < 10:
+				entity.model_container.rotation.y += PI
+				set_next_state("run")
+				return
+		
 		if key == InputManager.RUN or key == InputManager.UP:
 			set_next_state("run")
 			return
@@ -132,8 +138,9 @@ func _received_input(key, state):
 			return
 #		if key == InputManager.DOWN:
 #			entity.ground_drag = 20
-#	else:
-#		if key == InputManager.DOWN:
+	else:
+		if key == InputManager.BREAK:
+			set_next_state("run")
 #			entity.ground_drag = entity.default_ground_drag
 		
 	

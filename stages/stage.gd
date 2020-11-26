@@ -26,6 +26,7 @@ func create_object(resource_name : String, args : Dictionary):
 	for key in args.keys():
 		new_object.set(key, args[key])
 	add_child(new_object)
+	return new_object
 
 func spawn_effect(effect_type, p_position, direction):
 	if effect_type == null:

@@ -37,9 +37,9 @@ var has_camera = false setget set_has_camera
 var camera_side = 1
 var target_point = Vector3.ZERO
 var target_rotation = 0.0
-var motion_vector = Vector3.ZERO
+#var motion_vector = Vector3.ZERO
 var velocity = Vector3.ZERO
-var on_ground = true
+var on_ground = true #setget set_on_ground
 var root_motion = Vector3.ZERO
 var animation_ended = false
 var old_animation = ""
@@ -117,6 +117,14 @@ onready var raycast_side_high = {
 
 onready var vel_arrow = $VelocityArrow
 onready var bomb_ui = $"../UI/BombCooldown"
+
+func set_on_ground(value):
+	on_ground = value
+	if value:
+		gravity_scale = 4.0
+	else:
+		gravity_scale = 1.0
+		
 
 func set_hp(value):
 	hp = clamp(value, 0, max_hp)
@@ -226,6 +234,7 @@ var lock_on_scroll = 0
 
 func _on_InputListener_received_input(key, state):
 	fsm.receive_event("_received_input", [key, state])
+#	prints(key, state)
 	
 	if state:
 #		if key == InputManager.JUMP:
@@ -309,9 +318,13 @@ func apply_velocity(delta):
 	prev_speed = horizontal_speed
 	prev_velocity = velocity
 	
-#	velocity = move_and_slide(velocity, Vector3.UP, false, 4, 0.785398, true)
-#	velocity = move_and_slide(velocity * timescale, Vector3.UP, false, 4, deg2rad(50), true) / timescale
-	velocity = move_and_slide(velocity * timescale, Vector3.UP, true, 1, deg2rad(50), true) / timescale
+	if on_ground:
+		velocity = move_and_slide_with_snap(velocity * timescale, Vector3.DOWN, Vector3.UP, true, 1, deg2rad(50), true) / timescale
+	else:
+		velocity = move_and_slide(velocity * timescale, Vector3.UP, true, 1, deg2rad(50), true) / timescale
+
+#	velocity = move_and_slide(velocity * timescale, Vector3.UP, true, 1, deg2rad(50), true) / timescale
+		
 	horizontal_speed = Vector2(velocity.x, velocity.z).length()
 	emit_signal("position_changed", transform.origin, velocity)
 #	emit_signal("transform_changed", transform)
@@ -342,9 +355,9 @@ func align_to_floor(delta):
 func center_camera(delta):
 	var at = atan2(velocity.y, velocity.z)
 	if abs(at) < 0.01 or abs(at) > 3.1:
-		at = 0.0
+		at = -0.2
 	else:
-		at = clamp(atan2(velocity.y, velocity.z), -PI * 0.1, PI * 0.1)
+		at = clamp(atan2(velocity.y, velocity.z) - 0.2, -PI * 0.1, PI * 0.1)
 	camera_pivot.rotation.x = lerp_angle(camera_pivot.rotation.x, at, delta * 0.5)
 	camera_pivot.rotation.y = lerp_angle(camera_pivot.rotation.y, model_container.rotation.y, delta)
 
@@ -463,6 +476,7 @@ func apply_root_motion(delta):
 func jump():
 	velocity.y = 0.0
 	velocity *= 0.75
+	self.on_ground = false
 	
 	var direction = Vector2.ZERO
 	if input_listener.is_key_pressed(InputManager.RUN) or input_listener.is_key_pressed(InputManager.UP):
@@ -486,7 +500,6 @@ func jump():
 #		velocity.x = v.x
 #		velocity.z = v.y
 		
-	on_ground = false
 	play_sound("jump")
 #	jump_str = min_jump_str
 

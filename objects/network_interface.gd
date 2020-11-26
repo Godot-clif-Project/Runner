@@ -131,13 +131,10 @@ func player_entity_dealt_tandem_action(action, args):
 		for peer in peer_entities:
 			peer_entities[peer].rpc("dealt_tandem_action", NetworkManager.my_id, action, args)
 
-
 remote func peer_created_networked_object(owner_id : int, object_id : int, object_resource_name : String, args : Dictionary):
 	args["owner_id"] = owner_id
-#	args["name"] = object_name
 	MainManager.current_level.create_object(object_resource_name, args)
 	NetworkManager.uid = object_id
-#	prints("name", NetworkManager.my_id, args["name"])
 
 remote func update_networked_objects(update_data):
 	for object_id in update_data.keys():
@@ -146,7 +143,8 @@ remote func update_networked_objects(update_data):
 
 remote func receive_networked_object_event_from_peer(object_id : int, function_name : String, args : Array):
 	if remote_networked_objects.has(object_id):
-		remote_networked_objects[object_id].callv(function_name, args)
+		remote_networked_objects[object_id].receive_networked_call(function_name, args)
+#		remote_networked_objects[object_id].callv(function_name, args)
 #	else:
 #		prints(object_name, "not found in networked_objects")
 

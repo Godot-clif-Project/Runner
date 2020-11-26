@@ -48,4 +48,4 @@ nodes/animation_1/position = Vector2( 300, -80 )
 nodes/animation_1_seek/node = SubResource( 10 )
 nodes/animation_1_seek/position = Vector2( 500, -80 )
 nodes/output/position = Vector2( 1340, 0 )
-node_connections = [ "output", 0, "TimeScale", "TimeScale", 0, "Seek", "1_and_-1", 0, "animation_1_seek", "1_and_-1", 1, "animation_-1_seek", "Seek", 0, "Add2", "Add2", 0, "1_and_-1", "Add2", 1, "add_animation", "animation_-1_seek", 0, "animation_-1", "animation_1_seek", 0, "animation_1" ]
+node_connections = [ "output", 0, "TimeScale", "1_and_-1", 0, "animation_1_seek", "1_and_-1", 1, "animation_-1_seek", "TimeScale", 0, "Seek", "Seek", 0, "Add2", "Add2", 0, "1_and_-1", "Add2", 1, "add_animation", "animation_-1_seek", 0, "animation_-1", "animation_1_seek", 0, "animation_1" ]

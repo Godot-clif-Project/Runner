@@ -99,7 +99,7 @@ func _process_state(delta):
 	
 	wait -= 1
 	entity.apply_velocity(delta)
-	entity.center_camera(delta * 4)
+	entity.center_camera(delta * 60)
 #		entity.set_velocity(Vector3(0.0, 10, -10).rotated(Vector3.RIGHT, entity.wall_rot.x).rotated(Vector3.FORWARD, PI *entity.input_listener.analogs[0]))
 #		entity.model_container.rotation.z = PI * -entity.input_listener.analogs[0]
 #		entity.model.rotation.x = entity.wall_rot.x - PI * 0.5

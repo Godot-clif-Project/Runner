@@ -209,9 +209,9 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 						"sidestep":
 							if entity.input_listener.is_key_pressed(InputManager.LEFT) or entity.input_listener.is_key_pressed(InputManager.RIGHT):
 								return {"state" : t, "flag" : null}
-#						"slide":
-#							if entity.horizontal_speed > 5:# and entity.hp > 0:
-#								return {"state" : t, "flag" : null}
+						"slide":
+							if entity.horizontal_speed > 5:# and entity.hp > 0:
+								return {"state" : t, "flag" : null}
 						"cling":
 #							if entity.raycast_cling.is_colliding():
 							if not entity.clingbox.get_overlapping_bodies().empty():
@@ -316,6 +316,8 @@ func test_transition_by_input(key : int, key_state : int, valid_transitions : Ar
 				for t in valid_transitions:
 					match t as String:
 						"off_run_startup":
+							return {"state" : t, "flag" : "is_evade_cancelable"}
+						"run":
 							return {"state" : t, "flag" : "is_evade_cancelable"}
 #						"air_boost":
 #							if entity.air_boosts_left > 0:
