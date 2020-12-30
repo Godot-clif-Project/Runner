@@ -1,7 +1,5 @@
 extends Control
 
-const STAGE = preload("res://stages/test_stage_3.tscn")
-
 onready var label = $Label
 
 func _ready():
@@ -13,6 +11,9 @@ func _ready():
 	NetworkManager.connect("server_disconnected", self, "_server_disconnected")
 	NetworkManager.connect("peer_registered", self, "update_peer_list")
 	NetworkManager.lobby_scene = self
+	
+	for item in $ResourcePreloader.get_resource_list():
+		$LevelSelect.add_item(item)
 
 #### Network callbacks from SceneTree ####
 
@@ -51,6 +52,11 @@ func _server_disconnected():
 
 func update_peer_list():
 	$Peers.text = str(NetworkManager.peers)
+
+remotesync func start_net_game(level):
+#	get_tree().paused = true
+	self.queue_free()
+	get_tree().root.add_child($ResourcePreloader.get_resource(level).instance())
 
 func _on_Host_pressed():
 	var port = int($Port.text)
@@ -111,7 +117,7 @@ func _on_StartNetGame_pressed():
 		if NetworkManager.peers.size() == 0:
 			label.text = "No peers to start game with."
 		else:
-			NetworkManager.rpc("start_game")
+			rpc("start_net_game", $LevelSelect.get_item_text($LevelSelect.selected))
 	else:
 		label.text = "No connections active."
 
@@ -119,7 +125,7 @@ func _on_StartSingleGame_pressed():
 	NetworkManager.disconnect_network()
 #	visible = false
 	self.queue_free()
-	get_tree().root.add_child(STAGE.instance())
+	get_tree().root.add_child($ResourcePreloader.get_resource($LevelSelect.get_item_text($LevelSelect.selected)).instance())
 
 func _on_Port_text_changed(new_text):
 	if new_text == "":

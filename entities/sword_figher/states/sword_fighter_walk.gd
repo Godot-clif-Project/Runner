@@ -63,6 +63,7 @@ func _process_state(delta):
 	entity.apply_gravity(delta)
 #	entity.apply_tracking(delta)
 	entity.apply_root_motion(delta)
+	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
 
 func add_direction():
 	direction = Vector2(entity.input_listener.analogs[0], entity.input_listener.analogs[1])

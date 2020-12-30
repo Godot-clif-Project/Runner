@@ -54,7 +54,7 @@ var horizontal_speed = 0.0
 var falling_speed = 0.0
 var acceleration = 0.0
 var target_speed = 13.0
-const min_speed = 3.0
+const min_speed = 4.0
 const max_speed = 16.0
 const boost_speed = 22.0
 
@@ -277,7 +277,7 @@ func _physics_process(delta):
 		camera_pivot.rotation.y += input_listener.analogs[2] * -0.1
 		camera_pivot.rotation.x = clamp(camera_pivot.rotation.x + input_listener.analogs[3] * -0.1, -1.5, 0.9)
 		target_rotation = camera_pivot.rotation.y
-	
+
 		if camera_raycast.is_colliding():
 			var distance = camera_pivot.to_local(camera_raycast.get_collision_point()).z
 			if distance < default_camera_pos.z:
@@ -286,11 +286,11 @@ func _physics_process(delta):
 					camera.translation = camera_point.global_transform.origin
 				else:
 					camera_point.translation.z = distance - 0.1
-				
+
 		elif $CameraPointPivot/Position3D/CameraCollision.get_overlapping_bodies().empty():
 			if camera_point.translation.z < 3.5:
 				camera_point.translation.z += delta * 3
-				
+
 		camera_raycast.cast_to = camera_point.translation + Vector3(0.0, 0.0, 0.2)
 	
 	if shake_t > 0.0:
@@ -320,6 +320,7 @@ func apply_velocity(delta):
 	
 	if on_ground:
 		velocity = move_and_slide_with_snap(velocity * timescale, Vector3.DOWN, Vector3.UP, true, 1, deg2rad(50), true) / timescale
+#		velocity = move_and_slide(velocity * timescale, Vector3.UP, true, 1, deg2rad(50), true) / timescale
 	else:
 		velocity = move_and_slide(velocity * timescale, Vector3.UP, true, 1, deg2rad(50), true) / timescale
 
@@ -339,27 +340,22 @@ func apply_velocity(delta):
 	vel_arrow.scale.z = lerp(0, 1.0, horizontal_speed / 6)
 	
 #	print(horizontal_speed)
-
 func align_to_floor(delta):
 	if raycast_floor.is_colliding():
 		var floor_normal = raycast_floor.get_collision_normal()
-#	#		model.rotation.x = atan2(floor_normal.y, floor_normal.x) - PI * 0.5
-		model.look_at((translation + floor_normal.cross(-model_container.transform.basis.x)), Vector3.UP)
-#		model.look_at((translation + floor_normal), Vector3.UP)
-##		model.rotation.y = PI
-##		print(translation + (floor_normal).cross(Vector3.FORWARD.rotated(Vector3.UP, model_container.rotation.y)))
+		var target_vector = floor_normal.cross(-model_container.transform.basis.x)
+		model.look_at((translation + lerp(-model.global_transform.basis.z, target_vector, delta * 3)), Vector3.UP)
 	else:
 		model.rotation = Vector3(0, PI, model.rotation.z)
-	
 
-func center_camera(delta):
+func center_camera(delta, offset : Vector2):
 	var at = atan2(velocity.y, velocity.z)
 	if abs(at) < 0.01 or abs(at) > 3.1:
 		at = -0.2
 	else:
 		at = clamp(atan2(velocity.y, velocity.z) - 0.2, -PI * 0.1, PI * 0.1)
-	camera_pivot.rotation.x = lerp_angle(camera_pivot.rotation.x, at, delta * 0.5)
-	camera_pivot.rotation.y = lerp_angle(camera_pivot.rotation.y, model_container.rotation.y, delta)
+	camera_pivot.rotation.x = lerp_angle(camera_pivot.rotation.x, at + offset.x, delta * 0.5)
+	camera_pivot.rotation.y = lerp_angle(camera_pivot.rotation.y, model_container.rotation.y + offset.y, delta)
 
 func point_camera_at_target(delta, offset):
 	var current_camera_direction = Quat(camera_pivot.global_transform.basis)
@@ -382,8 +378,6 @@ func apply_rotation(delta):
 
 var target_velocity = Vector3.ZERO
 var current_velocity = Vector3.ZERO
-
-var target_vector = Vector2.ZERO
 
 func set_velocity(_velocity : Vector3):
 	var velocity_rotated = _velocity.rotated(Vector3.UP, model_container.rotation.y)

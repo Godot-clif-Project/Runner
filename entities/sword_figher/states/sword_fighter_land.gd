@@ -68,7 +68,7 @@ func _process_state(delta):
 	entity.apply_drag(delta)
 	entity.apply_gravity(delta)
 	entity.apply_velocity(delta)
-	entity.center_camera(delta)
+	entity.center_camera(delta, Vector2.ZERO)
 
 #func _touched_surface(surface):
 #	if surface == "floor": #and entity.flags.is_active:

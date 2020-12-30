@@ -108,7 +108,7 @@ func receive_networked_object_event(object_id : int, function_name : String, arg
 
 func player_entity_hp_changed(new_value):
 	if enabled:
-		rpc_unreliable("update_peer_hp", NetworkManager.my_id, new_value)
+		rpc("update_peer_hp", NetworkManager.my_id, new_value)
 
 func player_entity_transform_changed(new_value):
 	if enabled:

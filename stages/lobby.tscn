@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=2]
+[gd_scene load_steps=60 format=2]
 
 [ext_resource path="res://stages/lobby.gd" type="Script" id=1]
 [ext_resource path="res://stages/generic/sky.jpg" type="Texture" id=2]
@@ -11,6 +11,8 @@
 [ext_resource path="res://effects/glow_3.png" type="Texture" id=9]
 [ext_resource path="res://effects/dust/dust.material" type="Material" id=10]
 [ext_resource path="res://stages/generic/rock/rock.glb" type="PackedScene" id=11]
+[ext_resource path="res://stages/test_stage_4.tscn" type="PackedScene" id=12]
+[ext_resource path="res://stages/test_stage_3.tscn" type="PackedScene" id=13]
 
 [sub_resource type="PanoramaSky" id=1]
 panorama = ExtResource( 2 )
@@ -409,19 +411,19 @@ __meta__ = {
 
 [node name="Peers" type="Label" parent="."]
 margin_left = 495.0
-margin_top = 88.0
+margin_top = 121.0
 margin_right = 924.0
-margin_bottom = 607.0
+margin_bottom = 640.0
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Peers2" type="Label" parent="."]
-margin_left = 494.679
-margin_top = 64.0
-margin_right = 686.679
-margin_bottom = 168.0
+margin_left = 495.679
+margin_top = 98.0
+margin_right = 687.679
+margin_bottom = 202.0
 text = "Peers connected:"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -445,6 +447,15 @@ In offensive stance (sword up) doble tap and hold up to run.
 
 In defensive stance (sword in front) doble tap any direction to quickstep."
 autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LevelSelect" type="OptionButton" parent="."]
+margin_left = 509.747
+margin_top = 65.8363
+margin_right = 538.747
+margin_bottom = 85.8363
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -572,6 +583,9 @@ transform = Transform( -1.39869, 0, 1.06864, 0, 1.76021, 0, -1.06864, 0, -1.3986
 
 [node name="rock2" parent="." instance=ExtResource( 11 )]
 transform = Transform( -0.540851, 0.20405, 1.23011, -0.395206, 1.24366, -0.38006, -1.18263, -0.508918, -0.435557, 4.09356, 0.266002, 1.32252 )
+
+[node name="ResourcePreloader" type="ResourcePreloader" parent="."]
+resources = [ PoolStringArray( "test_stage_3", "test_stage_4" ), [ ExtResource( 13 ), ExtResource( 12 ) ] ]
 [connection signal="text_changed" from="Adress" to="." method="_on_Adress_text_changed"]
 [connection signal="text_changed" from="Port" to="." method="_on_Port_text_changed"]
 [connection signal="pressed" from="Host" to="." method="_on_Host_pressed"]

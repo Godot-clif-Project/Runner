@@ -61,12 +61,11 @@ func _process_state(delta):
 			set_next_state("wall_run")
 			return
 		
-		if not entity.raycast_side_high[entity.wall_side].is_colliding() and entity.wall_has_ledge:
-			if entity.wall_has_ledge:
-				entity.model_container.rotation.y = entity.wall_rot.y - PI
-				entity.model.rotation.z = 0.0
-				set_next_state("ledge_climb")
-				return
+#		if not entity.raycast_side_high[entity.wall_side].is_colliding() and entity.wall_has_ledge:
+#			entity.model_container.rotation.y = entity.wall_rot.y - PI
+#			entity.model.rotation.z = 0.0
+#			set_next_state("ledge_climb")
+#			return
 		
 #		if entity.wall_has_ledge:
 ##			if entity.raycast_side[entity.wall_side].get_collider().is_in_group("ledge"):
@@ -99,7 +98,7 @@ func _process_state(delta):
 	
 	wait -= 1
 	entity.apply_velocity(delta)
-	entity.center_camera(delta * 60)
+	entity.center_camera(delta * 60, Vector2.ZERO)
 #		entity.set_velocity(Vector3(0.0, 10, -10).rotated(Vector3.RIGHT, entity.wall_rot.x).rotated(Vector3.FORWARD, PI *entity.input_listener.analogs[0]))
 #		entity.model_container.rotation.z = PI * -entity.input_listener.analogs[0]
 #		entity.model.rotation.x = entity.wall_rot.x - PI * 0.5

@@ -135,8 +135,8 @@ remote func receive_peer_info(_peers):
 	peers = _peers
 	emit_signal("peer_registered")
 
-remotesync func start_game():
+remotesync func start_game(level):
 #	lobby_scene.visible = false
 #	get_tree().paused = true
 	lobby_scene.queue_free()
-	get_tree().root.add_child(NETWORK_STAGE.instance())
+	get_tree().root.add_child(level.instance())

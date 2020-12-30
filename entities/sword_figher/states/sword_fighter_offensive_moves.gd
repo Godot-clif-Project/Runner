@@ -1,5 +1,6 @@
 extends "res://entities/sword_figher/states/sword_fighter_state.gd"
 
+
 # Initialize state here: Set animation, add impulse, etc.
 #func _enter_state():
 #	entity.set_animation(get_animation_name(), 0, 5.0)
@@ -17,6 +18,8 @@ extends "res://entities/sword_figher/states/sword_fighter_state.gd"
 #	print(anim_name)
 #	set_next_state("idle")
 #	if anim_name == "off_h_r_heavy":
+
+
 
 func _animation_finished(anim_name):
 	set_next_state("offensive_stance")

@@ -61,6 +61,7 @@ func change_state(next_state : String):
 		print("ERROR Undefined State: " + next_state + "\n" + "Tried to access from: " + CurrentState.name)
 		CurrentState = StateList.STATES[StateList.INITIAL_STATE].new()
 		enter_initial_state()
+		return
 		
 	emit_signal("state_changed", next_state)
 

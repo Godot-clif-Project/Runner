@@ -59,7 +59,7 @@ func _process_state(delta):
 		
 	entity.velocity = entity.clinging_to_entity.velocity
 	entity.apply_velocity(delta)
-	entity.center_camera(delta * 2)
+	entity.center_camera(delta * 2, Vector2.ZERO)
 	pass
 
 func get_possible_transitions():

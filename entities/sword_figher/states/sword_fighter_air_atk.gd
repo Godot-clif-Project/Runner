@@ -46,7 +46,7 @@ func _process_state(delta):
 	entity.apply_gravity(delta)
 #	entity.apply_drag(delta * 0.1)
 	entity.apply_velocity(delta)
-	entity.center_camera(delta)
+#	entity.center_camera(delta)
 	
 	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
 #	entity.center_camera(delta)

@@ -13,6 +13,7 @@ func _enter_state():
 #	vector_to_target = entity.translation.direction_to(entity.tandem_entity.translation)
 #	entity.model_container.rotation.y = atan2(vector_to_target.x, vector_to_target.z) + PI
 	initial_distance_to_target = entity.translation.distance_to(entity.tandem_entity.translation)
+	entity.on_ground = false
 	
 #	start_pos = entity.translation
 	
@@ -52,10 +53,10 @@ func _process_state(delta):
 		set_next_state("jump")
 		return
 		
-	entity.center_camera(delta * 2)
+	entity.center_camera(delta * 2, Vector2.ZERO)
 	entity.apply_velocity(delta)
-#	entity.apply_drag(delta)
 #	entity.apply_gravity(delta)
+#	entity.apply_drag(delta)
 #
 ##func _animation_blend_started(anim_name):
 ##	print(anim_name)

@@ -164,6 +164,53 @@ func _received_input(key, state):
 		else:
 			set_next_state(test.state)
 
+func add_direction():
+	var direction = 0.0
+	
+	if entity.input_listener.is_key_pressed(InputManager.RIGHT):
+		direction = 1.0
+	elif entity.input_listener.is_key_pressed(InputManager.LEFT):
+		direction = -1.0
+	else:
+		direction = entity.input_listener.analogs[0]
+		
+	return direction
+
+func hit_wall():
+	if entity.prev_speed > entity.max_speed * 0.75:
+		var wall_normal = entity.get_slide_collision(0).normal
+#			print(entity.prev_velocity.normalized().dot(wall_normal))
+		var dot = entity.prev_velocity.normalized().dot(wall_normal)
+		if dot < -0.4:
+			
+			var player_vector = -entity.model_container.transform.basis.z
+#			var wall_position = entity.get_slide_collision(0).position
+#			entity.velocity *= 1 - abs(dot * 0.25)
+
+	#			if entity.target_speed <= entity.max_speed:
+	#	#			entity.model_container.rotation.y -= (PI * 0.333) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
+	#				entity.velocity += wall_normal * entity.prev_speed * 0.25
+	#			else:
+	#	#			entity.model_container.rotation.y -= (PI * 0.5) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
+	#				entity.velocity += wall_normal * entity.prev_speed * 0.33
+				
+			entity.velocity += wall_normal * (entity.prev_speed * 0.5 * abs(dot))
+			entity.acceleration = 0.0
+	
+				
+			var angle = Vector2(player_vector.x, player_vector.z).angle_to(Vector2(wall_normal.x, wall_normal.z))
+			if angle > 0.0:
+				entity.set_animation("run_bump_l", 0.0, 0.05)
+			else:
+				entity.set_animation("run_bump_r", 0.0, 0.05)
+			entity.play_sound("hit_random")
+			MainManager.current_level.spawn_effect("weak_hit", entity.translation + Vector3.UP, Vector3.ZERO)
+			
+#			var _hit = Hit.new(Hit.INIT_TYPE.WALL)
+#			_hit.position = wall_position
+#			_hit.damage = entity.prev_speed * 2
+#			entity.receive_hit(_hit)
+
 func test_transition_by_input(key : int, key_state : int, valid_transitions : Array):
 	# Pass valid transitions into the array in order of lowest to highest priority.
 #	if key_state == InputManager.RELEASED:

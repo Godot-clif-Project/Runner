@@ -137,6 +137,9 @@ func _exit_state():
 	entity.reset_hitboxes()
 	pass
 
+# Callback for player inputs.
+# "key" is a string with the name of the virtual key being pressed (see InputManager).
+# "state" is true or false, pressed or released.
 func _received_input(key, state):
 	pass
 

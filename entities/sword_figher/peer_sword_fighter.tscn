@@ -1,11 +1,11 @@
-[gd_scene load_steps=87 format=2]
+[gd_scene load_steps=89 format=2]
 
 [ext_resource path="res://entities/sword_figher/peer_sword_fighter.gd" type="Script" id=1]
 [ext_resource path="res://entities/sword_figher/model/sword_fighter.glb" type="PackedScene" id=2]
 [ext_resource path="res://objects/hurtbox.tscn" type="PackedScene" id=3]
 [ext_resource path="res://entities/sword_figher/dust_trail.tscn" type="PackedScene" id=4]
 [ext_resource path="res://entities/sword_figher/model/rope/rope_export.dae" type="PackedScene" id=5]
-[ext_resource path="res://entities/sword_figher/animation_events.gd" type="Script" id=6]
+[ext_resource path="res://tools/animation_events.gd" type="Script" id=6]
 [ext_resource path="res://entities/sword_figher/model/temp/fall.anim" type="Animation" id=7]
 [ext_resource path="res://entities/sword_figher/model/temp/air_atk_r.anim" type="Animation" id=8]
 [ext_resource path="res://entities/sword_figher/model/temp/run_loop_c.anim" type="Animation" id=9]
@@ -17,6 +17,8 @@
 [ext_resource path="res://entities/sword_figher/model/temp/def_taunt.anim" type="Animation" id=15]
 [ext_resource path="res://entities/sword_figher/model/temp/off_taunt.anim" type="Animation" id=16]
 [ext_resource path="res://objects/sound_array.tscn" type="PackedScene" id=17]
+[ext_resource path="res://entities/sword_figher/model/temp/idle.anim" type="Animation" id=18]
+
 
 [sub_resource type="AnimationNodeBlend2" id=1]
 
@@ -66,7 +68,7 @@ nodes/animation_1/position = Vector2( 300, -80 )
 nodes/animation_1_seek/node = SubResource( 10 )
 nodes/animation_1_seek/position = Vector2( 500, -80 )
 nodes/output/position = Vector2( 1340, 0 )
-node_connections = [ "output", 0, "TimeScale", "TimeScale", 0, "Seek", "1_and_-1", 0, "animation_1_seek", "1_and_-1", 1, "animation_-1_seek", "Seek", 0, "Add2", "Add2", 0, "1_and_-1", "Add2", 1, "add_animation", "animation_-1_seek", 0, "animation_-1", "animation_1_seek", 0, "animation_1" ]
+node_connections = [ "output", 0, "TimeScale", "Seek", 0, "Add2", "Add2", 0, "1_and_-1", "Add2", 1, "add_animation", "1_and_-1", 0, "animation_1_seek", "1_and_-1", 1, "animation_-1_seek", "TimeScale", 0, "Seek", "animation_-1_seek", 0, "animation_-1", "animation_1_seek", 0, "animation_1" ]
 
 [sub_resource type="Animation" id=12]
 length = 0.483333
@@ -140,72 +142,75 @@ length = 0.5
 length = 0.966667
 
 [sub_resource type="Animation" id=27]
-length = 0.7
+length = 2.0
 
 [sub_resource type="Animation" id=28]
-length = 2.26667
+length = 0.7
 
 [sub_resource type="Animation" id=29]
-length = 0.001
+length = 2.26667
 
 [sub_resource type="Animation" id=30]
-length = 1.33333
+length = 0.001
 
 [sub_resource type="Animation" id=31]
-length = 0.001
+length = 1.33333
 
 [sub_resource type="Animation" id=32]
 length = 0.001
 
 [sub_resource type="Animation" id=33]
-length = 0.833333
+length = 0.001
 
 [sub_resource type="Animation" id=34]
-length = 0.383333
+length = 0.833333
 
 [sub_resource type="Animation" id=35]
-length = 1.16667
+length = 0.383333
 
 [sub_resource type="Animation" id=36]
-length = 0.916667
+length = 1.16667
 
 [sub_resource type="Animation" id=37]
-length = 0.666667
+length = 0.916667
 
 [sub_resource type="Animation" id=38]
 length = 0.666667
 
 [sub_resource type="Animation" id=39]
+length = 0.666667
 
 [sub_resource type="Animation" id=40]
-length = 0.333333
 
 [sub_resource type="Animation" id=41]
-length = 0.583333
+length = 0.333333
 
 [sub_resource type="Animation" id=42]
-length = 1.93333
+length = 0.583333
 
 [sub_resource type="Animation" id=43]
-length = 2.25
+length = 1.93333
 
 [sub_resource type="Animation" id=44]
-length = 0.833333
+length = 2.25
 
 [sub_resource type="Animation" id=45]
-length = 1.33333
+length = 0.833333
 
 [sub_resource type="Animation" id=46]
+length = 1.33333
 
 [sub_resource type="Animation" id=47]
-length = 0.833333
 
 [sub_resource type="Animation" id=48]
 length = 0.833333
 
 [sub_resource type="Animation" id=49]
+length = 0.833333
 
 [sub_resource type="Animation" id=50]
+
+[sub_resource type="Animation" id=51]
 length = 2.18333
 step = 0.0166667
 tracks/0/type = "method"
@@ -226,52 +231,52 @@ tracks/0/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=51]
+[sub_resource type="Animation" id=52]
 length = 0.25
 
-[sub_resource type="Animation" id=52]
-length = 0.166667
-
 [sub_resource type="Animation" id=53]
-length = 0.516667
+length = 0.166667
 
 [sub_resource type="Animation" id=54]
 length = 0.516667
 
 [sub_resource type="Animation" id=55]
-length = 0.933333
+length = 0.516667
 
 [sub_resource type="Animation" id=56]
-length = 0.833333
+length = 0.933333
 
 [sub_resource type="Animation" id=57]
-length = 0.666667
-
-[sub_resource type="Animation" id=58]
-length = 0.45
-
-[sub_resource type="Animation" id=59]
-length = 0.416667
-
-[sub_resource type="Animation" id=60]
-length = 0.2
-
-[sub_resource type="Animation" id=61]
-length = 0.666667
-
-[sub_resource type="Animation" id=62]
 length = 0.833333
 
+[sub_resource type="Animation" id=58]
+length = 0.666667
+
+[sub_resource type="Animation" id=59]
+length = 0.45
+
+[sub_resource type="Animation" id=60]
+length = 0.416667
+
+[sub_resource type="Animation" id=61]
+length = 0.2
+
+[sub_resource type="Animation" id=62]
+length = 0.666667
+
 [sub_resource type="Animation" id=63]
+length = 0.833333
+
+[sub_resource type="Animation" id=64]
 length = 0.001
 
-[sub_resource type="Curve" id=64]
+[sub_resource type="Curve" id=65]
 _data = [ Vector2( 0.250909, 0 ), 0.0, 0.055563, 0, 0, Vector2( 0.250909, 1 ), -1.38996, -1.38996, 0, 0, Vector2( 1, 0 ), -0.00435815, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=65]
-curve = SubResource( 64 )
+[sub_resource type="CurveTexture" id=66]
+curve = SubResource( 65 )
 
-[sub_resource type="ParticlesMaterial" id=66]
+[sub_resource type="ParticlesMaterial" id=67]
 direction = Vector3( 0, 0, 1 )
 spread = 124.05
 flatness = 1.0
@@ -281,9 +286,9 @@ tangential_accel = -169.4
 damping = 179.02
 scale = 0.1
 scale_random = 0.1
-scale_curve = SubResource( 65 )
+scale_curve = SubResource( 66 )
 
-[sub_resource type="SpatialMaterial" id=67]
+[sub_resource type="SpatialMaterial" id=68]
 flags_transparent = true
 flags_unshaded = true
 vertex_color_use_as_albedo = true
@@ -295,10 +300,10 @@ particles_anim_v_frames = 1
 particles_anim_loop = false
 albedo_texture = ExtResource( 12 )
 
-[sub_resource type="QuadMesh" id=68]
-material = SubResource( 67 )
+[sub_resource type="QuadMesh" id=69]
+material = SubResource( 68 )
 
-[sub_resource type="CapsuleShape" id=69]
+[sub_resource type="CapsuleShape" id=70]
 radius = 0.459803
 height = 0.564789
 
@@ -339,43 +344,44 @@ anims/def_step_r = SubResource( 23 )
 anims/def_taunt = SubResource( 24 )
 anims/defensive_stance = SubResource( 25 )
 anims/fall = SubResource( 26 )
-anims/jump_land = SubResource( 27 )
-anims/jump_start = SubResource( 28 )
-anims/knocked_down = SubResource( 29 )
-anims/off_block_break = SubResource( 30 )
-anims/off_block_hi = SubResource( 31 )
-anims/off_block_low = SubResource( 32 )
-anims/off_h_r_0001 = SubResource( 33 )
-anims/off_h_r_1 = SubResource( 34 )
-anims/off_h_r_heavy = SubResource( 35 )
-anims/off_hi_fierce = SubResource( 36 )
-anims/off_hi_l_light = SubResource( 37 )
-anims/off_hi_r_light = SubResource( 38 )
-anims/off_kick = SubResource( 39 )
-anims/off_run_startup = SubResource( 40 )
-anims/off_run_stop = SubResource( 41 )
-anims/off_taunt = SubResource( 42 )
-anims/off_throw_f = SubResource( 43 )
-anims/off_throw_f_startup = SubResource( 44 )
-anims/off_walk_back = SubResource( 45 )
-anims/off_walk_forward = SubResource( 46 )
-anims/off_walk_left = SubResource( 47 )
-anims/off_walk_right = SubResource( 48 )
-anims/offensive_stance = SubResource( 49 )
-anims/receive_off_throw_f = SubResource( 50 )
-anims/run_break = SubResource( 51 )
-anims/run_break_loop = SubResource( 52 )
-anims/run_bump_l = SubResource( 53 )
-anims/run_bump_r = SubResource( 54 )
-anims/run_loop = SubResource( 55 )
-anims/run_loop_2 = SubResource( 56 )
-anims/run_loop_c = SubResource( 57 )
-anims/run_stop = SubResource( 58 )
-anims/run_stop_dash = SubResource( 59 )
-anims/run_stop_loop = SubResource( 60 )
-anims/stance_def_to_off = SubResource( 61 )
-anims/stance_off_to_def = SubResource( 62 )
-anims/t_pose = SubResource( 63 )
+anims/idle = SubResource( 27 )
+anims/jump_land = SubResource( 28 )
+anims/jump_start = SubResource( 29 )
+anims/knocked_down = SubResource( 30 )
+anims/off_block_break = SubResource( 31 )
+anims/off_block_hi = SubResource( 32 )
+anims/off_block_low = SubResource( 33 )
+anims/off_h_r_0001 = SubResource( 34 )
+anims/off_h_r_1 = SubResource( 35 )
+anims/off_h_r_heavy = SubResource( 36 )
+anims/off_hi_fierce = SubResource( 37 )
+anims/off_hi_l_light = SubResource( 38 )
+anims/off_hi_r_light = SubResource( 39 )
+anims/off_kick = SubResource( 40 )
+anims/off_run_startup = SubResource( 41 )
+anims/off_run_stop = SubResource( 42 )
+anims/off_taunt = SubResource( 43 )
+anims/off_throw_f = SubResource( 44 )
+anims/off_throw_f_startup = SubResource( 45 )
+anims/off_walk_back = SubResource( 46 )
+anims/off_walk_forward = SubResource( 47 )
+anims/off_walk_left = SubResource( 48 )
+anims/off_walk_right = SubResource( 49 )
+anims/offensive_stance = SubResource( 50 )
+anims/receive_off_throw_f = SubResource( 51 )
+anims/run_break = SubResource( 52 )
+anims/run_break_loop = SubResource( 53 )
+anims/run_bump_l = SubResource( 54 )
+anims/run_bump_r = SubResource( 55 )
+anims/run_loop = SubResource( 56 )
+anims/run_loop_2 = SubResource( 57 )
+anims/run_loop_c = SubResource( 58 )
+anims/run_stop = SubResource( 59 )
+anims/run_stop_dash = SubResource( 60 )
+anims/run_stop_loop = SubResource( 61 )
+anims/stance_def_to_off = SubResource( 62 )
+anims/stance_off_to_def = SubResource( 63 )
+anims/t_pose = SubResource( 64 )
 script = ExtResource( 6 )
 
 [node name="ModelContainer" type="Spatial" parent="."]
@@ -399,6 +405,7 @@ anims/air_atk_l = ExtResource( 13 )
 anims/air_atk_r = ExtResource( 8 )
 anims/def_taunt = ExtResource( 15 )
 anims/fall = ExtResource( 7 )
+anims/idle = ExtResource( 18 )
 anims/off_taunt = ExtResource( 16 )
 anims/run_loop_c = ExtResource( 9 )
 
@@ -410,12 +417,12 @@ visible = false
 material/0 = ExtResource( 11 )
 
 [node name="SlashParticles" type="Particles" parent="ModelContainer"]
-transform = Transform( 0.991606, 1.44152e-07, 0.129297, 1.50996e-07, -1, -4.31273e-08, 0.129297, 6.22887e-08, -0.991606, 0, 1.28032, 0 )
+transform = Transform( 0.991606, 1.44152e-07, 0.129297, 1.50996e-07, -1, -4.31274e-08, 0.129297, 6.22887e-08, -0.991606, 0, 1.28032, 0 )
 emitting = false
 amount = 133
 lifetime = 0.6
-process_material = SubResource( 66 )
-draw_pass_1 = SubResource( 68 )
+process_material = SubResource( 67 )
+draw_pass_1 = SubResource( 69 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -444,7 +451,7 @@ playback/speed = 3.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.74, 0 )
-shape = SubResource( 69 )
+shape = SubResource( 70 )
 __meta__ = {
 "_editor_description_": ""
 }
