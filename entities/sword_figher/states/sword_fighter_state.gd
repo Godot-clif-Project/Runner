@@ -176,8 +176,8 @@ func add_direction():
 		
 	return direction
 
-func hit_wall():
-	if entity.prev_speed > entity.max_speed * 0.75:
+func hit_wall() -> bool:
+	if entity.prev_speed > entity.MAX_SPEED * 0.75:
 		var wall_normal = entity.get_slide_collision(0).normal
 #			print(entity.prev_velocity.normalized().dot(wall_normal))
 		var dot = entity.prev_velocity.normalized().dot(wall_normal)
@@ -187,7 +187,7 @@ func hit_wall():
 #			var wall_position = entity.get_slide_collision(0).position
 #			entity.velocity *= 1 - abs(dot * 0.25)
 
-	#			if entity.target_speed <= entity.max_speed:
+	#			if entity.target_speed <= entity.MAX_SPEED:
 	#	#			entity.model_container.rotation.y -= (PI * 0.333) * (entity.prev_speed * 0.1) * abs(wall_normal.dot(player_vector)) * sign(rot)
 	#				entity.velocity += wall_normal * entity.prev_speed * 0.25
 	#			else:
@@ -206,6 +206,9 @@ func hit_wall():
 			entity.play_sound("hit_random")
 			MainManager.current_level.spawn_effect("weak_hit", entity.translation + Vector3.UP, Vector3.ZERO)
 			
+			return true
+			
+	return false
 #			var _hit = Hit.new(Hit.INIT_TYPE.WALL)
 #			_hit.position = wall_position
 #			_hit.damage = entity.prev_speed * 2

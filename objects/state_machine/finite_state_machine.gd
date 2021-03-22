@@ -22,7 +22,8 @@ func setup():
 #	CurrentState.entity = entity
 	
 	# Call this method deferred because other nodes won't be instanced yet.
-	call_deferred("enter_initial_state")
+#	call_deferred("enter_initial_state")
+	enter_initial_state()
 
 func enter_initial_state():
 	CurrentState = StateList.STATES[StateList.INITIAL_STATE].new()
@@ -51,14 +52,14 @@ func change_state(next_state : String):
 		CurrentState.fsm = self
 		CurrentState.state_list = StateList
 
-		CurrentState._enter_state()
-		
-#		state_history.push_front(next_state)
-#		state_history.pop_back()
+		state_history.push_front(next_state)
+		state_history.pop_back()
 #		print(state_history)
 		
+		CurrentState._enter_state()
+		
 	else:
-		print("ERROR Undefined State: " + next_state + "\n" + "Tried to access from: " + CurrentState.name)
+		printerr("ERROR Undefined State: " + next_state + "\n" + "Tried to access from: " + CurrentState.name)
 		CurrentState = StateList.STATES[StateList.INITIAL_STATE].new()
 		enter_initial_state()
 		return
@@ -71,6 +72,7 @@ func change_state(next_state : String):
 # entirely handled by the states themselves?
 
 func receive_event(type, args):
+#	if ready_to_process:
 	process_events = true
 	CurrentState.received_events[type].append(args)
 
@@ -79,7 +81,6 @@ func receive_event(type, args):
 func _process_current_state(delta, process_state):
 	if ready_to_process:
 		
-		# Process events and check if state must be changed afterwards
 		if process_events:
 			CurrentState.process_received_events()
 		

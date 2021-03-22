@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=2]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.412, 0.556, 1 )
+colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0.89, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="ParticlesMaterial" id=3]
+emission_shape = 1
+emission_sphere_radius = 2.0
+direction = Vector3( 0, 0, 1 )
+spread = 0.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 20.0
+color_ramp = SubResource( 2 )
+
+[sub_resource type="SpatialMaterial" id=4]
+render_priority = 100
+flags_transparent = true
+flags_unshaded = true
+flags_no_depth_test = true
+flags_do_not_receive_shadows = true
+vertex_color_use_as_albedo = true
+distance_fade_mode = 2
+distance_fade_min_distance = 0.0
+distance_fade_max_distance = 2.0
+
+[sub_resource type="CubeMesh" id=5]
+material = SubResource( 4 )
+size = Vector3( 0.05, 0.05, 2 )
+
+[node name="SpeedLines" type="Particles"]
+amount = 20
+lifetime = 0.5
+process_material = SubResource( 3 )
+draw_pass_1 = SubResource( 5 )

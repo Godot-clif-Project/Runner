@@ -44,7 +44,7 @@ tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
-tracks/0/enabled = true
+tracks/0/enabled = false
 tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -146,7 +146,7 @@ tracks/8/loop_wrap = true
 tracks/8/imported = false
 tracks/8/enabled = true
 tracks/8/keys = {
-"times": PoolRealArray( 0.300001 ),
+"times": PoolRealArray( 0.306 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ true ]
@@ -172,7 +172,7 @@ tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
-tracks/0/enabled = true
+tracks/0/enabled = false
 tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -274,7 +274,7 @@ tracks/8/loop_wrap = true
 tracks/8/imported = false
 tracks/8/enabled = true
 tracks/8/keys = {
-"times": PoolRealArray( 0.300001 ),
+"times": PoolRealArray( 0.306 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ true ]
@@ -2679,11 +2679,6 @@ script = ExtResource( 17 )
 [node name="sword_fighter" parent="ModelContainer" instance=ExtResource( 1 )]
 transform = Transform( -0.6, 0, -9.05975e-08, 0, 0.6, 0, 9.05975e-08, 0, -0.6, 0, 0, 0 )
 
-[node name="Skeleton" parent="ModelContainer/sword_fighter/Armature" index="0"]
-bones/7/bound_children = [ NodePath("BoneAttachment") ]
-bones/16/bound_children = [ NodePath("RHandAttachment") ]
-bones/23/bound_children = [ NodePath("ThrowAttachment") ]
-
 [node name="Cube" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="0"]
 transform = Transform( 1, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1, 0, 0, 0 )
 material/0 = ExtResource( 12 )
@@ -2692,7 +2687,7 @@ material/0 = ExtResource( 12 )
 material/0 = ExtResource( 12 )
 
 [node name="BoneAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
-transform = Transform( 0.148071, 0.779578, 0.60855, -0.359877, 0.61562, -0.701071, -0.921175, -0.115195, 0.371708, -0.00436896, 0.690309, -0.257788 )
+transform = Transform( 1, 0, 0, 0, 0.998474, 0.0552152, 0, -0.0552152, 0.998474, -6.59474e-17, 2.24226, 7.43921e-09 )
 bone_name = "torso"
 
 [node name="Hurtbox" parent="ModelContainer/sword_fighter/Armature/Skeleton/BoneAttachment" instance=ExtResource( 11 )]
@@ -2713,7 +2708,7 @@ draw_pass_1 = SubResource( 65 )
 bone_name = "throw_pos"
 
 [node name="RHandAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="4"]
-transform = Transform( -0.562354, -0.756706, -0.333397, -0.76748, 0.327566, 0.551068, -0.307787, 0.565771, -0.764964, -0.579447, 1.13831, 0.134891 )
+transform = Transform( 0.603443, -0.596163, -0.529571, -0.529571, -0.796131, 0.292799, -0.596163, 0.103758, -0.79613, -0.775657, 2.00929, -0.00336646 )
 bone_name = "hand_r"
 
 [node name="AnimationPlayer" parent="ModelContainer/sword_fighter" index="1"]
@@ -2745,7 +2740,7 @@ process_material = SubResource( 68 )
 draw_pass_1 = SubResource( 70 )
 
 [node name="Hitbox" parent="ModelContainer" instance=ExtResource( 9 )]
-transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 1.46744, 1.259, -0.075 )
+transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -1.467, 1.259, -0.075 )
 visible = false
 hit_info = ExtResource( 10 )
 hit_name = "off_hi_r_heavy"
@@ -2908,6 +2903,7 @@ visible = false
 one_shot = true
 
 [node name="BombTween" type="Tween" parent="."]
+
 [connection signal="flag_changed" from="AnimationFlags" to="." method="_on_AnimationFlags_flag_changed"]
 [connection signal="received_input" from="InputListener" to="." method="_on_InputListener_received_input"]
 [connection signal="animation_finished" from="AnimationEvents" to="." method="_on_AnimationEvents_animation_finished"]
@@ -2922,5 +2918,4 @@ one_shot = true
 [connection signal="tween_all_completed" from="BombTween" to="." method="_on_BombTween_tween_all_completed"]
 
 [editable path="ModelContainer/sword_fighter"]
-
 [editable path="ModelContainer/sword_fighter/slash"]

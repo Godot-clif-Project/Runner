@@ -63,8 +63,8 @@ func _flag_changed(flag, state):
 #		entity.set_velocity(Vector3(0.0, strength * 0.5 , -strength * 0.75))
 #		entity.add_impulse(Vector3(0.0, strength * 0.5 , -strength * 0.5))
 		entity.add_impulse(Vector3(0.0, 5.0 , -5.0))
-		var length = entity.velocity.length()
-		entity.velocity = entity.velocity.normalized() * clamp(length, 0, 20)
+#		var length = entity.velocity.length()
+#		entity.velocity = entity.velocity.normalized() * clamp(length, 0, 20)
 #		entity.set_velocity(Vector3(0.0, entity.jump_str * 0.5 , -entity.jump_str * 0.6))
 
 #func _received_input(key, state):

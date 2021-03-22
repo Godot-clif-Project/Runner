@@ -586,6 +586,7 @@ transform = Transform( -0.540851, 0.20405, 1.23011, -0.395206, 1.24366, -0.38006
 
 [node name="ResourcePreloader" type="ResourcePreloader" parent="."]
 resources = [ PoolStringArray( "test_stage_3", "test_stage_4" ), [ ExtResource( 13 ), ExtResource( 12 ) ] ]
+
 [connection signal="text_changed" from="Adress" to="." method="_on_Adress_text_changed"]
 [connection signal="text_changed" from="Port" to="." method="_on_Port_text_changed"]
 [connection signal="pressed" from="Host" to="." method="_on_Host_pressed"]

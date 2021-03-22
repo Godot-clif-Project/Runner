@@ -111,6 +111,18 @@ margin_right = 1295.0
 margin_bottom = 896.0
 rect_scale = Vector2( 0.5, 0.5 )
 
+[node name="Speed" type="Label" parent="."]
+margin_left = 256.0
+margin_top = 640.0
+margin_right = 323.0
+margin_bottom = 654.0
+rect_scale = Vector2( 2.62338, 2.62338 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "00"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="BombCooldown" type="TextureProgress" parent="."]
 modulate = Color( 0.470588, 0.87451, 0.223529, 1 )
 margin_left = 64.0

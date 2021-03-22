@@ -16,7 +16,7 @@ func _enter_state():
 #	entity.acceleration = 0.0
 	entity.get_node("ModelContainer/Particles2").emitting = true
 	entity.set_animation("run_break", 0, 0.05)
-	entity.ground_drag = 15
+	entity.ground_drag = 8
 	#	if entity.input_listener.is_key_pressed(InputManager.DOWN):
 #		entity.ground_drag = 20
 #	else:
@@ -47,7 +47,7 @@ func _process_state(delta):
 	
 	ang_momentum = lerp(ang_momentum, -add_direction() * max_turn_speed, delta * rot_lerp)
 	
-	entity.model_container.rotation_degrees.y += ang_momentum * float(1 - entity.target_speed / entity.boost_speed * 0.5)
+	entity.model_container.rotation_degrees.y += ang_momentum * float(1 - entity.target_speed / entity.BOOST_SPEED * 0.5)
 	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
 	
 #	if entity.input_listener.is_key_pressed(InputManager.FIRE):
@@ -121,7 +121,7 @@ func _received_input(key, state):
 			return
 		elif key == InputManager.BOOST:
 			set_next_state("run")
-			entity.target_speed = entity.boost_speed
+			entity.target_speed = entity.BOOST_SPEED
 #			entity.acceleration = 0.8
 			return
 #		if key == InputManager.DOWN:

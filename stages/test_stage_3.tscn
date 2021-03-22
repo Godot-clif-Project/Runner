@@ -11,7 +11,7 @@
 [ext_resource path="res://objects/stamina_bomb/stamina_bomb.tscn" type="PackedScene" id=9]
 [ext_resource path="res://objects/trip_obstacle.tscn" type="PackedScene" id=10]
 [ext_resource path="res://objects/stage_timer.tscn" type="PackedScene" id=11]
-[ext_resource path="res://run_icon.PNG" type="Texture" id=12]
+[ext_resource path="res://misc/runnnn.jpg" type="Texture" id=12]
 [ext_resource path="res://objects/test_material.material" type="Material" id=13]
 [ext_resource path="res://entities/sword_figher/model/elizell/elizell_mat.material" type="Material" id=14]
 [ext_resource path="res://objects/hurtbox.tscn" type="PackedScene" id=15]
@@ -261,6 +261,7 @@ light_color = Color( 1, 0.972549, 0.917647, 1 )
 shadow_enabled = true
 
 [node name="InterpolatedCamera" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 default_speed = 15
 
 [node name="SwordFighter" parent="." instance=ExtResource( 1 )]
@@ -284,7 +285,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.93326, 0, 3.01223 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.3395, 0, 3.01223 )
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform( 6.07915, 0, 0, 0, 6.07917, 0, 0, 0, 6.07915, -1.01271, 14.4972, -359.019 )
+transform = Transform( 0.33331, 0.501786, 2.19338e-08, 0, -2.63317e-08, 0.602399, 0.501786, -0.33331, -1.45694e-08, -2.77224, 0.00455643, -340.397 )
 transparent = false
 shaded = true
 texture = ExtResource( 12 )
@@ -892,6 +893,7 @@ transform = Transform( -1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, -
 
 [node name="pillar2" parent="." instance=ExtResource( 21 )]
 transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 15.6172, 0, 43.2726 )
+
 [connection signal="received_hit" from="Dummy/Hurtbox" to="Dummy" method="_on_Hurtbox_received_hit"]
 
 [editable path="UI"]

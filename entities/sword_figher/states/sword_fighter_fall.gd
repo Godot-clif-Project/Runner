@@ -63,7 +63,7 @@ func _touched_surface(surface):
 		set_next_state("land")
 		return
 	elif surface == "wall":
-		if entity.prev_speed > entity.max_speed * 0.5:
+		if entity.prev_speed > entity.MAX_SPEED * 0.5:
 			var wall_normal = entity.get_slide_collision(0).normal
 			if entity.prev_velocity.normalized().dot(wall_normal) < -0.4:
 				

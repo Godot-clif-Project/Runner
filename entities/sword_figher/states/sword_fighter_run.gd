@@ -21,6 +21,10 @@ var bomb_throw_str = 30.0
 #var t = 0.0
 #var t_2 = 0.0
 
+#############
+# TODO: fix retarded target speed
+#############
+
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
 	entity.set_animation("run_loop_c", 0, 0.05)
@@ -28,8 +32,10 @@ func _enter_state():
 #		entity.velocity = entity.velocity.normalized() * entity.target_speed
 	entity.model.rotation.z = 0.0
 	entity.get_node("ModelContainer/Particles2").emitting = true
+#	entity.velocity.z = entity.prev_velocity.z
 #	entity.velocity = entity.velocity.rotated(Vector3.UP, entity.model_container.rotation.y)
 #	entity.accelerate(-entity.target_speed, 0.01)
+#	entity.acceleration = 1.0
 #	._enter_state()
 #
 ## Inverse of enter_state.
@@ -37,12 +43,13 @@ func _exit_state():
 	entity.model.rotation = Vector3(0, PI, 0.0)
 #	entity.set_collision_mask_bit(0, true)
 	entity.anim_tree["parameters/TimeScale/scale"] = 1
+	entity.acceleration = 0.0
 	._exit_state()
 
 func _process_state(delta):
 	
 	if entity.feet.get_overlapping_bodies().size() == 0:
-#		if entity.target_speed > entity.max_speed:
+#		if entity.target_speed > entity.MAX_SPEED:
 #			set_next_state("running_fall")
 #			return
 #		else:
@@ -74,7 +81,7 @@ func _process_state(delta):
 ##			entity.set_collision_layer_bit(2, true)
 #			entity.set_collision_mask_bit(0, true)
 		
-	ang_momentum = lerp(ang_momentum, -add_direction() * max_turn_speed * (1 - (entity.target_speed / entity.boost_speed) * 0.5), delta * rot_lerp)
+	ang_momentum = lerp(ang_momentum, -add_direction() * max_turn_speed * (1 - (entity.target_speed / entity.BOOST_SPEED) * 0.5), delta * rot_lerp)
 #	ang_momentum = lerp(ang_momentum, -direction * max_turn_speed, delta * rot_lerp)
 	
 	if current_turn_dir != prev_turn_dir:
@@ -85,33 +92,34 @@ func _process_state(delta):
 #		entity.ground_drag = 15
 #		entity.ground_drag = 8.5
 #		entity.acceleration = 0.0
-		if entity.horizontal_speed <= entity.min_speed:
+		if entity.horizontal_speed <= entity.MIN_SPEED:
 			set_next_state("run_stop")
 			return
 		entity.target_speed = lerp(entity.target_speed, 0.0, delta * 0.75)
 		pass
 	else:
 		if boost:
-			entity.target_speed = entity.boost_speed
-			entity.hp -= 50 * delta
+			entity.target_speed = entity.BOOST_SPEED
+#			entity.hp -= 50 * delta
 		else:
-#			if entity.target_speed > entity.max_speed:
+#			if entity.target_speed > entity.MAX_SPEED:
 		#		entity.target_speed -= delta * 50
-#				entity.target_speed = lerp(entity.target_speed, entity.max_speed, delta * 1.5)
+#				entity.target_speed = lerp(entity.target_speed, entity.MAX_SPEED, delta * 1.5)
 		#		print(entity.target_speed)
 #			else:
 			if entity.input_listener.is_key_pressed(InputManager.RUN):
-				entity.target_speed = lerp(entity.target_speed, entity.max_speed, delta * 2)
+#				entity.target_speed = lerp(entity.target_speed, entity.MAX_SPEED, delta * 2)
+				entity.target_speed = entity.MAX_SPEED
 			else:
-				if entity.horizontal_speed <= entity.min_speed:
+				if entity.horizontal_speed <= entity.MIN_SPEED:
 					set_next_state("run_stop")
 					return
 				
-				if entity.target_speed > entity.max_speed * entity.input_listener.analogs[7]:
-					entity.target_speed = lerp(entity.target_speed, entity.max_speed * entity.input_listener.analogs[7], delta * 0.25)
+				if entity.target_speed > entity.MAX_SPEED * entity.input_listener.analogs[7]:
+					entity.target_speed = lerp(entity.target_speed, entity.MAX_SPEED * entity.input_listener.analogs[7], delta * 0.25)
+#					entity.target_speed = entity.MAX_SPEED * entity.input_listener.analogs[7]
 				else:
-					entity.target_speed = lerp(entity.target_speed, entity.max_speed * entity.input_listener.analogs[7], delta * 2)
-			
+					entity.target_speed = lerp(entity.target_speed, entity.MAX_SPEED * entity.input_listener.analogs[7], delta * 2)
 	
 	# slow down when turning
 #	entity.target_speed *= 1 - abs(ang_momentum) / (max_turn_speed * 6)
@@ -120,7 +128,7 @@ func _process_state(delta):
 	entity.model_container.rotation_degrees.y += ang_momentum
 	
 	# + turn speed dependant on velocity
-#	entity.model_container.rotation_degrees.y += ang_momentum * float(1 - entity.target_speed / entity.boost_speed * 0.5)
+#	entity.model_container.rotation_degrees.y += ang_momentum * float(1 - entity.target_speed / entity.BOOST_SPEED * 0.5)
 	
 	# rotate character dependant on velocity
 #	var vel_angle = atan2(entity.velocity.x, entity.velocity.z)
@@ -130,13 +138,13 @@ func _process_state(delta):
 #	entity.model.rotation.y = -PI
 	entity.align_to_floor(delta)
 	
-	entity.acceleration = clamp(entity.acceleration + delta, 0, 1.0)
-	entity.accelerate(-entity.target_speed, delta * entity.acceleration * 5)
+	entity.acceleration = clamp((entity.acceleration + delta * 2), 0.0, 1.0)
+	entity.accelerate(-entity.target_speed, delta * entity.acceleration * 3)
 	
 	entity.apply_gravity(delta)
 	entity.apply_velocity(delta)
 	
-	entity.anim_tree["parameters/TimeScale/scale"] = float(entity.target_speed / (entity.boost_speed * 0.75)) + 0.4# + (0.75 - entity.acceleration * 0.75)
+	entity.anim_tree["parameters/TimeScale/scale"] = float(entity.target_speed / (entity.BOOST_SPEED * 0.6)) + 0.4# + (0.75 - entity.acceleration * 0.75)
 	entity.center_camera(delta * 2, Vector2.ZERO)
 	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
 	
@@ -203,10 +211,10 @@ func _received_input(key, state):
 		if key == InputManager.RUN_RUN or key == InputManager.UP_UP:
 			boost = true
 			entity.play_sound("boost")
-#			if entity.target_speed <= entity.max_speed:
+#			if entity.target_speed <= entity.MAX_SPEED:
 ##			if entity.hp > 0:
 #				entity.hp -= 25
-#				entity.target_speed = entity.boost_speed
+#				entity.target_speed = entity.BOOST_SPEED
 #				entity.acceleration = 0.85
 #				entity.play_sound("boost")
 				
@@ -217,15 +225,16 @@ func _received_input(key, state):
 			else:
 				set_next_state("running_fall")
 				return
+		if key == InputManager.SLIDE:
+			entity.velocity = entity.velocity.normalized() * clamp(entity.horizontal_speed * 1.25, 0.0, entity.BOOST_SPEED * 1.5)
 	else:
 		if key == InputManager.RUN:
 			boost = false
-		
 #			bomb_throw_str = 0.0
 			
 #		if key == InputManager.FIRE:
-#			if entity.target_speed <= entity.max_speed:
-#				entity.target_speed = entity.boost_speed * boost_charge
+#			if entity.target_speed <= entity.MAX_SPEED:
+#				entity.target_speed = entity.BOOST_SPEED * boost_charge
 #				entity.acceleration = 0.25
 #			max_turn_speed = 2.3
 #			entity.set_velocity(Vector3(0.0, 0.0, -entity.target_speed))

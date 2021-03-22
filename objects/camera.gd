@@ -9,19 +9,22 @@ onready var screen_bounds = get_node("ScreenBounds")
 func _ready():
 	if tracked_entity is Entity:
 		tracked_entity.camera = self
-	InputManager.connect("key_changed", self, "receive_input")
 	set_process(false)
 	ally_indicator.visible = false
-	reset_speed()
+#	reset_speed()
+	
+#	InputManager.connect("key_changed", self, "receive_input")
 
-func receive_input(pad, key, state):
-	if key == InputManager.EVADE:
-		if state:
-			set_process(true)
-			ally_indicator.visible = true
-		else:
-			set_process(false)
-			ally_indicator.visible = false
+#funcs receive_input(pad, key, state):
+#	pass
+	
+#	if key == InputManager.EVADE:
+#		if state:
+#			set_process(true)
+#			ally_indicator.visible = true
+#		else:
+#			set_process(false)
+#			ally_indicator.visible = false
 #	pass
 
 func _process(delta):
@@ -35,6 +38,12 @@ func _process(delta):
 		else:
 			var origin = DisplayManager.BASE_RESOLUTION * DisplayManager.window_zoom * 0.5
 			ally_indicator.position = screen_bounds.curve.get_closest_point(origin - u_position)
+			
+#	if tracked_entity.horizontal_speed > 16.0:
+#		$SpeedLinesPivot.visible = true
+#		$SpeedLinesPivot.look_at(translation + tracked_entity.velocity, Vector3.UP)
+#	else:
+#		$SpeedLinesPivot.visible = false
 
 func _on_Timer_timeout():
 	speed = default_speed

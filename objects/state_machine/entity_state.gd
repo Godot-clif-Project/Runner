@@ -11,18 +11,18 @@ func clear_received_events():
 	received_events = {
 	"_received_input" : [],
 	"_received_hit" : [],
-	"_received_parry" : [],
-	"_dealt_parry" : [],
-	"_received_defense" : [],
+#	"_received_parry" : [],
+#	"_dealt_parry" : [],
+#	"_received_defense" : [],
 	"_dealt_hit" : [],
-	"_released_from_grapple" : [],
+#	"_released_from_grapple" : [],
 	"_animation_finished" : [],
 	"_animation_blend_started" : [],
 	"_flag_changed" : [],
 	"_hitstop_ended" : [],
 	"_touched_surface" : [],
-	"_evaded_hit" : [],
-	"_concurrent_fsm_state_changed" : [],
+#	"_evaded_hit" : [],
+#	"_concurrent_fsm_state_changed" : [],
 	"_received_tandem_action" : [],
 	"_received_ai_action" : [],
 	}
@@ -49,20 +49,20 @@ func process_received_events():
 		if stop_processing_events:
 			return
 		
-	for arg in received_events["_released_from_grapple"]:
-		call("_released_from_grapple", arg)
-		if stop_processing_events:
-			return
+#	for arg in received_events["_released_from_grapple"]:
+#		call("_released_from_grapple", arg)
+#		if stop_processing_events:
+#			return
 	
 	for arg in received_events["_dealt_hit"]:
 		call("_dealt_hit", arg)
 		if stop_processing_events:
 			return
 		
-	for arg in received_events["_dealt_parry"]:
-		callv("_dealt_parry", arg)
-		if stop_processing_events:
-			return
+#	for arg in received_events["_dealt_parry"]:
+#		callv("_dealt_parry", arg)
+#		if stop_processing_events:
+#			return
 		
 	for arg_array in received_events["_received_ai_action"]:
 		callv("_received_ai_action", arg_array)
@@ -79,25 +79,25 @@ func process_received_events():
 		if stop_processing_events:
 			return
 
-	for arg in received_events["_concurrent_fsm_state_changed"]:
-		call("_concurrent_fsm_state_changed", arg)
-		if stop_processing_events:
-			return
+#	for arg in received_events["_concurrent_fsm_state_changed"]:
+#		call("_concurrent_fsm_state_changed", arg)
+#		if stop_processing_events:
+#			return
 	
-	for arg in received_events["_evaded_hit"]:
-		call("_evaded_hit", arg)
-		if stop_processing_events:
-			return
+#	for arg in received_events["_evaded_hit"]:
+#		call("_evaded_hit", arg)
+#		if stop_processing_events:
+#			return
 	
-	for arg in received_events["_received_parry"]:
-		call("_received_parry", arg)
-		if stop_processing_events:
-			return
+#	for arg in received_events["_received_parry"]:
+#		call("_received_parry", arg)
+#		if stop_processing_events:
+#			return
 	
-	for arg in received_events["_received_defense"]:
-		call("_received_defense", arg)
-		if stop_processing_events:
-			return
+#	for arg in received_events["_received_defense"]:
+#		call("_received_defense", arg)
+#		if stop_processing_events:
+#			return
 		
 	for arg in received_events["_animation_finished"]:
 		call("_animation_finished", arg)

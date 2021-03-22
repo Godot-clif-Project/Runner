@@ -12,7 +12,7 @@ func play(sound_name : String):
 	if not audio_streams.empty():
 		if sound_name == "step":
 			audio_streams[0].stream = $ResourcePreloader.get_resource("step-0" + str(randi() % 7 + 1))
-	#		audio_streams[0].unit_db = 20 * (horizontal_speed / (max_speed * 0.5)) 
+	#		audio_streams[0].unit_db = 20 * (horizontal_speed / (MAX_SPEED * 0.5)) 
 		else:
 			audio_streams[0].stream = $ResourcePreloader.get_resource(sound_name)
 			

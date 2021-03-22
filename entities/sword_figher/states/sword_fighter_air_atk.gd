@@ -7,12 +7,17 @@ func get_animation_data():
 
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
-	entity.velocity.y = 0.0
+		
 	entity.model.rotation.z = 0.0
 	if entity.input_listener.analogs[0] >= 0.0:
 		entity.set_animation("air_atk_r", 0, 0.05)
 	else:
 		entity.set_animation("air_atk_l", 0, 0.05)
+		
+	if entity.on_ground:
+#		entity.velocity.y = 0.0
+#		entity.add_impulse(Vector3(0, 10, 0))
+		entity.velocity.y = 10
 		
 #	entity.jump()
 #	entity.on_ground = false

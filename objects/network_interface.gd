@@ -44,7 +44,7 @@ func _ready():
 		
 		for peer_id in NetworkManager.peers.keys():
 			if peer_id == NetworkManager.my_id:
-				player_entity.setup(NetworkManager.peers[NetworkManager.my_id]["player_number"])
+				call_deferred("setup_player")
 			else:
 				var new_peer_entity = PEER_SCENE.instance()
 				peer_entities[peer_id] = new_peer_entity
@@ -62,6 +62,9 @@ func _ready():
 		player_entity = get_node("../SwordFighter")
 		player_entity.setup(1)
 		enabled = false
+
+func setup_player():
+	player_entity.setup(NetworkManager.peers[NetworkManager.my_id]["player_number"])
 
 func add_peer_entity(new_peer_entity, player_number):
 	$"..".add_child(new_peer_entity)

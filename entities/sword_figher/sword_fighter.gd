@@ -54,9 +54,9 @@ var horizontal_speed = 0.0
 var falling_speed = 0.0
 var acceleration = 0.0
 var target_speed = 13.0
-const min_speed = 4.0
-const max_speed = 16.0
-const boost_speed = 22.0
+const MIN_SPEED = 6.0
+const MAX_SPEED = 18.0
+const BOOST_SPEED = 25.0
 
 var prev_speed = 0.0
 var prev_velocity : Vector3
@@ -117,6 +117,7 @@ onready var raycast_side_high = {
 
 onready var vel_arrow = $VelocityArrow
 onready var bomb_ui = $"../UI/BombCooldown"
+onready var speed_ui = $"../UI/Speed"
 
 func set_on_ground(value):
 	on_ground = value
@@ -161,6 +162,9 @@ func setup(number):
 	$PlayerName/ViewportContainer/Viewport/Label.text = NetworkManager.my_info["name"]
 	$ModelContainer/sword_fighter/Armature/Skeleton/Cube.material_override = $"..".PLAYER_MATERIALS[number]
 	$ModelContainer/sword_fighter/Armature/Skeleton/sword.material_override = $"..".PLAYER_MATERIALS[number]
+#
+#	if number != 1:
+#		input_listener.listen_to_pads = []
 
 func reset():
 	self.hp = max_hp
@@ -236,25 +240,26 @@ func _on_InputListener_received_input(key, state):
 	fsm.receive_event("_received_input", [key, state])
 #	prints(key, state)
 	
-	if state:
-#		if key == InputManager.JUMP:
-#			jump_str = min_jump_str
-		if key == InputManager.EVADE:
-			if target.is_empty():
+	if key == InputManager.EVADE:
+		if state:
+			if get_tree().has_network_peer():
 				lock_on_target = $"../NetworkInterface".get_peer_at_index(lock_on_scroll)
 				camera.ally_indicator.get_node("Label").text = NetworkManager.peers[lock_on_target.owner_id]["name"]
 				lock_on_scroll += 1
 				if lock_on_scroll > $"../NetworkInterface".peer_entities.size() - 1:
 					lock_on_scroll = 0
+					
+				camera.ally_indicator.visible = true
+				camera.set_process(true)
 				
-#			camera.ally_indicator.visible = true
-#			camera._process(true)
-
-#			lock_on_target = $"../SwordFighter2"
-#	else:
-#		if key == InputManager.EVADE:
-#			camera.ally_indicator.visible = false
-#			camera._process(false)
+			if target.is_empty():
+				return
+			else:
+				camera.ally_indicator.visible = true
+				camera.set_process(true)
+		else:
+			camera.ally_indicator.visible = false
+			camera.set_process(false)
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -305,6 +310,7 @@ func _physics_process(delta):
 			bomb_ui.value = 100
 			bomb_ui.modulate = Color(0.470588, 0.87451, 0.223529)
 	
+	speed_ui.set_text(str(stepify(horizontal_speed, 0.1)))
 #	if hp < max_hp:
 #		self.hp += delta * 10
 	

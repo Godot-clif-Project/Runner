@@ -4,7 +4,8 @@ extends "res://entities/sword_figher/states/sword_fighter_offensive_moves.gd"
 	# Name, seek and blend length 
 #	return ["off_h_r_heavy", 0.0, 5.0]
 
-const DOWNHILL_ACC = 1.25
+const DOWNHILL_ACC = 1.0
+const MAX_DOWNHILL_SPEED = 35.0
 
 var released_up = false
 var ang_momentum = 0.0
@@ -24,11 +25,14 @@ func get_animation_data():
 func _enter_state():
 #	entity.acceleration = 0.0
 #	speed = entity.horizontal_speed
-	entity.get_node("ModelContainer/Particles2").emitting = true
-	initial_rot = entity.model_container.rotation_degrees.y
-	entity.velocity = entity.velocity.normalized() * clamp(entity.horizontal_speed * 1.25, 0.0, entity.boost_speed * 1.5)
-	entity.play_sound("stop")
 #	entity.hp -= 40
+	initial_rot = entity.model_container.rotation_degrees.y
+	
+	if fsm.state_history[1] == "run":
+		entity.velocity = entity.velocity.normalized() * clamp(entity.horizontal_speed * 1.25, 0.0, entity.BOOST_SPEED * 1.5)
+		
+	entity.get_node("ModelContainer/Particles2").emitting = true
+	entity.play_sound("stop")
 	._enter_state()
 	
 #	if entity.input_listener.is_key_pressed(InputManager.DOWN):
@@ -89,9 +93,9 @@ func _process_state(delta):
 			entity.velocity.x += delta * abs(entity.velocity.y) * sign(entity.velocity.x) * DOWNHILL_ACC
 			entity.velocity.z += delta * abs(entity.velocity.y) * sign(entity.velocity.z) * DOWNHILL_ACC
 	
-	if entity.horizontal_speed > 40:
+	if entity.horizontal_speed > MAX_DOWNHILL_SPEED:
 		var y = entity.velocity.y
-		entity.velocity = entity.velocity.normalized() * 40
+		entity.velocity = entity.velocity.normalized() * MAX_DOWNHILL_SPEED
 		entity.velocity.y = y
 	
 	var vel_angle = atan2(entity.velocity.x, entity.velocity.z)
@@ -108,15 +112,15 @@ func _process_state(delta):
 
 func _touched_surface(surface):
 	if surface == "wall":
-		set_next_state("run")
-		hit_wall()
+		if hit_wall():
+			set_next_state("run")
 
 func _animation_finished(anim_name):
 #	if anim_name == "run_stop":
 #		entity.set_animation("run_stop_loop", 0.0, 16.0)
 #	if anim_name == "run_stop_dash":
 #		set_next_state("run")
-#		entity.target_speed = entity.boost_speed
+#		entity.target_speed = entity.BOOST_SPEED
 #		entity.acceleration = 0.75
 	if anim_name == "run_bump_l" or anim_name == "run_bump_r":
 		set_next_state("run")
@@ -158,13 +162,14 @@ func _received_input(key, state):
 	if state:
 		if key == InputManager.RUN or key == InputManager.UP:
 #			entity.set_animation("run_stop_dash", 0.0, 20.0)
-			set_next_state("run")
-			entity.target_speed = entity.boost_speed
-			entity.acceleration = 1.0
+			if entity.flags.is_evade_cancelable:
+				set_next_state("run")
+#			entity.target_speed = entity.BOOST_SPEED
+#			entity.acceleration = 1.0
 			return
 #		elif key == InputManager.BOOST:
 #			entity.set_animation("run_stop_dash", 0.0, 20.0)
-#			entity.target_speed = entity.boost_speed
+#			entity.target_speed = entity.BOOST_SPEED
 ##			entity.acceleration = 0.8
 #			return
 		if key == InputManager.BREAK:

@@ -73,6 +73,8 @@ func _physics_process(delta):
 		held_keys[key] += 1
 
 func _input(event):
+	if not OS.is_window_focused():
+		return
 #	print(event.as_text())
 #	print(event.axis_value)
 	if enabled and not get_tree().paused:
@@ -94,6 +96,8 @@ func _input(event):
 				analogs[event.axis] = 0.0
 
 func _received_input (pad, key, state):
+	if not OS.is_window_focused():
+		return
 	if enabled and not get_tree().paused:
 		for n in listen_to_pads:
 			if n == pad:
