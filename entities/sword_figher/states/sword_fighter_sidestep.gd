@@ -5,16 +5,16 @@ extends "res://entities/sword_figher/states/sword_fighter_offensive_moves.gd"
 #	return ["off_h_r_heavy", 0.0, 5.0]
 #var direction = 0
 #var released_up = false
-
+const STRENGTH = 15.0
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
 	entity.ground_drag = 15
 #	entity.velocity *= 0.5
 	if entity.input_listener.is_key_pressed(InputManager.RIGHT):
-		entity.add_impulse(Vector3(10.0, 0.0, 0.0))
+		entity.add_impulse(Vector3(STRENGTH, 0.0, 0.0))
 		entity.set_animation("def_step_r", 0, 0.05)
 	elif entity.input_listener.is_key_pressed(InputManager.LEFT):
-		entity.add_impulse(Vector3(-10.0, 0.0, 0.0))
+		entity.add_impulse(Vector3(-STRENGTH, 0.0, 0.0))
 		entity.set_animation("def_step_l", 0, 0.05)
 #	._enter_state()
 #

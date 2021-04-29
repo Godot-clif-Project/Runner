@@ -131,13 +131,13 @@ var pad_1_stick_joystick = {
 
 var keys_keyboard = {
 	KEY_SPACE : [JUMP],
-	KEY_Q : [BREAK],
+	KEY_Q : [DOWN],
 	KEY_SHIFT : [FIRE],
 	KEY_CONTROL : [EVADE],
 	KEY_TAB : [START],
 	KEY_L : [START],
 	KEY_W : [RUN], 
-	KEY_S : [BREAK, DOWN],
+	KEY_S : [BREAK],
 	KEY_A : [LEFT],
 	KEY_D : [RIGHT],
 	KEY_Y : [LIGHT],

@@ -5,7 +5,7 @@ enum collision_layers {LAYER_1, LAYER_2,}
 var time = 0
 
 #const TRAINING_ROOM = preload("res://levels/training/training_room_2.tscn")
-#const LEVEL_1 = preload("res://misc/text_test.tscn")
+const LOBBY = preload("res://stages/lobby.tscn")
 
 var current_level : Node
 var camera : Camera2D setget set_camera
@@ -61,6 +61,12 @@ func _input(event : InputEvent) -> void:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		else:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	if event.is_action_pressed("lobby"):
+		if NetworkManager.get_my_id() == 1:
+			NetworkManager.rpc("return_to_lobby")
+		elif NetworkManager.get_my_id() == 0:
+			change_level(LOBBY)
+		
 #	if event.is_action_pressed("debug_reset"):
 #		current_level.reset()
 #		current_level.queue_free()

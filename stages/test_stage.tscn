@@ -327,4 +327,5 @@ material/0 = ExtResource( 10 )
 
 [node name="CollisionShape" type="CollisionShape" parent="RigidBody9"]
 shape = SubResource( 5 )
+
 [connection signal="body_entered" from="Goal" to="StageTimer" method="_on_Goal_body_entered"]

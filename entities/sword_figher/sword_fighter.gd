@@ -13,10 +13,13 @@ signal dealt_tandem_action(action, args)
 signal requested_camera(entity)
 
 enum Stances {OFFENSIVE, DEFENSIVE, UNIQUE}
+enum Modes {PLAYER, PEER}
+
 const TERMINAL_VELOCITY = -50
 const PLAYER_1_MATERIAL = preload("res://entities/sword_figher/sword_fighter_player_1.material")
 const PLAYER_2_MATERIAL = preload("res://entities/sword_figher/sword_fighter_player_2.material")
 
+export(int, "Player", "Peer") var mode = Modes.PLAYER
 export(NodePath) var target
 export var walk_speed = 3
 export var default_ground_drag = 10
@@ -54,9 +57,9 @@ var horizontal_speed = 0.0
 var falling_speed = 0.0
 var acceleration = 0.0
 var target_speed = 13.0
-const MIN_SPEED = 6.0
-const MAX_SPEED = 18.0
-const BOOST_SPEED = 25.0
+const MIN_SPEED = 3.0
+const MAX_SPEED = 15.0
+const BOOST_SPEED = 18.0
 
 var prev_speed = 0.0
 var prev_velocity : Vector3
@@ -144,15 +147,18 @@ func get_direction():
 	return model_container.transform.basis.get_euler()
 
 func _ready():
-	fsm.setup()
+	if mode == Modes.PLAYER:
+		fsm.setup()
+		if not target.is_empty():
+			lock_on_target = get_node(target)
+		if camera != null:
+			camera_raycast.enabled = true
+	else:
+		input_listener.enabled = false
+		
 	$AnimationTree.active = true
 	ready = true
 	emit_signal("ready")
-	if not target.is_empty():
-		lock_on_target = get_node(target)
-		
-	if camera != null:
-		camera_raycast.enabled = true
 	
 func setup(number):
 	player_number = number
@@ -237,29 +243,30 @@ func play_rope_animation():
 var lock_on_scroll = 0
 
 func _on_InputListener_received_input(key, state):
-	fsm.receive_event("_received_input", [key, state])
-#	prints(key, state)
-	
-	if key == InputManager.EVADE:
-		if state:
-			if get_tree().has_network_peer():
-				lock_on_target = $"../NetworkInterface".get_peer_at_index(lock_on_scroll)
-				camera.ally_indicator.get_node("Label").text = NetworkManager.peers[lock_on_target.owner_id]["name"]
-				lock_on_scroll += 1
-				if lock_on_scroll > $"../NetworkInterface".peer_entities.size() - 1:
-					lock_on_scroll = 0
+	if mode == Modes.PLAYER:
+		fsm.receive_event("_received_input", [key, state])
+	#	prints(key, state)
+		
+		if key == InputManager.EVADE:
+			if state:
+				if get_tree().has_network_peer():
+					lock_on_target = $"../NetworkInterface".get_peer_at_index(lock_on_scroll)
+					camera.ally_indicator.get_node("Label").text = NetworkManager.peers[lock_on_target.owner_id]["name"]
+					lock_on_scroll += 1
+					if lock_on_scroll > $"../NetworkInterface".peer_entities.size() - 1:
+						lock_on_scroll = 0
+						
+					camera.ally_indicator.visible = true
+					camera.set_process(true)
 					
-				camera.ally_indicator.visible = true
-				camera.set_process(true)
-				
-			if target.is_empty():
-				return
+				if target.is_empty():
+					return
+				else:
+					camera.ally_indicator.visible = true
+					camera.set_process(true)
 			else:
-				camera.ally_indicator.visible = true
-				camera.set_process(true)
-		else:
-			camera.ally_indicator.visible = false
-			camera.set_process(false)
+				camera.ally_indicator.visible = false
+				camera.set_process(false)
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -276,41 +283,42 @@ func _input(event):
 #func _process(delta):
 
 func _physics_process(delta):
-	fsm._process_current_state(delta * timescale, true)
-	
-	if camera != null:
-		camera_pivot.rotation.y += input_listener.analogs[2] * -0.1
-		camera_pivot.rotation.x = clamp(camera_pivot.rotation.x + input_listener.analogs[3] * -0.1, -1.5, 0.9)
-		target_rotation = camera_pivot.rotation.y
+	if mode == Modes.PLAYER:
+		fsm._process_current_state(delta * timescale, true)
+		
+		if camera != null:
+			camera_pivot.rotation.y += input_listener.analogs[2] * -0.1
+			camera_pivot.rotation.x = clamp(camera_pivot.rotation.x + input_listener.analogs[3] * -0.1, -1.5, 0.9)
+			target_rotation = camera_pivot.rotation.y
 
-		if camera_raycast.is_colliding():
-			var distance = camera_pivot.to_local(camera_raycast.get_collision_point()).z
-			if distance < default_camera_pos.z:
-				if distance < camera_point.translation.z - 0.5:
-					camera_point.translation.z = distance - 0.1
-					camera.translation = camera_point.global_transform.origin
-				else:
-					camera_point.translation.z = distance - 0.1
+			if camera_raycast.is_colliding():
+				var distance = camera_pivot.to_local(camera_raycast.get_collision_point()).z
+				if distance < default_camera_pos.z:
+					if distance < camera_point.translation.z - 0.5:
+						camera_point.translation.z = distance - 0.1
+						camera.translation = camera_point.global_transform.origin
+					else:
+						camera_point.translation.z = distance - 0.1
 
-		elif $CameraPointPivot/Position3D/CameraCollision.get_overlapping_bodies().empty():
-			if camera_point.translation.z < 3.5:
-				camera_point.translation.z += delta * 3
+			elif $CameraPointPivot/Position3D/CameraCollision.get_overlapping_bodies().empty():
+				if camera_point.translation.z < 3.5:
+					camera_point.translation.z += delta * 3
 
-		camera_raycast.cast_to = camera_point.translation + Vector3(0.0, 0.0, 0.2)
-	
-	if shake_t > 0.0:
-		$ModelContainer/sword_fighter.translation = (Vector3.RIGHT * (shake_t * 0.03)) * sin(shake_t) * 0.1
-		shake_t -= delta * 50
-	
-	if bomb_charge < 100.0:
-		bomb_charge += delta
-		bomb_ui.value = bomb_charge
-		if bomb_charge >= 100.0:
-			bomb_charge = 100.0
-			bomb_ui.value = 100
-			bomb_ui.modulate = Color(0.470588, 0.87451, 0.223529)
-	
-	speed_ui.set_text(str(stepify(horizontal_speed, 0.1)))
+			camera_raycast.cast_to = camera_point.translation + Vector3(0.0, 0.0, 0.2)
+		
+		if shake_t > 0.0:
+			$ModelContainer/sword_fighter.translation = (Vector3.RIGHT * (shake_t * 0.03)) * sin(shake_t) * 0.1
+			shake_t -= delta * 50
+		
+		if bomb_charge < 100.0:
+			bomb_charge += delta
+			bomb_ui.value = bomb_charge
+			if bomb_charge >= 100.0:
+				bomb_charge = 100.0
+				bomb_ui.value = 100
+				bomb_ui.modulate = Color(0.470588, 0.87451, 0.223529)
+		
+		speed_ui.set_text(str(stepify(horizontal_speed, 0.1)))
 #	if hp < max_hp:
 #		self.hp += delta * 10
 	
@@ -618,8 +626,9 @@ func receive_hit(hit):
 	fsm.receive_event("_received_hit", hit)
 
 func _on_Hurtbox_received_hit(hit, hurtbox):
-	receive_hit(hit)
-	set_hitstop(hit.hitstop, true)
+	if mode == Modes.PLAYER:
+		receive_hit(hit)
+		set_hitstop(hit.hitstop, true)
 
 func _on_Hitbox_dealt_hit(hit : Hit, collided_entity):
 	emit_signal("dealt_hit", hit)

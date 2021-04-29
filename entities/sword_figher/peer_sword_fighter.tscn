@@ -388,10 +388,6 @@ script = ExtResource( 6 )
 [node name="sword_fighter" parent="ModelContainer" instance=ExtResource( 2 )]
 transform = Transform( -0.6, 0, -9.05975e-08, 0, 0.6, 0, 9.05975e-08, 0, -0.6, 0, 0, 0 )
 
-[node name="Skeleton" parent="ModelContainer/sword_fighter/Armature" index="0"]
-bones/7/bound_children = [ NodePath("BoneAttachment") ]
-bones/23/bound_children = [ NodePath("ThrowAttachment") ]
-
 [node name="BoneAttachment" type="BoneAttachment" parent="ModelContainer/sword_fighter/Armature/Skeleton" index="2"]
 transform = Transform( 1, 0, 0, 0, 0.998474, 0.0552152, 0, -0.0552152, 0.998474, -6.59474e-17, 2.24226, 7.43921e-09 )
 bone_name = "torso"

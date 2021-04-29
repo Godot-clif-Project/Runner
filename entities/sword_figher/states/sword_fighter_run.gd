@@ -6,8 +6,8 @@ extends "res://entities/sword_figher/states/sword_fighter_offensive_moves.gd"
 
 var released_up = false
 var ang_momentum = 0.0
-var rot_lerp = 5.0
-var max_turn_speed = 5.5
+var rot_lerp = 3.8
+var max_turn_speed = 5.0
 var rot_speed = 30
 
 var boost = false
@@ -144,7 +144,7 @@ func _process_state(delta):
 	entity.apply_gravity(delta)
 	entity.apply_velocity(delta)
 	
-	entity.anim_tree["parameters/TimeScale/scale"] = float(entity.target_speed / (entity.BOOST_SPEED * 0.6)) + 0.4# + (0.75 - entity.acceleration * 0.75)
+	entity.anim_tree["parameters/TimeScale/scale"] = float(entity.target_speed / (entity.BOOST_SPEED * 0.75)) + 0.4# + (0.75 - entity.acceleration * 0.75)
 	entity.center_camera(delta * 2, Vector2.ZERO)
 	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
 	
@@ -203,7 +203,7 @@ func _received_input(key, state):
 				entity.throw_stamina_bomb(Vector3(0.0, bomb_throw_str * 0.25, -bomb_throw_str))
 				return
 				
-		if key == InputManager.BREAK_BREAK:
+		if key == InputManager.BREAK_BREAK or key == InputManager.DOWN_DOWN:
 			set_next_state("run_stop")
 			return
 			

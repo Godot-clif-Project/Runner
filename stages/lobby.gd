@@ -10,7 +10,7 @@ func _ready():
 	NetworkManager.connect("connected_to_server", self, "_connected_ok")
 	NetworkManager.connect("server_disconnected", self, "_server_disconnected")
 	NetworkManager.connect("peer_registered", self, "update_peer_list")
-	NetworkManager.lobby_scene = self
+	NetworkManager.lobby = self
 	
 	for item in $ResourcePreloader.get_resource_list():
 		$LevelSelect.add_item(item)
@@ -52,6 +52,12 @@ func _server_disconnected():
 
 func update_peer_list():
 	$Peers.text = str(NetworkManager.peers)
+
+func return_to_lobby():
+	if NetworkManager.get_my_id() == 1:
+		$StartNetGame.disabled = false
+	update_peer_list()
+	update_gui(true)
 
 remotesync func start_net_game(level):
 #	get_tree().paused = true
@@ -154,6 +160,3 @@ func update_gui(is_connected):
 		$Ping.disabled = true
 		$StartSingleGame.disabled = false
 		$StartNetGame.disabled = true
-
-
-

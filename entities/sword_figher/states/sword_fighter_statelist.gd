@@ -45,4 +45,5 @@ const STATES = {
 	"emote" : preload("res://entities/sword_figher/states/sword_fighter_emote.gd"),
 	"running_fall" : preload("res://entities/sword_figher/states/sword_fighter_running_fall.gd"),
 	"cling" : preload("res://entities/sword_figher/states/sword_fighter_cling.gd"),
+	"skid" : preload("res://entities/sword_figher/states/sword_fighter_skid.gd"),
 	}

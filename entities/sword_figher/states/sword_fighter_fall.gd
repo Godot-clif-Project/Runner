@@ -59,7 +59,7 @@ func _process_state(delta):
 	
 func _touched_surface(surface):
 	if surface == "floor":
-		entity.falling_speed = entity.prev_velocity.y
+#		entity.falling_speed = entity.prev_velocity.y
 		set_next_state("land")
 		return
 	elif surface == "wall":

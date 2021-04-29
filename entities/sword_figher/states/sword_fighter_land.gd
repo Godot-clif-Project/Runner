@@ -3,7 +3,12 @@ extends "res://entities/sword_figher/states/sword_fighter_state.gd"
 #func get_animation_data():
 	# Name, seek and blend length 
 #	return ["jump_start", 0.0, 16.0]
-var turn_speed = 180
+var ang_momentum = 0.0
+var rot_drag = 1
+var rot_speed = 5
+var rot_lerp = 5.0
+var max_turn_speed = 6.0
+
 
 ## Initialize state here: Set animation, add impulse, etc.
 func _enter_state():
@@ -12,6 +17,7 @@ func _enter_state():
 	entity.has_wall_run_side = true
 	entity.air_boosts_left = entity.MAX_AIR_BOOSTS
 	entity.model.rotation.z = 0.0
+	entity.ground_drag = 8
 #	entity.raycast_cling.enabled = false
 #	entity.clingbox.monitoring = false
 	
@@ -20,7 +26,7 @@ func _enter_state():
 	
 #	entity.velocity *= 0.75
 
-	if entity.falling_speed < -25:
+	if entity.prev_velocity.y < -20:
 		entity.set_animation("jump_land", 0.0, 0.05)
 #		entity.hp -= 300 * (entity.falling_speed / -50.0)
 #		entity.velocity *= 0.5
@@ -37,7 +43,8 @@ func _enter_state():
 #			entity.set_animation("run_break", 0.0, 0.05)
 		else:
 			entity.velocity *= 0.75
-			set_next_state("run_stop")
+#			set_next_state("skid")
+			entity.set_animation("run_break", 0, 0.05)
 		return
 ##	entity.set_animation("off_hi_r_light", 0, 16.0)
 #	entity.on_ground = false
@@ -48,27 +55,31 @@ func _enter_state():
 ##	pass
 
 func _process_state(delta):
+	if entity.horizontal_speed < 4.0:
+			set_next_state("offensive_stance")
+			return
+			
 	if entity.feet.get_overlapping_bodies().size() == 0:
 		set_next_state("fall")
 		return
 	
-	if entity.input_listener.is_key_pressed(InputManager.RIGHT):
-		entity.model_container.rotation_degrees.y -= delta * turn_speed
+	ang_momentum = lerp(ang_momentum, -add_direction() * max_turn_speed, delta * rot_lerp)
 	
-	elif entity.input_listener.is_key_pressed(InputManager.LEFT):
-		entity.model_container.rotation_degrees.y += delta * turn_speed
-		
-	else:
-		var stick = entity.input_listener.analogs[0]
-		if abs(stick) > 0.1:
-			entity.model_container.rotation_degrees.y -= stick * delta * turn_speed
+	entity.model_container.rotation_degrees.y += ang_momentum * float(1 - entity.target_speed / entity.BOOST_SPEED * 0.5)
+	entity.emit_signal("rotation_changed", entity.model_container.rotation.y)
 	
-	entity.accelerate(-5, delta * 0.2)
+#	if entity.input_listener.is_key_pressed(InputManager.FIRE):
+#		entity.ground_drag = 15
+#	else:
+#		entity.ground_drag = 8.5
 		
 	entity.apply_drag(delta)
+	entity.target_speed = entity.horizontal_speed
+	
 	entity.apply_gravity(delta)
 	entity.apply_velocity(delta)
-	entity.center_camera(delta, Vector2.ZERO)
+	entity.align_to_floor(delta)
+	entity.center_camera(delta * 2, Vector2.ZERO)
 
 #func _touched_surface(surface):
 #	if surface == "floor": #and entity.flags.is_active:

@@ -16,7 +16,7 @@ func _enter_state():
 #	entity.acceleration = 0.0
 	entity.get_node("ModelContainer/Particles2").emitting = true
 	entity.set_animation("run_break", 0, 0.05)
-	entity.ground_drag = 15
+	entity.ground_drag = 8
 	#	if entity.input_listener.is_key_pressed(InputManager.DOWN):
 #		entity.ground_drag = 20
 #	else:

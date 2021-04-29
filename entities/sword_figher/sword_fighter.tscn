@@ -66,7 +66,7 @@ tracks/1/keys = {
 "values": [ 0.5 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("ModelContainer/Hitbox:hit_name")
+tracks/2/path = NodePath("../SwordFighter/ModelContainer/Hitbox:hit_name")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -78,7 +78,7 @@ tracks/2/keys = {
 "values": [ "off_hi_r_heavy" ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("ModelContainer/Hitbox:translation")
+tracks/3/path = NodePath("../SwordFighter/ModelContainer/Hitbox:translation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -90,7 +90,7 @@ tracks/3/keys = {
 "values": [ Vector3( -0.241936, 1.25873, -0.89122 ), Vector3( -1.467, 1.259, -0.075 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("ModelContainer/Hitbox:scale")
+tracks/4/path = NodePath("../SwordFighter/ModelContainer/Hitbox:scale")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -102,7 +102,7 @@ tracks/4/keys = {
 "values": [ Vector3( 1, 1, 1 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("ModelContainer/Hitbox:active")
+tracks/5/path = NodePath("../SwordFighter/ModelContainer/Hitbox:active")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -114,7 +114,7 @@ tracks/5/keys = {
 "values": [ true, false ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("AnimationFlags:is_stringable")
+tracks/6/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -140,7 +140,7 @@ tracks/7/keys = {
 } ]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("AnimationFlags:is_active")
+tracks/8/path = NodePath("../SwordFighter/AnimationFlags:is_active")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -152,7 +152,7 @@ tracks/8/keys = {
 "values": [ true ]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/9/path = NodePath("../SwordFighter/AnimationFlags:is_evade_cancelable")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
@@ -194,7 +194,7 @@ tracks/1/keys = {
 "values": [ 0.5 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("ModelContainer/Hitbox:hit_name")
+tracks/2/path = NodePath("../SwordFighter/ModelContainer/Hitbox:hit_name")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -206,7 +206,7 @@ tracks/2/keys = {
 "values": [ "off_hi_r_heavy" ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("ModelContainer/Hitbox:translation")
+tracks/3/path = NodePath("../SwordFighter/ModelContainer/Hitbox:translation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -218,7 +218,7 @@ tracks/3/keys = {
 "values": [ Vector3( 0.242, 1.259, -0.891 ), Vector3( 1.46744, 1.259, -0.075 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("ModelContainer/Hitbox:scale")
+tracks/4/path = NodePath("../SwordFighter/ModelContainer/Hitbox:scale")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -230,7 +230,7 @@ tracks/4/keys = {
 "values": [ Vector3( 1, 1, 1 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("ModelContainer/Hitbox:active")
+tracks/5/path = NodePath("../SwordFighter/ModelContainer/Hitbox:active")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -242,7 +242,7 @@ tracks/5/keys = {
 "values": [ true, false ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("AnimationFlags:is_stringable")
+tracks/6/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -268,7 +268,7 @@ tracks/7/keys = {
 } ]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("AnimationFlags:is_active")
+tracks/8/path = NodePath("../SwordFighter/AnimationFlags:is_active")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -280,7 +280,7 @@ tracks/8/keys = {
 "values": [ true ]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/9/path = NodePath("../SwordFighter/AnimationFlags:is_evade_cancelable")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
@@ -316,7 +316,7 @@ tracks/0/keys = {
 } ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("ModelContainer/Particles2:emitting")
+tracks/1/path = NodePath("../SwordFighter/ModelContainer/Particles2:emitting")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -328,7 +328,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("AnimationFlags:is_active")
+tracks/2/path = NodePath("../SwordFighter/AnimationFlags:is_active")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -340,7 +340,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("AnimationFlags:is_stringable")
+tracks/3/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -376,7 +376,7 @@ tracks/0/keys = {
 } ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("AnimationFlags:is_active")
+tracks/1/path = NodePath("../SwordFighter/AnimationFlags:is_active")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -400,7 +400,7 @@ tracks/2/keys = {
 "values": [ 1.0, 1.0, 0.2, 0.2, 1.0 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("AnimationFlags:is_stringable")
+tracks/3/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -430,7 +430,7 @@ length = 1.38333
 [sub_resource type="Animation" id=7]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:track_target")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:track_target")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -449,7 +449,7 @@ length = 0.001
 length = 0.683333
 step = 0.016
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_stringable")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -461,7 +461,7 @@ tracks/0/keys = {
 "values": [ true ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/1/path = NodePath("../SwordFighter/AnimationFlags:is_evade_cancelable")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -473,7 +473,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("AnimationFlags:is_cancelable")
+tracks/2/path = NodePath("../SwordFighter/AnimationFlags:is_cancelable")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -485,7 +485,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("AnimationFlags:is_command_cancelable")
+tracks/3/path = NodePath("../SwordFighter/AnimationFlags:is_command_cancelable")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -497,7 +497,7 @@ tracks/3/keys = {
 "values": [ true ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("ModelContainer/Hitbox:active")
+tracks/4/path = NodePath("../SwordFighter/ModelContainer/Hitbox:active")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -509,7 +509,7 @@ tracks/4/keys = {
 "values": [ true, false ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("ModelContainer/Hitbox:translation")
+tracks/5/path = NodePath("../SwordFighter/ModelContainer/Hitbox:translation")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -521,7 +521,7 @@ tracks/5/keys = {
 "values": [ Vector3( 0.0803003, 1.25873, -2.50039 ) ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("ModelContainer/Hitbox:scale")
+tracks/6/path = NodePath("../SwordFighter/ModelContainer/Hitbox:scale")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -533,7 +533,7 @@ tracks/6/keys = {
 "values": [ Vector3( 0.443658, 0.443658, 0.443658 ) ]
 }
 tracks/7/type = "value"
-tracks/7/path = NodePath("ModelContainer/Hitbox2:active")
+tracks/7/path = NodePath("../SwordFighter/ModelContainer/Hitbox2:active")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
@@ -545,7 +545,7 @@ tracks/7/keys = {
 "values": [ true, false ]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("ModelContainer/Hitbox2:translation")
+tracks/8/path = NodePath("../SwordFighter/ModelContainer/Hitbox2:translation")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -557,7 +557,7 @@ tracks/8/keys = {
 "values": [ Vector3( 0.0618832, 1.25873, -1.56914 ) ]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("ModelContainer/Hitbox2:scale")
+tracks/9/path = NodePath("../SwordFighter/ModelContainer/Hitbox2:scale")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
@@ -569,7 +569,7 @@ tracks/9/keys = {
 "values": [ Vector3( 0.569786, 0.569786, 0.569786 ) ]
 }
 tracks/10/type = "value"
-tracks/10/path = NodePath("AnimationFlags:track_target")
+tracks/10/path = NodePath("../SwordFighter/AnimationFlags:track_target")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/imported = false
@@ -581,7 +581,7 @@ tracks/10/keys = {
 "values": [ false, true ]
 }
 tracks/11/type = "value"
-tracks/11/path = NodePath("ModelContainer/Hitbox:hit_name")
+tracks/11/path = NodePath("../SwordFighter/ModelContainer/Hitbox:hit_name")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/imported = false
@@ -593,7 +593,7 @@ tracks/11/keys = {
 "values": [ "def_hi_light" ]
 }
 tracks/12/type = "value"
-tracks/12/path = NodePath("ModelContainer/Hitbox2:hit_name")
+tracks/12/path = NodePath("../SwordFighter/ModelContainer/Hitbox2:hit_name")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/imported = false
@@ -609,7 +609,7 @@ tracks/12/keys = {
 length = 0.5
 step = 0.0166667
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_stringable")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -621,7 +621,7 @@ tracks/0/keys = {
 "values": [ true ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/1/path = NodePath("../SwordFighter/AnimationFlags:is_evade_cancelable")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -633,7 +633,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("AnimationFlags:is_cancelable")
+tracks/2/path = NodePath("../SwordFighter/AnimationFlags:is_cancelable")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -645,7 +645,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("AnimationFlags:is_command_cancelable")
+tracks/3/path = NodePath("../SwordFighter/AnimationFlags:is_command_cancelable")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -661,7 +661,7 @@ tracks/3/keys = {
 length = 0.5
 step = 0.0166667
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_stringable")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -673,7 +673,7 @@ tracks/0/keys = {
 "values": [ true ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/1/path = NodePath("../SwordFighter/AnimationFlags:is_evade_cancelable")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -685,7 +685,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("AnimationFlags:is_cancelable")
+tracks/2/path = NodePath("../SwordFighter/AnimationFlags:is_cancelable")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -697,7 +697,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("AnimationFlags:is_command_cancelable")
+tracks/3/path = NodePath("../SwordFighter/AnimationFlags:is_command_cancelable")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -712,7 +712,7 @@ tracks/3/keys = {
 [sub_resource type="Animation" id=12]
 length = 0.5
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_stringable")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -724,7 +724,7 @@ tracks/0/keys = {
 "values": [ true ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/1/path = NodePath("../SwordFighter/AnimationFlags:is_evade_cancelable")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -736,7 +736,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("AnimationFlags:is_cancelable")
+tracks/2/path = NodePath("../SwordFighter/AnimationFlags:is_cancelable")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -748,7 +748,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("AnimationFlags:is_command_cancelable")
+tracks/3/path = NodePath("../SwordFighter/AnimationFlags:is_command_cancelable")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -760,7 +760,7 @@ tracks/3/keys = {
 "values": [ true ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("CameraPointPivot/Position3D:translation")
+tracks/4/path = NodePath("../SwordFighter/CameraPointPivot/Position3D:translation")
 tracks/4/interp = 2
 tracks/4/loop_wrap = false
 tracks/4/imported = false
@@ -803,7 +803,7 @@ tracks/6/keys = {
 [sub_resource type="Animation" id=13]
 length = 0.5
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_stringable")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -815,7 +815,7 @@ tracks/0/keys = {
 "values": [ true ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/1/path = NodePath("../SwordFighter/AnimationFlags:is_evade_cancelable")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -827,7 +827,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("AnimationFlags:is_cancelable")
+tracks/2/path = NodePath("../SwordFighter/AnimationFlags:is_cancelable")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -839,7 +839,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("AnimationFlags:is_command_cancelable")
+tracks/3/path = NodePath("../SwordFighter/AnimationFlags:is_command_cancelable")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -851,7 +851,7 @@ tracks/3/keys = {
 "values": [ true ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("CameraPointPivot/Position3D:translation")
+tracks/4/path = NodePath("../SwordFighter/CameraPointPivot/Position3D:translation")
 tracks/4/interp = 2
 tracks/4/loop_wrap = false
 tracks/4/imported = false
@@ -895,7 +895,7 @@ tracks/6/keys = {
 
 [sub_resource type="Animation" id=15]
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_stringable")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -907,7 +907,7 @@ tracks/0/keys = {
 "values": [ true ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/1/path = NodePath("../SwordFighter/AnimationFlags:is_evade_cancelable")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -919,7 +919,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("AnimationFlags:is_cancelable")
+tracks/2/path = NodePath("../SwordFighter/AnimationFlags:is_cancelable")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -931,7 +931,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("AnimationFlags:is_command_cancelable")
+tracks/3/path = NodePath("../SwordFighter/AnimationFlags:is_command_cancelable")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -943,7 +943,7 @@ tracks/3/keys = {
 "values": [ true ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("AnimationFlags:track_target")
+tracks/4/path = NodePath("../SwordFighter/AnimationFlags:track_target")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -957,7 +957,7 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id=16]
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_stringable")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -969,7 +969,7 @@ tracks/0/keys = {
 "values": [ true ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/1/path = NodePath("../SwordFighter/AnimationFlags:is_evade_cancelable")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -984,7 +984,7 @@ tracks/1/keys = {
 [sub_resource type="Animation" id=17]
 length = 2.0
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_stringable")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -996,7 +996,7 @@ tracks/0/keys = {
 "values": [ true ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/1/path = NodePath("../SwordFighter/AnimationFlags:is_evade_cancelable")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -1008,7 +1008,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("AnimationFlags:is_cancelable")
+tracks/2/path = NodePath("../SwordFighter/AnimationFlags:is_cancelable")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -1020,7 +1020,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("AnimationFlags:is_command_cancelable")
+tracks/3/path = NodePath("../SwordFighter/AnimationFlags:is_command_cancelable")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -1060,7 +1060,7 @@ tracks/0/keys = {
 "values": [ 15 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("AnimationFlags:is_stringable")
+tracks/1/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -1101,7 +1101,7 @@ tracks/1/keys = {
 } ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("AnimationFlags:is_active")
+tracks/2/path = NodePath("../SwordFighter/AnimationFlags:is_active")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -1127,7 +1127,7 @@ tracks/3/keys = {
 } ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("ModelContainer/Particles2:emitting")
+tracks/4/path = NodePath("../SwordFighter/ModelContainer/Particles2:emitting")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -1139,7 +1139,7 @@ tracks/4/keys = {
 "values": [ true, false ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("AnimationFlags:is_stringable")
+tracks/5/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -1151,7 +1151,7 @@ tracks/5/keys = {
 "values": [ true ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/6/path = NodePath("../SwordFighter/AnimationFlags:is_evade_cancelable")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -1173,7 +1173,7 @@ length = 1.33333
 length = 0.333333
 step = 0.0166667
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:track_target")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:track_target")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -1188,7 +1188,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id=23]
 length = 0.2
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:track_target")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:track_target")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -1207,7 +1207,7 @@ length = 0.833333
 length = 0.7
 step = 0.016
 tracks/0/type = "value"
-tracks/0/path = NodePath("ModelContainer/Hitbox2:active")
+tracks/0/path = NodePath("../SwordFighter/ModelContainer/Hitbox2:active")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -1223,7 +1223,7 @@ tracks/0/keys = {
 length = 1.16667
 step = 0.016
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_stringable")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/0/interp = 1
 tracks/0/loop_wrap = false
 tracks/0/imported = false
@@ -1235,7 +1235,7 @@ tracks/0/keys = {
 "values": [ true ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/1/path = NodePath("../SwordFighter/AnimationFlags:is_evade_cancelable")
 tracks/1/interp = 1
 tracks/1/loop_wrap = false
 tracks/1/imported = false
@@ -1247,7 +1247,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("ModelContainer/Hitbox2:active")
+tracks/2/path = NodePath("../SwordFighter/ModelContainer/Hitbox2:active")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -1259,7 +1259,7 @@ tracks/2/keys = {
 "values": [ true, false ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("ModelContainer/Hitbox2:translation")
+tracks/3/path = NodePath("../SwordFighter/ModelContainer/Hitbox2:translation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -1271,7 +1271,7 @@ tracks/3/keys = {
 "values": [ Vector3( 0.0517746, 1.25873, -1.03754 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("ModelContainer/Hitbox:active")
+tracks/4/path = NodePath("../SwordFighter/ModelContainer/Hitbox:active")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -1283,7 +1283,7 @@ tracks/4/keys = {
 "values": [ true, false ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("ModelContainer/Hitbox:translation")
+tracks/5/path = NodePath("../SwordFighter/ModelContainer/Hitbox:translation")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -1295,7 +1295,7 @@ tracks/5/keys = {
 "values": [ Vector3( 0.809197, 1.25873, 0.198503 ) ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("ModelContainer/Hitbox:scale")
+tracks/6/path = NodePath("../SwordFighter/ModelContainer/Hitbox:scale")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -1307,7 +1307,7 @@ tracks/6/keys = {
 "values": [ Vector3( 1.00906, 1.00906, 1.00906 ) ]
 }
 tracks/7/type = "value"
-tracks/7/path = NodePath("ModelContainer/Hitbox2:scale")
+tracks/7/path = NodePath("../SwordFighter/ModelContainer/Hitbox2:scale")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
@@ -1319,7 +1319,7 @@ tracks/7/keys = {
 "values": [ Vector3( 0.863382, 0.863382, 0.863382 ) ]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("AnimationFlags:track_target")
+tracks/8/path = NodePath("../SwordFighter/AnimationFlags:track_target")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -1331,7 +1331,7 @@ tracks/8/keys = {
 "values": [ false, true ]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("ModelContainer/Hitbox2:hit_name")
+tracks/9/path = NodePath("../SwordFighter/ModelContainer/Hitbox2:hit_name")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
@@ -1343,7 +1343,7 @@ tracks/9/keys = {
 "values": [ "off_hi_r_heavy" ]
 }
 tracks/10/type = "value"
-tracks/10/path = NodePath("ModelContainer/Hitbox:hit_name")
+tracks/10/path = NodePath("../SwordFighter/ModelContainer/Hitbox:hit_name")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/imported = false
@@ -1359,7 +1359,7 @@ tracks/10/keys = {
 length = 0.916667
 step = 0.0166667
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:is_evade_cancelable")
 tracks/0/interp = 1
 tracks/0/loop_wrap = false
 tracks/0/imported = false
@@ -1371,7 +1371,7 @@ tracks/0/keys = {
 "values": [ true ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("AnimationFlags:is_stringable")
+tracks/1/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/1/interp = 1
 tracks/1/loop_wrap = false
 tracks/1/imported = false
@@ -1390,7 +1390,7 @@ length = 0.666667
 length = 0.666667
 step = 0.016
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_stringable")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/0/interp = 1
 tracks/0/loop_wrap = false
 tracks/0/imported = false
@@ -1402,7 +1402,7 @@ tracks/0/keys = {
 "values": [ true ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("ModelContainer/Hitbox:translation")
+tracks/1/path = NodePath("../SwordFighter/ModelContainer/Hitbox:translation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = false
 tracks/1/imported = false
@@ -1414,7 +1414,7 @@ tracks/1/keys = {
 "values": [ Vector3( 0, 1.25873, -1.42206 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("ModelContainer/Hitbox:scale")
+tracks/2/path = NodePath("../SwordFighter/ModelContainer/Hitbox:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = false
 tracks/2/imported = false
@@ -1426,7 +1426,7 @@ tracks/2/keys = {
 "values": [ Vector3( 0.404816, 0.404816, 0.404816 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("ModelContainer/Hitbox:hit_name")
+tracks/3/path = NodePath("../SwordFighter/ModelContainer/Hitbox:hit_name")
 tracks/3/interp = 1
 tracks/3/loop_wrap = false
 tracks/3/imported = false
@@ -1438,7 +1438,7 @@ tracks/3/keys = {
 "values": [ "off_hi_r_light" ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("ModelContainer/Hitbox:active")
+tracks/4/path = NodePath("../SwordFighter/ModelContainer/Hitbox:active")
 tracks/4/interp = 1
 tracks/4/loop_wrap = false
 tracks/4/imported = false
@@ -1450,7 +1450,7 @@ tracks/4/keys = {
 "values": [ true, false ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("ModelContainer/Hitbox2:translation")
+tracks/5/path = NodePath("../SwordFighter/ModelContainer/Hitbox2:translation")
 tracks/5/interp = 1
 tracks/5/loop_wrap = false
 tracks/5/imported = false
@@ -1462,7 +1462,7 @@ tracks/5/keys = {
 "values": [ Vector3( 0.848743, 1.25873, -0.834254 ) ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("ModelContainer/Hitbox2:scale")
+tracks/6/path = NodePath("../SwordFighter/ModelContainer/Hitbox2:scale")
 tracks/6/interp = 1
 tracks/6/loop_wrap = false
 tracks/6/imported = false
@@ -1474,7 +1474,7 @@ tracks/6/keys = {
 "values": [ Vector3( 0.404816, 0.404816, 0.404816 ) ]
 }
 tracks/7/type = "value"
-tracks/7/path = NodePath("ModelContainer/Hitbox2:active")
+tracks/7/path = NodePath("../SwordFighter/ModelContainer/Hitbox2:active")
 tracks/7/interp = 1
 tracks/7/loop_wrap = false
 tracks/7/imported = false
@@ -1486,7 +1486,7 @@ tracks/7/keys = {
 "values": [ true, false ]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("AnimationFlags:track_target")
+tracks/8/path = NodePath("../SwordFighter/AnimationFlags:track_target")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -1498,7 +1498,7 @@ tracks/8/keys = {
 "values": [ false, true ]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("ModelContainer/Hitbox2:hit_name")
+tracks/9/path = NodePath("../SwordFighter/ModelContainer/Hitbox2:hit_name")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
@@ -1513,7 +1513,7 @@ tracks/9/keys = {
 [sub_resource type="Animation" id=30]
 step = 0.016
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:is_evade_cancelable")
 tracks/0/interp = 1
 tracks/0/loop_wrap = false
 tracks/0/imported = false
@@ -1525,7 +1525,7 @@ tracks/0/keys = {
 "values": [ true ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/1/path = NodePath("../SwordFighter/AnimationFlags:is_evade_cancelable")
 tracks/1/interp = 1
 tracks/1/loop_wrap = false
 tracks/1/imported = false
@@ -1537,7 +1537,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("AnimationFlags:is_stringable")
+tracks/2/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/2/interp = 1
 tracks/2/loop_wrap = false
 tracks/2/imported = false
@@ -1549,7 +1549,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("AnimationFlags:track_target")
+tracks/3/path = NodePath("../SwordFighter/AnimationFlags:track_target")
 tracks/3/interp = 1
 tracks/3/loop_wrap = false
 tracks/3/imported = false
@@ -1561,7 +1561,7 @@ tracks/3/keys = {
 "values": [ false, true ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("ModelContainer/Hitbox:hit_name")
+tracks/4/path = NodePath("../SwordFighter/ModelContainer/Hitbox:hit_name")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -1573,7 +1573,7 @@ tracks/4/keys = {
 "values": [ "off_kick" ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("ModelContainer/Hitbox:active")
+tracks/5/path = NodePath("../SwordFighter/ModelContainer/Hitbox:active")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -1585,7 +1585,7 @@ tracks/5/keys = {
 "values": [ true, false ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("ModelContainer/Hitbox:translation")
+tracks/6/path = NodePath("../SwordFighter/ModelContainer/Hitbox:translation")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -1597,7 +1597,7 @@ tracks/6/keys = {
 "values": [ Vector3( 0.00636727, 1.25873, -1.03357 ) ]
 }
 tracks/7/type = "value"
-tracks/7/path = NodePath("ModelContainer/Hitbox:scale")
+tracks/7/path = NodePath("../SwordFighter/ModelContainer/Hitbox:scale")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
@@ -1609,7 +1609,7 @@ tracks/7/keys = {
 "values": [ Vector3( 0.524719, 0.524719, 0.524719 ) ]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("ModelContainer/Hitbox2:active")
+tracks/8/path = NodePath("../SwordFighter/ModelContainer/Hitbox2:active")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -1621,7 +1621,7 @@ tracks/8/keys = {
 "values": [ true, false ]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("ModelContainer/Hitbox2:translation")
+tracks/9/path = NodePath("../SwordFighter/ModelContainer/Hitbox2:translation")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
@@ -1633,7 +1633,7 @@ tracks/9/keys = {
 "values": [ Vector3( 0.0517746, 1.25873, -1.03754 ) ]
 }
 tracks/10/type = "value"
-tracks/10/path = NodePath("ModelContainer/Hitbox2:scale")
+tracks/10/path = NodePath("../SwordFighter/ModelContainer/Hitbox2:scale")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/imported = false
@@ -1645,7 +1645,7 @@ tracks/10/keys = {
 "values": [ Vector3( 0.863382, 0.863382, 0.863382 ) ]
 }
 tracks/11/type = "value"
-tracks/11/path = NodePath("ModelContainer/Hitbox2:hit_name")
+tracks/11/path = NodePath("../SwordFighter/ModelContainer/Hitbox2:hit_name")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/imported = false
@@ -1677,7 +1677,7 @@ tracks/0/keys = {
 length = 0.583333
 step = 0.0166667
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_active")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:is_active")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -1689,7 +1689,7 @@ tracks/0/keys = {
 "values": [ false ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("AnimationFlags:is_stringable")
+tracks/1/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -1701,7 +1701,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("AnimationFlags:is_command_cancelable")
+tracks/2/path = NodePath("../SwordFighter/AnimationFlags:is_command_cancelable")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -1713,7 +1713,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/3/path = NodePath("../SwordFighter/AnimationFlags:is_evade_cancelable")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -1747,7 +1747,7 @@ length = 2.25
 length = 0.833333
 step = 0.016
 tracks/0/type = "value"
-tracks/0/path = NodePath("ModelContainer/Hitbox:translation")
+tracks/0/path = NodePath("../SwordFighter/ModelContainer/Hitbox:translation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -1759,7 +1759,7 @@ tracks/0/keys = {
 "values": [ Vector3( 0.00636727, 1.192, -0.759958 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("ModelContainer/Hitbox:scale")
+tracks/1/path = NodePath("../SwordFighter/ModelContainer/Hitbox:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -1771,7 +1771,7 @@ tracks/1/keys = {
 "values": [ Vector3( 0.378735, 0.378735, 0.378735 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("ModelContainer/Hitbox:hit_name")
+tracks/2/path = NodePath("../SwordFighter/ModelContainer/Hitbox:hit_name")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -1783,7 +1783,7 @@ tracks/2/keys = {
 "values": [ "off_throw_f_startup" ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("ModelContainer/Hitbox:active")
+tracks/3/path = NodePath("../SwordFighter/ModelContainer/Hitbox:active")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -1798,7 +1798,7 @@ tracks/3/keys = {
 [sub_resource type="Animation" id=36]
 length = 1.33333
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_stringable")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -1810,7 +1810,7 @@ tracks/0/keys = {
 "values": [ true ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/1/path = NodePath("../SwordFighter/AnimationFlags:is_evade_cancelable")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -1822,7 +1822,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("AnimationFlags:is_cancelable")
+tracks/2/path = NodePath("../SwordFighter/AnimationFlags:is_cancelable")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -1834,7 +1834,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("AnimationFlags:is_command_cancelable")
+tracks/3/path = NodePath("../SwordFighter/AnimationFlags:is_command_cancelable")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -1848,7 +1848,7 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id=37]
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_stringable")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -1860,7 +1860,7 @@ tracks/0/keys = {
 "values": [ true ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/1/path = NodePath("../SwordFighter/AnimationFlags:is_evade_cancelable")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -1872,7 +1872,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("AnimationFlags:is_cancelable")
+tracks/2/path = NodePath("../SwordFighter/AnimationFlags:is_cancelable")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -1884,7 +1884,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("AnimationFlags:is_command_cancelable")
+tracks/3/path = NodePath("../SwordFighter/AnimationFlags:is_command_cancelable")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -1899,7 +1899,7 @@ tracks/3/keys = {
 [sub_resource type="Animation" id=38]
 length = 0.833333
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_stringable")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -1911,7 +1911,7 @@ tracks/0/keys = {
 "values": [ true ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/1/path = NodePath("../SwordFighter/AnimationFlags:is_evade_cancelable")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -1923,7 +1923,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("AnimationFlags:is_cancelable")
+tracks/2/path = NodePath("../SwordFighter/AnimationFlags:is_cancelable")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -1935,7 +1935,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("AnimationFlags:is_command_cancelable")
+tracks/3/path = NodePath("../SwordFighter/AnimationFlags:is_command_cancelable")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -1950,7 +1950,7 @@ tracks/3/keys = {
 [sub_resource type="Animation" id=39]
 length = 0.833333
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_stringable")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -1962,7 +1962,7 @@ tracks/0/keys = {
 "values": [ true ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/1/path = NodePath("../SwordFighter/AnimationFlags:is_evade_cancelable")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -1974,7 +1974,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("AnimationFlags:is_cancelable")
+tracks/2/path = NodePath("../SwordFighter/AnimationFlags:is_cancelable")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -1986,7 +1986,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("AnimationFlags:is_command_cancelable")
+tracks/3/path = NodePath("../SwordFighter/AnimationFlags:is_command_cancelable")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -2000,7 +2000,7 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id=40]
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_stringable")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -2012,7 +2012,7 @@ tracks/0/keys = {
 "values": [ true ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/1/path = NodePath("../SwordFighter/AnimationFlags:is_evade_cancelable")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -2024,7 +2024,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("AnimationFlags:is_cancelable")
+tracks/2/path = NodePath("../SwordFighter/AnimationFlags:is_cancelable")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -2036,7 +2036,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("AnimationFlags:is_command_cancelable")
+tracks/3/path = NodePath("../SwordFighter/AnimationFlags:is_command_cancelable")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -2048,7 +2048,7 @@ tracks/3/keys = {
 "values": [ true ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("AnimationFlags:track_target")
+tracks/4/path = NodePath("../SwordFighter/AnimationFlags:track_target")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -2078,7 +2078,7 @@ length = 2.18333
 [sub_resource type="Animation" id=42]
 length = 0.3
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_active")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:is_active")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -2102,7 +2102,7 @@ tracks/1/keys = {
 "values": [ 5 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("AnimationFlags:is_command_cancelable")
+tracks/2/path = NodePath("../SwordFighter/AnimationFlags:is_command_cancelable")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -2114,7 +2114,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/3/path = NodePath("../SwordFighter/AnimationFlags:is_evade_cancelable")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -2126,7 +2126,7 @@ tracks/3/keys = {
 "values": [ true ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("AnimationFlags:is_stringable")
+tracks/4/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -2141,7 +2141,7 @@ tracks/4/keys = {
 [sub_resource type="Animation" id=43]
 length = 0.166667
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_active")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:is_active")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -2156,7 +2156,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id=44]
 length = 0.25
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_stringable")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -2171,7 +2171,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id=45]
 length = 0.25
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_stringable")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -2186,7 +2186,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id=46]
 length = 0.833333
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_active")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:is_active")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -2198,7 +2198,7 @@ tracks/0/keys = {
 "values": [ true ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("AnimationFlags:is_stringable")
+tracks/1/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -2210,7 +2210,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("AnimationFlags:is_command_cancelable")
+tracks/2/path = NodePath("../SwordFighter/AnimationFlags:is_command_cancelable")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -2222,7 +2222,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/3/path = NodePath("../SwordFighter/AnimationFlags:is_evade_cancelable")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -2245,7 +2245,7 @@ length = 0.666667
 loop = true
 step = 0.0166667
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_stringable")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -2277,7 +2277,7 @@ tracks/1/keys = {
 [sub_resource type="Animation" id=50]
 length = 0.45
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_command_cancelable")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:is_command_cancelable")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -2289,13 +2289,13 @@ tracks/0/keys = {
 "values": [ true ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("AnimationFlags:is_evade_cancelable")
+tracks/1/path = NodePath("../SwordFighter/AnimationFlags:is_evade_cancelable")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.4 ),
+"times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 2,
 "values": [ true ]
@@ -2313,7 +2313,7 @@ tracks/2/keys = {
 "values": [ 6 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("AnimationFlags:is_stringable")
+tracks/3/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -2328,7 +2328,7 @@ tracks/3/keys = {
 [sub_resource type="Animation" id=51]
 length = 0.416667
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_active")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:is_active")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -2364,7 +2364,7 @@ length = 0.833333
 [sub_resource type="Animation" id=55]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationFlags:is_stringable")
+tracks/0/path = NodePath("../SwordFighter/AnimationFlags:is_stringable")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false

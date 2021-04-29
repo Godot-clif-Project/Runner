@@ -12,6 +12,7 @@ signal peer_registered()
 
 const DEFAULT_PORT = 4561 #Don't use under 1024
 const NETWORK_STAGE = preload("res://stages/test_stage_3.tscn")
+const LOBBY_SCENE = preload("res://stages/lobby.tscn")
 
 var my_id = 1
 var my_info = {
@@ -20,7 +21,7 @@ var my_info = {
 }
 var peers = {}
 
-var lobby_scene
+var lobby
 var network_interface
 
 var uid = -1
@@ -32,6 +33,8 @@ func get_new_uid() -> int:
 func get_my_id():
 	if get_tree().has_network_peer():
 		return get_tree().get_network_unique_id()
+	else:
+		return 0
 
 func _ready():
 #	get_tree().connect("network_peer_connected", self, "_network_peer_connected")
@@ -138,5 +141,12 @@ remote func receive_peer_info(_peers):
 remotesync func start_game(level):
 #	lobby_scene.visible = false
 #	get_tree().paused = true
-	lobby_scene.queue_free()
+	lobby.queue_free()
 	get_tree().root.add_child(level.instance())
+
+remotesync func return_to_lobby():
+	MainManager.current_level.queue_free()
+	var new_lobby = LOBBY_SCENE.instance()
+	get_tree().root.add_child(new_lobby)
+	new_lobby.return_to_lobby()
+	
